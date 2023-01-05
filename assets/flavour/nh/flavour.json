@@ -1,0 +1,30 @@
+{
+"app_title": "NH",
+"sub_title": "NH",
+"app_short_title": "NH",
+"app_logo": "nh/images/app-logo.png",
+"android_app_id": "com.app.travelgrid",
+"ios_app_id": "com.app.travelgrid",
+"urls": {
+      "prod_url" : "",
+      "dev_url" : "",
+      "test_url" : ""
+},
+"splash_screen_data":{
+       "splash_bg": {
+             "splash_bg": "assets/",
+             "color": "0xFF0000"
+       },
+       "splash_logo": "assets/",
+       "splash_duration": 2500,
+       "splash_legal_name":"Powered by Channel Mentor"
+ },
+"copy_right_message": "Powered by Channel Mentor",
+"support_email" : "info@csit.com",
+"privacy_policy_url": "",
+"terms_of_use_url": "",
+"app_theme" : {
+      "primary_color" : "0XFFFFFF",
+      "secondary_color" : "0XFFFFFF"
+}
+}
