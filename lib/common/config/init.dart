@@ -8,6 +8,7 @@ import 'package:travelgrid/common/config/preferences_config.dart';
 import 'package:travelgrid/common/constants/color_constants.dart';
 import 'package:travelgrid/common/constants/flavour_constants.dart';
 import 'package:travelgrid/common/constants/theme_constants.dart';
+import 'package:travelgrid/common/extentions/pretty.dart';
 import 'package:travelgrid/common/injector/injector_config.dart';
 import 'app_routes.dart';
 import 'package:flutter/services.dart';
@@ -27,20 +28,9 @@ class _InitRootState extends State<InitRoot> {
   @override
   void initState() {
     super.initState();
-    initData();
     configLoading();
   }
 
-  void initData() async {
-    try {
-      InjectorConfig.setup();
-      String flavourData = await rootBundle.loadString("assets/flavour.json");
-      Map<String, dynamic> flavourJson = await json.decode(flavourData.toString());
-      FlavorConfig(variables: flavourJson);
-    } catch (e) {
-      print(e);
-    }
-  }
 
   void configLoading() {
     EasyLoading.instance

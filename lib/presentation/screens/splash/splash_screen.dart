@@ -3,7 +3,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:travelgrid/common/constants/flavour_constants.dart';
+import 'package:travelgrid/common/constants/font_constants.dart';
 import 'package:travelgrid/common/constants/route_constants.dart';
+import 'package:travelgrid/common/extentions/pretty.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -15,7 +17,7 @@ class SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
 
- //  getInitRoute();
+    getInitRoute();
     super.initState();
   }
 
@@ -28,29 +30,21 @@ class SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
 
     return Scaffold(
+      backgroundColor: FlavourConstants.splashBgColor,
       body:Stack(
         alignment: Alignment.bottomCenter,
         children: [
           Container(
             height: double.infinity,
             width: double.infinity,
-            decoration:  BoxDecoration(
-                gradient:  LinearGradient(
-                    colors: [
-                      Theme.of(context).colorScheme.primary,
-                      Theme.of(context).colorScheme.secondary,
-                    ],
-                    stops: const [0.0, 1.0],
-                    begin: FractionalOffset.topCenter,
-                    end: FractionalOffset.bottomCenter,
-                    tileMode: TileMode.repeated
-                )
-            ),
-            child: Image.asset(FlavourConstants.splashLogo,width: 250,height: 250,),
+            child: Image.asset(FlavourConstants.path+FlavourConstants.splashLogo,width: 250,height: 250,),
           ),
           Container(
               margin: EdgeInsets.symmetric(vertical: 20.h),
-              child: Text(FlavourConstants.poweredBy,style:Theme.of(context).textTheme.caption))
+              child: Text(
+                  FlavourConstants.poweredBy,
+                  style:Theme.of(context).textTheme.
+                  caption?.copyWith(color: FlavourConstants.splashTextColor,fontFamily: FontConstants.FONT_ITALIC )))
         ],
       ),
     );
@@ -62,8 +56,8 @@ class SplashScreenState extends State<SplashScreen> {
       //     Navigator.of(context).pushNamed(RouteConstants.dashBoardTabsPath, arguments: { "tab" : 0 });
       //   });
       // }else{
-        Timer(const Duration(seconds: 3),(){
-          Navigator.of(context).pushNamed(RouteConstants.splashPath);
+        Timer( Duration(seconds: FlavourConstants.splashTimer),(){
+   //       Navigator.of(context).pushNamed(RouteConstants.splashPath);
         });
       // }
   }
