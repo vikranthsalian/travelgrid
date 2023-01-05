@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_flavor/flutter_flavor.dart';
 import 'package:travelgrid/common/config/flavour_config.dart';
 import 'package:travelgrid/common/config/preferences_config.dart';
 import 'package:travelgrid/common/constants/color_constants.dart';
@@ -33,24 +34,9 @@ class _InitRootState extends State<InitRoot> {
   void initData() async {
     try {
       InjectorConfig.setup();
-      String whiteLabelPath = 'assets/whitelabel/';
-      await dotenv.load(fileName: "assets/.env");
-      String flavourString = await rootBundle.loadString("assets/flavour.json");
-
-      Map<String, dynamic> flavourJson = await json.decode(
-          flavourString.toString());
-
-      Map<String, dynamic> flavourData = {
-        "appName": flavourJson['app_title'],
-        "appLogo": whiteLabelPath + flavourJson['logo'],
-        "splashLogo": whiteLabelPath + flavourJson['splash_logo'],
-        "svgLogo": whiteLabelPath + flavourJson['svgLogo'],
-        "baseUrl": flavourJson['dev_url'],
-        "poweredBy": flavourJson['powered_by'],
-        "enableUnitTesting": dotenv.env['ENABLE_TESTING'] == "FALSE" ? false : true,
-        "loadFromXML": dotenv.env['LOAD_FROM_XML'] == "FALSE" ? false : true,
-      };
-      FlavourConfig().initConfig(flavourData);
+      String flavourData = await rootBundle.loadString("assets/flavour.json");
+      Map<String, dynamic> flavourJson = await json.decode(flavourData.toString());
+      FlavorConfig(variables: flavourJson);
     } catch (e) {
       print(e);
     }

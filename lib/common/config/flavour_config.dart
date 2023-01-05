@@ -11,7 +11,6 @@ class FlavourConfig {
         "poweredBy": flavour['poweredBy'],
         "baseUrl":  flavour['baseUrl'],
         "enableUnitTesting":  flavour['enableUnitTesting'],
-        "loadFromXML": flavour['loadFromXML'],
       },);
   }
 }
