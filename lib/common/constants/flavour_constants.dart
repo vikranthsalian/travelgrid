@@ -7,6 +7,7 @@ class FlavourConstants {
   static  String appName =  FlavorConfig.instance.variables["app_title"];
  // static  String appLogo =  FlavorConfig.instance.variables["appLogo"];
   static  String path =  FlavorConfig.instance.variables["image_path"];
+  static  bool showNetworkLogs =  FlavorConfig.instance.variables["showNetworkLogs"];
 
   //splash details
   static  Map<String,dynamic> appThemeData = FlavorConfig.instance.variables["app_theme"];

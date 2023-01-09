@@ -1,6 +1,10 @@
 
 import 'package:kiwi/kiwi.dart';
 import 'package:travelgrid/common/http/http_client.dart';
+import 'package:travelgrid/data/remote/remote_datasource.dart';
+import 'package:travelgrid/data/repositories/app_repo.dart';
+import 'package:travelgrid/domain/repo_abstract/api_abstract.dart';
+import 'package:travelgrid/domain/usecases/login_usecase.dart';
 part 'injector_config.g.dart';
 
 abstract class InjectorConfig {
@@ -35,15 +39,15 @@ abstract class InjectorConfig {
   void _configureBlocs();
   //
   // ============ USECASES ============
- //@Register.singleton(APIUseCase)
+  @Register.singleton(LoginUseCase)
   void _configureUsecases();
 
   // ============ REPOSITORIES ============
-  //@Register.singleton(APIAbstract,from:APIRepo)
+  @Register.singleton(LoginAPIAbstract,from:LoginRepository)
   void _configureRepositories();
 
   // ============ REMOTE DATASOURCES ============
-  //@Register.singleton(APIRemoteDatasource)
+  @Register.singleton(APIRemoteDatasource)
   void _configureRemoteDataSources();
 
   // // ============ LOCAL DATASOURCES ============
@@ -51,7 +55,7 @@ abstract class InjectorConfig {
   // void _configureLocalDataSources();
 
   // ============ COMMON ============
-  @Register.singleton(HttpClient)
+ // @Register.singleton(HttpClient)
   void _configureCommon();
 
 }

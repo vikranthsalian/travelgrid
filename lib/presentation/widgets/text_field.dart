@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:travelgrid/common/constants/flavour_constants.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
@@ -97,48 +98,44 @@ class CustomTextField extends StatelessWidget {
 
 class MetaTextFieldView extends StatelessWidget {
   MetaTextFieldView({Key? key,
-    required this.controller,
+    this.controller,
     required this.mapData,
     required this.onChanged,
-    required this.onValidate,
+    required this.textFieldBloc,
   })
       : super(key: key);
   Map mapData;
-  TextEditingController controller;
+  TextEditingController? controller;
   Function(String)? onChanged;
-  FormFieldValidator<String>? onValidate;
+  TextFieldBloc textFieldBloc;
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      key: key,
-      controller:controller,
+    return TextFieldBlocBuilder(
+      key: UniqueKey(),
+      textFieldBloc: textFieldBloc,
+      //controller:controller,
       autofocus: false,
-      enabled: mapData['enabled'],
+    //  enabled: mapData['enabled'],
       keyboardType: ParseDataType().getInputType(mapData['inputType'] ?? "") ,
       maxLength: mapData['maxLength'] ?? null,
-      onChanged: onChanged,
-      validator: (String? value){
-        if(mapData['validator'].isNotEmpty){
-          for(var item in mapData['validator']){
-            if(item['value'] == ""){
-              return "${mapData['name']}  ${item['text']}";
-            }
-          }
-        }
-      },
+    //  onChanged: onChanged,
+     // suffixButton:mapData['isPassword'] ? SuffixButton.obscureText: SuffixButton.clearText,
       obscureText: mapData['isPassword']  ?? false,
-      style: MetaStyle(mapData: mapData['text']).getStyle() ,
+      obscureTextTrueIcon: Icon(Icons.remove_red_eye,
+          color: ParseDataType().getHexToColor(FlavourConstants.appThemeData['cursor_color'])),
+      textStyle: MetaStyle(mapData: mapData['text']).getStyle() ,
       inputFormatters: mapData['inputFormatters']  ?? [],
       maxLines:  mapData['maxLines'] ?? 1 ,
-      autovalidateMode: AutovalidateMode.disabled,
+     // autovalidateMode: AutovalidateMode.disabled,
       decoration: InputDecoration(
         isDense: true,
-        contentPadding:  EdgeInsets.symmetric(horizontal: 10.w, vertical: 15),
+
+        contentPadding:  EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
         border: _renderBorder(),
      // disabledBorder: _renderBorder(),
         focusedBorder: _renderBorder(),
-         enabledBorder: _renderBorder(),
+        enabledBorder: _renderBorder(),
         label: MetaTextView(mapData: mapData['labelText']),
         hintText: mapData['hintText']['text'],
         hintStyle: MetaStyle(mapData: mapData['hintText']).getStyle() ,

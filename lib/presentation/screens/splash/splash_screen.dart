@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:travelgrid/common/constants/flavour_constants.dart';
 import 'package:travelgrid/common/constants/route_constants.dart';
+import 'package:travelgrid/common/dio/dio_client.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
 import 'package:travelgrid/common/extensions/pretty.dart';
 
@@ -62,7 +63,8 @@ class SplashScreenState extends State<SplashScreen> {
     );
   }
 
-  void getInitRoute() {
+  void getInitRoute() async{
+    await CustomDio().setDio();
       // if(PreferenceConfig.containsKey(PreferenceConstants.sessionID)) {
       //   Timer(const Duration(seconds: 3),(){
       //     Navigator.of(context).pushNamed(RouteConstants.dashBoardTabsPath, arguments: { "tab" : 0 });

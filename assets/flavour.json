@@ -5,10 +5,11 @@
   "app_logo": "nh/images/app-logo.png",
   "android_app_id": "com.app.travelgrid",
   "ios_app_id": "com.app.travelgrid",
-  "base_url": "",
+  "base_url": "http://172.104.189.54:8080/tems/rest/ma/",
+  "showNetworkLogs": true,
   "urls": {
     "prod_url" : "",
-    "dev_url" : "",
+    "dev_url" : "http://172.104.189.54:8080/tems/rest/ma/",
     "qa_url" : ""
   },
   "image_path":"assets/apps/nh/images/",
@@ -33,159 +34,109 @@
   },
   "login_screen_data":{
     "backgroundColor" : "0XFFFFFFFF",
-    "widgets": [
-      {
-        "type": "text_view",
-        "data" : {
-          "text" : "Welcome Back",
-          "color" : "0xFF2854A1",
-          "size": "28",
-          "family": "bold",
-          "align" : "center-left"
-        }
-      },
-      {
-        "type": "sized_box_view",
-        "data" : {
-          "ht" : 5.0,
-          "wd" : 0.0
-        }
-      },
-      {
-        "type": "text_view",
-        "data" : {
-          "text" : "Sign in to continue",
-          "color" : "0xFFCCCCCC",
-          "size": "14",
-          "family": "regular",
-          "align" : "center-left"
-        }
-      },
-      {
-        "type": "sized_box_view",
-        "data" : {
-          "ht" : 40.0,
-          "wd" : 0.0
-        }
-      },
-      {
-        "type": "image_view",
-        "data" : {
-          "image" : "logo_banner.png",
-          "align": "center",
-          "wd": 250.0
-        }
-      },
-      {
-        "type": "sized_box_view",
-        "data" : {
-          "ht" : 40.0,
-          "wd" : 0.0
-        }
-      },
-      {
-        "type": "form_view",
-        "data" : [
-          {
-            "name": "Username",
-            "id": 1,
-            "type": "text_field_view",
-            "inputType": "text",
-            "isPassword": false,
-            "backgroundColor": "0XFFFFFFFF",
-            "borderColor": "0XFFCCCCCC",
-            "text" : {
-              "text" : "",
-              "color" : "0xFF2854A1",
-              "size": "14",
-              "family": "regular"
-            },
-            "labelText" : {
-              "text" : "Username",
-              "color" : "0xFF2854A1",
-              "size": "14",
-              "family": "regular",
-              "align" : "center-left"
-            },
-            "hintText" : {
-              "text" : "Enter Username",
-              "color" : "0xFF2854A1",
-              "size": "14",
-              "family": "regular"
-            },
-            "errorText" : {
-              "text" : "",
-              "color" : "0xFFFF0000",
-              "size": "14",
-              "family": "regular"
-            },
-            "validator" : [
-              {
-                "value" : "",
-                "text" : "is empty"
-              }
-            ]
-          },
-          {
-            "type": "sized_box_view",
-            "data" : {
-              "ht" : 10.0,
-              "wd" : 0.0
-            }
-          },
-          {
-            "name": "Password",
-            "id": 2,
-            "type": "text_field_view",
-            "inputType": "text",
-            "isPassword": true,
-            "backgroundColor": "0XFFFFFFFF",
-            "borderColor": "0XFFCCCCCC",
-            "text" : {
-              "text" : "",
-              "color" : "0xFF2854A1",
-              "size": "14",
-              "family": "regular"
-            },
-            "labelText" : {
-              "text" : "Password",
-              "color" : "0xFF2854A1",
-              "size": "14",
-              "family": "regular",
-              "align" : "center-left"
-            },
-            "hintText" : {
-              "text" : "Enter Password",
-              "color" : "0xFF2854A1",
-              "size": "14",
-              "family": "regular"
-            },
-            "errorText" : {
-              "text" : "",
-              "color" : "0xFFFF0000",
-              "size": "14",
-              "family": "regular"
-            },
-            "validator" : [
-              {
-                "value" : "",
-                "text" : "is empty"
-              }
-            ]
-          }
-        ]
-      }
-    ],
     "bottomButton": {
-      "type": "button_view",
-      "isFormButton": true,
-      "data" : {
-        "text" : "Log In",
-        "color" : "0xFFFFFFFF",
-        "backgroundColor" : "0xFF2854A1",
-        "size": "18",
+      "text" : "Log In",
+      "color" : "0xFFFFFFFF",
+      "backgroundColor" : "0xFF2854A1",
+      "size": "18",
+      "family": "regular"
+    },
+    "text_title": {
+      "text" : "Welcome",
+      "color" : "0xFF2854A1",
+      "size": "28",
+      "family": "bold",
+      "align" : "center-left"
+    },
+    "text_subtitle":{
+      "text" : "Sign in to continue",
+      "color" : "0xFFCCCCCC",
+      "size": "14",
+      "family": "regular",
+      "align" : "center-left"
+    },
+    "image_view":   {
+      "image" : "logo_banner.png",
+      "align": "center",
+      "wd": 250.0
+    },
+    "text_field_username":  {
+      "name": "Username",
+      "apiKey": "username",
+      "type": "text_field_view",
+      "inputType": "text",
+      "isPassword": false,
+      "backgroundColor": "0XFFFFFFFF",
+      "borderColor": "0XFFCCCCCC",
+      "text" : {
+        "text" : "",
+        "color" : "0xFF2854A1",
+        "size": "14",
         "family": "regular"
-      }
+      },
+      "labelText" : {
+        "text" : "Username",
+        "color" : "0xFF2854A1",
+        "size": "14",
+        "family": "regular",
+        "align" : "center-left"
+      },
+      "hintText" : {
+        "text" : "Enter Username",
+        "color" : "0xFF2854A1",
+        "size": "14",
+        "family": "regular"
+      },
+      "errorText" : {
+        "text" : "",
+        "color" : "0xFFFF0000",
+        "size": "14",
+        "family": "regular"
+      },
+      "validators" : [
+        {
+          "type" : "empty"
+        }
+      ]
+    },
+    "text_field_password":  {
+      "name": "Password",
+      "apiKey": "password",
+      "type": "text_field_view",
+      "inputType": "text",
+      "isPassword": true,
+      "backgroundColor": "0XFFFFFFFF",
+      "borderColor": "0XFFCCCCCC",
+      "text" : {
+        "text" : "",
+        "color" : "0xFF2854A1",
+        "size": "14",
+        "family": "regular"
+      },
+      "labelText" : {
+        "text" : "Password",
+        "color" : "0xFF2854A1",
+        "size": "14",
+        "family": "regular",
+        "align" : "center-left"
+      },
+      "hintText" : {
+        "text" : "Enter Password",
+        "color" : "0xFF2854A1",
+        "size": "14",
+        "family": "regular"
+      },
+      "errorText" : {
+        "text" : "",
+        "color" : "0xFFFF0000",
+        "size": "14",
+        "family": "regular"
+      },
+      "validators" : [
+        {
+          "type" : "empty"
+        }
+      ]
     }
   }
 
