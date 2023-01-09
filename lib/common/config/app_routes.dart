@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_offline/flutter_offline.dart';
 import 'package:travelgrid/common/constants/route_constants.dart';
+import 'package:travelgrid/presentation/auth/login_screen.dart';
 import 'package:travelgrid/presentation/screens/splash/splash_screen.dart';
 class AppRoutes {
 
@@ -31,6 +32,9 @@ class AppRoutes {
     switch(routeSettings.name) {
       case RouteConstants.splashPath:
         return SplashScreen();
+
+      case RouteConstants.loginPath:
+        return const LoginScreen();
 
       default:
         return SplashScreen();

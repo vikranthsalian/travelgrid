@@ -17,14 +17,10 @@ void main() async {
 }
 
  configureFlavour() async {
-  try {
     InjectorConfig.setup();
     String flavourData = await rootBundle.loadString("assets/flavour.json");
     Map<String, dynamic> flavourJson = await json.decode(flavourData.toString());
     FlavorConfig(variables: flavourJson);
-  } catch (e) {
-    print(e);
-  }
 }
 
 

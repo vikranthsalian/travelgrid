@@ -1,15 +1,9 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:flutter_flavor/flutter_flavor.dart';
-import 'package:travelgrid/common/config/flavour_config.dart';
 import 'package:travelgrid/common/config/preferences_config.dart';
 import 'package:travelgrid/common/constants/color_constants.dart';
 import 'package:travelgrid/common/constants/flavour_constants.dart';
 import 'package:travelgrid/common/constants/theme_constants.dart';
-import 'package:travelgrid/common/extentions/pretty.dart';
-import 'package:travelgrid/common/injector/injector_config.dart';
 import 'app_routes.dart';
 import 'package:flutter/services.dart';
 
