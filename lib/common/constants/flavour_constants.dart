@@ -13,6 +13,7 @@ class FlavourConstants {
   static  Map<String,dynamic> appThemeData = FlavorConfig.instance.variables["app_theme"];
   static  Map<String,dynamic> splashData = FlavorConfig.instance.variables["splash_screen_data"];
   static  Map<String,dynamic> loginData = FlavorConfig.instance.variables["login_screen_data"];
+  static  Map<String,dynamic> homeData = FlavorConfig.instance.variables["home_screen_data"];
 
 //  static  String flavour =  FlavorConfig.instance.name.toString();
 //  static  bool enableTesting =  FlavorConfig.instance.variables["enableUnitTesting"];

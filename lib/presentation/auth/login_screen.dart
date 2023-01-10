@@ -33,7 +33,6 @@ class _LoginScreenState extends State<_Login> {
   final _formKey = GlobalKey<FormState>();
   final double _sizedBoxHeight= 10.0.h;
 
-  final Map<String, dynamic> _formData = {};
   LoginFormBloc? formBloc ;
   @override
   void initState() {

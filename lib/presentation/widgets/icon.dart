@@ -1,0 +1,57 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:travelgrid/common/extensions/parse_data_type.dart';
+import 'package:travelgrid/presentation/widgets/text_view.dart';
+
+
+class MetaIcon extends StatelessWidget {
+
+  Function() onButtonPressed;
+  Map mapData;
+
+  MetaIcon({super.key,
+    required this.onButtonPressed ,
+    required this.mapData
+  });
+
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: (){
+        onButtonPressed();
+      },
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 10),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15.w),
+            color:ParseDataType().getHexToColor(mapData['backgroundColor'] ?? 'transparent') ,
+          ),
+          height:50.w,
+          width:50.w,
+          child: Align(
+            alignment: Alignment.center,
+            child: IconButton(
+                icon: FaIcon(
+                    iconMapping['home'],
+                    color: ParseDataType().getHexToColor(mapData['color']),
+                     size: mapData['size'],
+                ),
+                onPressed: () => mapData['onPress'] ? onButtonPressed :null
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+}
+Map<String, IconData> iconMapping = {
+  'facebook' : FontAwesomeIcons.facebook,
+  'twitter' : FontAwesomeIcons.twitter,
+  'home' : FontAwesomeIcons.house,
+  'audiotrack' : Icons.audiotrack,
+};

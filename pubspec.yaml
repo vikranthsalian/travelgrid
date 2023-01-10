@@ -36,6 +36,11 @@ dependencies:
   flutter_pretty_dio_logger: ^2.0.3
   flutter_form_bloc: ^0.30.1
   flutter_flavor: ^3.1.1
+  google_nav_bar: ^5.0.6
+  line_icons: ^2.0.1
+  font_awesome_flutter: ^10.3.0
+  chips_choice: ^3.0.0
+  custom_navigation_bar: ^0.8.2
   shared_preferences: ^2.0.15
   flutter_easyloading: ^3.0.5
   tuple: ^2.0.1
@@ -71,7 +76,8 @@ flutter:
   uses-material-design: true
   assets:
     - assets/
-    - assets/app-fonts/
+    - assets/build-runner/flavour.json
+    - assets/build-runner/app-fonts/
     - assets/apps/nh/images/
 
 
@@ -94,18 +100,18 @@ flutter:
   fonts:
     - family: regular
       fonts:
-        - asset: assets/app-fonts/regular.ttf
+        - asset: assets/build-runner/app-fonts/regular.ttf
     - family: italic
       fonts:
-        - asset: assets/app-fonts/italic.ttf
+        - asset: assets/build-runner/app-fonts/italic.ttf
     - family: semiBold
       fonts:
-        - asset: assets/app-fonts/semiBold.ttf
+        - asset: assets/build-runner/app-fonts/semiBold.ttf
     - family: extraBold
       fonts:
-        - asset: assets/app-fonts/extraBold.ttf
+        - asset: assets/build-runner/app-fonts/extraBold.ttf
     - family: bold
       fonts:
-        - asset: assets/app-fonts/bold.ttf
+        - asset: assets/build-runner/app-fonts/bold.ttf
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

@@ -18,7 +18,7 @@ void main() async {
 
  configureFlavour() async {
     InjectorConfig.setup();
-    String flavourData = await rootBundle.loadString("assets/flavour.json");
+    String flavourData = await rootBundle.loadString("assets/build-runner/flavour.json");
     Map<String, dynamic> flavourJson = await json.decode(flavourData.toString());
     FlavorConfig(variables: flavourJson);
 }

@@ -1,0 +1,339 @@
+{
+  "app_title": "NH",
+  "sub_title": "NH",
+  "app_short_title": "NH",
+  "app_logo": "assets/apps/nh/images/app-logo.png",
+  "android_app_id": "com.app.travelgrid",
+  "ios_app_id": "com.app.travelgrid",
+  "base_url": "http://172.104.189.54:8080/tems/rest/ma/",
+  "showNetworkLogs": true,
+  "urls": {
+    "prod_url" : "",
+    "dev_url" : "http://172.104.189.54:8080/tems/rest/ma/",
+    "qa_url" : ""
+  },
+  "image_path":"assets/apps/nh/images/",
+  "support_email" : "info@travelgrid.com",
+  "privacy_policy_url": "",
+  "terms_of_use_url": "",
+  "app_theme" : {
+    "primary_color" : "0xFF2854A1",
+    "secondary_color" : "0XFFFFFFFF",
+    "cursor_color" : "0XFF000000"
+  },
+  "splash_screen_data":{
+    "splash_bg_color": "0xFF2854A1",
+    "splash_logo": "splash.png",
+    "splash_duration": "2500",
+    "splash_bottom_text" : {
+      "text" : "Powered by Channel Mentor",
+      "color" : "0XFFFFFFFF",
+      "size": "14",
+      "family": "regular"
+    }
+  },
+  "login_screen_data":{
+    "backgroundColor" : "0XFFFFFFFF",
+    "bottomButton": {
+      "text" : "Log In",
+      "color" : "0xFFFFFFFF",
+      "backgroundColor" : "0xFF2854A1",
+      "size": "18",
+      "family": "regular"
+    },
+    "text_title": {
+      "text" : "Welcome!!!",
+      "color" : "0xFF2854A1",
+      "size": "28",
+      "family": "bold",
+      "align" : "center-left"
+    },
+    "text_subtitle":{
+      "text" : "Sign in to continue",
+      "color" : "0xFFCCCCCC",
+      "size": "14",
+      "family": "regular",
+      "align" : "center-left"
+    },
+    "image_view":   {
+      "image" : "logo_banner.png",
+      "align": "center",
+      "wd": 250.0
+    },
+    "text_field_username":  {
+      "name": "Username",
+      "apiKey": "username",
+      "type": "text_field_view",
+      "inputType": "text",
+      "isPassword": false,
+      "backgroundColor": "0XFFFFFFFF",
+      "borderColor": "0XFFCCCCCC",
+      "text" : {
+        "text" : "",
+        "color" : "0xFF2854A1",
+        "size": "14",
+        "family": "regular"
+      },
+      "labelText" : {
+        "text" : "Username",
+        "color" : "0xFF2854A1",
+        "size": "14",
+        "family": "regular",
+        "align" : "center-left"
+      },
+      "hintText" : {
+        "text" : "Enter Username",
+        "color" : "0xFF2854A1",
+        "size": "14",
+        "family": "regular"
+      },
+      "errorText" : {
+        "text" : "",
+        "color" : "0xFFFF0000",
+        "size": "14",
+        "family": "regular"
+      },
+      "validators" : [
+        {
+          "type" : "empty"
+        }
+      ]
+    },
+    "text_field_password":  {
+      "name": "Password",
+      "apiKey": "password",
+      "type": "text_field_view",
+      "inputType": "text",
+      "isPassword": true,
+      "backgroundColor": "0XFFFFFFFF",
+      "borderColor": "0XFFCCCCCC",
+      "text" : {
+        "text" : "",
+        "color" : "0xFF2854A1",
+        "size": "14",
+        "family": "regular"
+      },
+      "labelText" : {
+        "text" : "Password",
+        "color" : "0xFF2854A1",
+        "size": "14",
+        "family": "regular",
+        "align" : "center-left"
+      },
+      "hintText" : {
+        "text" : "Enter Password",
+        "color" : "0xFF2854A1",
+        "size": "14",
+        "family": "regular"
+      },
+      "errorText" : {
+        "text" : "",
+        "color" : "0xFFFF0000",
+        "size": "14",
+        "family": "regular"
+      },
+      "validators" : [
+        {
+          "type" : "empty"
+        }
+      ]
+    }
+  },
+  "home_screen_data" : {
+    "app_bar": {
+      "isCenter": true,
+      "title":  {
+        "text" : "Tuesday , 10 January",
+        "color" : "0XFF000000",
+        "size": "16",
+        "family": "bold"
+      },
+      "leading": {
+        "icon": "home",
+        "size": 20.0,
+        "color": "0XFF000000",
+        "backgroundColor": "0XFFFFFFFF",
+        "onPress": true
+      },
+      "actions": [
+        {
+          "icon": "home",
+          "size": 20.0,
+          "color": "0XFF000000",
+          "backgroundColor": "0XFFFFFFFF",
+          "onPress": true
+        }
+      ]
+    },
+    "badges": [
+      {
+        "label":{
+          "text" : "Travel Request",
+          "color" : "0XFFFFFFFF",
+          "size": "16",
+          "family": "regular"
+        },
+        "count":{
+          "text" : "20",
+          "color" : "0XFF000000",
+          "size": "16",
+          "family": "bold"
+        },
+        "icon":{
+          "icon": "home",
+          "size": 20.0,
+          "color": "0XFF000000",
+          "onPress": true
+        },
+        "cardColor": [
+          "0XFF2193b0",
+          "0XFF6dd5ed"
+        ]
+      },
+      {
+        "label":{
+          "text" : "Travel Expenses",
+          "color" : "0XFFFFFFFF",
+          "size": "16",
+          "family": "regular"
+        },
+        "count":{
+          "text" : "18",
+          "color" : "0XFF000000",
+          "size": "16",
+          "family": "bold"
+        },
+        "icon":{
+          "icon": "home",
+          "size": 20.0,
+          "color": "0XFF000000",
+          "onPress": true
+        },
+        "cardColor": [
+          "0XFF7b4397",
+          "0XFFdc2430"
+        ]
+      },
+      {
+        "label":{
+          "text" : "Travel Approvals",
+          "color" : "0XFFFFFFFF",
+          "size": "16",
+          "family": "regular"
+        },
+        "count":{
+          "text" : "18",
+          "color" : "0XFF000000",
+          "size": "16",
+          "family": "bold"
+        },
+        "icon":{
+          "icon": "home",
+          "size": 20.0,
+          "color": "0XFF000000",
+          "onPress": true
+        },
+        "cardColor": [
+          "0XFF5C258D",
+          "0XFF4389A2"
+        ]
+      },
+      {
+        "label":{
+          "text" : "General Expenses",
+          "color" : "0XFFFFFFFF",
+          "size": "16",
+          "family": "regular"
+        },
+        "count":{
+          "text" : "18",
+          "color" : "0XFF000000",
+          "size": "16",
+          "family": "bold"
+        },
+        "icon":{
+          "icon": "home",
+          "size": 20.0,
+          "color": "0XFF000000",
+          "onPress": true
+        },
+        "cardColor": [
+          "0XFFFF8008",
+          "0XFFFFC837"
+        ]
+      }
+
+    ],
+    "upcoming_details": {
+      "title":  {
+        "text" : "Upcoming Bookings",
+        "color" : "0xFF2854A1",
+        "size": "16",
+        "family": "bold",
+        "align": "center-left"
+      },
+      "button":  {
+        "text" : "View all",
+        "color" : "0xFF2854A1",
+        "size": "16",
+        "family": "regular",
+        "onPress": true
+      },
+      "list_data": {
+        "chip_data": {
+          "data_length": 4,
+          "chips": [
+            {
+              "text" : "Today",
+              "key" : "today",
+              "color" : "0xFFFFFFFF",
+              "size": "14",
+              "family": "regular",
+              "backgroundColor" : "0xFF2854A1"
+            },
+            {
+              "text" : "Tomorrow",
+              "key" : "tomorrow",
+              "color" : "0xFFFFFFFF",
+              "size": "14",
+              "family": "regular",
+              "backgroundColor" : "0xFF2854A1"
+            },
+            {
+              "text" : "Week",
+              "key" : "week",
+              "color" : "0xFFFFFFFF",
+              "size": "14",
+              "family": "regular",
+              "backgroundColor" : "0xFF2854A1"
+            },
+            {
+              "text" : "Month",
+              "key" : "month",
+              "color" : "0xFFFFFFFF",
+              "size": "14",
+              "family": "regular",
+              "backgroundColor" : "0xFF2854A1"
+            }
+          ],
+          "list": []
+        },
+        "title_text" : {
+          "text" : "18:00",
+          "color" : "0xFF2854A1",
+          "size": "16",
+          "family": "bold"
+        },
+        "subtitle_text" : {
+          "text" : "22:00",
+          "color" : "0xFF2854A1",
+          "size": "16",
+          "family": "bold"
+        }
+      }
+    }
+
+  }
+
+
+}

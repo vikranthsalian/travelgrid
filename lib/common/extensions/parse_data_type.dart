@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 class ParseDataType{
 
   Color getHexToColor(String color){
+    if(color=="transparent"){
+      return Colors.transparent;
+    }
     return Color(int.parse(color));
   }
 

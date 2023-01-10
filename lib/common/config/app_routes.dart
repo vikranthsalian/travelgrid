@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_offline/flutter_offline.dart';
 import 'package:travelgrid/common/constants/route_constants.dart';
 import 'package:travelgrid/presentation/auth/login_screen.dart';
+import 'package:travelgrid/presentation/dashboard/dashboard.dart';
+import 'package:travelgrid/presentation/dashboard/dashboard_2.dart';
 import 'package:travelgrid/presentation/screens/splash/splash_screen.dart';
 class AppRoutes {
 
@@ -35,6 +37,9 @@ class AppRoutes {
 
       case RouteConstants.loginPath:
         return const LoginScreen();
+
+      case RouteConstants.dashboardPath:
+        return  HomePage();
 
       default:
         return SplashScreen();
