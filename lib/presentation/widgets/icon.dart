@@ -36,7 +36,7 @@ class MetaIcon extends StatelessWidget {
             alignment: Alignment.center,
             child: IconButton(
                 icon: FaIcon(
-                    iconMapping['home'],
+                    iconMapping[mapData['icon']],
                     color: ParseDataType().getHexToColor(mapData['color']),
                      size: mapData['size'],
                 ),
@@ -51,6 +51,7 @@ class MetaIcon extends StatelessWidget {
 }
 Map<String, IconData> iconMapping = {
   'facebook' : FontAwesomeIcons.facebook,
+  'add' : FontAwesomeIcons.circlePlus,
   'twitter' : FontAwesomeIcons.twitter,
   'home' : FontAwesomeIcons.house,
   'audiotrack' : Icons.audiotrack,

@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_offline/flutter_offline.dart';
 import 'package:travelgrid/common/constants/route_constants.dart';
 import 'package:travelgrid/presentation/auth/login_screen.dart';
-import 'package:travelgrid/presentation/dashboard/dashboard.dart';
-import 'package:travelgrid/presentation/dashboard/dashboard_2.dart';
+import 'package:travelgrid/presentation/screens/dashboard/dashboard.dart';
+import 'package:travelgrid/presentation/screens/dashboard/dashboard_2.dart';
 import 'package:travelgrid/presentation/screens/splash/splash_screen.dart';
+import 'package:travelgrid/presentation/screens/tabs/general_expense.dart';
 class AppRoutes {
 
   Route generateRoute(RouteSettings routeSettings) {
@@ -33,7 +34,7 @@ class AppRoutes {
     final args = routeSettings.arguments;
     switch(routeSettings.name) {
       case RouteConstants.splashPath:
-        return SplashScreen();
+        return GeneralExpense();
 
       case RouteConstants.loginPath:
         return const LoginScreen();

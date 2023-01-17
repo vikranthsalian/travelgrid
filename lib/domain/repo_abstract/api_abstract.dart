@@ -1,3 +1,5 @@
+import 'package:travelgrid/data/datsources/login_response.dart';
+
 abstract class LoginAPIAbstract {
-  Future<dynamic> callLogin(input);
+  Future<MetaLoginResponse> callLogin(input);
 }

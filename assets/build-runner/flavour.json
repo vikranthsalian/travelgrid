@@ -167,6 +167,8 @@
     },
     "badges": [
       {
+        "main": 2,
+        "cross": 2,
         "label":{
           "text" : "Travel Request",
           "color" : "0XFFFFFFFF",
@@ -191,6 +193,8 @@
         ]
       },
       {
+        "main": 2,
+        "cross": 2,
         "label":{
           "text" : "Travel Expenses",
           "color" : "0XFFFFFFFF",
@@ -215,6 +219,8 @@
         ]
       },
       {
+        "main": 2,
+        "cross": 2,
         "label":{
           "text" : "Travel Approvals",
           "color" : "0XFFFFFFFF",
@@ -239,6 +245,8 @@
         ]
       },
       {
+        "main": 2,
+        "cross": 2,
         "label":{
           "text" : "General Expenses",
           "color" : "0XFFFFFFFF",
@@ -262,77 +270,87 @@
           "0XFFFFC837"
         ]
       }
-
     ],
-    "upcoming_details": {
+    "policiesButton": {
+      "text" : "Polices",
+      "color" : "0xFFFFFFFF",
+      "backgroundColor" : "0xFF2854A1",
+      "size": "18",
+      "family": "regular"
+    },
+    "walletButton": {
+      "text" : "Wallet",
+      "color" : "0xFFFFFFFF",
+      "backgroundColor" : "0xFF2854A1",
+      "size": "18",
+      "family": "regular"
+    }
+  },
+  "ge_screen_data" : {
+    "app_bar": {
+      "isCenter": true,
+      "backgroundColor" : "0xFF2854A1",
       "title":  {
-        "text" : "Upcoming Bookings",
-        "color" : "0xFF2854A1",
+        "text" : "General Expense",
+        "color" : "0XFFFFFFFF",
         "size": "16",
-        "family": "bold",
-        "align": "center-left"
+        "family": "bold"
       },
-      "button":  {
-        "text" : "View all",
-        "color" : "0xFF2854A1",
-        "size": "16",
-        "family": "regular",
-        "onPress": true
-      },
-      "list_data": {
-        "chip_data": {
-          "data_length": 4,
-          "chips": [
-            {
-              "text" : "Today",
-              "key" : "today",
-              "color" : "0xFFFFFFFF",
-              "size": "14",
-              "family": "regular",
-              "backgroundColor" : "0xFF2854A1"
-            },
-            {
-              "text" : "Tomorrow",
-              "key" : "tomorrow",
-              "color" : "0xFFFFFFFF",
-              "size": "14",
-              "family": "regular",
-              "backgroundColor" : "0xFF2854A1"
-            },
-            {
-              "text" : "Week",
-              "key" : "week",
-              "color" : "0xFFFFFFFF",
-              "size": "14",
-              "family": "regular",
-              "backgroundColor" : "0xFF2854A1"
-            },
-            {
-              "text" : "Month",
-              "key" : "month",
-              "color" : "0xFFFFFFFF",
-              "size": "14",
-              "family": "regular",
-              "backgroundColor" : "0xFF2854A1"
-            }
-          ],
-          "list": []
+      "actions": [
+        {
+          "icon": "refresh",
+          "size": 20.0,
+          "color": "0XFF000000",
+          "backgroundColor": "0XFFFFFFFF",
+          "onPress": true
+        }
+      ]
+    },
+    "bottomButtonSort": {
+      "text" : "Sort",
+      "color" : "0xFFFFFFFF",
+      "backgroundColor" : "0xFF2854A1",
+      "size": "18",
+      "family": "regular"
+    },
+    "bottomButtonFab": {
+      "icon": "add",
+      "size": 20.0,
+      "color": "0XFFFFFFFF",
+      "onPress": true
+    },
+    "bottomButtonFilter": {
+      "text" : "Filter",
+      "color" : "0xFFFFFFFF",
+      "backgroundColor" : "0xFF2854A1",
+      "size": "18",
+      "family": "regular"
+    },
+    "listView": {
+      "emptyData": {
+        "image_view":   {
+          "image" : "logo_banner.png",
+          "align": "center",
+          "wd": 250.0
         },
-        "title_text" : {
-          "text" : "18:00",
-          "color" : "0xFF2854A1",
+        "title":  {
+          "text" : "No Data Found!!!",
+          "color" : "0XFF3D3D3D",
           "size": "16",
-          "family": "bold"
+          "family": "regular"
         },
-        "subtitle_text" : {
-          "text" : "22:00",
-          "color" : "0xFF2854A1",
-          "size": "16",
-          "family": "bold"
+        "bottomButtonRefresh": {
+          "text" : "Refresh",
+          "height": 35.0,
+          "color" : "0xFFFFFFFF",
+          "borderRadius": 30.0,
+          "backgroundColor" : "0xFF2854A1",
+          "size": "15",
+          "family": "regular"
         }
       }
-    }
 
+    }
   }
 
 

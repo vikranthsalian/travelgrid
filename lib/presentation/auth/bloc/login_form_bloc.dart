@@ -2,8 +2,11 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
+import 'package:travelgrid/common/config/navigator_key.dart';
 import 'package:travelgrid/common/injector/injector.dart';
 import 'package:travelgrid/common/utils/validators.dart';
+import 'package:travelgrid/data/cubits/login_cubit/login_cubit.dart';
+import 'package:travelgrid/data/datsources/login_response.dart';
 import 'package:travelgrid/domain/usecases/login_usecase.dart';
 
 class LoginFormBloc extends FormBloc<String, String> {
@@ -25,8 +28,8 @@ class LoginFormBloc extends FormBloc<String, String> {
 
   @override
   FutureOr<void> onSubmitting() async {
-    emitFailure(failureResponse:" e.toString()" );
-    await Injector.resolve<LoginUseCase>()
+
+    MetaLoginResponse? response = await Injector.resolve<LoginUseCase>()
         .callApi(
             {
               "loginId" :tfUsername.value,
@@ -35,25 +38,12 @@ class LoginFormBloc extends FormBloc<String, String> {
               "enterpriseName" :'NH',
             }
         );
-   // emitSuccess(canSubmitAgain: true);
+   if(response!=null && response.status==true){
+     emitSuccess(successResponse: jsonEncode(response));
+   }else{
+     emitFailure(failureResponse: jsonEncode(response));
+   }
 
-
-   // http://172.104.189.54:8080/tems/rest/ma/authenticate?loginId=cm05&password=Test123#&domain=172.104.189.54&enterpriseName=NH
-
-    // try {
-    //   String data ="<Parameter><ProcessID>1001</ProcessID><MobileNo>${tfMobileNo.value}</MobileNo></Parameter>";
-    //   jsonString = await CommonFunctions.handleApiCall(data);
-    //   MobileValidBaseResponse mobileValidBaseResponse = MobileValidBaseResponse.fromJson(jsonDecode(jsonString));
-    //   if((mobileValidBaseResponse.Result?.ErrorNo ?? 0) != "0") {
-    //     throw "invalid";
-    //   }
-    //   PreferenceConfig.setString(PreferenceConstants.customerID, mobileValidBaseResponse.Result!.CustomerID ?? "");
-    //   PreferenceConfig.setString(PreferenceConstants.mobileNumber, tfMobileNo.value);
-    //   emitSuccess(successResponse: mobileValidBaseResponse.Result!.Message ?? "Valid");
-    // } catch(e) {
-    //   Response response = Response.fromJson(jsonDecode(jsonString));
-    //   emitFailure(failureResponse: response.result?.message );
-    // }
   }
 
 

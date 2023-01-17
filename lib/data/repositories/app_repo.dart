@@ -1,3 +1,4 @@
+import 'package:travelgrid/data/datsources/login_response.dart';
 import 'package:travelgrid/data/remote/remote_datasource.dart';
 import 'package:travelgrid/domain/repo_abstract/api_abstract.dart';
 
@@ -10,9 +11,15 @@ class LoginRepository extends LoginAPIAbstract {
 
 
   @override
-  Future<String> callLogin(input) async {
-      print("inside LoginRepository");
-      return await apiRemoteDatasource.loginRequest(input,"authenticate");
+  Future<MetaLoginResponse> callLogin(input) async {
+
+    var response = await apiRemoteDatasource.loginRequest(input,"authenticate");
+    if(response!=null) {
+      MetaLoginResponse modelResponse = MetaLoginResponse.fromJson(response);
+      return modelResponse;
+    }
+
+      return MetaLoginResponse(status: false);
   }
 
 

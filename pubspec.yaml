@@ -40,6 +40,7 @@ dependencies:
   line_icons: ^2.0.1
   font_awesome_flutter: ^10.3.0
   chips_choice: ^3.0.0
+  flutter_staggered_grid_view: ^0.6.2
   custom_navigation_bar: ^0.8.2
   shared_preferences: ^2.0.15
   flutter_easyloading: ^3.0.5
