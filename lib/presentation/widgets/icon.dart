@@ -50,6 +50,7 @@ class MetaIcon extends StatelessWidget {
 
 }
 Map<String, IconData> iconMapping = {
+  'back' : FontAwesomeIcons.chevronLeft,
   'facebook' : FontAwesomeIcons.facebook,
   'add' : FontAwesomeIcons.circlePlus,
   'twitter' : FontAwesomeIcons.twitter,

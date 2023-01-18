@@ -1,10 +1,12 @@
 import 'package:chips_choice/chips_choice.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:travelgrid/common/config/navigator_key.dart';
 import 'package:travelgrid/common/constants/flavour_constants.dart';
 import 'package:travelgrid/common/constants/route_constants.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
 import 'package:travelgrid/common/extensions/pretty.dart';
+import 'package:travelgrid/common/utils/show_alert.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';
 import 'package:travelgrid/presentation/widgets/icon.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
@@ -71,15 +73,22 @@ class _HomePageState extends State<HomePage> {
               ),
               child:StaggeredGrid.count(
                 crossAxisCount: 4,
-
                 crossAxisSpacing: 5.w,
-
                 mainAxisSpacing: 5.h,
                 children: items.map((e) => StaggeredGridTile.count(
                   crossAxisCellCount: e['cross'],
                   mainAxisCellCount: e['main'],
                   child: InkWell(
                     onTap: (){
+
+                      if(e["onClick"].toString().isNotEmpty){
+                        Navigator.of(appNavigatorKey.currentState!.context).pushNamed(e["onClick"]);
+                      }else{
+                        MetaAlert.showErrorAlert(
+                          message: "Yet to be configured",
+                        );
+                      }
+
 
                     },
                     child: Container(

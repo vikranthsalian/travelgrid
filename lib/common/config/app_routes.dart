@@ -6,7 +6,10 @@ import 'package:travelgrid/presentation/auth/login_screen.dart';
 import 'package:travelgrid/presentation/screens/dashboard/dashboard.dart';
 import 'package:travelgrid/presentation/screens/dashboard/dashboard_2.dart';
 import 'package:travelgrid/presentation/screens/splash/splash_screen.dart';
+import 'package:travelgrid/presentation/screens/tabs/approval_expense.dart';
 import 'package:travelgrid/presentation/screens/tabs/general_expense.dart';
+import 'package:travelgrid/presentation/screens/tabs/travel_expense.dart';
+import 'package:travelgrid/presentation/screens/tabs/travel_request.dart';
 class AppRoutes {
 
   Route generateRoute(RouteSettings routeSettings) {
@@ -34,13 +37,25 @@ class AppRoutes {
     final args = routeSettings.arguments;
     switch(routeSettings.name) {
       case RouteConstants.splashPath:
-        return GeneralExpense();
+        return SplashScreen();
 
       case RouteConstants.loginPath:
         return const LoginScreen();
 
       case RouteConstants.dashboardPath:
         return  HomePage();
+
+      case RouteConstants.travelRequestPath:
+        return  TravelRequest();
+
+      case RouteConstants.travelExpensePath:
+        return  TravelExpense();
+
+      case RouteConstants.generalExpensePath:
+        return  GeneralExpense();
+
+      case RouteConstants.approvalExpensePath:
+        return ApprovalExpense();
 
       default:
         return SplashScreen();
