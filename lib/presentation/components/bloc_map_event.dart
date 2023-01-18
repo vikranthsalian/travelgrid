@@ -3,14 +3,19 @@ import 'package:travelgrid/common/constants/event_types.dart';
 
 
 class BlocMapToEvent extends StatelessWidget {
-  BlocMapToEvent({Key? key,  required this.state, required this.child, required this.message }) : super(key: key);
+  BlocMapToEvent({Key? key,  required this.state, this.searchBar,required this.child, required this.message }) : super(key: key);
   BlocEventState state;
   Widget child;
+  Widget? searchBar;
   String message;
 
   @override
   Widget build(BuildContext context) {
-    return _mapStateToWidget(state);
+    return Column(
+        children: [
+          searchBar ?? Container(),
+         _mapStateToWidget(state)
+        ]);
   }
 
   Widget _mapStateToWidget(BlocEventState state) {

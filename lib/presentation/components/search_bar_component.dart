@@ -1,6 +1,5 @@
 
 import 'package:flutter/material.dart';
-import 'package:travelgrid/presentation/widgets/icon.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
 
 class SearchBarComponent extends StatefulWidget {
@@ -56,14 +55,14 @@ class _SearchBarComponentState extends State<SearchBarComponent> {
                 },
                 controller: widget.searchController,
                 style: MetaStyle(mapData: {
-                  "color" : "0xFF000000",
+                  "color" : "0xFF2854A1",
                   "size": "14",
                   "family": "regular"
                 }).getStyle(),
                 decoration: InputDecoration(
                   hintStyle: MetaStyle(mapData: {
                     "text" : "Search Username",
-                    "color" : "0xFF3D3D3D",
+                    "color" : "0xFF2854A1",
                     "size": "14",
                     "family": "regular"
                   }).getStyle(),
@@ -78,29 +77,27 @@ class _SearchBarComponentState extends State<SearchBarComponent> {
                   ),
                   fillColor: Colors.transparent,
                   filled: true,
-                  prefixIcon: MetaIcon(mapData:{
-                    "icon": "search",
-                    "size": 20.0,
-                    "color": "0xFF2854A1",
-                    "backgroundColor": "transparent",
-                    "onPress": true
-                  }, onButtonPressed: (){
-                    widget.onSubmitted!(widget.searchController.text);
-                  }),
+                  prefixIcon: InkWell(
+                    onTap: () {
+                      widget.onSubmitted!(widget.searchController.text);
+                    },
+                    child: Icon(Icons.search_outlined,color: Colors.black54,),
+                  ),
                   suffixIcon: _editing
-                      ? MetaIcon(mapData:{
-                    "icon": "close",
-                    "size": 20.0,
-                    "color": "0xFF2854A1",
-                    "backgroundColor": "transparent",
-                    "onPress": true
-                  }, onButtonPressed: (){
-                    widget.searchController.text = "";
-                    setState(() {
-                      _editing = false;
-                      widget.onClear!();
-                    });
-                  })
+                      ? InkWell(
+                          onTap: () {
+                            widget.searchController.text = "";
+                            setState(() {
+                              _editing = false;
+                              widget.onClear!();
+                            });
+                          },
+                          child: Icon(
+                            Icons.close,
+                            size: 16,
+                            color: Colors.grey,
+                          ),
+                        )
                       : SizedBox(),
                 ),
               ),

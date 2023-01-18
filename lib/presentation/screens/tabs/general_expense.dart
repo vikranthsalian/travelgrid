@@ -24,7 +24,10 @@ class _GeneralExpenseState extends State<GeneralExpense> {
   Map<String,dynamic> jsonData = {};
   List items=[];
   double cardHt = 90.h;
+  bool enableSearch = false;
   final TextEditingController _searchController = TextEditingController();
+  bool loaded=false;
+  GeneralExpenseBloc? bloc;
   @override
   void initState() {
     // TODO: implement initState
@@ -37,11 +40,14 @@ class _GeneralExpenseState extends State<GeneralExpense> {
   @override
   Widget build(BuildContext context) {
 
-   GeneralExpenseBloc bloc = Injector.resolve<GeneralExpenseBloc>()..add(GetGeneralExpenseListEvent());
+   if(!loaded){
+     bloc = Injector.resolve<GeneralExpenseBloc>()..add(GetGeneralExpenseListEvent());
+     loaded=true;
+   }
+
 
 
     return Scaffold(
-      // extendBody for floating bar get better perfomance
       backgroundColor: Colors.white,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton:  FloatingActionButton(
@@ -96,10 +102,19 @@ class _GeneralExpenseState extends State<GeneralExpense> {
                           onButtonPressed: (){
 
                           }),
-                        MetaIcon(mapData:jsonData['searchBar'],
+                        enableSearch ? MetaIcon(mapData:jsonData['searchClose'],
                           onButtonPressed: (){
 
-                          }),
+                          setState(() {
+                            enableSearch=false;
+                          });
+
+                          }):MetaIcon(mapData:jsonData['searchOpen'],
+                           onButtonPressed: (){
+                             setState(() {
+                               enableSearch=true;
+                             });
+                           }),
                         ],
                   ),
                 )
@@ -114,10 +129,32 @@ class _GeneralExpenseState extends State<GeneralExpense> {
           bloc: bloc,
           builder:(context, state) {
             return Container(
+                margin: EdgeInsets.symmetric(vertical: 10.h),
               child: BlocMapToEvent(state: state.eventState, message: state.message,
+                  searchBar:enableSearch ? Container(
+                    margin: EdgeInsets.symmetric(horizontal: 20.w,vertical: 5.h),
+                    padding: EdgeInsets.symmetric(vertical: 5.h),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8.r),
+                        color: Color(0x1FD3CACA),
+                        border: Border.all(color: Colors.black12)),
+                    child: SearchBarComponent(
+                      barHeight: 40,
+                      hintText: "Search.....",
+                      searchController: _searchController,
+                      onClear: (){
+
+                      },
+                      onSubmitted: (text) {
+
+                      },
+                      onChange: (text) {
+
+                      },
+                    ),
+                  ):null,
                   child:getListView(state)
               )
-
             );
           }
         ),
@@ -127,39 +164,14 @@ class _GeneralExpenseState extends State<GeneralExpense> {
 
   Widget getListView(GeneralExpenseState state){
 
-    List<Data>? list = [Data()];
-    list.addAll( state.response?.data ?? []);
+    List<Data>? list = state.response?.data ?? [];
 
     return  list.isNotEmpty ? ListView.separated(
+      shrinkWrap: true,
       padding: EdgeInsets.zero,
       itemBuilder: (BuildContext context, int index) {
         Data item = list[index];
 
-
-        if(index == 0){
-          return Container(
-            padding: EdgeInsets.symmetric(vertical: 5),
-            margin: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                color: Color(0x1FD3CACA),
-                border: Border.all(color: Colors.black12)),
-            child: SearchBarComponent(
-              barHeight: 40,
-              hintText: "Search Patient",
-              searchController: _searchController,
-              onClear: (){
-
-              },
-              onSubmitted: (text) {
-
-              },
-              onChange: (text) {
-
-              },
-            ),
-          );
-        }
 
 
         Map date = {

@@ -19,29 +19,30 @@ class MetaIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: (){
-        onButtonPressed();
-      },
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 10.w),
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 10),
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15.w),
-            color:ParseDataType().getHexToColor(mapData['backgroundColor'] ?? 'transparent') ,
-          ),
-          height:50.w,
-          width:50.w,
-          child: Align(
-            alignment: Alignment.center,
-            child: IconButton(
-                icon: FaIcon(
-                    iconMapping[mapData['icon']],
-                    color: ParseDataType().getHexToColor(mapData['color']),
-                     size: mapData['size'],
-                ),
-                onPressed: () => mapData['onPress'] ? onButtonPressed :null
-            ),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15.w),
+          color:ParseDataType().getHexToColor(mapData['backgroundColor'] ?? 'transparent') ,
+        ),
+        height:50.w,
+        width:50.w,
+        child: Align(
+          alignment: Alignment.center,
+          child: IconButton(
+              icon: FaIcon(
+                iconMapping[mapData['icon']],
+                color: ParseDataType().getHexToColor(mapData['color']),
+                size: mapData['size'],
+              ),
+              onPressed: (){
+
+                if( mapData['onPress']){
+                  onButtonPressed();
+                }
+
+              }
           ),
         ),
       ),
@@ -51,6 +52,7 @@ class MetaIcon extends StatelessWidget {
 }
 Map<String, IconData> iconMapping = {
   'search' : FontAwesomeIcons.magnifyingGlass,
+  'search_close' : Icons.search_off,
   'close' : FontAwesomeIcons.xmark,
   'back' : FontAwesomeIcons.chevronLeft,
   'facebook' : FontAwesomeIcons.facebook,
@@ -58,4 +60,5 @@ Map<String, IconData> iconMapping = {
   'twitter' : FontAwesomeIcons.twitter,
   'home' : FontAwesomeIcons.house,
   'audiotrack' : Icons.audiotrack,
+
 };

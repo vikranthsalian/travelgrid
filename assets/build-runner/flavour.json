@@ -440,8 +440,15 @@
       "backgroundColor": "transparent",
       "onPress": true
     },
-    "searchBar": {
+    "searchOpen": {
       "icon": "search",
+      "size": 20.0,
+      "color": "0XFFFFFFFF",
+      "backgroundColor": "transparent",
+      "onPress": true
+    },
+    "searchClose": {
+      "icon": "search_close",
       "size": 20.0,
       "color": "0XFFFFFFFF",
       "backgroundColor": "transparent",
