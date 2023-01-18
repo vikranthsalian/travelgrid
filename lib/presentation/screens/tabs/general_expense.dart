@@ -10,6 +10,7 @@ import 'package:travelgrid/data/blocs/general_expense/ge_bloc.dart';
 import 'package:travelgrid/data/datsources/general_expense_list.dart';
 import 'package:travelgrid/presentation/components/bloc_map_event.dart';
 import 'package:travelgrid/presentation/components/clippers/app_bar_shape.dart';
+import 'package:travelgrid/presentation/components/search_bar_component.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';
 import 'package:travelgrid/presentation/widgets/icon.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
@@ -23,6 +24,7 @@ class _GeneralExpenseState extends State<GeneralExpense> {
   Map<String,dynamic> jsonData = {};
   List items=[];
   double cardHt = 90.h;
+  final TextEditingController _searchController = TextEditingController();
   @override
   void initState() {
     // TODO: implement initState
@@ -45,11 +47,11 @@ class _GeneralExpenseState extends State<GeneralExpense> {
       floatingActionButton:  FloatingActionButton(
         child:MetaIcon(mapData:jsonData['bottomButtonFab'],
         onButtonPressed: (){}),
-        backgroundColor: ParseDataType().getHexToColor(jsonData['app_bar']['backgroundColor']),
+        backgroundColor: ParseDataType().getHexToColor(jsonData['backgroundColor']),
         onPressed: () {  },),
       bottomNavigationBar:
       BottomAppBar(
-        color:ParseDataType().getHexToColor(jsonData['app_bar']['backgroundColor']),
+        color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
         shape: CircularNotchedRectangle(),
         notchMargin: 5,
         elevation: 2.0,
@@ -74,7 +76,7 @@ class _GeneralExpenseState extends State<GeneralExpense> {
         elevation: 0,
         backgroundColor: Colors.transparent,
         automaticallyImplyLeading:false,
-        toolbarHeight: 130.h,
+        toolbarHeight: 100.h,
         flexibleSpace: ClipPath(
           clipper: Customshape(),
           child: Container(
@@ -83,45 +85,82 @@ class _GeneralExpenseState extends State<GeneralExpense> {
               children: [
                 Container(
                   width: MediaQuery.of(context).size.width,
-                  color:ParseDataType().getHexToColor(jsonData['app_bar']['backgroundColor']),
-                  child: Center(child: MetaTextView(mapData: jsonData['app_bar']['title'])),
+                  color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
+                  child: Center(child: MetaTextView(mapData: jsonData['title'])),
                 ),
-                MetaIcon(mapData:jsonData['app_bar']['leading'],
-                    onButtonPressed: (){
+                Container(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                          MetaIcon(mapData:jsonData['backBar'],
+                          onButtonPressed: (){
 
-                    })
+                          }),
+                        MetaIcon(mapData:jsonData['searchBar'],
+                          onButtonPressed: (){
+
+                          }),
+                        ],
+                  ),
+                )
               ],
             ),
           ),
         ),
       ),
-      body: BlocBuilder<GeneralExpenseBloc, GeneralExpenseState>(
-        bloc: bloc,
-        builder:(context, state) {
+      body: Transform.translate(
+        offset: Offset(0,-30.h),
+        child: BlocBuilder<GeneralExpenseBloc, GeneralExpenseState>(
+          bloc: bloc,
+          builder:(context, state) {
+            return Container(
+              child: BlocMapToEvent(state: state.eventState, message: state.message,
+                  child:getListView(state)
+              )
 
-          return Container(
-            child: BlocMapToEvent(state: state.eventState, message: state.message,
-                child:getListView(state)
-            )
-
-          );
-        }
+            );
+          }
+        ),
       ),
-      //  bottomNavigationBar: _buildBottomNavigationBar(),
     );
   }
 
   Widget getListView(GeneralExpenseState state){
 
-    List<Data>? list = state.response?.data ?? [];
-
-    print("-----------GeneralExpenseState-----------");
-    print(list);
+    List<Data>? list = [Data()];
+    list.addAll( state.response?.data ?? []);
 
     return  list.isNotEmpty ? ListView.separated(
       padding: EdgeInsets.zero,
       itemBuilder: (BuildContext context, int index) {
         Data item = list[index];
+
+
+        if(index == 0){
+          return Container(
+            padding: EdgeInsets.symmetric(vertical: 5),
+            margin: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                color: Color(0x1FD3CACA),
+                border: Border.all(color: Colors.black12)),
+            child: SearchBarComponent(
+              barHeight: 40,
+              hintText: "Search Patient",
+              searchController: _searchController,
+              onClear: (){
+
+              },
+              onSubmitted: (text) {
+
+              },
+              onChange: (text) {
+
+              },
+            ),
+          );
+        }
+
 
         Map date = {
           "text" : MetaDateTime().getDate(item.date.toString(),format: "dd MMM"),
@@ -146,7 +185,6 @@ class _GeneralExpenseState extends State<GeneralExpense> {
           "family": "semiBold",
           "align" : "center"
         };
-
 
         Map recordLocator = {
           "text" :"#"+ item.recordLocator.toString().toUpperCase(),
@@ -173,13 +211,12 @@ class _GeneralExpenseState extends State<GeneralExpense> {
         };
 
         Map cancel = {
-          "text" :"Cancel".toUpperCase(),
+          "text" :"Edit".toUpperCase(),
           "color" : "0xFFFFFFFF",
           "size": "12",
           "family": "bold",
           "align" : "center"
         };
-
 
         return Container(
           padding: EdgeInsets.symmetric(horizontal: 20.w),
@@ -279,7 +316,7 @@ class _GeneralExpenseState extends State<GeneralExpense> {
         );
       },
       separatorBuilder: (BuildContext context, int index) {
-        return SizedBox(height: 7.h);
+        return SizedBox(height: 3.h);
       },
       itemCount:list.length,
     ):  Column(
