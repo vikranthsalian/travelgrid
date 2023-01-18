@@ -77,9 +77,8 @@ class CustomDio {
         responseHeader: true,
         error: true,
         canShowLog: true,
+
         // logPrint: dio.
-        //  compact: true,
-        // maxWidth: 90,
       ),
     );
     return dio;
@@ -99,13 +98,18 @@ class CustomDio {
 
   addHeaders() {
     print("Adding headers");
-    _dio.options.headers={};
-    if (authTokens != null && authTokens.isNotEmpty) {
-      _dio.options.headers = {
-        'Authorization': 'Bearer $authTokens',
-        'Accept': 'application/json',
-      };
-    }
+
+    _dio.options.headers = {
+      'Accept': 'application/json',
+    };
+
+    // _dio.options.headers={};
+    // if (authTokens != null && authTokens.isNotEmpty) {
+    //   _dio.options.headers = {
+    //     'Authorization': 'Bearer $authTokens',
+    //     'Accept': 'application/json',
+    //   };
+    // }
 
 
   }

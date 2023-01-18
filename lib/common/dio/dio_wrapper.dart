@@ -107,6 +107,17 @@ class MetaDioWrapper implements BaseDioWrapper {
         cancelToken: cancelToken,
         onReceiveProgress: onReceiveProgress,
       );
+
+      Map<String,dynamic> dataMap = response.data as Map<String, dynamic>;
+      try {
+        MetaAlert.showSuccessAlert(
+          message: dataMap["message"],
+        );
+      }catch(e){
+
+      }
+
+
       return response;
     } on DioError catch (e, stackTrace) {
       print("PARSE ERROR RESPONSE===========> "+e.response.toString());
@@ -152,7 +163,7 @@ class MetaDioWrapper implements BaseDioWrapper {
       Map<String,dynamic> dataMap = response.data as Map<String, dynamic>;
       try {
         MetaAlert.showSuccessAlert(
-          message: dataMap["message"],
+          message: dataMap["SUCCESS"],
         );
       }catch(e){
 

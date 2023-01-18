@@ -435,15 +435,13 @@
         "size": "16",
         "family": "bold"
       },
-      "actions": [
-        {
-          "icon": "refresh",
-          "size": 20.0,
-          "color": "0XFF000000",
-          "backgroundColor": "0XFFFFFFFF",
-          "onPress": true
-        }
-      ]
+      "leading": {
+        "icon": "back",
+        "size": 20.0,
+        "color": "0XFFFFFFFF",
+        "backgroundColor": "transparent",
+        "onPress": true
+      }
     },
     "searchBar": {},
     "listView": {

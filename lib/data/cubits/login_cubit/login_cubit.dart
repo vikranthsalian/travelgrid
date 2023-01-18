@@ -14,6 +14,15 @@ class LoginCubit extends Cubit<LoginState> {
     }
   }
 
+
+ String? getLoginToken() {
+    if(state is LoggedIn) {
+      final current = state as LoggedIn;
+      return current.loginResponse.token;
+    }
+    return "no";
+  }
+
   MetaLoginResponse getLoginResponse() {
     MetaLoginResponse loginResponse = MetaLoginResponse();
     if(state is LoggedIn) {

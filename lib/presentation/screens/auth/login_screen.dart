@@ -10,7 +10,7 @@ import 'package:travelgrid/common/extensions/pretty.dart';
 import 'package:travelgrid/common/utils/show_alert.dart';
 import 'package:travelgrid/data/cubits/login_cubit/login_cubit.dart';
 import 'package:travelgrid/data/datsources/login_response.dart';
-import 'package:travelgrid/presentation/auth/bloc/login_form_bloc.dart';
+import 'package:travelgrid/presentation/screens/auth/bloc/login_form_bloc.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';
 import 'package:travelgrid/presentation/widgets/image_view.dart';
 import 'package:travelgrid/presentation/widgets/text_field.dart';
@@ -57,7 +57,7 @@ class _LoginScreenState extends State<_Login> {
             builder: (context) {
               LoginFormBloc  formBloc =  BlocProvider.of<LoginFormBloc>(context);
               formBloc.tfUsername.updateValue("cm05");
-              formBloc.tfPassword.updateValue("Test123#");
+             formBloc.tfPassword.updateValue("Test123#");
               return Scaffold(
                 backgroundColor: ParseDataType().getHexToColor(loginJsonData['backgroundColor']),
                 body: Container(
@@ -67,7 +67,7 @@ class _LoginScreenState extends State<_Login> {
 
                       },
                       onSubmitting: (context, state) {
-
+                        FocusScope.of(context).unfocus();
                       },
                       onSuccess: (context, state) {
                        MetaLoginResponse modelResponse = MetaLoginResponse.fromJson(jsonDecode(state.successResponse.toString()));
