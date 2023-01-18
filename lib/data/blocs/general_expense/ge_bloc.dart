@@ -20,10 +20,7 @@ class GeneralExpenseBloc extends Bloc<GeneralExpenseEvent, GeneralExpenseState> 
     emit(GeneralExpenseInitialState());
     if(event is GetGeneralExpenseListEvent) {
       GEListResponse? response = await Injector.resolve<GeUseCase>().callApi();
-      print("GEListResponse");
-
       if(response!=null && response.status==true){
-        print(response.data);
         emit(GeneralExpenseLoadedState(data: response));
       }else{
         emit(GeneralExpenseLoadedState(data: GEListResponse(data: [],message: response.message)));
