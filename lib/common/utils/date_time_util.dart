@@ -10,7 +10,6 @@ class MetaDateTime{
     if(date !="null") {
       final DateFormat formatter = DateFormat(format);
       final String formatted = formatter.format(DateTime.parse(parseDate.toString()));
-      print(formatted);
       return formatted;
     }
     return "";

@@ -45,8 +45,6 @@ class _GeneralExpenseState extends State<GeneralExpense> {
      loaded=true;
    }
 
-
-
     return Scaffold(
       backgroundColor: Colors.white,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -55,8 +53,7 @@ class _GeneralExpenseState extends State<GeneralExpense> {
         onButtonPressed: (){}),
         backgroundColor: ParseDataType().getHexToColor(jsonData['backgroundColor']),
         onPressed: () {  },),
-      bottomNavigationBar:
-      BottomAppBar(
+      bottomNavigationBar: BottomAppBar(
         color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
         shape: CircularNotchedRectangle(),
         notchMargin: 5,
@@ -78,89 +75,79 @@ class _GeneralExpenseState extends State<GeneralExpense> {
           ],
         ),
       ),
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        automaticallyImplyLeading:false,
-        toolbarHeight: 100.h,
-        flexibleSpace: ClipPath(
-          clipper: Customshape(),
-          child: Container(
-            child: Stack(
-              alignment: Alignment.centerLeft,
-              children: [
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
-                  child: Center(child: MetaTextView(mapData: jsonData['title'])),
-                ),
-                Container(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                          MetaIcon(mapData:jsonData['backBar'],
-                          onButtonPressed: (){
-
-                          }),
-                        enableSearch ? MetaIcon(mapData:jsonData['searchClose'],
-                          onButtonPressed: (){
-
-                          setState(() {
-                            enableSearch=false;
-                          });
-
-                          }):MetaIcon(mapData:jsonData['searchOpen'],
-                           onButtonPressed: (){
-                             setState(() {
-                               enableSearch=true;
-                             });
-                           }),
-                        ],
-                  ),
-                )
-              ],
-            ),
-          ),
-        ),
-      ),
-      body: Transform.translate(
-        offset: Offset(0,-30.h),
-        child: BlocBuilder<GeneralExpenseBloc, GeneralExpenseState>(
+      body: BlocBuilder<GeneralExpenseBloc, GeneralExpenseState>(
           bloc: bloc,
           builder:(context, state) {
+            jsonData['listView']['recordsFound']['value'] = 0;
             return Container(
-                margin: EdgeInsets.symmetric(vertical: 10.h),
-              child: BlocMapToEvent(state: state.eventState, message: state.message,
-                  searchBar:enableSearch ? Container(
-                    margin: EdgeInsets.symmetric(horizontal: 20.w,vertical: 5.h),
-                    padding: EdgeInsets.symmetric(vertical: 5.h),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8.r),
-                        color: Color(0x1FD3CACA),
-                        border: Border.all(color: Colors.black12)),
-                    child: SearchBarComponent(
-                      barHeight: 40,
-                      hintText: "Search.....",
-                      searchController: _searchController,
-                      onClear: (){
+                child: BlocMapToEvent(state: state.eventState, message: state.message,
+                    callback: (){
+                       jsonData['listView']['recordsFound']['value'] = state.response?.data?.length;
+                    },
+                    topComponent:Container(
+                      color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
+                      height: 250.h,
+                      child:  Column(
+                        children: [
+                          SizedBox(height:40.h),
+                          Container(
+                            height: 40.h,
+                            alignment: Alignment.center,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                MetaIcon(mapData:jsonData['backBar'],
+                                    onButtonPressed: (){
+                                      Navigator.pop(context);
+                                    }),
+                                Container(
+                                  child:MetaTextView(mapData: jsonData['title']),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.symmetric(horizontal: 20.w,vertical: 5.h),
+                            padding: EdgeInsets.symmetric(vertical: 5.h),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8.r),
+                                color: Color(0xFFFFFFFF),
+                                border: Border.all(color: Colors.black12)),
+                            child: SearchBarComponent(
+                              barHeight: 40.h,
+                              hintText: "Search.....",
+                              searchController: _searchController,
+                              onClear: (){
 
-                      },
-                      onSubmitted: (text) {
+                              },
+                              onSubmitted: (text) {
 
-                      },
-                      onChange: (text) {
+                              },
+                              onChange: (text) {
 
-                      },
+                              },
+                            ),
+                          ),
+                          SizedBox(height:10.h),
+                          Container(
+                            margin: EdgeInsets.symmetric(horizontal: 20.w),
+                            child:MetaTextView(mapData: jsonData['listView']['recordsFound']),
+                          ),
+                          SizedBox(height:10.h),
+                        ],
+                      ),
                     ),
-                  ):null,
-                  child:getListView(state)
-              )
+                    child:Transform.translate(
+                        offset: Offset(0,-80.h),
+                        child: getListView(state))
+                )
             );
           }
-        ),
       ),
     );
   }
+
 
   Widget getListView(GeneralExpenseState state){
 
@@ -171,8 +158,6 @@ class _GeneralExpenseState extends State<GeneralExpense> {
       padding: EdgeInsets.zero,
       itemBuilder: (BuildContext context, int index) {
         Data item = list[index];
-
-
 
         Map date = {
           "text" : MetaDateTime().getDate(item.date.toString(),format: "dd MMM"),
@@ -207,7 +192,7 @@ class _GeneralExpenseState extends State<GeneralExpense> {
         };
 
         Map amount = {
-          "text" :"GE Amount : "+ item.totalAmount.toString().toUpperCase(),
+          "text" :"Amount : "+ item.totalAmount.toString().toUpperCase(),
           "color" : "0xFF000000",
           "size": "12",
           "family": "bold",
@@ -243,25 +228,26 @@ class _GeneralExpenseState extends State<GeneralExpense> {
                   child: Column(
                     children: [
                       Container(
-                        height: 7.h,
+                        height:cardHt * 0.07,
                       ),
                       Container(
                         color: Color(0xFFFFFFFF),
                         child: Column(
                           children: [
                             Container(
-                                height: 35.h,
+                                height: cardHt * 0.40,
                                 child: MetaTextView(mapData: date)
                             ),
                             Container(
-                                height: 25.h,
+                              margin: EdgeInsets.only(right: 5.w),
+                                height:cardHt * 0.25,
                                 child: MetaTextView( mapData: week)
                             )
                           ],
                         ),
                       ),
                       Container(
-                        height: 23.h,
+                        height: cardHt * 0.27,
                         child: MetaTextView( mapData: status),
                       ),
                     ],
@@ -279,7 +265,7 @@ class _GeneralExpenseState extends State<GeneralExpense> {
                     child: Column(
                       children: [
                         Container(
-                          height: 7.h,
+                          height:cardHt * 0.07,
                         ),
                         Container(
                           color: Color(0xFFFFFFFF),
@@ -287,12 +273,12 @@ class _GeneralExpenseState extends State<GeneralExpense> {
                             children: [
                               Container(
                                   margin: EdgeInsets.symmetric(horizontal: 5.w),
-                                  height: 35.h,
+                                  height: cardHt * 0.40,
                                   child: MetaTextView(mapData: recordLocator)
                               ),
                               Container(
                                   margin: EdgeInsets.symmetric(horizontal: 5.w),
-                                  height: 25.h,
+                                  height: cardHt * 0.25,
                                   child: MetaTextView(mapData: amount)
                               ),
                             ],
@@ -300,9 +286,9 @@ class _GeneralExpenseState extends State<GeneralExpense> {
                         ),
                         Container(
                           margin: EdgeInsets.symmetric(horizontal: 5.w),
-                          height: 23.h,
+                          height: cardHt * 0.27,
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
                              MetaTextView( mapData: view),
                              Container(

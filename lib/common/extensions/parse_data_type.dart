@@ -23,6 +23,9 @@ class ParseDataType{
       case 'center-left':
        return Alignment.centerLeft;
 
+      case 'center-right':
+        return Alignment.centerRight;
+
       default:
         return Alignment.center;
     }

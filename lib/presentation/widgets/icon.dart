@@ -19,33 +19,20 @@ class MetaIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 10.w),
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15.w),
-          color:ParseDataType().getHexToColor(mapData['backgroundColor'] ?? 'transparent') ,
+    return IconButton(
+        color: Colors.redAccent,
+        icon: FaIcon(
+          iconMapping[mapData['icon']],
+          color: ParseDataType().getHexToColor(mapData['color']),
+          size: mapData['size'],
         ),
-        height:50.w,
-        width:50.w,
-        child: Align(
-          alignment: Alignment.center,
-          child: IconButton(
-              icon: FaIcon(
-                iconMapping[mapData['icon']],
-                color: ParseDataType().getHexToColor(mapData['color']),
-                size: mapData['size'],
-              ),
-              onPressed: (){
+        onPressed: (){
 
-                if( mapData['onPress']){
-                  onButtonPressed();
-                }
+          if( mapData['onPress']){
+            onButtonPressed();
+          }
 
-              }
-          ),
-        ),
-      ),
+        }
     );
   }
 

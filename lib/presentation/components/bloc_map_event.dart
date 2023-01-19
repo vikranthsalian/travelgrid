@@ -3,17 +3,18 @@ import 'package:travelgrid/common/constants/event_types.dart';
 
 
 class BlocMapToEvent extends StatelessWidget {
-  BlocMapToEvent({Key? key,  required this.state, this.searchBar,required this.child, required this.message }) : super(key: key);
+  BlocMapToEvent({Key? key,  required this.state,this.callback, this.topComponent,required this.child, required this.message }) : super(key: key);
   BlocEventState state;
   Widget child;
-  Widget? searchBar;
+  Widget? topComponent;
   String message;
+  Function? callback;
 
   @override
   Widget build(BuildContext context) {
     return Column(
         children: [
-          searchBar ?? Container(),
+          topComponent ?? Container(),
          _mapStateToWidget(state)
         ]);
   }
@@ -28,6 +29,7 @@ class BlocMapToEvent extends StatelessWidget {
         );
 
       case BlocEventState.LOADED:
+        callback!();
         return child;
 
       case BlocEventState.ERROR:
