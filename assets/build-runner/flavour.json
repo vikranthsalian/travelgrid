@@ -40,7 +40,7 @@
       "backgroundColor" : "0xFF2854A1",
       "size": "18",
       "family": "regular",
-      "borderRadius": 15.0
+      "borderRadius": 25.0
     },
     "text_title": {
       "text" : "Welcome!!!",
