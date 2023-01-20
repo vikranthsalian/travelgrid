@@ -81,7 +81,7 @@ class _HomePageState extends State<HomePage> {
                   child: InkWell(
                     onTap: (){
 
-                      if(e["onClick"].toString().isNotEmpty){
+                      if(e["onClick"].isNotEmpty){
                         Navigator.of(appNavigatorKey.currentState!.context).pushNamed(e["onClick"]);
                       }else{
                         MetaAlert.showErrorAlert(
@@ -174,7 +174,9 @@ class _HomePageState extends State<HomePage> {
                   Expanded(
                     child: MetaButton(mapData: homeJsonData['policiesButton'],
                         onButtonPressed: (){
-                          Navigator.of(context).pushNamed(RouteConstants.dashboardPath);
+                          if(homeJsonData['policiesButton']["onClick"].isNotEmpty) {
+                            Navigator.of(appNavigatorKey.currentState!.context).pushNamed(homeJsonData['policiesButton']["onClick"]);
+                          }
                         }
                     ),
                   ),

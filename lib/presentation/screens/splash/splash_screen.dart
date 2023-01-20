@@ -45,7 +45,7 @@ class SplashScreenState extends State<SplashScreen> {
           Container(
             height: double.infinity,
             width: double.infinity,
-            child: Image.asset(FlavourConstants.path + splashData['splash_logo'],width: 250,height: 250,),
+            child: Image.asset(FlavourConstants.path +"images/"+ splashData['splash_logo'],width: 250,height: 250,),
           ),
           Container(
               margin: EdgeInsets.symmetric(vertical: 10.h),

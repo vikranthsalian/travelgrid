@@ -12,7 +12,7 @@ class MetaImageView extends StatelessWidget {
     return  Container(
         alignment: ParseDataType().getAlign(mapData['align'] ?? ""),
         child: Image.asset(
-          FlavourConstants.path + mapData['image'],
+          FlavourConstants.path +"images/"+ mapData['image'],
           width: mapData['wd'],
           height: mapData['ht'],)
     );

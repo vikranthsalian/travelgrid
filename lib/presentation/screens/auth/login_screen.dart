@@ -35,8 +35,6 @@ class _Login extends StatefulWidget {
 class _LoginScreenState extends State<_Login> {
   Map<String,dynamic> loginJsonData = {};
 
-  List widgets=[];
-  final _formKey = GlobalKey<FormState>();
   final double _sizedBoxHeight= 10.0.h;
 
   LoginFormBloc? formBloc ;
@@ -56,8 +54,8 @@ class _LoginScreenState extends State<_Login> {
         child: Builder(
             builder: (context) {
               LoginFormBloc  formBloc =  BlocProvider.of<LoginFormBloc>(context);
-              formBloc.tfUsername.updateValue("cm05");
-             formBloc.tfPassword.updateValue("Test123#");
+           //   formBloc.tfUsername.updateValue("cm05");
+           //  formBloc.tfPassword.updateValue("Test123#");
               return Scaffold(
                 backgroundColor: ParseDataType().getHexToColor(loginJsonData['backgroundColor']),
                 body: Container(

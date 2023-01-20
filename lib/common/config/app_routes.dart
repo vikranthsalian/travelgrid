@@ -2,14 +2,18 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_offline/flutter_offline.dart';
 import 'package:travelgrid/common/constants/route_constants.dart';
+import 'package:travelgrid/presentation/components/pdf_component.dart';
 import 'package:travelgrid/presentation/screens/auth/login_screen.dart';
 import 'package:travelgrid/presentation/screens/dashboard/dashboard.dart';
 import 'package:travelgrid/presentation/screens/dashboard/dashboard_2.dart';
+import 'package:travelgrid/presentation/screens/ge/create_ge.dart';
+import 'package:travelgrid/presentation/screens/policy/policy_screen.dart';
 import 'package:travelgrid/presentation/screens/splash/splash_screen.dart';
 import 'package:travelgrid/presentation/screens/tabs/approval_expense.dart';
-import 'package:travelgrid/presentation/screens/tabs/general_expense.dart';
+import 'package:travelgrid/presentation/screens/ge/general_expense.dart';
 import 'package:travelgrid/presentation/screens/tabs/travel_expense.dart';
 import 'package:travelgrid/presentation/screens/tabs/travel_request.dart';
+import 'package:travelgrid/presentation/widgets/pdf.dart';
 class AppRoutes {
 
   Route generateRoute(RouteSettings routeSettings) {
@@ -54,8 +58,19 @@ class AppRoutes {
       case RouteConstants.generalExpensePath:
         return  GeneralExpense();
 
+      case RouteConstants.generalCreateExpensePath:
+        return  CreateGeneralExpense();
+
       case RouteConstants.approvalExpensePath:
         return ApprovalExpense();
+
+      case RouteConstants.policyPath:
+        return PolicyHome();
+
+      case RouteConstants.pdfPath:
+        return PDFComponent(path: args.toString());
+
+
 
       default:
         return SplashScreen();

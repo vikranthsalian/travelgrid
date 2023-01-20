@@ -6,7 +6,7 @@ class FlavourConstants {
 
   static  String appName =  FlavorConfig.instance.variables["app_title"];
  // static  String appLogo =  FlavorConfig.instance.variables["appLogo"];
-  static  String path =  FlavorConfig.instance.variables["image_path"];
+  static  String path =  FlavorConfig.instance.variables["asset_path"];
   static  bool showNetworkLogs =  FlavorConfig.instance.variables["showNetworkLogs"];
 
   //splash details
@@ -15,10 +15,16 @@ class FlavourConstants {
   static  Map<String,dynamic> loginData = FlavorConfig.instance.variables["login_screen_data"];
   static  Map<String,dynamic> homeData = FlavorConfig.instance.variables["home_screen_data"];
 
+  //List Data
   static  Map<String,dynamic> trData = FlavorConfig.instance.variables["tr_screen_data"];
   static  Map<String,dynamic> teData = FlavorConfig.instance.variables["te_screen_data"];
   static  Map<String,dynamic> geData = FlavorConfig.instance.variables["ge_screen_data"];
   static  Map<String,dynamic> approvalData = FlavorConfig.instance.variables["approval_screen_data"];
+  static  Map<String,dynamic> policyData = FlavorConfig.instance.variables["policy_screen_data"];
+  static  Map<String,dynamic> pdfData = FlavorConfig.instance.variables["pdf_screen_data"];
+
+  //Create Data
+  static  Map<String,dynamic> geCreateData = FlavorConfig.instance.variables["ge_create_data"];
 
 //  static  String flavour =  FlavorConfig.instance.name.toString();
 //  static  bool enableTesting =  FlavorConfig.instance.variables["enableUnitTesting"];

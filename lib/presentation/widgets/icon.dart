@@ -8,11 +8,11 @@ import 'package:travelgrid/presentation/widgets/text_view.dart';
 
 class MetaIcon extends StatelessWidget {
 
-  Function() onButtonPressed;
+  Function()? onButtonPressed;
   Map mapData;
 
   MetaIcon({super.key,
-    required this.onButtonPressed ,
+     this.onButtonPressed ,
     required this.mapData
   });
 
@@ -27,11 +27,8 @@ class MetaIcon extends StatelessWidget {
           size: mapData['size'],
         ),
         onPressed: (){
-
-          if( mapData['onPress']){
-            onButtonPressed();
-          }
-
+          if(onButtonPressed!=null)
+            onButtonPressed!();
         }
     );
   }

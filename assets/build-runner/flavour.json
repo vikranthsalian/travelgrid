@@ -12,7 +12,7 @@
     "dev_url" : "http://172.104.189.54:8080/tems/rest/ma/",
     "qa_url" : ""
   },
-  "image_path":"assets/apps/nh/images/",
+  "asset_path":"assets/apps/nh/",
   "support_email" : "info@travelgrid.com",
   "privacy_policy_url": "",
   "terms_of_use_url": "",
@@ -281,7 +281,8 @@
       "color" : "0xFFFFFFFF",
       "backgroundColor" : "0xFF2854A1",
       "size": "18",
-      "family": "regular"
+      "family": "regular",
+      "onClick": "/viewPolicies"
     },
     "walletButton": {
       "text" : "Wallet",
@@ -485,7 +486,7 @@
       "icon": "add",
       "size": 20.0,
       "color": "0XFFFFFFFF",
-      "onPress": true
+      "onClick": "/generalCreateExpense"
     },
     "bottomButtonFilter": {
       "text" : "Filter",
@@ -568,7 +569,136 @@
       "size": "18",
       "family": "regular"
     }
+  },
+  "ge_create_data": {
+    "backgroundColor" : "0xFF2854A1",
+    "title":  {
+      "text" : "Create General Expense",
+      "color" : "0XFFFFFFFF",
+      "size": "18",
+      "family": "bold",
+      "align": "center-left"
+    },
+    "backBar": {
+      "icon": "back",
+      "size": 20.0,
+      "color": "0XFFFFFFFF",
+      "backgroundColor": "transparent",
+      "onPress": true,
+      "align": "center-left"
+    },
+    "requesterTitle":  {
+      "text" : "Requester Details",
+      "color" : "0XFFFFFFFF",
+      "size": "14",
+      "family": "bold",
+      "align": "center-left"
+    },
+    "requesterDetails":  {
+      "style": {
+        "text" : "",
+        "color" : "0XFFFFFFFF",
+        "size": "10",
+        "family": "bold",
+        "align": "center-left"
+      },
+      "data": ["Initiator Name","Grade","Gender","Emp. Code",
+               "Division","Department","Cost Center","Location",
+               "Contact","Emer. Contact"]
+    },
+    "bottomButtonSort": {
+      "text" : "Sort",
+      "color" : "0xFFFFFFFF",
+      "backgroundColor" : "0xFF2854A1",
+      "size": "18",
+      "family": "regular"
+    },
+    "bottomButtonFilter": {
+      "text" : "Filter",
+      "color" : "0xFFFFFFFF",
+      "backgroundColor" : "0xFF2854A1",
+      "size": "18",
+      "family": "regular"
+    }
+  },
+  "policy_screen_data" : {
+    "backgroundColor" : "0xFF2854A1",
+    "title":  {
+      "text" : "Policies",
+      "color" : "0XFFFFFFFF",
+      "size": "18",
+      "family": "bold",
+      "align": "center-left"
+    },
+    "backBar": {
+      "icon": "back",
+      "size": 20.0,
+      "color": "0XFFFFFFFF",
+      "backgroundColor": "transparent",
+      "onPress": true,
+      "align": "center-left"
+    },
+    "listView": {
+      "svgIconColor" : "0xFF2854A1",
+      "data": [
+        {
+          "title": {
+            "text" : "NH - Travel Policies",
+            "color" : "0xFF2854A1",
+            "size": "12",
+            "family": "regular",
+            "align": "center"
+          },
+          "subtitle": {
+            "text" : "Tap to view",
+            "color" : "0xFFCCCCCC",
+            "size": "10",
+            "family": "bold",
+            "align": "center"
+          },
+          "path": "travel_policies.pdf"
+        }
+      ],
+      "emptyData": {
+        "image_view":   {
+          "image" : "logo_banner.png",
+          "align": "center",
+          "wd": 250.0
+        },
+        "title":  {
+          "text" : "No Data Found!!!",
+          "color" : "0XFF3D3D3D",
+          "size": "16",
+          "family": "regular"
+        },
+        "bottomButtonRefresh": {
+          "text" : "Refresh",
+          "height": 35.0,
+          "color" : "0xFFFFFFFF",
+          "borderRadius": 30.0,
+          "backgroundColor" : "0xFF2854A1",
+          "size": "15",
+          "family": "regular"
+        }
+      }
+    }
+  },
+  "pdf_screen_data" : {
+    "backgroundColor" : "0xFF2854A1",
+    "title":  {
+      "text" : "PDF Viewer",
+      "color" : "0XFFFFFFFF",
+      "size": "18",
+      "family": "bold",
+      "align": "center-left"
+    },
+    "backBar": {
+      "icon": "back",
+      "size": 20.0,
+      "color": "0XFFFFFFFF",
+      "backgroundColor": "transparent",
+      "onPress": true,
+      "align": "center-left"
+    }
   }
-
-
 }

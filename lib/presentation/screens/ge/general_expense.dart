@@ -6,6 +6,7 @@ import 'package:travelgrid/common/extensions/parse_data_type.dart';
 import 'package:travelgrid/common/extensions/pretty.dart';
 import 'package:travelgrid/common/injector/injector.dart';
 import 'package:travelgrid/common/utils/date_time_util.dart';
+import 'package:travelgrid/common/utils/show_alert.dart';
 import 'package:travelgrid/data/blocs/general_expense/ge_bloc.dart';
 import 'package:travelgrid/data/datsources/general_expense_list.dart';
 import 'package:travelgrid/presentation/components/bloc_map_event.dart';
@@ -49,10 +50,16 @@ class _GeneralExpenseState extends State<GeneralExpense> {
       backgroundColor: Colors.white,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton:  FloatingActionButton(
-        child:MetaIcon(mapData:jsonData['bottomButtonFab'],
-        onButtonPressed: (){}),
+        child:MetaIcon(mapData:jsonData['bottomButtonFab'],onButtonPressed: (){
+          if(jsonData['bottomButtonFab']['onClick'].isNotEmpty){
+
+            MetaAlert.showErrorAlert(message: "Work in Progress");
+
+           // Navigator.of(context).pushNamed(jsonData['bottomButtonFab']['onClick']);
+          }
+        },),
         backgroundColor: ParseDataType().getHexToColor(jsonData['backgroundColor']),
-        onPressed: () {  },),
+        onPressed: () {}),
       bottomNavigationBar: BottomAppBar(
         color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
         shape: CircularNotchedRectangle(),
@@ -86,7 +93,7 @@ class _GeneralExpenseState extends State<GeneralExpense> {
                     },
                     topComponent:Container(
                       color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
-                      height: 250.h,
+                      height: 120.h,
                       child:  Column(
                         children: [
                           SizedBox(height:40.h),
@@ -107,28 +114,28 @@ class _GeneralExpenseState extends State<GeneralExpense> {
                               ],
                             ),
                           ),
-                          Container(
-                            margin: EdgeInsets.symmetric(horizontal: 20.w,vertical: 5.h),
-                            padding: EdgeInsets.symmetric(vertical: 5.h),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8.r),
-                                color: Color(0xFFFFFFFF),
-                                border: Border.all(color: Colors.black12)),
-                            child: SearchBarComponent(
-                              barHeight: 40.h,
-                              hintText: "Search.....",
-                              searchController: _searchController,
-                              onClear: (){
-
-                              },
-                              onSubmitted: (text) {
-
-                              },
-                              onChange: (text) {
-
-                              },
-                            ),
-                          ),
+                          // Container(
+                          //   margin: EdgeInsets.symmetric(horizontal: 20.w,vertical: 5.h),
+                          //   padding: EdgeInsets.symmetric(vertical: 5.h),
+                          //   decoration: BoxDecoration(
+                          //       borderRadius: BorderRadius.circular(8.r),
+                          //       color: Color(0xFFFFFFFF),
+                          //       border: Border.all(color: Colors.black12)),
+                          //   child: SearchBarComponent(
+                          //     barHeight: 40.h,
+                          //     hintText: "Search.....",
+                          //     searchController: _searchController,
+                          //     onClear: (){
+                          //
+                          //     },
+                          //     onSubmitted: (text) {
+                          //
+                          //     },
+                          //     onChange: (text) {
+                          //
+                          //     },
+                          //   ),
+                          // ),
                           SizedBox(height:10.h),
                           Container(
                             margin: EdgeInsets.symmetric(horizontal: 20.w),
@@ -139,7 +146,7 @@ class _GeneralExpenseState extends State<GeneralExpense> {
                       ),
                     ),
                     child:Transform.translate(
-                        offset: Offset(0,-80.h),
+                        offset: Offset(0,0.h),
                         child: getListView(state))
                 )
             );
@@ -290,7 +297,7 @@ class _GeneralExpenseState extends State<GeneralExpense> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
-                             MetaTextView( mapData: view),
+                             MetaTextView( mapData: cancel),
                              Container(
                                margin: EdgeInsets.symmetric(horizontal: 5.w),
                                child: MetaTextView(mapData: {
@@ -301,7 +308,7 @@ class _GeneralExpenseState extends State<GeneralExpense> {
                                  "align" : "center"
                                }),
                              ),
-                            MetaTextView( mapData: cancel),
+                            MetaTextView( mapData:  view )
                           ]),
                         ),
                       ],
