@@ -680,6 +680,14 @@
           "size": "15",
           "family": "regular"
         }
+      },
+      "recordsFound":  {
+        "text" : "Records Found",
+        "value" : "1",
+        "color" : "0XFFFFFFFF",
+        "size": "12",
+        "family": "regular",
+        "align": "center-right"
       }
     }
   },
