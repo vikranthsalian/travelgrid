@@ -595,17 +595,87 @@
       "align": "center-left"
     },
     "requesterDetails":  {
-      "style": {
+      "label": {
         "text" : "",
         "color" : "0XFFFFFFFF",
         "size": "10",
         "family": "bold",
         "align": "center-left"
       },
+      "value": {
+        "text" : "",
+        "color" : "0XFFFFFFFF",
+        "size": "7",
+        "family": "regular",
+        "align": "center-left"
+      },
+      "switchData": {
+        "label": {
+          "text" : "Show",
+          "color" : "0XFFFFFFFF",
+          "size": "10",
+          "family": "bold",
+          "align": "center-left"
+        }
+      },
       "data": ["Initiator Name","Grade","Gender","Emp. Code",
                "Division","Department","Cost Center","Location",
                "Contact","Emer. Contact"]
     },
+    "expensesTypes": [
+      {
+        "title": {
+          "text" : "Accom. Expense",
+          "color" : "0xFF2854A1",
+          "size": "8",
+          "family": "regular",
+          "align": "center"
+        },
+        "svgIcon":{
+          "icon": "pdf.svg",
+          "color" : "0xFF2854A1"
+        }
+      },
+      {
+        "title": {
+          "text" : "Travel Expense",
+          "color" : "0xFF2854A1",
+          "size": "8",
+          "family": "regular",
+          "align": "center"
+        },
+        "svgIcon":{
+          "icon": "pdf.svg",
+          "color" : "0xFF2854A1"
+        }
+      },
+      {
+        "title": {
+          "text" : "Daily Allowance",
+          "color" : "0xFF2854A1",
+          "size": "8",
+          "family": "regular",
+          "align": "center"
+        },
+        "svgIcon":{
+          "icon": "pdf.svg",
+          "color" : "0xFF2854A1"
+        }
+      },
+      {
+        "title": {
+          "text" : "Misc. Allowance",
+          "color" : "0xFF2854A1",
+          "size": "8",
+          "family": "regular",
+          "align": "center"
+        },
+        "svgIcon":{
+          "icon": "pdf.svg",
+          "color" : "0xFF2854A1"
+        }
+      }
+    ],
     "bottomButtonSort": {
       "text" : "Sort",
       "color" : "0xFFFFFFFF",

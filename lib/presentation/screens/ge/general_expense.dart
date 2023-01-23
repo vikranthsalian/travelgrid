@@ -53,9 +53,9 @@ class _GeneralExpenseState extends State<GeneralExpense> {
         child:MetaIcon(mapData:jsonData['bottomButtonFab'],onButtonPressed: (){
           if(jsonData['bottomButtonFab']['onClick'].isNotEmpty){
 
-            MetaAlert.showErrorAlert(message: "Work in Progress");
+           // MetaAlert.showErrorAlert(message: "Work in Progress");
 
-           // Navigator.of(context).pushNamed(jsonData['bottomButtonFab']['onClick']);
+            Navigator.of(context).pushNamed(jsonData['bottomButtonFab']['onClick']);
           }
         },),
         backgroundColor: ParseDataType().getHexToColor(jsonData['backgroundColor']),

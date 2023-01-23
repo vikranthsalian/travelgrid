@@ -54,8 +54,8 @@ class _LoginScreenState extends State<_Login> {
         child: Builder(
             builder: (context) {
               LoginFormBloc  formBloc =  BlocProvider.of<LoginFormBloc>(context);
-           //   formBloc.tfUsername.updateValue("cm05");
-           //  formBloc.tfPassword.updateValue("Test123#");
+              formBloc.tfUsername.updateValue("cm05");
+              formBloc.tfPassword.updateValue("Test123#");
               return Scaffold(
                 backgroundColor: ParseDataType().getHexToColor(loginJsonData['backgroundColor']),
                 body: Container(
@@ -69,6 +69,7 @@ class _LoginScreenState extends State<_Login> {
                       },
                       onSuccess: (context, state) {
                        MetaLoginResponse modelResponse = MetaLoginResponse.fromJson(jsonDecode(state.successResponse.toString()));
+                       print(modelResponse.data?.toJson());
                        context.read<LoginCubit>().setLoginResponse(modelResponse);
                        MetaAlert.showSuccessAlert(
                          message: "Login Success"

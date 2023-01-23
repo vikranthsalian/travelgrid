@@ -4,14 +4,16 @@ import 'package:travelgrid/common/extensions/parse_data_type.dart';
 
 class MetaTextView extends StatelessWidget {
   Map mapData;
-  MetaTextView({super.key, required this.mapData});
+  String? text;
+  MetaTextView({super.key, required this.mapData,this.text});
 
   @override
   Widget build(BuildContext context) {
     return  Container(
         alignment: ParseDataType().getAlign(mapData['align'] ?? ""),
         child: Text(
-            mapData['value']!=null ? (mapData['value'].toString() +" "+ mapData['text'].toString()) :mapData['text'],
+            text==null ?
+            mapData['value']!=null ? (mapData['value'].toString() +" "+ mapData['text'].toString()) :mapData['text'] :text,
             style:Theme.of(context).textTheme.
             caption?.copyWith(
                 fontSize: ParseDataType().getDouble(mapData['size']).sp,

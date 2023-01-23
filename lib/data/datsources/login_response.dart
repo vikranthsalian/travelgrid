@@ -23,6 +23,18 @@ class MetaLoginResponse {
     }
     return data;
   }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'data': this.data,
+    };
+  }
+
+  factory MetaLoginResponse.fromMap(Map<String, dynamic> map) {
+    return MetaLoginResponse(
+      data: map['data'] as Data,
+    );
+  }
 }
 
 class Data {
@@ -69,6 +81,7 @@ class Data {
   Null? travelVendor;
 
   Data({this.id, this.recordLocator, this.gender, this.maritalStatus, this.prefix, this.given, this.family, this.suffix, this.nickName, this.fatherName, this.dateOfbirth, this.language, this.permanentContact, this.currentContact, this.account, this.fullName, this.employeecode, this.employeeTypeId, this.externalId, this.profitcenter, this.dateOfJoining, this.company, this.costCenter, this.worklocation, this.grade, this.Subgrade, this.deptCode, this.deptName, this.divisionCode, this.divName, this.position, this.positionName, this.empVendorCode, this.jobtext, this.uniqueIdentificationNumber, this.airSeatPreference, this.mealPreference, this.visa, this.travelDocs, this.frequentFlyer, this.travelVendor});
+
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
