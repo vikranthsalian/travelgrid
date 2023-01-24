@@ -46,12 +46,12 @@ class _TravelExpenseState extends State<TravelExpense> {
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            MetaButton(mapData: jsonData['bottomButtonSort'],
+            MetaButton(mapData: jsonData['bottomButtonLeft'],
                 onButtonPressed: (){
 
                 }
             ),
-            MetaButton(mapData: jsonData['bottomButtonFilter'],
+            MetaButton(mapData: jsonData['bottomButtonRight'],
                 onButtonPressed: (){
 
                 }

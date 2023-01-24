@@ -41,6 +41,9 @@ class ParseDataType{
       case 'phone':
         return TextInputType.phone;
 
+      case 'number':
+        return TextInputType.number;
+
       default:
         return TextInputType.text;
     }

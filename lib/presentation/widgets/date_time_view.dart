@@ -13,17 +13,17 @@ class MetaDateTimeView extends StatelessWidget {
 
     if(mapData['showView'] == "date"){
       return Container(
-          margin: EdgeInsets.symmetric(horizontal: 20.w,vertical: 5.h),
+          margin: EdgeInsets.symmetric(horizontal: 10.w,vertical: 5.h),
           child: dateView()
       );
     }else if(mapData['showView'] == "time"){
       return Container(
-          margin: EdgeInsets.symmetric(horizontal: 20.w,vertical: 5.h),
+          margin: EdgeInsets.symmetric(horizontal: 10.w,vertical: 5.h),
           child: timeView()
       );
     }else{
       return Container(
-          margin: EdgeInsets.symmetric(horizontal: 20.w,vertical: 5.h),
+          margin: EdgeInsets.symmetric(horizontal: 10.w,vertical: 5.h),
           child: dateTimeView()
       );
     }

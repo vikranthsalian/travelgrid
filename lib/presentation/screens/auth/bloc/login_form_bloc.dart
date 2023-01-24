@@ -15,8 +15,12 @@ class LoginFormBloc extends FormBloc<String, String> {
 
 
   LoginFormBloc(Map<String, dynamic> data):super(autoValidate: true) {
-    tfUsername.addValidators(Validators().getValidators(data['text_field_username']));
-    tfPassword.addValidators(Validators().getValidators(data['text_field_password']));
+
+      if(data.isNotEmpty){
+        tfUsername.addValidators(Validators().getValidators(data['text_field_username']));
+        tfPassword.addValidators(Validators().getValidators(data['text_field_password']));
+
+      }
 
 
 
