@@ -672,6 +672,7 @@
           "family": "regular",
           "align": "center"
         },
+        "onClick": "/createMiscExpense",
         "svgIcon":{
           "icon": "pdf.svg",
           "color" : "0xFF2854A1"

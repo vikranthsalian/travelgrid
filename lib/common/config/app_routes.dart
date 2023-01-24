@@ -8,6 +8,7 @@ import 'package:travelgrid/presentation/screens/dashboard/dashboard.dart';
 import 'package:travelgrid/presentation/screens/dashboard/dashboard_2.dart';
 import 'package:travelgrid/presentation/screens/ge/create/create_accom.dart';
 import 'package:travelgrid/presentation/screens/ge/create/create_ge.dart';
+import 'package:travelgrid/presentation/screens/ge/create/create_misc.dart';
 import 'package:travelgrid/presentation/screens/ge/create/create_travel.dart';
 import 'package:travelgrid/presentation/screens/policy/policy_screen.dart';
 import 'package:travelgrid/presentation/screens/splash/splash_screen.dart';
@@ -78,6 +79,8 @@ class AppRoutes {
       case RouteConstants.createTravelExpensePath:
         return CreateTravelExpense();
 
+      case RouteConstants.createMiscExpensePath:
+        return CreateMiscExpense();
 
       default:
         return SplashScreen();

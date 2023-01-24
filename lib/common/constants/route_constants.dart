@@ -11,4 +11,5 @@ class RouteConstants {
   static const pdfPath = "/viewPdfScreen";
   static const createAccommodationExpensePath = "/createAccommodationExpense";
   static const createTravelExpensePath = "/createTravelExpense";
+  static const createMiscExpensePath = "/createMiscExpense";
 }
