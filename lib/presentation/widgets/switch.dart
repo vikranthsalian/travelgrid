@@ -13,7 +13,7 @@ class MetaSwitch extends StatefulWidget {
 
   MetaSwitch({
     this.onSwitchPressed,
-    this.value = false,
+    this.value = true,
     required this.mapData
   });
 
