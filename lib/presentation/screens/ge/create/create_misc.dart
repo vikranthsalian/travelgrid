@@ -4,13 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:travelgrid/common/constants/flavour_constants.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
 import 'package:travelgrid/common/extensions/pretty.dart';
-import 'package:travelgrid/common/injector/injector.dart';
-import 'package:travelgrid/common/utils/date_time_util.dart';
-import 'package:travelgrid/data/datsources/general_expense_list.dart';
-import 'package:travelgrid/presentation/components/bloc_map_event.dart';
 import 'package:travelgrid/presentation/screens/auth/bloc/login_form_bloc.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';
-import 'package:travelgrid/presentation/widgets/checkbox.dart';
 import 'package:travelgrid/presentation/widgets/date_time_view.dart';
 import 'package:travelgrid/presentation/widgets/dialog_selector_view.dart';
 import 'package:travelgrid/presentation/widgets/icon.dart';
@@ -29,7 +24,6 @@ class _CreateMiscExpenseState extends State<CreateMiscExpense> {
   List items=[];
   double cardHt = 90.h;
   bool enableSearch = false;
-  final TextEditingController _searchController = TextEditingController();
   bool loaded=false;
   bool showWithBill=true;
   @override
@@ -43,11 +37,6 @@ class _CreateMiscExpenseState extends State<CreateMiscExpense> {
 
   @override
   Widget build(BuildContext context) {
-
-
-
-
-
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -128,12 +117,17 @@ class _CreateMiscExpenseState extends State<CreateMiscExpense> {
                               padding: EdgeInsets.zero,
                               shrinkWrap: true,
                               children:[
-                                Container(
-                                  child: MetaDateTimeView(mapData: jsonData['checkInDateTime']),
+                                Row(
+                                  children: [
+                                    Container(
+                                      child: MetaDateTimeView(mapData: jsonData['checkInDateTime']),
+                                    ),
+                                    Container(
+                                      child: MetaDateTimeView(mapData: jsonData['checkOutDateTime']),
+                                    ),
+                                  ],
                                 ),
-                                Container(
-                                  child: MetaDateTimeView(mapData: jsonData['checkOutDateTime']),
-                                ),
+
                                 Row(
                                     children: [
                                   Expanded(
@@ -144,16 +138,32 @@ class _CreateMiscExpenseState extends State<CreateMiscExpense> {
                                   ),
                                   Expanded(
                                     child: Container(
-                                      child: MetaDialogSelectorView(mapData: jsonData['selectType']),
+                                      child: MetaDialogSelectorView(mapData: jsonData['selectMiscType']),
                                     ),
                                   ),
                                 ]),
 
-                                showWithBill ?  MetaTextFieldView(mapData: jsonData['text_field_voucher'],
+                                Row(
+                                  children: [
+                                    Container(
+                                      child: MetaSwitch(mapData:  jsonData['unitType'],
+                                        value: showWithBill,
+                                        onSwitchPressed: (value){
+
+                                          setState(() {
+                                            showWithBill=value;
+                                          });
+
+                                        },),
+                                    ),
+                                  ],
+                                ),
+
+                                MetaTextFieldView(mapData: jsonData['text_field_voucher'],
                                     textFieldBloc: formBloc.tfUsername,
                                     onChanged:(value){
                                       formBloc.tfUsername.updateValue(value);
-                                    }):SizedBox(),
+                                    }),
                                 Container(
                                   child: Row(
                                     children: [
@@ -164,14 +174,6 @@ class _CreateMiscExpenseState extends State<CreateMiscExpense> {
                                               formBloc.tfUsername.updateValue(value);
                                             }),
                                           ),
-                                      SizedBox(width: 30.w,),
-                                      Expanded(
-                                        child: MetaTextFieldView(mapData: jsonData['text_field_tax'],
-                                            textFieldBloc: formBloc.tfUsername,
-                                            onChanged:(value){
-                                              formBloc.tfUsername.updateValue(value);
-                                            }),
-                                      ),
                                         ],
                                   ),
                                 ),
@@ -181,30 +183,6 @@ class _CreateMiscExpenseState extends State<CreateMiscExpense> {
                                       formBloc.tfUsername.updateValue(value);
                                     }),
 
-                                Row(
-                                  children: [
-                                    Container(
-                                      child: MetaSwitch(mapData:  jsonData['withBillCheckBox'],
-                                        value: showWithBill,
-                                        onSwitchPressed: (value){
-
-                                        setState(() {
-                                          showWithBill=value;
-                                        });
-
-                                      },),
-                                    ),
-                                    showWithBill ? Container(
-                                      margin: EdgeInsets.symmetric(vertical: 20.h),
-                                      width: 180.w,
-                                      child: MetaButton(mapData: jsonData['uploadButton'],
-                                          onButtonPressed: (){
-
-                                          }
-                                      ),
-                                    ):SizedBox(),
-                                  ],
-                                )
 
                               ]
                           ),

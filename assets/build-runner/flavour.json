@@ -1513,6 +1513,23 @@
         "align": "center-left"
       }
     },
+    "selectMiscType": {
+      "showView": true,
+      "label":  {
+        "text" : "Misc. Type*",
+        "color" : "0xFF2854A1",
+        "size": "14",
+        "family": "regular",
+        "align": "center-left"
+      },
+      "dataText":  {
+        "text" : "Choose Type",
+        "color" : "0xFFCCCCCC",
+        "size": "18",
+        "family": "regular",
+        "align": "center-left"
+      }
+    },
     "unitType":  {
       "label":  {
         "text" : "Within Unit",
@@ -1634,15 +1651,6 @@
         "family": "regular"
       },
       "validators" : []
-    },
-    "uploadButton":  {
-      "text" : "Upload Voucher",
-      "color" : "0xFFFFFFFF",
-      "backgroundColor" : "0xFF2854A1",
-      "size": "14",
-      "borderRadius": 15.0,
-      "family": "regular",
-      "onClick": "/uploadDoc"
     },
     "bottomButtonLeft": {
       "text" : "Cancel",
