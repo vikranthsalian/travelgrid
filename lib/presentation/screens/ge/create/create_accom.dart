@@ -9,6 +9,7 @@ import 'package:travelgrid/common/utils/date_time_util.dart';
 import 'package:travelgrid/data/datsources/general_expense_list.dart';
 import 'package:travelgrid/presentation/components/bloc_map_event.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';
+import 'package:travelgrid/presentation/widgets/date_time_view.dart';
 import 'package:travelgrid/presentation/widgets/icon.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
 
@@ -37,6 +38,10 @@ class _CreateAccommodationState extends State<CreateAccommodation> {
   Widget build(BuildContext context) {
 
 
+
+
+
+
     return Scaffold(
       backgroundColor: Colors.white,
       bottomNavigationBar: BottomAppBar(
@@ -61,32 +66,40 @@ class _CreateAccommodationState extends State<CreateAccommodation> {
           ],
         ),
       ),
-      body: Container(
-        color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
-        height: 100.h,
-        child:  Column(
-          children: [
-            SizedBox(height:40.h),
-            Container(
-              height: 40.h,
-              alignment: Alignment.center,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  MetaIcon(mapData:jsonData['backBar'],
-                      onButtonPressed: (){
-                        Navigator.pop(context);
-                      }),
-                  Container(
-                    child:MetaTextView(mapData: jsonData['title']),
+      body: Column(
+        children: [
+          Container(
+            height: 100.h,
+            color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
+            child:  Column(
+              children: [
+                SizedBox(height:40.h),
+                Container(
+                  alignment: Alignment.center,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      MetaIcon(mapData:jsonData['backBar'],
+                          onButtonPressed: (){
+                            Navigator.pop(context);
+                          }),
+                      Container(
+                        child:MetaTextView(mapData: jsonData['title']),
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-
-          ],
-        ),
+          ),
+          Container(
+            child: MetaDateTimeView(mapData: jsonData['checkInDateTime']),
+          ),
+          Container(
+            child: MetaDateTimeView(mapData: jsonData['checkOutDateTime']),
+          ),
+        ],
       ),
     );
   }

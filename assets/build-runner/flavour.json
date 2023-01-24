@@ -797,6 +797,106 @@
       "onPress": true,
       "align": "center-left"
     },
+    "checkInDateTime": {
+      "showView": "date_time",
+      "dateView": {
+        "label":  {
+          "text" : "Check-In Date",
+          "color" : "0xFF2854A1",
+          "size": "14",
+          "family": "regular",
+          "align": "center-left"
+        },
+        "dateText":  {
+          "text" : "22",
+          "color" : "0xFF000000",
+          "size": "25",
+          "family": "bold",
+          "align": "center-left"
+        },
+        "monthYearText":  {
+          "text" : "January, 2024",
+          "color" : "0xFF000000",
+          "size": "12",
+          "family": "regular",
+          "align": "center-left"
+        },
+        "weekText":  {
+          "text" : "Monday",
+          "color" : "0xFFCCCCCC",
+          "size": "10",
+          "family": "regular",
+          "align": "center-left"
+        }
+      },
+      "timeView": {
+        "label":  {
+          "text" : "Check-In Time",
+          "color" : "0xFF2854A1",
+          "size": "14",
+          "family": "regular",
+          "align": "center-left"
+        },
+        "timeText":  {
+          "text" : "12:23",
+          "color" : "0xFF000000",
+          "size": "25",
+          "family": "bold",
+          "align": "center-left"
+        }
+      }
+
+    },
+    "checkOutDateTime": {
+      "showView": "date_time",
+      "dateView": {
+        "label":  {
+          "text" : "Check-Out Date",
+          "color" : "0xFF2854A1",
+          "size": "14",
+          "family": "regular",
+          "align": "center-left"
+        },
+        "dateText":  {
+          "text" : "22",
+          "color" : "0xFF000000",
+          "size": "25",
+          "family": "bold",
+          "align": "center-left"
+        },
+        "monthYearText":  {
+          "text" : "January, 2024",
+          "color" : "0xFF000000",
+          "size": "12",
+          "family": "regular",
+          "align": "center-left"
+        },
+        "weekText":  {
+          "text" : "Monday",
+          "color" : "0xFFCCCCCC",
+          "size": "10",
+          "family": "regular",
+          "align": "center-left"
+        }
+      },
+      "timeView": {
+        "label":  {
+          "text" : "Check-Out Time",
+          "color" : "0xFF2854A1",
+          "size": "14",
+          "family": "regular",
+          "align": "center-left"
+        },
+        "timeText":  {
+          "text" : "12:23",
+          "color" : "0xFF000000",
+          "size": "25",
+          "family": "bold",
+          "align": "center-left"
+        }
+      }
+
+    },
     "bottomButtonSort": {
       "text" : "Cancel",
       "color" : "0xFFFFFFFF",
