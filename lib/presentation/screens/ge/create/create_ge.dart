@@ -172,54 +172,59 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
                     print(e);
 
                     return Expanded(
-                        child: Container(
-                        child: Card(
-                        color: Color(0xFF2854A1),
-                        elevation: 5,
-                        child: Container(
-                          child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Container(
-                                  height: 5.h,
-                                ),
-                                Container(
-                                  padding: EdgeInsets.symmetric(vertical: 5.h),
-                                  color: Colors.white,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      SvgPicture.asset(
-                                        AssetConstants.pdfSvg,//e['svgIcon']['color']
-                                        color: ParseDataType().getHexToColor(e['svgIcon']['color']),
-                                        width: 25.w,
-                                        height: 25.w,
-                                      ),
-                                      SizedBox(height:5.h),
-                                      Container(
-                                        alignment: Alignment.center,
-                                        child: MetaTextView(mapData: e['title']),
-                                      ),
-                                    ],
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.of(context).pushNamed(e['onClick']);
+                          },
+                          child: Container(
+                          child: Card(
+                          color: Color(0xFF2854A1),
+                          elevation: 5,
+                          child: Container(
+                            child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    height: 5.h,
                                   ),
-                                ),
-                                Expanded(
-                                  child: Container(
-                                    alignment: Alignment.center,
-                                     child: MetaTextView(mapData: {
-                                       "text" : "+ ADD",
-                                       "color" : "0xFFFFFFFF",
-                                       "size": "8",
-                                       "family": "bold",
-                                       "align": "center"
-                                     })
+                                  Container(
+                                    padding: EdgeInsets.symmetric(vertical: 5.h),
+                                    color: Colors.white,
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        SvgPicture.asset(
+                                          AssetConstants.pdfSvg,//e['svgIcon']['color']
+                                          color: ParseDataType().getHexToColor(e['svgIcon']['color']),
+                                          width: 25.w,
+                                          height: 25.w,
+                                        ),
+                                        SizedBox(height:5.h),
+                                        Container(
+                                          alignment: Alignment.center,
+                                          child: MetaTextView(mapData: e['title']),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              ]),
-                        ),
+                                  Expanded(
+                                    child: Container(
+                                      alignment: Alignment.center,
+                                       child: MetaTextView(mapData: {
+                                         "text" : "+ ADD",
+                                         "color" : "0xFFFFFFFF",
+                                         "size": "8",
+                                         "family": "bold",
+                                         "align": "center"
+                                       })
+                                    ),
+                                  ),
+                                ]),
+                          ),
                       ),
-                    ));
+                    ),
+                        ));
 
                   }).toList(),
                 ),

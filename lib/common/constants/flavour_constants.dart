@@ -25,6 +25,7 @@ class FlavourConstants {
 
   //Create Data
   static  Map<String,dynamic> geCreateData = FlavorConfig.instance.variables["ge_create_data"];
+  static  Map<String,dynamic> accomCreateData = FlavorConfig.instance.variables["accom_create_data"];
 
 //  static  String flavour =  FlavorConfig.instance.name.toString();
 //  static  bool enableTesting =  FlavorConfig.instance.variables["enableUnitTesting"];

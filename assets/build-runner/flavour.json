@@ -631,6 +631,7 @@
           "family": "regular",
           "align": "center"
         },
+        "onClick": "/createAccommodation",
         "svgIcon":{
           "icon": "pdf.svg",
           "color" : "0xFF2854A1"
@@ -777,6 +778,38 @@
       "backgroundColor": "transparent",
       "onPress": true,
       "align": "center-left"
+    }
+  },
+  "accom_create_data": {
+    "backgroundColor" : "0xFF2854A1",
+    "title":  {
+      "text" : "Create Accommodation Expense",
+      "color" : "0XFFFFFFFF",
+      "size": "18",
+      "family": "bold",
+      "align": "center-left"
+    },
+    "backBar": {
+      "icon": "back",
+      "size": 20.0,
+      "color": "0XFFFFFFFF",
+      "backgroundColor": "transparent",
+      "onPress": true,
+      "align": "center-left"
+    },
+    "bottomButtonSort": {
+      "text" : "Sort",
+      "color" : "0xFFFFFFFF",
+      "backgroundColor" : "0xFF2854A1",
+      "size": "18",
+      "family": "regular"
+    },
+    "bottomButtonFilter": {
+      "text" : "Filter",
+      "color" : "0xFFFFFFFF",
+      "backgroundColor" : "0xFF2854A1",
+      "size": "18",
+      "family": "regular"
     }
   }
 }

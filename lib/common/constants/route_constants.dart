@@ -9,4 +9,5 @@ class RouteConstants {
   static const approvalExpensePath = "/approvalExpense";
   static const policyPath = "/viewPolicies";
   static const pdfPath = "/viewPdfScreen";
+  static const createAccommodationPath = "/createAccommodation";
 }
