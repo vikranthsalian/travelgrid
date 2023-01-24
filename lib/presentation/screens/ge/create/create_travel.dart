@@ -19,12 +19,12 @@ import 'package:travelgrid/presentation/widgets/switch.dart';
 import 'package:travelgrid/presentation/widgets/text_field.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
 
-class CreateAccommodationExpense extends StatefulWidget {
+class CreateTravelExpense extends StatefulWidget {
   @override
-  _CreateAccommodationExpenseState createState() => _CreateAccommodationExpenseState();
+  _CreateTravelExpenseState createState() => _CreateTravelExpenseState();
 }
 
-class _CreateAccommodationExpenseState extends State<CreateAccommodationExpense> {
+class _CreateTravelExpenseState extends State<CreateTravelExpense> {
   Map<String,dynamic> jsonData = {};
   List items=[];
   double cardHt = 90.h;
@@ -36,7 +36,7 @@ class _CreateAccommodationExpenseState extends State<CreateAccommodationExpense>
   void initState() {
     // TODO: implement initState
     super.initState();
-    jsonData = FlavourConstants.accomCreateData;
+    jsonData = FlavourConstants.travelCreateData;
     prettyPrint(jsonData);
   }
 
@@ -131,24 +131,23 @@ class _CreateAccommodationExpenseState extends State<CreateAccommodationExpense>
                                 Container(
                                   child: MetaDateTimeView(mapData: jsonData['checkInDateTime']),
                                 ),
-                                Container(
-                                  child: MetaDateTimeView(mapData: jsonData['checkOutDateTime']),
-                                ),
                                 Row(
                                     children: [
                                   Expanded(
                                     child: Container(
-                                      child: MetaSearchSelectorView(mapData: jsonData['selectCity']),
+                                      child: MetaSearchSelectorView(mapData: jsonData['selectOrigin']),
                                       alignment: Alignment.centerLeft,
                                     ),
                                   ),
                                   Expanded(
                                     child: Container(
-                                      child: MetaDialogSelectorView(mapData: jsonData['selectType']),
+                                      child: MetaSearchSelectorView(mapData: jsonData['selectDestination']),
                                     ),
                                   ),
                                 ]),
-
+                                Container(
+                                  child: MetaDialogSelectorView(mapData: jsonData['selectMode']),
+                                ),
                                 showWithBill ?  MetaTextFieldView(mapData: jsonData['text_field_voucher'],
                                     textFieldBloc: formBloc.tfUsername,
                                     onChanged:(value){

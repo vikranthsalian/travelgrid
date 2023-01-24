@@ -631,7 +631,7 @@
           "family": "regular",
           "align": "center"
         },
-        "onClick": "/createAccommodation",
+        "onClick": "/createAccommodationExpense",
         "svgIcon":{
           "icon": "pdf.svg",
           "color" : "0xFF2854A1"
@@ -645,6 +645,7 @@
           "family": "regular",
           "align": "center"
         },
+        "onClick": "/createTravelExpense",
         "svgIcon":{
           "icon": "pdf.svg",
           "color" : "0xFF2854A1"
@@ -1115,7 +1116,7 @@
   "travel_create_data": {
     "backgroundColor" : "0xFF2854A1",
     "title":  {
-      "text" : "Create\nAccommodation Expense",
+      "text" : "Create\nTravel Expense",
       "color" : "0XFFFFFFFF",
       "size": "18",
       "family": "bold",
@@ -1130,7 +1131,7 @@
       "align": "center-left"
     },
     "checkInDateTime": {
-      "showView": "date_time",
+      "showView": "date",
       "dateView": {
         "label":  {
           "text" : "Check-In Date",
@@ -1163,7 +1164,7 @@
       },
       "timeView": {
         "label":  {
-          "text" : "Check-In Time",
+          "text" : "Date",
           "color" : "0xFF2854A1",
           "size": "14",
           "family": "regular",
@@ -1179,84 +1180,51 @@
       }
 
     },
-    "checkOutDateTime": {
-      "showView": "date_time",
-      "dateView": {
-        "label":  {
-          "text" : "Check-Out Date",
-          "color" : "0xFF2854A1",
-          "size": "14",
-          "family": "regular",
-          "align": "center-left"
-        },
-        "dateText":  {
-          "text" : "22",
-          "color" : "0xFF000000",
-          "size": "25",
-          "family": "bold",
-          "align": "center-left"
-        },
-        "monthYearText":  {
-          "text" : "January, 2024",
-          "color" : "0xFF000000",
-          "size": "12",
-          "family": "regular",
-          "align": "center-left"
-        },
-        "weekText":  {
-          "text" : "Monday",
-          "color" : "0xFFCCCCCC",
-          "size": "10",
-          "family": "regular",
-          "align": "center-left"
-        }
-      },
-      "timeView": {
-        "label":  {
-          "text" : "Check-Out Time",
-          "color" : "0xFF2854A1",
-          "size": "14",
-          "family": "regular",
-          "align": "center-left"
-        },
-        "timeText":  {
-          "text" : "12:23",
-          "color" : "0xFF000000",
-          "size": "25",
-          "family": "bold",
-          "align": "center-left"
-        }
-      }
-
-    },
-    "selectCity": {
+    "selectOrigin": {
       "showView": true,
       "label":  {
-        "text" : "City",
+        "text" : "Origin",
         "color" : "0xFF2854A1",
         "size": "14",
         "family": "regular",
         "align": "center-left"
       },
       "dataText":  {
-        "text" : "Choose City",
+        "text" : "Choose Origin",
         "color" : "0xFFCCCCCC",
         "size": "18",
         "family": "regular",
         "align": "center-left"
       }
     },
-    "selectType": {
+    "selectDestination": {
       "showView": true,
       "label":  {
-        "text" : "Accommodation Type*",
+        "text" : "Destination",
         "color" : "0xFF2854A1",
         "size": "14",
         "family": "regular",
         "align": "center-left"
       },
       "dataText":  {
-        "text" : "Choose Type",
+        "text" : "Choose Dest.",
+        "color" : "0xFFCCCCCC",
+        "size": "18",
+        "family": "regular",
+        "align": "center-left"
+      }
+    },
+    "selectMode": {
+      "showView": true,
+      "label":  {
+        "text" : "Travel Mode*",
+        "color" : "0xFF2854A1",
+        "size": "14",
+        "family": "regular",
+        "align": "center-left"
+      },
+      "dataText":  {
+        "text" : "Choose Mode",
         "color" : "0xFFCCCCCC",
         "size": "18",
         "family": "regular",

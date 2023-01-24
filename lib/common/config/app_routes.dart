@@ -8,6 +8,7 @@ import 'package:travelgrid/presentation/screens/dashboard/dashboard.dart';
 import 'package:travelgrid/presentation/screens/dashboard/dashboard_2.dart';
 import 'package:travelgrid/presentation/screens/ge/create/create_accom.dart';
 import 'package:travelgrid/presentation/screens/ge/create/create_ge.dart';
+import 'package:travelgrid/presentation/screens/ge/create/create_travel.dart';
 import 'package:travelgrid/presentation/screens/policy/policy_screen.dart';
 import 'package:travelgrid/presentation/screens/splash/splash_screen.dart';
 import 'package:travelgrid/presentation/screens/tabs/approval_expense.dart';
@@ -71,8 +72,12 @@ class AppRoutes {
       case RouteConstants.pdfPath:
         return PDFComponent(path: args.toString());
 
-      case RouteConstants.createAccommodationPath:
+      case RouteConstants.createAccommodationExpensePath:
         return CreateAccommodation();
+
+      case RouteConstants.createTravelExpensePath:
+        return CreateTravelExpense();
+
 
       default:
         return SplashScreen();
