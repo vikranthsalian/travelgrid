@@ -1411,5 +1411,251 @@
       "size": "18",
       "family": "regular"
     }
+  },
+  "misc_create_data": {
+    "backgroundColor" : "0xFF2854A1",
+    "title":  {
+      "text" : "Create\nMiscellaneous Expense",
+      "color" : "0XFFFFFFFF",
+      "size": "18",
+      "family": "bold",
+      "align": "center-left"
+    },
+    "backBar": {
+      "icon": "back",
+      "size": 20.0,
+      "color": "0XFFFFFFFF",
+      "backgroundColor": "transparent",
+      "onPress": true,
+      "align": "center-left"
+    },
+    "checkInDateTime": {
+      "showView": "date",
+      "dateView": {
+        "label":  {
+          "text" : "Start Date",
+          "color" : "0xFF2854A1",
+          "size": "14",
+          "family": "regular",
+          "align": "center-left"
+        },
+        "dateText":  {
+          "text" : "22",
+          "color" : "0xFF000000",
+          "size": "25",
+          "family": "bold",
+          "align": "center-left"
+        },
+        "monthYearText":  {
+          "text" : "January, 2024",
+          "color" : "0xFF000000",
+          "size": "12",
+          "family": "regular",
+          "align": "center-left"
+        },
+        "weekText":  {
+          "text" : "Monday",
+          "color" : "0xFFCCCCCC",
+          "size": "10",
+          "family": "regular",
+          "align": "center-left"
+        }
+      }
+    },
+    "checkOutDateTime": {
+      "showView": "date",
+      "dateView": {
+        "label":  {
+          "text" : "End Date",
+          "color" : "0xFF2854A1",
+          "size": "14",
+          "family": "regular",
+          "align": "center-left"
+        },
+        "dateText":  {
+          "text" : "22",
+          "color" : "0xFF000000",
+          "size": "25",
+          "family": "bold",
+          "align": "center-left"
+        },
+        "monthYearText":  {
+          "text" : "January, 2024",
+          "color" : "0xFF000000",
+          "size": "12",
+          "family": "regular",
+          "align": "center-left"
+        },
+        "weekText":  {
+          "text" : "Monday",
+          "color" : "0xFFCCCCCC",
+          "size": "10",
+          "family": "regular",
+          "align": "center-left"
+        }
+      }
+    },
+    "selectCity": {
+      "showView": true,
+      "label":  {
+        "text" : "City",
+        "color" : "0xFF2854A1",
+        "size": "14",
+        "family": "regular",
+        "align": "center-left"
+      },
+      "dataText":  {
+        "text" : "Choose City",
+        "color" : "0xFFCCCCCC",
+        "size": "18",
+        "family": "regular",
+        "align": "center-left"
+      }
+    },
+    "unitType":  {
+      "label":  {
+        "text" : "Within Unit",
+        "color" : "0xFF2854A1",
+        "size": "14",
+        "family": "bold",
+        "align": "center-left"
+      }
+    },
+    "text_field_voucher":  {
+      "name": "Voucher",
+      "apiKey": "voucher",
+      "type": "text_field_view",
+      "inputType": "text",
+      "isPassword": false,
+      "backgroundColor": "0XFFFFFFFF",
+      "borderColor": "0XFFCCCCCC",
+      "text" : {
+        "text" : "",
+        "color" : "0xFF2854A1",
+        "size": "14",
+        "family": "regular"
+      },
+      "labelText" : {
+        "text" : "Voucher",
+        "color" : "0xFF2854A1",
+        "size": "14",
+        "family": "regular",
+        "align" : "center-left"
+      },
+      "hintText" : {
+        "text" : "Enter Voucher",
+        "color" : "0xFF2854A1",
+        "size": "14",
+        "family": "regular"
+      },
+      "errorText" : {
+        "text" : "",
+        "color" : "0xFFFF0000",
+        "size": "14",
+        "family": "regular"
+      },
+      "validators" : [
+        {
+          "type" : "empty"
+        }
+      ]
+    },
+    "text_field_amount":  {
+      "name": "Amount*",
+      "apiKey": "amount",
+      "type": "text_field_view",
+      "inputType": "number",
+      "isPassword": false,
+      "backgroundColor": "0XFFFFFFFF",
+      "borderColor": "0XFFCCCCCC",
+      "text" : {
+        "text" : "",
+        "color" : "0xFF2854A1",
+        "size": "14",
+        "family": "regular"
+      },
+      "labelText" : {
+        "text" : "Amount",
+        "color" : "0xFF2854A1",
+        "size": "14",
+        "family": "regular",
+        "align" : "center-left"
+      },
+      "hintText" : {
+        "text" : "Enter Amount",
+        "color" : "0xFF2854A1",
+        "size": "14",
+        "family": "regular"
+      },
+      "errorText" : {
+        "text" : "",
+        "color" : "0xFFFF0000",
+        "size": "14",
+        "family": "regular"
+      },
+      "validators" : [
+        {
+          "type" : "empty"
+        }
+      ]
+    },
+    "text_field_desc":  {
+      "name": "Description",
+      "apiKey": "description",
+      "type": "text_field_view",
+      "inputType": "text",
+      "isPassword": false,
+      "backgroundColor": "0XFFFFFFFF",
+      "borderColor": "0XFFCCCCCC",
+      "text" : {
+        "text" : "",
+        "color" : "0xFF2854A1",
+        "size": "14",
+        "family": "regular"
+      },
+      "labelText" : {
+        "text" : "Description",
+        "color" : "0xFF2854A1",
+        "size": "14",
+        "family": "regular",
+        "align" : "center-left"
+      },
+      "hintText" : {
+        "text" : "Enter Description",
+        "color" : "0xFF2854A1",
+        "size": "14",
+        "family": "regular"
+      },
+      "errorText" : {
+        "text" : "",
+        "color" : "0xFFFF0000",
+        "size": "14",
+        "family": "regular"
+      },
+      "validators" : []
+    },
+    "uploadButton":  {
+      "text" : "Upload Voucher",
+      "color" : "0xFFFFFFFF",
+      "backgroundColor" : "0xFF2854A1",
+      "size": "14",
+      "borderRadius": 15.0,
+      "family": "regular",
+      "onClick": "/uploadDoc"
+    },
+    "bottomButtonLeft": {
+      "text" : "Cancel",
+      "color" : "0xFFFFFFFF",
+      "backgroundColor" : "0xFF2854A1",
+      "size": "18",
+      "family": "regular"
+    },
+    "bottomButtonRight": {
+      "text" : "Save",
+      "color" : "0xFFFFFFFF",
+      "backgroundColor" : "0xFF2854A1",
+      "size": "18",
+      "family": "regular"
+    }
   }
 }
