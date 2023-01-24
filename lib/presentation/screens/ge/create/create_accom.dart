@@ -39,15 +39,6 @@ class _CreateAccommodationState extends State<CreateAccommodation> {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton:  FloatingActionButton(
-        child:MetaIcon(mapData:jsonData['bottomButtonFab'],onButtonPressed: (){
-          if(jsonData['bottomButtonFab']['onClick'].isNotEmpty){
-
-          }
-        },),
-        backgroundColor: ParseDataType().getHexToColor(jsonData['backgroundColor']),
-        onPressed: () {}),
       bottomNavigationBar: BottomAppBar(
         color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
         shape: CircularNotchedRectangle(),
@@ -70,7 +61,33 @@ class _CreateAccommodationState extends State<CreateAccommodation> {
           ],
         ),
       ),
-      body: Container(),
+      body: Container(
+        color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
+        height: 100.h,
+        child:  Column(
+          children: [
+            SizedBox(height:40.h),
+            Container(
+              height: 40.h,
+              alignment: Alignment.center,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  MetaIcon(mapData:jsonData['backBar'],
+                      onButtonPressed: (){
+                        Navigator.pop(context);
+                      }),
+                  Container(
+                    child:MetaTextView(mapData: jsonData['title']),
+                  ),
+                ],
+              ),
+            ),
+
+          ],
+        ),
+      ),
     );
   }
 

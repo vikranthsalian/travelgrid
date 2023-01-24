@@ -798,14 +798,14 @@
       "align": "center-left"
     },
     "bottomButtonSort": {
-      "text" : "Sort",
+      "text" : "Cancel",
       "color" : "0xFFFFFFFF",
       "backgroundColor" : "0xFF2854A1",
       "size": "18",
       "family": "regular"
     },
     "bottomButtonFilter": {
-      "text" : "Filter",
+      "text" : "Save",
       "color" : "0xFFFFFFFF",
       "backgroundColor" : "0xFF2854A1",
       "size": "18",
