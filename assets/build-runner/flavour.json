@@ -587,29 +587,15 @@
       "onPress": true,
       "align": "center-left"
     },
-    "requesterTitle":  {
-      "text" : "Requester Details",
-      "color" : "0XFFFFFFFF",
-      "size": "14",
-      "family": "bold",
-      "align": "center-left"
-    },
     "requesterDetails":  {
       "label": {
-        "text" : "",
+        "text" : "Requester Details",
         "color" : "0XFFFFFFFF",
-        "size": "10",
+        "size": "14",
         "family": "bold",
         "align": "center-left"
       },
-      "value": {
-        "text" : "",
-        "color" : "0XFFFFFFFF",
-        "size": "7",
-        "family": "regular",
-        "align": "center-left"
-      },
-      "switchData": {
+      "showDetails": {
         "label": {
           "text" : "Show",
           "color" : "0XFFFFFFFF",
@@ -620,7 +606,21 @@
       },
       "data": ["Initiator Name","Grade","Gender","Emp. Code",
                "Division","Department","Cost Center","Location",
-               "Contact","Emer. Contact"]
+               "Contact","Emer. Contact"],
+      "gridLabel": {
+        "text" : "",
+        "color" : "0XFF000000",
+        "size": "10",
+        "family": "bold",
+        "align": "center-left"
+      },
+      "gridValue": {
+        "text" : "",
+        "color" : "0XFFCCCCCC",
+        "size": "7",
+        "family": "regular",
+        "align": "center-left"
+      }
     },
     "expensesTypes": [
       {
@@ -633,7 +633,7 @@
         },
         "onClick": "/createAccommodationExpense",
         "svgIcon":{
-          "icon": "pdf.svg",
+          "icon": "briefcase.svg",
           "color" : "0xFF2854A1"
         }
       },
@@ -647,20 +647,7 @@
         },
         "onClick": "/createTravelExpense",
         "svgIcon":{
-          "icon": "pdf.svg",
-          "color" : "0xFF2854A1"
-        }
-      },
-      {
-        "title": {
-          "text" : "Daily Allowance",
-          "color" : "0xFF2854A1",
-          "size": "8",
-          "family": "regular",
-          "align": "center"
-        },
-        "svgIcon":{
-          "icon": "pdf.svg",
+          "icon": "briefcase.svg",
           "color" : "0xFF2854A1"
         }
       },
@@ -674,11 +661,249 @@
         },
         "onClick": "/createMiscExpense",
         "svgIcon":{
-          "icon": "pdf.svg",
+          "icon": "briefcase.svg",
           "color" : "0xFF2854A1"
         }
       }
     ],
+    "summaryDetails": {
+      "label": {
+        "text" : "Expense Summary Details",
+        "color" : "0XFFFFFFFF",
+        "size": "14",
+        "family": "bold",
+        "align": "center-left"
+      },
+      "showDetails": {
+        "label": {
+          "text" : "Show",
+          "color" : "0XFFFFFFFF",
+          "size": "10",
+          "family": "bold",
+          "align": "center-right"
+        }
+      },
+      "dataHeader":  {
+        "label": {
+          "text" : "Expense Summary",
+          "color" : "0xFF000000",
+          "size": "14",
+          "family": "bold",
+          "align": "center-left"
+        },
+        "value": {
+          "text" : "Reimbursement",
+          "color" : "0xFF000000",
+          "size": "14",
+          "family": "bold",
+          "align": "center-right"
+        }
+      },
+      "data": [
+        {
+        "label": {
+          "text" : "Accommodation Expense",
+          "color" : "0xFF000000",
+          "size": "14",
+          "family": "regular",
+          "align": "center-left"
+        },
+        "value": {
+          "text" : "0.00",
+          "color" : "0xFFCCCCCC",
+          "size": "14",
+          "family": "regular",
+          "align": "center-right"
+        }
+       },
+        {
+          "label": {
+            "text" : "Travel Expense",
+            "color" : "0xFF000000",
+            "size": "14",
+            "family": "regular",
+            "align": "center-left"
+          },
+          "value": {
+            "text" : "0.00",
+            "color" : "0xFFCCCCCC",
+            "size": "14",
+            "family": "regular",
+            "align": "center-right"
+          }
+        },
+        {
+          "label": {
+            "text" : "Daily Allowance",
+            "color" : "0xFF000000",
+            "size": "14",
+            "family": "regular",
+            "align": "center-left"
+          },
+          "value": {
+            "text" : "0.00",
+            "color" : "0xFFCCCCCC",
+            "size": "14",
+            "family": "regular",
+            "align": "center-right"
+          }
+        },
+        {
+          "label": {
+            "text" : "Miscellaneous Expense",
+            "color" : "0xFF000000",
+            "size": "14",
+            "family": "regular",
+            "align": "center-left"
+          },
+          "value": {
+            "text" : "0.00",
+            "color" : "0xFFCCCCCC",
+            "size": "14",
+            "family": "regular",
+            "align": "center-right"
+          }
+        }
+      ],
+      "dataFooter":  {
+        "label": {
+          "text" : "Total Expense",
+          "color" : "0xFF000000",
+          "size": "14",
+          "family": "bold",
+          "align": "center-left"
+        },
+        "value": {
+          "text" : "0.00",
+          "color" : "0xFF000000",
+          "size": "14",
+          "family": "bold",
+          "align": "center-right"
+        }
+      }
+    },
+    "approverDetails": {
+      "label": {
+        "text" : "Approver Details",
+        "color" : "0XFFFFFFFF",
+        "size": "14",
+        "family": "bold",
+        "align": "center-left"
+      },
+      "showDetails": {
+        "label": {
+          "text" : "Show",
+          "color" : "0XFFFFFFFF",
+          "size": "10",
+          "family": "bold",
+          "align": "center-right"
+        }
+      },
+      "selectApprover1": {
+        "showView": true,
+        "label":  {
+          "text" : "Approver 1",
+          "color" : "0xFF2854A1",
+          "size": "14",
+          "family": "regular",
+          "align": "center-left"
+        },
+        "dataText":  {
+          "text" : "Choose Approver",
+          "color" : "0xFFCCCCCC",
+          "size": "16",
+          "family": "regular",
+          "align": "center-left"
+        }
+      },
+      "selectApprover2": {
+        "showView": true,
+        "label":  {
+          "text" : "Approver 2",
+          "color" : "0xFF2854A1",
+          "size": "14",
+          "family": "regular",
+          "align": "center-left"
+        },
+        "dataText":  {
+          "text" : "Choose Approver",
+          "color" : "0xFFCCCCCC",
+          "size": "16",
+          "family": "regular",
+          "align": "center-left"
+        },
+        "text_field_desc":  {
+          "name": "Description",
+          "apiKey": "description",
+          "type": "text_field_view",
+          "inputType": "text",
+          "isPassword": false,
+          "backgroundColor": "0XFFFFFFFF",
+          "borderColor": "0XFFCCCCCC",
+          "text" : {
+            "text" : "",
+            "color" : "0xFF2854A1",
+            "size": "14",
+            "family": "regular"
+          },
+          "labelText" : {
+            "text" : "Description",
+            "color" : "0xFF2854A1",
+            "size": "14",
+            "family": "regular",
+            "align" : "center-left"
+          },
+          "hintText" : {
+            "text" : "Enter Description",
+            "color" : "0xFF2854A1",
+            "size": "14",
+            "family": "regular"
+          },
+          "errorText" : {
+            "text" : "",
+            "color" : "0xFFFF0000",
+            "size": "14",
+            "family": "regular"
+          },
+          "validators" : []
+        }
+      },
+      "text_field_desc":  {
+        "name": "Description",
+        "apiKey": "description",
+        "type": "text_field_view",
+        "inputType": "text",
+        "isPassword": false,
+        "backgroundColor": "0XFFFFFFFF",
+        "borderColor": "0XFFCCCCCC",
+        "text" : {
+          "text" : "",
+          "color" : "0xFF2854A1",
+          "size": "14",
+          "family": "regular"
+        },
+        "labelText" : {
+          "text" : "Description",
+          "color" : "0xFF2854A1",
+          "size": "14",
+          "family": "regular",
+          "align" : "center-left"
+        },
+        "hintText" : {
+          "text" : "Enter Description",
+          "color" : "0xFF2854A1",
+          "size": "14",
+          "family": "regular"
+        },
+        "errorText" : {
+          "text" : "",
+          "color" : "0xFFFF0000",
+          "size": "14",
+          "family": "regular"
+        },
+        "validators" : []
+      }
+    },
     "bottomButtonLeft": {
       "text" : "Sort",
       "color" : "0xFFFFFFFF",

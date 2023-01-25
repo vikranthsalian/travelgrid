@@ -17,8 +17,13 @@ import 'package:travelgrid/data/datsources/login_response.dart';
 import 'package:travelgrid/presentation/components/bloc_map_event.dart';
 import 'package:travelgrid/presentation/components/clippers/app_bar_shape.dart';
 import 'package:travelgrid/presentation/components/search_bar_component.dart';
+import 'package:travelgrid/presentation/screens/auth/bloc/login_form_bloc.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';
+import 'package:travelgrid/presentation/widgets/dialog_selector_view.dart';
 import 'package:travelgrid/presentation/widgets/icon.dart';
+import 'package:travelgrid/presentation/widgets/search_selector_view.dart';
+import 'package:travelgrid/presentation/widgets/switch.dart';
+import 'package:travelgrid/presentation/widgets/text_field.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
 
 class CreateGeneralExpense extends StatefulWidget {
@@ -30,13 +35,16 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
   Map<String,dynamic> jsonData = {};
   List details=[];
   List expenseTypes=[];
+  List summaryDetails=[];
   double cardHt = 90.h;
   bool enableSearch = false;
   final TextEditingController _searchController = TextEditingController();
   bool loaded=false;
-  GeneralExpenseBloc? bloc;
-  bool isSwitched = false;
+  LoginFormBloc? formBloc;
   List<String> values=[];
+  bool showRequesterDetails=true;
+  bool showSummaryDetails=true;
+  bool showApproverDetails=true;
   @override
   void initState() {
     // TODO: implement initState
@@ -45,7 +53,8 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
    // prettyPrint(jsonData);
 
      details = jsonData['requesterDetails']['data'];
-      expenseTypes = jsonData['expensesTypes'];
+     expenseTypes = jsonData['expensesTypes'];
+    summaryDetails = jsonData['summaryDetails']['data'];
 
     MetaLoginResponse loginResponse = context.read<LoginCubit>().getLoginResponse();
     values.add(loginResponse.data!.fullName ?? "");
@@ -68,7 +77,6 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomAppBar(
         color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
         shape: CircularNotchedRectangle(),
@@ -93,8 +101,7 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
       ),
       body: Container(
         color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
-        height: 450.h,
-        child:  Column(
+        child: Column(
           children: [
             SizedBox(height:40.h),
             Container(
@@ -115,60 +122,41 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
               ),
             ),
             Container(
-              alignment: Alignment.center,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                      Container(
-                          margin: EdgeInsets.symmetric(horizontal: 20.w),
-                      child: MetaTextView(mapData: jsonData['requesterTitle'])),
-                  Switch(
-                    activeColor: Colors.green,
-                    value: isSwitched,
-                    onChanged:(bool? value) {
-                      setState(() {
-                        isSwitched=value!;
-                      });
-                    },
-                  ),
-                    ],
-              ),
-            ),
-            SizedBox(height:5.h),
-            Container(
-              child: GridView.builder(
-                physics: NeverScrollableScrollPhysics(),
-                padding: EdgeInsets.zero,
-                itemCount: details.length,
-                shrinkWrap: true,
-                gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount:2,
-                    childAspectRatio: 7,
-                    mainAxisSpacing: 3.h
-                ),
-                itemBuilder: (BuildContext context, int index) {
-                    return Container(
-                      margin: EdgeInsets.symmetric(horizontal: 20.w),
-                                 child: Column(
-                                   mainAxisAlignment: MainAxisAlignment.center,
-                                   children: [
-                                   MetaTextView(mapData: jsonData['requesterDetails']['label'],text:details[index],
-                                     key: UniqueKey(),),
-                                   MetaTextView(mapData: jsonData['requesterDetails']['value'],text:values[index],
-                                     key: UniqueKey(),)
-                                 ])
-                           );
-                    },
-              )
-            ),
-            Container(
               color: Colors.white,
               height:80,
               child: Container(
                 margin: EdgeInsets.symmetric(horizontal: 10.w),
                 child: Row(
                   children: expenseTypes.map((e) {
-                    print(e);
+
+                    return Expanded(
+                        child: InkWell(
+                            onTap: () {
+                              Navigator.of(context).pushNamed(e['onClick']);
+                            },
+                            child: Container(
+                              height: 60.h,
+                              decoration: BoxDecoration(
+                                color: Colors.lightBlueAccent,
+                                shape: BoxShape.circle,
+                              ),
+                              child: Stack(
+                                alignment: Alignment.center,
+                                children: [
+                                  Container(
+                                    width: 25.w,
+                                    height: 25.w,
+                                    child: SvgPicture.asset(
+                                      AssetConstants.assetsBaseURLSVG +"/"+  e['svgIcon']['icon'],//e['svgIcon']['color']
+                                      // color: ParseDataType().getHexToColor(e['svgIcon']['color']),
+                                      width: 25.w,
+                                      height: 25.w,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )
+                        ));
 
                     return Expanded(
                         child: InkWell(
@@ -176,64 +164,309 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
                             Navigator.of(context).pushNamed(e['onClick']);
                           },
                           child: Container(
-                          child: Card(
-                          color: Color(0xFF2854A1),
-                          elevation: 5,
-                          child: Container(
-                            child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    height: 5.h,
-                                  ),
-                                  Container(
-                                    padding: EdgeInsets.symmetric(vertical: 5.h),
-                                    color: Colors.white,
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: [
-                                        SvgPicture.asset(
-                                          AssetConstants.pdfSvg,//e['svgIcon']['color']
-                                          color: ParseDataType().getHexToColor(e['svgIcon']['color']),
-                                          width: 25.w,
-                                          height: 25.w,
+                            child: Card(
+                              color: Color(0xFF2854A1),
+                              elevation: 5,
+                              child: Container(
+                                child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                        height: 5.h,
+                                      ),
+                                      Container(
+                                        padding: EdgeInsets.symmetric(vertical: 5.h),
+                                        color: Colors.white,
+                                        child: Column(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          children: [
+                                            SvgPicture.asset(
+                                              AssetConstants.pdfSvg,//e['svgIcon']['color']
+                                              color: ParseDataType().getHexToColor(e['svgIcon']['color']),
+                                              width: 25.w,
+                                              height: 25.w,
+                                            ),
+                                            SizedBox(height:5.h),
+                                            Container(
+                                              alignment: Alignment.center,
+                                              child: MetaTextView(mapData: e['title']),
+                                            ),
+                                          ],
                                         ),
-                                        SizedBox(height:5.h),
-                                        Container(
-                                          alignment: Alignment.center,
-                                          child: MetaTextView(mapData: e['title']),
+                                      ),
+                                      Expanded(
+                                        child: Container(
+                                            alignment: Alignment.center,
+                                            child: MetaTextView(mapData: {
+                                              "text" : "+ ADD",
+                                              "color" : "0xFFFFFFFF",
+                                              "size": "8",
+                                              "family": "bold",
+                                              "align": "center"
+                                            })
                                         ),
-                                      ],
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Container(
-                                      alignment: Alignment.center,
-                                       child: MetaTextView(mapData: {
-                                         "text" : "+ ADD",
-                                         "color" : "0xFFFFFFFF",
-                                         "size": "8",
-                                         "family": "bold",
-                                         "align": "center"
-                                       })
-                                    ),
-                                  ),
-                                ]),
+                                      ),
+                                    ]),
+                              ),
+                            ),
                           ),
-                      ),
-                    ),
                         ));
 
                   }).toList(),
                 ),
               ),
-            )
+            ),
+            Expanded(
+              child: Container(
+                color:Colors.white,
+                child:BlocProvider(
+                  create: (context) => LoginFormBloc({}),
+                  child: Builder(
+                      builder: (context) {
+                        formBloc =  BlocProvider.of<LoginFormBloc>(context);
+                        return FormBlocListener<LoginFormBloc, String, String>(
+                            onSubmissionFailed: (context, state) {
+
+                            },
+                            onSubmitting: (context, state) {
+                              FocusScope.of(context).unfocus();
+                            },
+                            onSuccess: (context, state) {
+
+                            },
+                            onFailure: (context, state) {
+
+
+                            },
+                            child:  SingleChildScrollView(
+                              child: Column(
+                                children: [
+                                  buildExpandableView(jsonData,"requesterDetails"),
+                                  buildExpandableView(jsonData,"summaryDetails"),
+                                  buildExpandableView(jsonData,"approverDetails"),
+                                ],
+                              ),
+                            )
+                        );
+                      }
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),
     );
   }
+
+
+  Container buildExpandableView(Map mapData,String key){
+    Map map= mapData[key];
+
+    Container getSwitches(map,value){
+      switch(value){
+        case "requesterDetails":
+          return Container(
+            alignment: Alignment.centerLeft,
+            child: MetaSwitch(mapData: map['showDetails'],
+              value: showRequesterDetails,
+              onSwitchPressed: (value){
+                setState(() {
+                  showRequesterDetails=value;
+                });
+              },),
+          );
+        case "summaryDetails":
+          return Container(
+            alignment: Alignment.centerRight,
+            child: MetaSwitch(mapData: map['showDetails'],
+              value: showSummaryDetails,
+              onSwitchPressed: (value){
+
+                setState(() {
+                  showSummaryDetails=value;
+                });
+
+              },),
+          );
+        case "approverDetails":
+          return Container(
+            alignment: Alignment.centerRight,
+            child: MetaSwitch(mapData: map['showDetails'],
+              value: showApproverDetails,
+              onSwitchPressed: (value){
+
+                setState(() {
+                  showApproverDetails=value;
+                });
+
+              },),
+          );
+        default:
+          return Container();
+
+      }
+
+    }
+
+    Container getViews(map,value){
+      switch(value){
+        case "requesterDetails":
+          return showRequesterDetails ? buildRequesterWidget(map):Container();
+        case "summaryDetails":
+          return showSummaryDetails ? buildSummaryWidget(map):Container();
+        case "approverDetails":
+          return showApproverDetails ? buildApproverWidget(map, formBloc):Container();
+        default:
+          return Container();
+      }
+
+    }
+    return Container(
+      child: Column(
+        children: [
+          buildHeaders(map, getSwitches(map,key)),
+          getViews(map,key)
+        ],
+      ),
+    );
+  }
+
+
+  Container buildHeaders(Map map, Container child) {
+    return Container(
+            height: 40.h,
+            color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
+            child: Row(
+
+              children: [
+                Container(
+                    margin: EdgeInsets.symmetric(horizontal: 20.w),
+                    child: MetaTextView(mapData: map['label'])),
+                Expanded(child: child)
+              ],
+            ),
+          );
+  }
+
+  Container buildSummaryWidget(Map map) {
+    return Container(
+            padding: EdgeInsets.symmetric(horizontal: 20.w,vertical: 10.h),
+            color: Colors.white,
+            child: Column(
+              children: [
+                Container(
+                  child: Row(
+                    children: [
+                      Expanded(child: MetaTextView(mapData:   map['dataHeader']['label'])),
+                      Expanded(child: MetaTextView(mapData:  map['dataHeader']['value']))
+                    ],
+                  ),
+                ),
+                Divider(color: Color(0xff3D3D3D),),
+                Container(
+                  color: Colors.white,
+                  child: ListView.separated(
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    padding: EdgeInsets.zero,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Container(
+                          padding: EdgeInsets.symmetric(vertical: 5.h),
+                          child: Row(
+                            children: [
+                              Expanded(child: MetaTextView(mapData: summaryDetails[index]['label'])),
+                              Expanded(child: MetaTextView(mapData: summaryDetails[index]['value']))
+                            ],
+                          ),
+                        );
+                      },
+                      separatorBuilder: (BuildContext context, int index) {
+                      return Container();
+                      },
+                      itemCount: summaryDetails.length
+                  ),
+                ),
+                Divider(color: Color(0xff3D3D3D),),
+                Container(
+                  child: Row(
+                    children: [
+                      Expanded(child: MetaTextView(mapData:  map['dataFooter']['label'])),
+                      Expanded(child: MetaTextView(mapData:  map['dataFooter']['value']))
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          );
+  }
+
+  Container buildApproverWidget(Map map,bloc){
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 20.w,vertical: 10.h),
+      color: Colors.white,
+      child: ScrollableFormBlocManager(
+        formBloc: bloc,
+        child: ListView(
+        padding: EdgeInsets.zero,
+        shrinkWrap: true,
+        children:[
+          Row(
+              children: [
+                Expanded(
+                  child: Container(
+                    child: MetaDialogSelectorView(mapData: map['selectApprover1']),
+                    alignment: Alignment.centerLeft,
+                  ),
+                ),
+                Expanded(
+                  child: Container(
+                    child: MetaDialogSelectorView(mapData: map['selectApprover1']),
+                  ),
+                ),
+              ]),
+          MetaTextFieldView(mapData: map['text_field_desc'],
+              textFieldBloc: bloc.tfUsername,
+              onChanged:(value){
+                bloc.tfUsername.updateValue(value);
+              }),
+
+        ],
+      )),
+    );
+  }
+
+  Container buildRequesterWidget(Map map){
+    return Container(
+        color: Colors.white,
+        child: GridView.builder(
+          physics: NeverScrollableScrollPhysics(),
+          padding: EdgeInsets.zero,
+          itemCount: details.length,
+          shrinkWrap: true,
+          gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount:2,
+              childAspectRatio: 7,
+              mainAxisSpacing: 3.h
+          ),
+          itemBuilder: (BuildContext context, int index) {
+            return Container(
+                margin: EdgeInsets.symmetric(horizontal: 20.w),
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      MetaTextView(mapData: map['gridLabel'],text:details[index],
+                        key: UniqueKey(),),
+                      MetaTextView(mapData: map['gridValue'],text:values[index],
+                        key: UniqueKey(),)
+                    ])
+            );
+          },
+        )
+    );
+  }
+
 
 
 }

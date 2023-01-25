@@ -45,10 +45,6 @@ class _CreateAccommodationState extends State<CreateAccommodation> {
   Widget build(BuildContext context) {
 
 
-
-
-
-
     return Scaffold(
       backgroundColor: Colors.white,
       bottomNavigationBar: BottomAppBar(

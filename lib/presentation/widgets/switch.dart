@@ -29,10 +29,9 @@ class _MetaSwitchState extends State<MetaSwitch> {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 10.w,vertical: 5.h),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          Container(
-              child: MetaTextView(mapData: widget.mapData['label'])),
+          Container(child: MetaTextView(mapData: widget.mapData['label'])),
           Switch(
             activeColor: Colors.green,
             value: widget.value,
