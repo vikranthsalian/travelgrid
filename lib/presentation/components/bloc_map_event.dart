@@ -15,7 +15,7 @@ class BlocMapToEvent extends StatelessWidget {
     return Column(
         children: [
           topComponent ?? Container(),
-         _mapStateToWidget(state)
+         Expanded(child: _mapStateToWidget(state))
         ]);
   }
 
