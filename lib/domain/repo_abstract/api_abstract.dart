@@ -1,3 +1,4 @@
+import 'package:travelgrid/data/datsources/accom_type_list.dart';
 import 'package:travelgrid/data/datsources/cities_list.dart';
 import 'package:travelgrid/data/datsources/general_expense_list.dart';
 import 'package:travelgrid/data/datsources/login_response.dart';
@@ -12,4 +13,6 @@ abstract class GeAPIAbstract {
 }
 abstract class CommonAPIAbstract {
   Future<MetaCityListResponse> getCities(countryCode,tripType);
+
+  Future<MetaAccomTypeListResponse> getAccomTypesList();
 }

@@ -1,6 +1,7 @@
 
 import 'package:kiwi/kiwi.dart';
 import 'package:travelgrid/common/http/http_client.dart';
+import 'package:travelgrid/data/blocs/accom/accom_type_bloc.dart';
 import 'package:travelgrid/data/blocs/cities/city_bloc.dart';
 import 'package:travelgrid/data/blocs/general_expense/ge_bloc.dart';
 import 'package:travelgrid/data/remote/remote_datasource.dart';
@@ -36,6 +37,7 @@ abstract class InjectorConfig {
   // ============ BLOCS ============
   @Register.singleton(GeneralExpenseBloc)
   @Register.singleton(CityBloc)
+  @Register.singleton(AccomTypeBloc)
   void _configureBlocs();
   //
   // ============ USECASES ============

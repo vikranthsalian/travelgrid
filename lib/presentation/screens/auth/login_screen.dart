@@ -7,7 +7,9 @@ import 'package:travelgrid/common/constants/flavour_constants.dart';
 import 'package:travelgrid/common/constants/route_constants.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
 import 'package:travelgrid/common/extensions/pretty.dart';
+import 'package:travelgrid/common/injector/injector.dart';
 import 'package:travelgrid/common/utils/show_alert.dart';
+import 'package:travelgrid/data/blocs/accom/accom_type_bloc.dart';
 import 'package:travelgrid/data/cubits/login_cubit/login_cubit.dart';
 import 'package:travelgrid/data/datsources/login_response.dart';
 import 'package:travelgrid/presentation/screens/auth/bloc/login_form_bloc.dart';
@@ -74,6 +76,9 @@ class _LoginScreenState extends State<_Login> {
                        MetaAlert.showSuccessAlert(
                          message: "Login Success"
                        );
+                       Injector.resolve<AccomTypeBloc>()..add(GetAccomTypeListEvent());
+
+
                        Navigator.of(context).pushNamed(RouteConstants.dashboardPath);
                       },
                       onFailure: (context, state) {

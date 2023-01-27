@@ -18,44 +18,40 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  Map<String,dynamic> homeJsonData = {};
+  Map<String,dynamic> jsonData = {};
   List items=[];
   int _choiceIndex=0;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    homeJsonData = FlavourConstants.homeData;
-    prettyPrint(homeJsonData);
-
-    for(var badges in homeJsonData['badges']){
+    jsonData = FlavourConstants.homeData;
+    //prettyPrint(jsonData);
+    for(var badges in jsonData['badges']){
       items.add(badges);
     }
-
-
   }
 
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // extendBody for floating bar get better perfomance
       backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0,
         leadingWidth: 50.w,
         backgroundColor: Colors.transparent,
-        automaticallyImplyLeading:homeJsonData['app_bar']['leading'] !=null ? true: false,
-        leading: MetaIcon(mapData:homeJsonData['app_bar']['leading'],onButtonPressed: (){
+        automaticallyImplyLeading:jsonData['app_bar']['leading'] !=null ? true: false,
+        leading: MetaIcon(mapData:jsonData['app_bar']['leading'],onButtonPressed: (){
 
         }) ,
         title: Container(
           height: 25.h,
-          child: MetaTextView(mapData: homeJsonData['app_bar']['title']),
+          child: MetaTextView(mapData: jsonData['app_bar']['title']),
         ),
-        centerTitle: homeJsonData['app_bar']['isCenter'] ?? false,
+        centerTitle: jsonData['app_bar']['isCenter'] ?? false,
         actions: [
-          MetaIcon(mapData:homeJsonData['app_bar']['actions'][0],
+          MetaIcon(mapData:jsonData['app_bar']['actions'][0],
               onButtonPressed: (){
 
           })
@@ -172,17 +168,17 @@ class _HomePageState extends State<HomePage> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Expanded(
-                    child: MetaButton(mapData: homeJsonData['policiesButton'],
+                    child: MetaButton(mapData: jsonData['policiesButton'],
                         onButtonPressed: (){
-                          if(homeJsonData['policiesButton']["onClick"].isNotEmpty) {
-                            Navigator.of(appNavigatorKey.currentState!.context).pushNamed(homeJsonData['policiesButton']["onClick"]);
+                          if(jsonData['policiesButton']["onClick"].isNotEmpty) {
+                            Navigator.of(appNavigatorKey.currentState!.context).pushNamed(jsonData['policiesButton']["onClick"]);
                           }
                         }
                     ),
                   ),
                  SizedBox(width: 5.w,),
                   Expanded(
-                    child: MetaButton(mapData: homeJsonData['walletButton'],
+                    child: MetaButton(mapData: jsonData['walletButton'],
                         onButtonPressed: (){
                           Navigator.of(context).pushNamed(RouteConstants.dashboardPath);
                         }
@@ -200,11 +196,11 @@ class _HomePageState extends State<HomePage> {
             //       Row(
             //         mainAxisAlignment: MainAxisAlignment.spaceAround,
             //           children: [
-            //             MetaTextView(mapData: homeJsonData['upcoming_details']['title']),
-            //             MetaTextView(mapData: homeJsonData['upcoming_details']['button']),
+            //             MetaTextView(mapData: jsonData['upcoming_details']['title']),
+            //             MetaTextView(mapData: jsonData['upcoming_details']['button']),
             //           ]
             //       ),
-            //       _buildChoiceChips( homeJsonData['upcoming_details']['list_data']['chip_data']['chips'])
+            //       _buildChoiceChips( jsonData['upcoming_details']['list_data']['chip_data']['chips'])
             //     ],
             //   ),
             // )

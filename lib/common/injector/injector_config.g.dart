@@ -12,7 +12,8 @@ class _$InjectorConfig extends InjectorConfig {
     final KiwiContainer container = KiwiContainer();
     container
       ..registerSingleton((c) => GeneralExpenseBloc(c<GeUseCase>()))
-      ..registerSingleton((c) => CityBloc(c<GeUseCase>()));
+      ..registerSingleton((c) => CityBloc(c<GeUseCase>()))
+      ..registerSingleton((c) => AccomTypeBloc(c<GeUseCase>()));
   }
 
   @override
