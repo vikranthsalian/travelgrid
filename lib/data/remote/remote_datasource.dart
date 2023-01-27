@@ -3,6 +3,7 @@ import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:travelgrid/common/config/navigator_key.dart';
 import 'package:travelgrid/common/dio/dio_client.dart';
 import 'package:travelgrid/data/cubits/login_cubit/login_cubit.dart';
+import 'package:travelgrid/data/datsources/cities_list.dart';
 import 'package:travelgrid/data/datsources/login_response.dart';
 
 class APIRemoteDatasource{
@@ -68,26 +69,24 @@ class APIRemoteDatasource{
 
   }
 
-  Future<dynamic> getAllCities(pathUrl,data) async {
+  Future<dynamic> getAllCities(pathUrl,Map<String,dynamic> data) async {
 
-    Map map = {"token":appNavigatorKey.currentState!.context.read<LoginCubit>().getLoginToken()};
-
-    map.addAll(data);
+    data["token"]=appNavigatorKey.currentState!.context.read<LoginCubit>().getLoginToken();
 
     try {
       final responseJson = await CustomDio().getWrapper().get(
         pathUrl,
         loadingMessage:"Loading Data...",
-        queryParameters:map,
+        queryParameters:data,
       );
       return responseJson.data;
     } on DioError catch (e) {
       print("DioError"+e.toString());
-      return MetaLoginResponse(status: false);
+      return MetaCityListResponse(status: false);
 
     }catch(e){
       print("CatchError"+e.toString());
-      return MetaLoginResponse(status: false);
+      return MetaCityListResponse(status: false);
     }
 
   }

@@ -1911,6 +1911,10 @@
       "align": "center-left"
     },
     "listView": {
+      "svgIcon":{
+        "icon": "map.svg",
+        "color" : "0xFF2854A1"
+      },
       "recordsFound":  {
         "text" : "Records Found",
         "value" : "0",

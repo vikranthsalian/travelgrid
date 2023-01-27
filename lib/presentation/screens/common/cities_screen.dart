@@ -5,15 +5,18 @@ import 'package:travelgrid/common/constants/flavour_constants.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
 import 'package:travelgrid/common/extensions/pretty.dart';
 import 'package:travelgrid/common/injector/injector.dart';
-import 'package:travelgrid/common/utils/date_time_util.dart';
 import 'package:travelgrid/data/blocs/cities/city_bloc.dart';
 import 'package:travelgrid/data/datsources/cities_list.dart';
 import 'package:travelgrid/presentation/components/bloc_map_event.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';
 import 'package:travelgrid/presentation/widgets/icon.dart';
+import 'package:travelgrid/presentation/widgets/svg_view.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
 
 class CityScreen extends StatefulWidget {
+  Function(Map)? onTap;
+  CityScreen({this.onTap});
+
   @override
   _CityScreenState createState() => _CityScreenState();
 }
@@ -21,7 +24,6 @@ class CityScreen extends StatefulWidget {
 class _CityScreenState extends State<CityScreen> {
   Map<String,dynamic> jsonData = {};
   List items=[];
-  double cardHt = 90.h;
   bool enableSearch = false;
   final TextEditingController _searchController = TextEditingController();
   bool loaded=false;
@@ -30,8 +32,8 @@ class _CityScreenState extends State<CityScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    jsonData = FlavourConstants.geData;
-    prettyPrint(jsonData);
+    jsonData = FlavourConstants.cityData;
+    //prettyPrint(jsonData);
   }
 
 
@@ -45,40 +47,6 @@ class _CityScreenState extends State<CityScreen> {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton:  FloatingActionButton(
-        child:MetaIcon(mapData:jsonData['bottomButtonFab'],onButtonPressed: (){
-          if(jsonData['bottomButtonFab']['onClick'].isNotEmpty){
-
-           // MetaAlert.showErrorAlert(message: "Work in Progress");
-
-            Navigator.of(context).pushNamed(jsonData['bottomButtonFab']['onClick']);
-          }
-        },),
-        backgroundColor: ParseDataType().getHexToColor(jsonData['backgroundColor']),
-        onPressed: () {}),
-      bottomNavigationBar: BottomAppBar(
-        color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
-        shape: CircularNotchedRectangle(),
-        notchMargin: 5,
-        elevation: 2.0,
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            MetaButton(mapData: jsonData['bottomButtonLeft'],
-                onButtonPressed: (){
-
-                }
-            ),
-            MetaButton(mapData: jsonData['bottomButtonRight'],
-                onButtonPressed: (){
-
-                }
-            )
-          ],
-        ),
-      ),
       body: BlocBuilder<CityBloc, CityState>(
           bloc: bloc,
           builder:(context, state) {
@@ -154,171 +122,57 @@ class _CityScreenState extends State<CityScreen> {
 
 
   Widget getListView(CityState state){
-
     List<Data>? list = state.response?.data ?? [];
 
     return  list.isNotEmpty ? ListView.separated(
       shrinkWrap: true,
       padding: EdgeInsets.zero,
       itemBuilder: (BuildContext context, int index) {
-        Data item = list[index];
 
-        Map date = {
-          "text" : MetaDateTime().getDate(item.date.toString(),format: "dd MMM"),
-          "color" : "0xFF2854A1",
-          "size": "20",
-          "family": "bold",
-          "align" : "center"
-        };
-
-        Map week = {
-          "text" : MetaDateTime().getDate(item.date.toString(),format: "EEE").toUpperCase(),
-          "color" : "0xFF2854A1",
-          "size": "13",
-          "family": "bold",
-          "align" : "center-right"
-        };
-
-        Map status = {
-          "text" : item.status.toString().toUpperCase(),
-          "color" : "0xFFFFFFFF",
-          "size": "8",
-          "family": "semiBold",
-          "align" : "center"
-        };
-
-        Map recordLocator = {
-          "text" :"#"+ item.recordLocator.toString().toUpperCase(),
-          "color" : "0xFF2854A1",
+        Map city = {
+          "text" :"",
+          "color" : "0xFF000000",
           "size": "15",
           "family": "bold",
           "align" : "center-left"
         };
 
-        Map amount = {
-          "text" :"Amount : "+ item.totalAmount.toString().toUpperCase(),
-          "color" : "0xFF000000",
+        Map state = {
+          "text" :"",
+          "color" : "0xFFCCCCCC",
           "size": "12",
           "family": "bold",
           "align" : "center-left"
         };
 
-        Map view = {
-          "text" :"View".toUpperCase(),
-          "color" : "0xFFFFFFFF",
-          "size": "12",
-          "family": "bold",
-          "align" : "center"
-        };
-
-        Map cancel = {
-          "text" :"Edit".toUpperCase(),
-          "color" : "0xFFFFFFFF",
-          "size": "12",
-          "family": "bold",
-          "align" : "center"
-        };
-
         return Container(
           padding: EdgeInsets.symmetric(horizontal: 20.w),
-          child: Row(
-            children: [
-              Card(
-                color: Color(0xFF2854A1),
-                elevation: 5,
-                child: Container(
-                  width: cardHt,
-                  height: cardHt,
-                  child: Column(
-                    children: [
-                      Container(
-                        height:cardHt * 0.07,
-                      ),
-                      Container(
-                        color: Color(0xFFFFFFFF),
-                        child: Column(
-                          children: [
-                            Container(
-                                height: cardHt * 0.40,
-                                child: MetaTextView(mapData: date)
-                            ),
-                            Container(
-                              margin: EdgeInsets.only(right: 5.w),
-                                height:cardHt * 0.25,
-                                child: MetaTextView( mapData: week)
-                            )
-                          ],
-                        ),
-                      ),
-                      Container(
-                        height: cardHt * 0.27,
-                        child: MetaTextView( mapData: status),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(width: 3.w,),
-              Expanded(
-                child: Card(
-                  color: Color(0xFF2854A1),
-                  elevation: 5,
-                  child: Container(
-                    width: cardHt,
-                    height: cardHt,
-                    child: Column(
-                      children: [
-                        Container(
-                          height:cardHt * 0.07,
-                        ),
-                        Container(
-                          color: Color(0xFFFFFFFF),
-                          child: Column(
-                            children: [
-                              Container(
-                                  margin: EdgeInsets.symmetric(horizontal: 5.w),
-                                  height: cardHt * 0.40,
-                                  child: MetaTextView(mapData: recordLocator)
-                              ),
-                              Container(
-                                  margin: EdgeInsets.symmetric(horizontal: 5.w),
-                                  height: cardHt * 0.25,
-                                  child: MetaTextView(mapData: amount)
-                              ),
-                            ],
-                          ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.symmetric(horizontal: 5.w),
-                          height: cardHt * 0.27,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                             MetaTextView( mapData: cancel),
-                             Container(
-                               margin: EdgeInsets.symmetric(horizontal: 5.w),
-                               child: MetaTextView(mapData: {
-                                 "text" :"|",
-                                 "color" : "0xFFFFFFFF",
-                                 "size": "12",
-                                 "family": "bold",
-                                 "align" : "center"
-                               }),
-                             ),
-                            MetaTextView( mapData:  view )
-                          ]),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              )
-            ],
+          child: ListTile(
+            leading: Container(
+                height: 30.w,
+                width: 30.w,
+                child: MetaSVGView(mapData:  jsonData['listView']['svgIcon'])
+            ),
+            title: Container(
+                child: MetaTextView(mapData: city,
+                    text:(list[index].name.toString() +
+                        (list[index].code!="" ? "${( list[index].code.toString())}" :""  ) ))
+            ),
+            trailing: const Icon(Icons.flight_outlined),
+            subtitle:  Container(
+                margin: EdgeInsets.only(right: 5.w),
+                child: MetaTextView( mapData:  state,text: list[index].state)
+            ),
+            onTap: () {
+                widget.onTap!(list[index].toMap());
+            },
           ),
         );
+
+
       },
       separatorBuilder: (BuildContext context, int index) {
-        return SizedBox(height: 3.h);
+        return Divider(height: 3.h);
       },
       itemCount:list.length,
     ):  Column(

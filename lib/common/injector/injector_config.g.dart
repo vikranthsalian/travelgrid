@@ -10,7 +10,9 @@ class _$InjectorConfig extends InjectorConfig {
   @override
   void _configureBlocs() {
     final KiwiContainer container = KiwiContainer();
-    container.registerSingleton((c) => GeneralExpenseBloc(c<GeUseCase>()));
+    container
+      ..registerSingleton((c) => GeneralExpenseBloc(c<GeUseCase>()))
+      ..registerSingleton((c) => CityBloc(c<GeUseCase>()));
   }
 
   @override
@@ -18,7 +20,8 @@ class _$InjectorConfig extends InjectorConfig {
     final KiwiContainer container = KiwiContainer();
     container
       ..registerSingleton((c) => LoginUseCase(c<LoginAPIAbstract>()))
-      ..registerSingleton((c) => GeUseCase(c<GeAPIAbstract>()));
+      ..registerSingleton((c) => GeUseCase(c<GeAPIAbstract>()))
+      ..registerSingleton((c) => CommonUseCase(c<CommonAPIAbstract>()));
   }
 
   @override
@@ -28,7 +31,9 @@ class _$InjectorConfig extends InjectorConfig {
       ..registerSingleton<LoginAPIAbstract>(
           (c) => LoginRepository(apiRemoteDatasource: c<APIRemoteDatasource>()))
       ..registerSingleton<GeAPIAbstract>(
-          (c) => GeRepository(apiRemoteDatasource: c<APIRemoteDatasource>()));
+          (c) => GeRepository(apiRemoteDatasource: c<APIRemoteDatasource>()))
+      ..registerSingleton<CommonAPIAbstract>((c) =>
+          CommonRepository(apiRemoteDatasource: c<APIRemoteDatasource>()));
   }
 
   @override

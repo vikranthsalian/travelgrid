@@ -20,7 +20,11 @@ class CityBloc extends Bloc<CityEvent, CityState> {
     emit(CityInitialState());
     if(event is GetCityListEvent) {
       MetaCityListResponse? response = await Injector.resolve<CommonUseCase>().getCities("IN","D");
-      if(response!=null && response.status==true){
+
+
+      print(response.toJson());
+      if(response!=null && response.status == true){
+
         emit(CityLoadedState(data: response));
       }else{
         emit(CityLoadedState(data: MetaCityListResponse(data: [],message: response.message)));

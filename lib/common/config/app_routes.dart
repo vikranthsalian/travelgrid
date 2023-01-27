@@ -83,9 +83,6 @@ class AppRoutes {
       case RouteConstants.createMiscExpensePath:
         return CreateMiscExpense();
 
-      case RouteConstants.viewCitiesPath:
-        return CityScreen();
-
       default:
         return SplashScreen();
     }

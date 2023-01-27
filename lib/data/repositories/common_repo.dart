@@ -14,14 +14,14 @@ class CommonRepository extends CommonAPIAbstract {
   @override
   Future<MetaCityListResponse> getCities(countryCode,tripType) async {
 
-    Map data= {
+    Map<String,dynamic> data= {
       "q":"ad",
       "tripType":tripType,
       "countryCode":countryCode,
-
     };
 
     var response = await apiRemoteDatasource.getAllCities("getCities",data);
+
     if(response!=null) {
       MetaCityListResponse modelResponse = MetaCityListResponse.fromJson(response);
       return modelResponse;
