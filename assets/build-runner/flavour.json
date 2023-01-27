@@ -919,94 +919,6 @@
       "family": "regular"
     }
   },
-  "policy_screen_data" : {
-    "backgroundColor" : "0xFF2854A1",
-    "title":  {
-      "text" : "Policies",
-      "color" : "0XFFFFFFFF",
-      "size": "18",
-      "family": "bold",
-      "align": "center-left"
-    },
-    "backBar": {
-      "icon": "back",
-      "size": 20.0,
-      "color": "0XFFFFFFFF",
-      "backgroundColor": "transparent",
-      "onPress": true,
-      "align": "center-left"
-    },
-    "listView": {
-      "svgIconColor" : "0xFF2854A1",
-      "data": [
-        {
-          "title": {
-            "text" : "NH - Travel Policies",
-            "color" : "0xFF2854A1",
-            "size": "12",
-            "family": "regular",
-            "align": "center"
-          },
-          "subtitle": {
-            "text" : "Tap to view",
-            "color" : "0xFFCCCCCC",
-            "size": "10",
-            "family": "bold",
-            "align": "center"
-          },
-          "path": "travel_policies.pdf"
-        }
-      ],
-      "emptyData": {
-        "image_view":   {
-          "image" : "logo_banner.png",
-          "align": "center",
-          "wd": 250.0
-        },
-        "title":  {
-          "text" : "No Data Found!!!",
-          "color" : "0XFF3D3D3D",
-          "size": "16",
-          "family": "regular"
-        },
-        "bottomButtonRefresh": {
-          "text" : "Refresh",
-          "height": 35.0,
-          "color" : "0xFFFFFFFF",
-          "borderRadius": 30.0,
-          "backgroundColor" : "0xFF2854A1",
-          "size": "15",
-          "family": "regular"
-        }
-      },
-      "recordsFound":  {
-        "text" : "Records Found",
-        "value" : "1",
-        "color" : "0XFFFFFFFF",
-        "size": "12",
-        "family": "regular",
-        "align": "center-right"
-      }
-    }
-  },
-  "pdf_screen_data" : {
-    "backgroundColor" : "0xFF2854A1",
-    "title":  {
-      "text" : "PDF Viewer",
-      "color" : "0XFFFFFFFF",
-      "size": "18",
-      "family": "bold",
-      "align": "center-left"
-    },
-    "backBar": {
-      "icon": "back",
-      "size": 20.0,
-      "color": "0XFFFFFFFF",
-      "backgroundColor": "transparent",
-      "onPress": true,
-      "align": "center-left"
-    }
-  },
   "accom_create_data": {
     "backgroundColor" : "0xFF2854A1",
     "title":  {
@@ -1723,6 +1635,7 @@
     },
     "selectCity": {
       "showView": true,
+      "onClick": "/viewCities",
       "label":  {
         "text" : "City",
         "color" : "0xFF2854A1",
@@ -1890,6 +1803,144 @@
       "backgroundColor" : "0xFF2854A1",
       "size": "18",
       "family": "regular"
+    }
+  },
+  "policy_screen_data" : {
+    "backgroundColor" : "0xFF2854A1",
+    "title":  {
+      "text" : "Policies",
+      "color" : "0XFFFFFFFF",
+      "size": "18",
+      "family": "bold",
+      "align": "center-left"
+    },
+    "backBar": {
+      "icon": "back",
+      "size": 20.0,
+      "color": "0XFFFFFFFF",
+      "backgroundColor": "transparent",
+      "onPress": true,
+      "align": "center-left"
+    },
+    "listView": {
+      "svgIconColor" : "0xFF2854A1",
+      "data": [
+        {
+          "title": {
+            "text" : "NH - Travel Policies",
+            "color" : "0xFF2854A1",
+            "size": "12",
+            "family": "regular",
+            "align": "center"
+          },
+          "subtitle": {
+            "text" : "Tap to view",
+            "color" : "0xFFCCCCCC",
+            "size": "10",
+            "family": "bold",
+            "align": "center"
+          },
+          "path": "travel_policies.pdf"
+        }
+      ],
+      "emptyData": {
+        "image_view":   {
+          "image" : "logo_banner.png",
+          "align": "center",
+          "wd": 250.0
+        },
+        "title":  {
+          "text" : "No Data Found!!!",
+          "color" : "0XFF3D3D3D",
+          "size": "16",
+          "family": "regular"
+        },
+        "bottomButtonRefresh": {
+          "text" : "Refresh",
+          "height": 35.0,
+          "color" : "0xFFFFFFFF",
+          "borderRadius": 30.0,
+          "backgroundColor" : "0xFF2854A1",
+          "size": "15",
+          "family": "regular"
+        }
+      },
+      "recordsFound":  {
+        "text" : "Records Found",
+        "value" : "1",
+        "color" : "0XFFFFFFFF",
+        "size": "12",
+        "family": "regular",
+        "align": "center-right"
+      }
+    }
+  },
+  "pdf_screen_data" : {
+    "backgroundColor" : "0xFF2854A1",
+    "title":  {
+      "text" : "PDF Viewer",
+      "color" : "0XFFFFFFFF",
+      "size": "18",
+      "family": "bold",
+      "align": "center-left"
+    },
+    "backBar": {
+      "icon": "back",
+      "size": 20.0,
+      "color": "0XFFFFFFFF",
+      "backgroundColor": "transparent",
+      "onPress": true,
+      "align": "center-left"
+    }
+  },
+  "city_screen_data" : {
+    "backgroundColor" : "0xFF2854A1",
+    "title":  {
+      "text" : "Select City",
+      "color" : "0XFFFFFFFF",
+      "size": "18",
+      "family": "bold",
+      "align": "center-left"
+    },
+    "backBar": {
+      "icon": "back",
+      "size": 20.0,
+      "color": "0XFFFFFFFF",
+      "backgroundColor": "transparent",
+      "onPress": true,
+      "align": "center-left"
+    },
+    "listView": {
+      "recordsFound":  {
+        "text" : "Records Found",
+        "value" : "0",
+        "color" : "0XFFFFFFFF",
+        "size": "12",
+        "family": "regular",
+        "align": "center-right"
+      },
+      "emptyData": {
+        "image_view":   {
+          "image" : "logo_banner.png",
+          "align": "center",
+          "wd": 250.0
+        },
+        "title":  {
+          "text" : "No Data Found!!!",
+          "color" : "0XFF3D3D3D",
+          "size": "16",
+          "family": "regular"
+        },
+        "bottomButtonRefresh": {
+          "text" : "Refresh",
+          "height": 35.0,
+          "color" : "0xFFFFFFFF",
+          "borderRadius": 30.0,
+          "backgroundColor" : "0xFF2854A1",
+          "size": "15",
+          "family": "regular"
+        }
+      }
     }
   }
 }
