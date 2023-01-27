@@ -12,4 +12,5 @@ class RouteConstants {
   static const createAccommodationExpensePath = "/createAccommodationExpense";
   static const createTravelExpensePath = "/createTravelExpense";
   static const createMiscExpensePath = "/createMiscExpense";
+  static const viewCitiesPath = "/viewCities";
 }

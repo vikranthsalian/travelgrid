@@ -4,6 +4,7 @@ import 'package:flutter_offline/flutter_offline.dart';
 import 'package:travelgrid/common/constants/route_constants.dart';
 import 'package:travelgrid/presentation/components/pdf_component.dart';
 import 'package:travelgrid/presentation/screens/auth/login_screen.dart';
+import 'package:travelgrid/presentation/screens/common/cities_screen.dart';
 import 'package:travelgrid/presentation/screens/dashboard/dashboard.dart';
 import 'package:travelgrid/presentation/screens/dashboard/dashboard_2.dart';
 import 'package:travelgrid/presentation/screens/ge/create/create_accom.dart';
@@ -81,6 +82,9 @@ class AppRoutes {
 
       case RouteConstants.createMiscExpensePath:
         return CreateMiscExpense();
+
+      case RouteConstants.viewCitiesPath:
+        return CityScreen();
 
       default:
         return SplashScreen();
