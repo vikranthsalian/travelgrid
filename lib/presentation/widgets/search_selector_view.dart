@@ -30,7 +30,6 @@ class _MetaSearchSelectorViewState extends State<MetaSearchSelectorView> {
                   Navigator.pop(context);
                   prettyPrint("MetaSearchSelectorView");
                   prettyPrint(data);
-
                   setState(() {
                     widget.text=data['name'];
                   });
