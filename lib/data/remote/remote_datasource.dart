@@ -46,4 +46,51 @@ class APIRemoteDatasource{
 
   }
 
+  Future<dynamic> getGeSummary(pathUrl,id) async {
+    try {
+      final responseJson = await CustomDio().getWrapper().get(
+        pathUrl,
+        loadingMessage:"Loading Data...",
+        queryParameters:{
+          "token":appNavigatorKey.currentState!.context.read<LoginCubit>().getLoginToken(),
+          "recordLocator":id,
+        },
+      );
+      return responseJson.data;
+    } on DioError catch (e) {
+      print("DioError"+e.toString());
+      return MetaLoginResponse(status: false);
+
+    }catch(e){
+      print("CatchError"+e.toString());
+      return MetaLoginResponse(status: false);
+    }
+
+  }
+
+  Future<dynamic> getAllCities(pathUrl,data) async {
+
+    Map map = {"token":appNavigatorKey.currentState!.context.read<LoginCubit>().getLoginToken()};
+
+    map.addAll(data);
+
+    try {
+      final responseJson = await CustomDio().getWrapper().get(
+        pathUrl,
+        loadingMessage:"Loading Data...",
+        queryParameters:map,
+      );
+      return responseJson.data;
+    } on DioError catch (e) {
+      print("DioError"+e.toString());
+      return MetaLoginResponse(status: false);
+
+    }catch(e){
+      print("CatchError"+e.toString());
+      return MetaLoginResponse(status: false);
+    }
+
+  }
+
+
 }

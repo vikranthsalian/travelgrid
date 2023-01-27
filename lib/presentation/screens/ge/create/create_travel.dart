@@ -38,6 +38,8 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
     super.initState();
     jsonData = FlavourConstants.travelCreateData;
     prettyPrint(jsonData);
+
+    createMapData();
   }
 
 
@@ -218,6 +220,22 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
         ],
       ),
     );
+  }
+
+  void createMapData() {
+    Map<String,dynamic> saveTravelData = {
+      "conveyanceDate": "06-01-2023",
+      "origin": "cbi",
+      "destination": "hebbal",
+      "travelMode": 193,
+      "travelModeName": "Own Vehicle",
+      "amount": 1000.0,
+      "description": "",
+      "voucherNumber": "",
+      "withBill": false,
+      "voucherPath": "",
+      "voucherFile": null,
+    };
   }
 
 

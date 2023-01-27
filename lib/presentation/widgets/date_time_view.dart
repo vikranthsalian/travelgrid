@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:travelgrid/common/extensions/parse_data_type.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
 
 class MetaDateTimeView extends StatelessWidget {

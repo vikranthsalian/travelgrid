@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:travelgrid/common/constants/event_types.dart';
@@ -20,6 +19,7 @@ class GeneralExpenseBloc extends Bloc<GeneralExpenseEvent, GeneralExpenseState> 
     emit(GeneralExpenseInitialState());
     if(event is GetGeneralExpenseListEvent) {
       GEListResponse? response = await Injector.resolve<GeUseCase>().callApi();
+      GEListResponse? response2 = await Injector.resolve<GeUseCase>().getSummary("GEIN2023000004");
       if(response!=null && response.status==true){
         emit(GeneralExpenseLoadedState(data: response));
       }else{

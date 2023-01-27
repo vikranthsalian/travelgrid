@@ -24,4 +24,18 @@ class GeRepository extends GeAPIAbstract {
   }
 
 
+  @override
+  Future<GEListResponse> getGE(id) async {
+
+    var response = await apiRemoteDatasource.getGeSummary("ge/geSummaryDetails",id);
+    if(response!=null) {
+      GEListResponse modelResponse = GEListResponse.fromJson(response);
+      return modelResponse;
+    }
+
+    return GEListResponse(status: false);
+  }
+
+
+
 }

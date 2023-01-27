@@ -6,4 +6,6 @@ class GeUseCase {
   final GeAPIAbstract apiAbstract;
   GeUseCase(this.apiAbstract);
   Future<GEListResponse> callApi() async => apiAbstract.callList();
+
+  Future<GEListResponse> getSummary(id) async => apiAbstract.getGE(id);
 }

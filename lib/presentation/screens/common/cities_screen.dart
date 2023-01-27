@@ -6,27 +6,26 @@ import 'package:travelgrid/common/extensions/parse_data_type.dart';
 import 'package:travelgrid/common/extensions/pretty.dart';
 import 'package:travelgrid/common/injector/injector.dart';
 import 'package:travelgrid/common/utils/date_time_util.dart';
-import 'package:travelgrid/common/utils/show_alert.dart';
-import 'package:travelgrid/data/blocs/general_expense/ge_bloc.dart';
-import 'package:travelgrid/data/datsources/general_expense_list.dart';
+import 'package:travelgrid/data/blocs/cities/city_bloc.dart';
+import 'package:travelgrid/data/datsources/cities_list.dart';
 import 'package:travelgrid/presentation/components/bloc_map_event.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';
 import 'package:travelgrid/presentation/widgets/icon.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
 
-class GeneralExpense extends StatefulWidget {
+class CityScreen extends StatefulWidget {
   @override
-  _GeneralExpenseState createState() => _GeneralExpenseState();
+  _CityScreenState createState() => _CityScreenState();
 }
 
-class _GeneralExpenseState extends State<GeneralExpense> {
+class _CityScreenState extends State<CityScreen> {
   Map<String,dynamic> jsonData = {};
   List items=[];
   double cardHt = 90.h;
   bool enableSearch = false;
   final TextEditingController _searchController = TextEditingController();
   bool loaded=false;
-  GeneralExpenseBloc? bloc;
+  CityBloc? bloc;
   @override
   void initState() {
     // TODO: implement initState
@@ -40,7 +39,7 @@ class _GeneralExpenseState extends State<GeneralExpense> {
   Widget build(BuildContext context) {
 
    if(!loaded){
-     bloc = Injector.resolve<GeneralExpenseBloc>()..add(GetGeneralExpenseListEvent());
+     bloc = Injector.resolve<CityBloc>()..add(GetCityListEvent());
      loaded=true;
    }
 
@@ -80,7 +79,7 @@ class _GeneralExpenseState extends State<GeneralExpense> {
           ],
         ),
       ),
-      body: BlocBuilder<GeneralExpenseBloc, GeneralExpenseState>(
+      body: BlocBuilder<CityBloc, CityState>(
           bloc: bloc,
           builder:(context, state) {
             jsonData['listView']['recordsFound']['value'] = 0;
@@ -154,7 +153,7 @@ class _GeneralExpenseState extends State<GeneralExpense> {
   }
 
 
-  Widget getListView(GeneralExpenseState state){
+  Widget getListView(CityState state){
 
     List<Data>? list = state.response?.data ?? [];
 
