@@ -13,7 +13,8 @@ class _$InjectorConfig extends InjectorConfig {
     container
       ..registerSingleton((c) => GeneralExpenseBloc(c<GeUseCase>()))
       ..registerSingleton((c) => CityBloc(c<GeUseCase>()))
-      ..registerSingleton((c) => AccomTypeBloc(c<GeUseCase>()));
+      ..registerSingleton((c) => AccomTypeBloc(c<GeUseCase>()))
+      ..registerSingleton((c) => TravelModeBloc(c<GeUseCase>()));
   }
 
   @override

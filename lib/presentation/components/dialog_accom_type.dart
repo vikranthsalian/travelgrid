@@ -5,8 +5,8 @@ import 'package:travelgrid/presentation/screens/common/accom_type_screen.dart';
 
 
 class DialogAccomType extends StatelessWidget{
-  Function? onClick;
-  DialogAccomType({this.onClick});
+  Widget? child;
+  DialogAccomType({this.child});
   @override
   Widget build(BuildContext context) {
 
@@ -16,9 +16,7 @@ class DialogAccomType extends StatelessWidget{
         height: MediaQuery.of(context).size.height * 0.3,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(12.r),
-          child: AccommodationTypeScreen(onTap:(value){
-            onClick!(value);
-          }),
+          child: child,
         ),
       ),
     );

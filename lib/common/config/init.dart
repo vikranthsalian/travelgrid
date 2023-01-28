@@ -7,6 +7,7 @@ import 'package:travelgrid/common/constants/flavour_constants.dart';
 import 'package:travelgrid/common/constants/theme_constants.dart';
 import 'package:travelgrid/data/cubits/accom_type_cubit/accom_type_cubit.dart';
 import 'package:travelgrid/data/cubits/login_cubit/login_cubit.dart';
+import 'package:travelgrid/data/cubits/travel_mode_cubit/travel_mode_cubit.dart';
 import 'app_routes.dart';
 import 'package:flutter/services.dart';
 
@@ -59,20 +60,25 @@ class _InitRootState extends State<InitRoot> {
       providers: [
         BlocProvider(create: (context) => LoginCubit()),
         BlocProvider(create: (context) => AccomTypeCubit()),
+        BlocProvider(create: (context) => TravelModeCubit()),
       ],
       child:  BlocBuilder<AccomTypeCubit, AccomTypeState>(
           builder: (context, state) {
-          return BlocBuilder<LoginCubit, LoginState>(
-              builder: (context, state) {
-              return MaterialApp(
-                useInheritedMediaQuery: true,
-                navigatorKey: appNavigatorKey,
-                builder: EasyLoading.init(),
-                debugShowCheckedModeBanner: false,
-                title: FlavourConstants.appName,
-                onGenerateRoute: AppRoutes().generateRoute,
-                themeMode: ThemeMode.system,
-                theme: GlobalTheme().globalTheme,
+            return BlocBuilder<TravelModeCubit, TravelModeState>(
+                builder: (context, state) {
+              return BlocBuilder<LoginCubit, LoginState>(
+                  builder: (context, state) {
+                  return MaterialApp(
+                    useInheritedMediaQuery: true,
+                    navigatorKey: appNavigatorKey,
+                    builder: EasyLoading.init(),
+                    debugShowCheckedModeBanner: false,
+                    title: FlavourConstants.appName,
+                    onGenerateRoute: AppRoutes().generateRoute,
+                    themeMode: ThemeMode.system,
+                    theme: GlobalTheme().globalTheme,
+                  );
+                }
               );
             }
           );

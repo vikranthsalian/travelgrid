@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:travelgrid/presentation/components/dialog_accom_type.dart';
+import 'package:travelgrid/presentation/screens/common/accom_type_screen.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
 class MetaDialogSelectorView extends StatefulWidget {
 
@@ -26,8 +27,9 @@ class _MetaDialogSelectorViewState extends State<MetaDialogSelectorView> {
             onTap: () async{
               await showDialog(
                   context: context,
-                  builder: (_) => getDialogViews(widget.mapData['key']),
-              );
+                  builder: (_) => DialogAccomType(
+                    child: getDialogViews(widget.mapData['key']),
+              ));
             },
               child: MetaTextView(mapData: widget.mapData['dataText'],text: widget.text,)),
         ],
@@ -38,13 +40,16 @@ class _MetaDialogSelectorViewState extends State<MetaDialogSelectorView> {
   Widget getDialogViews(text){
 
     switch(text){
-      case "accom_view":
-        return DialogAccomType(onClick: (value){
-          print(value);
-          setState(() {
-            widget.text= value['label'];
+      case "accom_type_view":
+        return AccommodationTypeScreen(
+            onTap:(value){
+              widget.text= value['label'];
           });
-        });
+      case "travel_mode_view":
+        return AccommodationTypeScreen(
+            onTap:(value){
+              widget.text= value['label'];
+            });
       default:
        return Container();
     }

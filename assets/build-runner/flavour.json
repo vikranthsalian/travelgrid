@@ -1055,7 +1055,7 @@
     },
     "selectType": {
       "showView": true,
-      "key": "accom_view",
+      "key": "accom_type_view",
       "label":  {
         "text" : "Accommodation Type*",
         "color" : "0xFF2854A1",
@@ -1355,6 +1355,7 @@
     },
     "selectMode": {
       "showView": true,
+      "key": "travel_mode_view",
       "label":  {
         "text" : "Travel Mode*",
         "color" : "0xFF2854A1",

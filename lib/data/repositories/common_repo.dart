@@ -1,6 +1,7 @@
 import 'package:travelgrid/data/datsources/accom_type_list.dart';
 import 'package:travelgrid/data/datsources/cities_list.dart';
 import 'package:travelgrid/data/datsources/login_response.dart';
+import 'package:travelgrid/data/datsources/travel_mode_list.dart';
 import 'package:travelgrid/data/remote/remote_datasource.dart';
 import 'package:travelgrid/domain/repo_abstract/api_abstract.dart';
 
@@ -45,6 +46,22 @@ class CommonRepository extends CommonAPIAbstract {
 
     return MetaAccomTypeListResponse(status: false);
   }
+
+  @override
+  Future<MetaTravelModeListResponse> getTravelModeList() async {
+
+    Map<String,dynamic> data= {};
+
+    var response = await apiRemoteDatasource.getAccomTypes("getModeOfTravel",data);
+
+    if(response!=null) {
+      MetaTravelModeListResponse modelResponse = MetaTravelModeListResponse.fromJson(response);
+      return modelResponse;
+    }
+
+    return MetaTravelModeListResponse(status: false);
+  }
+
 
 
 }

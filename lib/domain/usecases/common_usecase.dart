@@ -1,6 +1,7 @@
 import 'package:travelgrid/data/datsources/accom_type_list.dart';
 import 'package:travelgrid/data/datsources/cities_list.dart';
 import 'package:travelgrid/data/datsources/login_response.dart';
+import 'package:travelgrid/data/datsources/travel_mode_list.dart';
 import 'package:travelgrid/domain/repo_abstract/api_abstract.dart';
 
 class CommonUseCase {
@@ -9,4 +10,6 @@ class CommonUseCase {
   Future<MetaCityListResponse> getCities(countryCode,tripType) async => apiAbstract.getCities(countryCode,tripType);
 
   Future<MetaAccomTypeListResponse> getAccomTypesList() async => apiAbstract.getAccomTypesList();
+
+  Future<MetaTravelModeListResponse> getTravelModeList() async => apiAbstract.getTravelModeList();
 }
