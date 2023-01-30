@@ -1720,6 +1720,7 @@
     },
     "selectMiscType": {
       "showView": true,
+      "key":"accom_type_view",
       "label":  {
         "text" : "Misc. Type*",
         "color" : "0xFF2854A1",

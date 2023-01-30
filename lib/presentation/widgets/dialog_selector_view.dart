@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:travelgrid/presentation/components/dialog_accom_type.dart';
 import 'package:travelgrid/presentation/screens/common/accom_type_screen.dart';
+import 'package:travelgrid/presentation/screens/common/misc_type_screen.dart';
 import 'package:travelgrid/presentation/screens/common/travel_mode_screen.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
 
@@ -30,6 +31,7 @@ class _MetaDialogSelectorViewState extends State<MetaDialogSelectorView> {
               await showDialog(
                   context: context,
                   builder: (_) => DialogAccomType(
+                    size: getSize(widget.mapData['key']),
                     child: getDialogViews(widget.mapData['key']),
               ));
             },
@@ -52,6 +54,15 @@ class _MetaDialogSelectorViewState extends State<MetaDialogSelectorView> {
               });
 
           });
+      case "misc_type_view":
+        return MiscellaneousTypeScreen(
+            onTap:(value){
+              setState(() {
+                widget.text= value['label'];
+                widget.onChange!(widget.text);
+              });
+
+            });
       case "travel_mode_view":
         return TravelModeScreen(
             onTap:(value){
@@ -64,6 +75,18 @@ class _MetaDialogSelectorViewState extends State<MetaDialogSelectorView> {
        return Container();
     }
 
+  }
+
+  getSize(key) {
+    switch(key){
+      case "accom_type_view":
+        return 0.3;
+      case "misc_mode_view":
+        return 0.8;
+      case "travel_mode_view":
+        return 0.5;
+
+    }
   }
 
 }
