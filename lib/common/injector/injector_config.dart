@@ -4,6 +4,7 @@ import 'package:travelgrid/common/http/http_client.dart';
 import 'package:travelgrid/data/blocs/accom/accom_type_bloc.dart';
 import 'package:travelgrid/data/blocs/cities/city_bloc.dart';
 import 'package:travelgrid/data/blocs/general_expense/ge_bloc.dart';
+import 'package:travelgrid/data/blocs/misc/misc_type_bloc.dart';
 import 'package:travelgrid/data/blocs/travel/travel_mode_bloc.dart';
 import 'package:travelgrid/data/remote/remote_datasource.dart';
 import 'package:travelgrid/data/repositories/common_repo.dart';
@@ -39,6 +40,7 @@ abstract class InjectorConfig {
   @Register.singleton(GeneralExpenseBloc)
   @Register.singleton(CityBloc)
   @Register.singleton(AccomTypeBloc)
+  @Register.singleton(MiscTypeBloc)
   @Register.singleton(TravelModeBloc)
   void _configureBlocs();
   //
