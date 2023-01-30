@@ -22,7 +22,9 @@ import 'package:travelgrid/presentation/widgets/text_view.dart';
 
 class CreateMiscExpense extends StatefulWidget {
   Function(Map)? onAdd;
-  CreateMiscExpense({this.onAdd});
+  bool isEdit;
+  GEMiscModel? miscModel;
+  CreateMiscExpense({this.onAdd,this.isEdit=false,this.miscModel});
   @override
   _CreateMiscExpenseState createState() => _CreateMiscExpenseState();
 }
@@ -38,7 +40,7 @@ class _CreateMiscExpenseState extends State<CreateMiscExpense> {
     // TODO: implement initState
     super.initState();
     jsonData = FlavourConstants.miscCreateData;
-    prettyPrint(jsonData);
+  //  prettyPrint(jsonData);
 
     createMap();
   }
@@ -110,7 +112,24 @@ class _CreateMiscExpenseState extends State<CreateMiscExpense> {
                    formBloc!.miscName.updateValue("Initial UD");
                    formBloc!.miscID.updateValue("21");
 
-                  return Container(
+
+
+                   if(widget.isEdit){
+
+                     formBloc!.checkInDate.updateValue(widget.miscModel!.startDate.toString());
+                     formBloc!.checkOutDate.updateValue(widget.miscModel!.endDate.toString());
+
+                     formBloc!.cityName.updateValue(widget.miscModel!.cityName.toString());
+                     formBloc!.cityID.updateValue(widget.miscModel!.city.toString());
+
+                    formBloc!.tfVoucher.updateValue(widget.miscModel!.voucher.toString());
+                    formBloc!.tfAmount.updateValue(widget.miscModel!.amount.toString());
+                    formBloc!.tfDescription.updateValue(widget.miscModel!.description.toString());
+                   }
+
+
+
+                   return Container(
                     margin: EdgeInsets.symmetric(horizontal: 10.w),
                     child: FormBlocListener<MiscFormBloc, String, String>(
                         onSubmissionFailed: (context, state) {
@@ -150,13 +169,17 @@ class _CreateMiscExpenseState extends State<CreateMiscExpense> {
                                 Row(
                                   children: [
                                     Container(
-                                      child: MetaDateTimeView(mapData: jsonData['checkInDateTime'],onChange: (value){
-                                        formBloc!.checkInDate.updateValue(value.toString());
+                                      child: MetaDateTimeView(mapData: jsonData['checkInDateTime'],
+                                          value: {"date": formBloc!.checkInDate.value},
+                                          onChange: (value){
+                                        formBloc!.checkInDate.updateValue(value['date'].toString());
                                       }),
                                     ),
                                     Container(
-                                      child: MetaDateTimeView(mapData: jsonData['checkOutDateTime'],onChange: (value){
-                                        formBloc!.checkOutDate.updateValue(value.toString());
+                                      child: MetaDateTimeView(mapData: jsonData['checkOutDateTime'],
+                                          value: {"date": formBloc!.checkOutDate.value},
+                                          onChange: (value){
+                                        formBloc!.checkOutDate.updateValue(value['date'].toString());
                                       }),
                                     ),
                                   ],
@@ -167,6 +190,7 @@ class _CreateMiscExpenseState extends State<CreateMiscExpense> {
                                   Expanded(
                                     child: Container(
                                       child: MetaSearchSelectorView(mapData: jsonData['selectCity'],
+                                        text: formBloc!.cityName.value,
                                         onChange:(value){
                                           formBloc!.cityName.updateValue(value.name);
                                           formBloc!.cityID.updateValue(value.id.toString());
@@ -177,6 +201,7 @@ class _CreateMiscExpenseState extends State<CreateMiscExpense> {
                                   Expanded(
                                     child: Container(
                                       child: MetaDialogSelectorView(mapData: jsonData['selectMiscType'],
+                                        text :formBloc!.miscName.value,
                                         onChange:(value){
                                           formBloc!.miscName.updateValue(value.name);
                                           formBloc!.miscID.updateValue(value.id.toString());

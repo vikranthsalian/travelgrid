@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,6 +13,7 @@ import 'package:travelgrid/common/extensions/pretty.dart';
 import 'package:travelgrid/data/cubits/login_cubit/login_cubit.dart';
 import 'package:travelgrid/data/datsources/login_response.dart';
 import 'package:travelgrid/data/models/expense_model.dart';
+import 'package:travelgrid/data/models/ge_misc_model.dart';
 import 'package:travelgrid/presentation/screens/auth/bloc/login_form_bloc.dart';
 import 'package:travelgrid/presentation/screens/ge/add/add_accom.dart';
 import 'package:travelgrid/presentation/screens/ge/add/add_misc.dart';
@@ -33,7 +36,7 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
   Map<String,dynamic> jsonData = {};
   List details=[];
   List expenseTypes=[];
-  List<Tuple2<ExpenseModel,Map>> summaryItems=[];
+  List<Tuple2<ExpenseModel,Map<String,dynamic>>> summaryItems=[];
   List<Tuple2<Map,String>> summaryDetails=[];
   bool loaded=false;
   LoginFormBloc? formBloc;
@@ -67,7 +70,6 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
 
 
     for(var item in jsonData['summaryDetails']['data']){
-      print(item);
       summaryDetails.add(Tuple2(item, "0"));
     }
 
@@ -135,31 +137,7 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
                     return Expanded(
                         child: InkWell(
                             onTap: () async{
-
-                              if(e['onClick'] == RouteConstants.createMiscExpensePath){
-                                Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
-                                    CreateMiscExpense(onAdd: (values){
-                                        summaryItems.add(Tuple2(values['item'] as ExpenseModel, values['data']));
-                                        calculateSummary();
-                                },)));
-                              }
-
-                              if(e['onClick'] == RouteConstants.createAccommodationExpensePath){
-                                Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
-                                    CreateAccommodationExpense(onAdd: (values){
-                                      summaryItems.add(Tuple2(values['item'] as ExpenseModel, values['data']));
-                                      calculateSummary();
-                                    },)));
-                              }
-
-                              if(e['onClick'] == RouteConstants.createTravelExpensePath){
-                                Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
-                                    CreateTravelExpense(onAdd: (values){
-                                      summaryItems.add(Tuple2(values['item'] as ExpenseModel, values['data']));
-                                      calculateSummary();
-                                    },)));
-                              }
-
+                              navigate(e,false,{},0);
                             },
                             child: Container(
                               height: 60.h,
@@ -362,10 +340,6 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
                     padding: EdgeInsets.zero,
                       itemBuilder: (BuildContext context, int index) {
 
-
-                        print("summaryDetails.data");
-                        print(summaryDetails[index]);
-
                         return Container(
                           padding: EdgeInsets.symmetric(vertical: 5.h),
                           child: Row(
@@ -502,7 +476,7 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             InkWell(onTap: (){
-
+                                  navigate({"onClick": type}, true,summaryItems[index].item2,index);
                             },
                             child: Container(
                                 width:25.w,
@@ -510,6 +484,10 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
                                 child: MetaSVGView(mapData:  map['listView']['item']['items'][0]))),
                             SizedBox(width: 10.h,),
                             InkWell(onTap: (){
+                              print("removing index:"+index.toString() );
+                              setState(() {
+                                summaryItems.removeAt(index);
+                              });
 
                             },
                             child: Container(
@@ -558,6 +536,52 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
 
     });
 
+
+  }
+
+  void navigate(e,bool isEdit,Map<String,dynamic> data,int index) {
+
+    if(e['onClick'] == RouteConstants.createMiscExpensePath || e['onClick']  == GETypes.MISCELLANEOUS.toString()){
+      print(data);
+      GEMiscModel? model;
+      if(data.isNotEmpty){
+        model =  GEMiscModel.fromMap(data);
+      }
+
+
+      Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
+          CreateMiscExpense(
+            isEdit:isEdit,
+            miscModel:model,
+            onAdd: (values){
+
+              if(isEdit){
+                summaryItems.removeAt(index);
+              }
+                summaryItems.add(Tuple2(values['item'] as ExpenseModel, values['data']));
+
+
+              calculateSummary();
+            },)));
+    }else{
+      print("else");
+    }
+
+    if(e['onClick'] == RouteConstants.createAccommodationExpensePath){
+      Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
+          CreateAccommodationExpense(onAdd: (values){
+            summaryItems.add(Tuple2(values['item'] as ExpenseModel, values['data']));
+            calculateSummary();
+          },)));
+    }
+
+    if(e['onClick'] == RouteConstants.createTravelExpensePath){
+      Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
+          CreateTravelExpense(onAdd: (values){
+            summaryItems.add(Tuple2(values['item'] as ExpenseModel, values['data']));
+            calculateSummary();
+          },)));
+    }
 
   }
 

@@ -76,7 +76,7 @@ class GEMiscModel {
       voucher: map['voucher'] as String,
       amount: map['amount'] as String,
       description: map['description'] as String,
-      voucherPath: map['voucherPath'] as String,
+      voucherPath: map['voucherPath'],
     );
   }
 }

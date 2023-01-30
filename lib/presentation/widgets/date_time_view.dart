@@ -4,13 +4,15 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:travelgrid/common/config/navigator_key.dart';
 import 'package:travelgrid/common/constants/flavour_constants.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
+import 'package:travelgrid/common/utils/date_time_util.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
 class MetaDateTimeView extends StatefulWidget {
 
   Map mapData;
   String? text;
   Function(Map)? onChange;
-  MetaDateTimeView({required this.mapData,this.text,this.onChange});
+  Map value;
+  MetaDateTimeView({required this.mapData,this.text,this.onChange,this.value=const {}});
 
 
   @override
@@ -20,6 +22,7 @@ class MetaDateTimeView extends StatefulWidget {
 class _MetaDateTimeViewState extends State<MetaDateTimeView> {
   String? date,week,month,time="00:00";
   String? dateText ;
+  DateTime currentDateTime = DateTime.now();
   @override
   Widget build(BuildContext context) {
 
@@ -38,6 +41,27 @@ class _MetaDateTimeViewState extends State<MetaDateTimeView> {
           margin: EdgeInsets.symmetric(horizontal: 10.w,vertical: 5.h),
           child: dateTimeView()
       );
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if(widget.value['date'].toString().isEmpty){
+      date= currentDateTime.day.toString();
+      week= DateFormat('EEEE').format(currentDateTime);
+      month= DateFormat('MMMM, y').format(currentDateTime);
+    }else{
+
+      DateTime dateTime = MetaDateTime().getDateTime(widget.value['date'].toString(),format: "dd-MM-yyyy");
+      print(dateTime);
+
+      date= dateTime.day.toString();
+      week= DateFormat('EEEE').format(dateTime);
+      month= DateFormat('MMMM, y').format(dateTime);
+      time = widget.value['time'] ?? "00:00";
+
     }
   }
 

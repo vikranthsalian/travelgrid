@@ -33,6 +33,8 @@ class _CreateAccommodationExpenseState extends State<CreateAccommodationExpense>
     super.initState();
     jsonData = FlavourConstants.accomCreateData;
    // prettyPrint(jsonData);
+
+    createMapData();
   }
 
 
@@ -220,6 +222,26 @@ class _CreateAccommodationExpenseState extends State<CreateAccommodationExpense>
       ),
     );
   }
+
+  void createMapData() {}
+  Map<String,dynamic> map = {
+    "id": 10,
+    "checkInDate": "10-01-2023",
+    "checkInTime": "08:10",
+    "checkOutDate": "12-01-2023",
+    "checkOutTime": "10:10",
+    "noOfDays": 0,
+    "city": 2029,
+    "cityName": "bangalore",
+    "accomodationType": 249,
+    "accomodationTypeName": "Lodging",
+    "amount": 4000,
+    "tax": 0,
+    "description": "",
+    "withBill": true,
+    "voucherPath": "",
+    "voucherNumber": "245665"
+  };
 
 
 }

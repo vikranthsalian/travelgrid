@@ -31,8 +31,6 @@ class _MetaSearchSelectorViewState extends State<MetaSearchSelectorView> {
               Navigator.of(context).push(MaterialPageRoute(builder: (context) => CityScreen(
                 onTap: (data){
                   Navigator.pop(context);
-                  prettyPrint("MetaSearchSelectorView");
-                  prettyPrint(data);
                   setState(() {
                     widget.text = data.name;
                     widget.onChange!(data);
