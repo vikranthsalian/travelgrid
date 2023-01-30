@@ -96,8 +96,8 @@ class CustomTextField extends StatelessWidget {
 
 }
 
-class MetaTextFieldView extends StatelessWidget {
-  MetaTextFieldView({Key? key,
+class MetaTextFieldBlocView extends StatelessWidget {
+  MetaTextFieldBlocView({Key? key,
     this.controller,
     required this.mapData,
     required this.onChanged,
@@ -134,6 +134,54 @@ class MetaTextFieldView extends StatelessWidget {
         contentPadding:  EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
         border: _renderBorder(),
      // disabledBorder: _renderBorder(),
+        focusedBorder: _renderBorder(),
+        enabledBorder: _renderBorder(),
+        label: MetaTextView(mapData: mapData['labelText']),
+        hintText: mapData['hintText']['text'],
+        hintStyle: MetaStyle(mapData: mapData['hintText']).getStyle() ,
+        filled: true,
+        fillColor:ParseDataType().getHexToColor(mapData['backgroundColor'] ?? "0xFFFFFFFF"),
+        errorStyle: MetaStyle(mapData: mapData['errorText']).getStyle(),
+        suffixIcon: mapData['suffixIcon'] ?? null,
+      ),
+      readOnly: mapData['readOnly'] ?? false,
+      cursorColor:ParseDataType().getHexToColor(FlavourConstants.appThemeData['cursor_color']),
+    );
+  }
+
+  UnderlineInputBorder _renderBorder() =>
+      UnderlineInputBorder(borderSide:BorderSide(color:ParseDataType().getHexToColor(mapData['borderColor'] ?? "0xFFFFFFFF")));
+
+}
+
+class MetaTextFieldView extends StatelessWidget {
+  MetaTextFieldView({Key? key,
+    this.controller,
+    required this.mapData,
+    required this.onChanged,
+  })
+      : super(key: key);
+  Map mapData;
+  TextEditingController? controller;
+  Function(String)? onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      key: UniqueKey(),
+      controller:controller,
+      autofocus: false,
+      keyboardType: ParseDataType().getInputType(mapData['inputType'] ?? "") ,
+      maxLength: mapData['maxLength'] ?? null,
+      obscureText: mapData['isPassword']  ?? false,
+      style:  MetaStyle(mapData: mapData['text']).getStyle(),
+      inputFormatters: mapData['inputFormatters']  ?? [],
+      maxLines:  mapData['maxLines'] ?? 1 ,
+      decoration: InputDecoration(
+        isDense: true,
+        contentPadding:  EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
+        border: _renderBorder(),
+        // disabledBorder: _renderBorder(),
         focusedBorder: _renderBorder(),
         enabledBorder: _renderBorder(),
         label: MetaTextView(mapData: mapData['labelText']),

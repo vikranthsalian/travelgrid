@@ -4,20 +4,17 @@ import 'package:flutter_offline/flutter_offline.dart';
 import 'package:travelgrid/common/constants/route_constants.dart';
 import 'package:travelgrid/presentation/components/pdf_component.dart';
 import 'package:travelgrid/presentation/screens/auth/login_screen.dart';
-import 'package:travelgrid/presentation/screens/common/cities_screen.dart';
-import 'package:travelgrid/presentation/screens/dashboard/dashboard.dart';
 import 'package:travelgrid/presentation/screens/dashboard/dashboard_2.dart';
-import 'package:travelgrid/presentation/screens/ge/create/create_accom.dart';
-import 'package:travelgrid/presentation/screens/ge/create/create_ge.dart';
-import 'package:travelgrid/presentation/screens/ge/create/create_misc.dart';
-import 'package:travelgrid/presentation/screens/ge/create/create_travel.dart';
+import 'package:travelgrid/presentation/screens/ge/add/add_accom.dart';
+import 'package:travelgrid/presentation/screens/ge/add/add_misc.dart';
+import 'package:travelgrid/presentation/screens/ge/add/add_travel.dart';
+import 'package:travelgrid/presentation/screens/ge/create_ge.dart';
 import 'package:travelgrid/presentation/screens/policy/policy_screen.dart';
 import 'package:travelgrid/presentation/screens/splash/splash_screen.dart';
 import 'package:travelgrid/presentation/screens/tabs/approval_expense.dart';
 import 'package:travelgrid/presentation/screens/ge/general_expense.dart';
 import 'package:travelgrid/presentation/screens/tabs/travel_expense.dart';
 import 'package:travelgrid/presentation/screens/tabs/travel_request.dart';
-import 'package:travelgrid/presentation/widgets/pdf.dart';
 class AppRoutes {
 
   Route generateRoute(RouteSettings routeSettings) {
@@ -81,7 +78,10 @@ class AppRoutes {
         return CreateTravelExpense();
 
       case RouteConstants.createMiscExpensePath:
-        return CreateMiscExpense();
+        return CreateMiscExpense(onAdd: (data){
+          print("data");
+          print(data);
+        });
 
       default:
         return SplashScreen();

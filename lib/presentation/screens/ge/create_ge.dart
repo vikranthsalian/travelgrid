@@ -2,29 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:travelgrid/common/config/navigator_key.dart';
 import 'package:travelgrid/common/constants/asset_constants.dart';
 import 'package:travelgrid/common/constants/flavour_constants.dart';
 import 'package:travelgrid/common/constants/route_constants.dart';
+import 'package:travelgrid/common/enum/dropdown_types.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
 import 'package:travelgrid/common/extensions/pretty.dart';
-import 'package:travelgrid/common/injector/injector.dart';
-import 'package:travelgrid/common/utils/date_time_util.dart';
-import 'package:travelgrid/data/blocs/general_expense/ge_bloc.dart';
 import 'package:travelgrid/data/cubits/login_cubit/login_cubit.dart';
-import 'package:travelgrid/data/datsources/general_expense_list.dart';
 import 'package:travelgrid/data/datsources/login_response.dart';
-import 'package:travelgrid/presentation/components/bloc_map_event.dart';
-import 'package:travelgrid/presentation/components/clippers/app_bar_shape.dart';
-import 'package:travelgrid/presentation/components/search_bar_component.dart';
+import 'package:travelgrid/data/models/expense_model.dart';
 import 'package:travelgrid/presentation/screens/auth/bloc/login_form_bloc.dart';
+import 'package:travelgrid/presentation/screens/ge/add/add_misc.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';
 import 'package:travelgrid/presentation/widgets/dialog_selector_view.dart';
 import 'package:travelgrid/presentation/widgets/icon.dart';
-import 'package:travelgrid/presentation/widgets/search_selector_view.dart';
+import 'package:travelgrid/presentation/widgets/svg_view.dart';
 import 'package:travelgrid/presentation/widgets/switch.dart';
 import 'package:travelgrid/presentation/widgets/text_field.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
+import 'package:tuple/tuple.dart';
 
 class CreateGeneralExpense extends StatefulWidget {
   @override
@@ -35,16 +31,16 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
   Map<String,dynamic> jsonData = {};
   List details=[];
   List expenseTypes=[];
-  List summaryDetails=[];
-  double cardHt = 90.h;
-  bool enableSearch = false;
-  final TextEditingController _searchController = TextEditingController();
+  List<Tuple2<ExpenseModel,Map>> summaryItems=[];
+  List<Tuple2<Map,String>> summaryDetails=[];
   bool loaded=false;
   LoginFormBloc? formBloc;
   List<String> values=[];
-  bool showRequesterDetails=true;
+  bool showRequesterDetails=false;
+  bool showSummaryItems=true;
   bool showSummaryDetails=true;
   bool showApproverDetails=true;
+  String total="0.00";
   @override
   void initState() {
     // TODO: implement initState
@@ -54,7 +50,6 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
 
      details = jsonData['requesterDetails']['data'];
      expenseTypes = jsonData['expensesTypes'];
-    summaryDetails = jsonData['summaryDetails']['data'];
 
     MetaLoginResponse loginResponse = context.read<LoginCubit>().getLoginResponse();
     values.add(loginResponse.data!.fullName ?? "");
@@ -67,6 +62,12 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
     values.add(loginResponse.data!.worklocation!.locationName ?? "");
     values.add(loginResponse.data!.currentContact!.mobile ?? "");
     values.add(loginResponse.data!.permanentContact?? "");
+
+
+    for(var item in jsonData['summaryDetails']['data']){
+      print(item);
+      summaryDetails.add(Tuple2(item, "0"));
+    }
 
   }
 
@@ -131,8 +132,27 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
 
                     return Expanded(
                         child: InkWell(
-                            onTap: () {
-                              Navigator.of(context).pushNamed(e['onClick']);
+                            onTap: () async{
+
+                              if(e['onClick'] == RouteConstants.createMiscExpensePath){
+                                Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
+                                    CreateMiscExpense(onAdd: (values){
+                                  //    print("CreateMiscExpense 2");
+                                   //   print(values['item']);
+
+
+                                        summaryItems.add(Tuple2(values['item'] as ExpenseModel, values['data']));
+
+                                        calculateSummary();
+
+
+
+
+                                      //summaryDetails.add(values['items']);
+
+                                },)));
+                              }
+
                             },
                             child: Container(
                               height: 60.h,
@@ -157,62 +177,6 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
                               ),
                             )
                         ));
-
-                    return Expanded(
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.of(context).pushNamed(e['onClick']);
-                          },
-                          child: Container(
-                            child: Card(
-                              color: Color(0xFF2854A1),
-                              elevation: 5,
-                              child: Container(
-                                child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Container(
-                                        height: 5.h,
-                                      ),
-                                      Container(
-                                        padding: EdgeInsets.symmetric(vertical: 5.h),
-                                        color: Colors.white,
-                                        child: Column(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                          children: [
-                                            SvgPicture.asset(
-                                              AssetConstants.pdfSvg,//e['svgIcon']['color']
-                                              color: ParseDataType().getHexToColor(e['svgIcon']['color']),
-                                              width: 25.w,
-                                              height: 25.w,
-                                            ),
-                                            SizedBox(height:5.h),
-                                            Container(
-                                              alignment: Alignment.center,
-                                              child: MetaTextView(mapData: e['title']),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Container(
-                                            alignment: Alignment.center,
-                                            child: MetaTextView(mapData: {
-                                              "text" : "+ ADD",
-                                              "color" : "0xFFFFFFFF",
-                                              "size": "8",
-                                              "family": "bold",
-                                              "align": "center"
-                                            })
-                                        ),
-                                      ),
-                                    ]),
-                              ),
-                            ),
-                          ),
-                        ));
-
                   }).toList(),
                 ),
               ),
@@ -243,6 +207,7 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
                               child: Column(
                                 children: [
                                   buildExpandableView(jsonData,"requesterDetails"),
+                                  buildExpandableView(jsonData,"summaryItems"),
                                   buildExpandableView(jsonData,"summaryDetails"),
                                   buildExpandableView(jsonData,"approverDetails"),
                                 ],
@@ -275,6 +240,19 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
                 setState(() {
                   showRequesterDetails=value;
                 });
+              },),
+          );
+        case "summaryItems":
+          return Container(
+            alignment: Alignment.centerRight,
+            child: MetaSwitch(mapData: map['showDetails'],
+              value: showSummaryItems,
+              onSwitchPressed: (value){
+
+                setState(() {
+                  showSummaryItems=value;
+                });
+
               },),
           );
         case "summaryDetails":
@@ -314,6 +292,8 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
       switch(value){
         case "requesterDetails":
           return showRequesterDetails ? buildRequesterWidget(map):Container();
+        case "summaryItems":
+          return showSummaryItems ? buildSummaryItemWidget(map):Container();
         case "summaryDetails":
           return showSummaryDetails ? buildSummaryWidget(map):Container();
         case "approverDetails":
@@ -351,6 +331,8 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
   }
 
   Container buildSummaryWidget(Map map) {
+
+
     return Container(
             padding: EdgeInsets.symmetric(horizontal: 20.w,vertical: 10.h),
             color: Colors.white,
@@ -372,12 +354,17 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
                     shrinkWrap: true,
                     padding: EdgeInsets.zero,
                       itemBuilder: (BuildContext context, int index) {
+
+
+                        print("summaryDetails.data");
+                        print(summaryDetails[index]);
+
                         return Container(
                           padding: EdgeInsets.symmetric(vertical: 5.h),
                           child: Row(
                             children: [
-                              Expanded(child: MetaTextView(mapData: summaryDetails[index]['label'])),
-                              Expanded(child: MetaTextView(mapData: summaryDetails[index]['value']))
+                              Expanded(child: MetaTextView(mapData: summaryDetails[index].item1['label'])),
+                              Expanded(child: MetaTextView(mapData: summaryDetails[index].item1['value'],text:summaryDetails[index].item2))
                             ],
                           ),
                         );
@@ -393,7 +380,7 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
                   child: Row(
                     children: [
                       Expanded(child: MetaTextView(mapData:  map['dataFooter']['label'])),
-                      Expanded(child: MetaTextView(mapData:  map['dataFooter']['value']))
+                      Expanded(child: MetaTextView(mapData:  map['dataFooter']['value'],text:total))
                     ],
                   ),
                 ),
@@ -426,7 +413,7 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
                   ),
                 ),
               ]),
-          MetaTextFieldView(mapData: map['text_field_desc'],
+          MetaTextFieldBlocView(mapData: map['text_field_desc'],
               textFieldBloc: bloc.tfUsername,
               onChanged:(value){
                 bloc.tfUsername.updateValue(value);
@@ -467,6 +454,100 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
     );
   }
 
+  Container buildSummaryItemWidget(Map map) {
+    List items =[];
+    items =  map['dataHeader'];
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 20.w,vertical: 10.h),
+      color: Colors.white,
+      child: Column(
+        children: [
+          Container(
+            child: Row(
+              children: items.map((e) {
+                return Expanded(
+                    flex: e['flex'],
+                    child: Container(
+                    margin: EdgeInsets.symmetric(horizontal: 0.w),
+                    child: MetaTextView(mapData: e)));
+              }).toList(),
+            )
+          ),
+          Divider(color: Color(0xff3D3D3D),),
+          Container(
+            color: Colors.white,
+            child: ListView.builder(
+                physics: NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                padding: EdgeInsets.zero,
+                itemBuilder: (BuildContext context, int index) {
 
+                  String type = summaryItems[index].item1.type.toString();
+                  String amount = summaryItems[index].item1.amount.toString();
+
+                  return Container(
+                    margin: EdgeInsets.symmetric(vertical: 2.h),
+                    child: Row(
+                      children: [
+                        Expanded(flex:2, child: MetaTextView(mapData: map['item'],text: type)),
+                        Expanded(flex:1,child: MetaTextView(mapData: map['item'],text:amount)),
+                        Expanded(flex:1,child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            InkWell(onTap: (){
+
+                            },
+                            child: Container(
+                                width:25.w,
+                                height:25.w,
+                                child: MetaSVGView(mapData:  map['item']['items'][0]))),
+                            SizedBox(width: 10.h,),
+                            InkWell(onTap: (){
+
+                            },
+                            child: Container(
+                                width:25.w,
+                                height:25.w,
+                                child: MetaSVGView(mapData:  map['item']['items'][1]))),
+                          ],
+                        ))
+                        ]),
+                  );
+                },
+                itemCount: summaryItems.length
+            ),
+          ),
+          Divider(color: Color(0xff3D3D3D),),
+        ],
+      ),
+    );
+  }
+
+  void calculateSummary() {
+    double miscTotal=0;
+    double accomTotal=0;
+    double travelTotal=0;
+    double dailyTotal=0;
+    for(var item in summaryItems){
+      if(item.item1.type==GETypes.MISCELLANEOUS){
+        miscTotal=miscTotal + double.parse(item.item1.amount.toString() ?? "0");
+      }
+    }
+    for(int i=0;i<summaryDetails.length;i++){
+      Map map = summaryDetails[i].item1;
+
+      if(summaryDetails[i].item1['key']=="ME"){
+        summaryDetails[i]= Tuple2(map, miscTotal.toString());
+      }
+    }
+
+    total =( miscTotal+accomTotal+travelTotal+dailyTotal).toString();
+
+    setState(() {
+
+    });
+
+
+  }
 
 }

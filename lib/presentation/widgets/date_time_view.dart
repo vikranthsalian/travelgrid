@@ -9,7 +9,8 @@ class MetaDateTimeView extends StatefulWidget {
 
   Map mapData;
   String? text;
-  MetaDateTimeView({super.key, required this.mapData,this.text});
+  Function(Map)? onChange;
+  MetaDateTimeView({required this.mapData,this.text,this.onChange});
 
 
   @override
@@ -17,8 +18,8 @@ class MetaDateTimeView extends StatefulWidget {
 }
 
 class _MetaDateTimeViewState extends State<MetaDateTimeView> {
-  String? date,week,month,time;
-
+  String? date,week,month,time="00:00";
+  String? dateText ;
   @override
   Widget build(BuildContext context) {
 
@@ -79,6 +80,21 @@ class _MetaDateTimeViewState extends State<MetaDateTimeView> {
                     date= pickedDate.day.toString();
                     week= DateFormat('EEEE').format(pickedDate);
                     month= DateFormat('MMMM, y').format(pickedDate);
+                    dateText = DateFormat('dd-MM-yyyy').format(pickedDate);
+                    print(dateText);
+
+
+                    if(widget.mapData['showView'] == "date_time"){
+                      widget.onChange!(
+                          {
+                            "date":dateText,
+                            "time":time,
+                          }
+                      );
+                    }else{
+                      widget.onChange!({"date":dateText});
+                    }
+
                   });
                 }
 
@@ -137,6 +153,18 @@ class _MetaDateTimeViewState extends State<MetaDateTimeView> {
         if (picked_s != null )
           setState(() {
             time= picked_s.hour.toString() +":"+picked_s.minute.toString();
+            if(widget.mapData['showView'] == "date_time"){
+              widget.onChange!(
+                  {
+                    "date":dateText,
+                    "time":time,
+                  }
+              );
+            }else{
+              widget.onChange!({"time":dateText});
+            }
+
+
           });
       },
       child: Container(
@@ -149,7 +177,6 @@ class _MetaDateTimeViewState extends State<MetaDateTimeView> {
       ),
     );
   }
-
 
   Widget dateTimeView(){
     return Container(

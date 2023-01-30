@@ -7,7 +7,7 @@ import Foundation
 
 import connectivity_plus_macos
 import network_info_plus_macos
-import shared_preferences_macos
+import shared_preferences_foundation
 import syncfusion_pdfviewer_macos
 import url_launcher_macos
 

@@ -13,7 +13,7 @@ import 'package:travelgrid/presentation/widgets/svg_view.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
 
 class CityScreen extends StatefulWidget {
-  Function(Map)? onTap;
+  Function(Data)? onTap;
   CityScreen({this.onTap});
 
   @override
@@ -163,7 +163,7 @@ class _CityScreenState extends State<CityScreen> {
                 child: MetaTextView( mapData:  state,text: list[index].state)
             ),
             onTap: () {
-                widget.onTap!(list[index].toMap());
+                widget.onTap!(list[index]);
             },
           ),
         );

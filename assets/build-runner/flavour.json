@@ -666,6 +666,67 @@
         }
       }
     ],
+    "summaryItems": {
+      "label": {
+        "text" : "Expense Item Details",
+        "color" : "0XFFFFFFFF",
+        "size": "14",
+        "family": "bold",
+        "align": "center-left"
+      },
+      "showDetails": {
+        "label": {
+          "text" : "Show",
+          "color" : "0XFFFFFFFF",
+          "size": "10",
+          "family": "bold",
+          "align": "center-right"
+        }
+      },
+      "dataHeader":  [
+        {
+          "text" : "Type",
+          "color" : "0xFF000000",
+          "size": "12",
+          "family": "bold",
+          "align": "center",
+          "flex": 2
+        },
+        {
+          "text" : "Amount",
+          "color" : "0xFF000000",
+          "size": "12",
+          "family": "bold",
+          "align": "center",
+          "flex": 1
+        },
+        {
+          "text" : "Update",
+          "color" : "0xFF000000",
+          "size": "12",
+          "family": "bold",
+          "align": "center",
+          "flex": 1
+        }
+      ],
+      "item": {
+        "text" : "",
+        "color" : "0XFF000000",
+        "size": "10",
+        "family": "regular",
+        "align": "center",
+        "items": [
+          {
+            "icon": "edit.svg",
+            "color" : "0xFF2854A1"
+          },
+          {
+            "icon": "delete.svg",
+            "color" : "0xFFff0000"
+          }
+        ]
+      }
+    },
     "summaryDetails": {
       "label": {
         "text" : "Expense Summary Details",
@@ -687,79 +748,83 @@
         "label": {
           "text" : "Expense Summary",
           "color" : "0xFF000000",
-          "size": "14",
+          "size": "12",
           "family": "bold",
           "align": "center-left"
         },
         "value": {
           "text" : "Reimbursement",
           "color" : "0xFF000000",
-          "size": "14",
+          "size": "12",
           "family": "bold",
           "align": "center-right"
         }
       },
       "data": [
         {
+        "key": "AE",
         "label": {
           "text" : "Accommodation Expense",
           "color" : "0xFF000000",
-          "size": "14",
+          "size": "12",
           "family": "regular",
           "align": "center-left"
         },
         "value": {
           "text" : "0.00",
           "color" : "0xFFCCCCCC",
-          "size": "14",
+          "size": "12",
           "family": "regular",
           "align": "center-right"
         }
-       },
+        },
         {
+          "key": "TE",
           "label": {
             "text" : "Travel Expense",
             "color" : "0xFF000000",
-            "size": "14",
+            "size": "12",
             "family": "regular",
             "align": "center-left"
           },
           "value": {
             "text" : "0.00",
             "color" : "0xFFCCCCCC",
-            "size": "14",
+            "size": "12",
             "family": "regular",
             "align": "center-right"
           }
         },
         {
+          "key": "DE",
           "label": {
             "text" : "Daily Allowance",
             "color" : "0xFF000000",
-            "size": "14",
+            "size": "12",
             "family": "regular",
             "align": "center-left"
           },
           "value": {
             "text" : "0.00",
             "color" : "0xFFCCCCCC",
-            "size": "14",
+            "size": "12",
             "family": "regular",
             "align": "center-right"
           }
         },
         {
+          "key": "ME",
           "label": {
             "text" : "Miscellaneous Expense",
             "color" : "0xFF000000",
-            "size": "14",
+            "size": "12",
             "family": "regular",
             "align": "center-left"
           },
           "value": {
             "text" : "0.00",
             "color" : "0xFFCCCCCC",
-            "size": "14",
+            "size": "12",
             "family": "regular",
             "align": "center-right"
           }
@@ -769,14 +834,14 @@
         "label": {
           "text" : "Total Expense",
           "color" : "0xFF000000",
-          "size": "14",
+          "size": "12",
           "family": "bold",
           "align": "center-left"
         },
         "value": {
           "text" : "0.00",
           "color" : "0xFF000000",
-          "size": "14",
+          "size": "12",
           "family": "bold",
           "align": "center-right"
         }
@@ -922,7 +987,7 @@
   "accom_create_data": {
     "backgroundColor" : "0xFF2854A1",
     "title":  {
-      "text" : "Create\nAccommodation Expense",
+      "text" : "Add\nAccommodation Expense",
       "color" : "0XFFFFFFFF",
       "size": "18",
       "family": "bold",
@@ -940,7 +1005,7 @@
       "showView": "date_time",
       "dateView": {
         "label":  {
-          "text" : "Check-In Date",
+          "text" : "Check-In Date*",
           "color" : "0xFF2854A1",
           "size": "14",
           "family": "regular",
@@ -970,7 +1035,7 @@
       },
       "timeView": {
         "label":  {
-          "text" : "Check-In Time",
+          "text" : "Check-In Time*",
           "color" : "0xFF2854A1",
           "size": "14",
           "family": "regular",
@@ -984,13 +1049,12 @@
           "align": "center-left"
         }
       }
-
     },
     "checkOutDateTime": {
       "showView": "date_time",
       "dateView": {
         "label":  {
-          "text" : "Check-Out Date",
+          "text" : "Check-Out Date*",
           "color" : "0xFF2854A1",
           "size": "14",
           "family": "regular",
@@ -1020,7 +1084,7 @@
       },
       "timeView": {
         "label":  {
-          "text" : "Check-Out Time",
+          "text" : "Check-Out Time*",
           "color" : "0xFF2854A1",
           "size": "14",
           "family": "regular",
@@ -1039,7 +1103,7 @@
     "selectCity": {
       "showView": true,
       "label":  {
-        "text" : "City",
+        "text" : "City*",
         "color" : "0xFF2854A1",
         "size": "14",
         "family": "regular",
@@ -1086,7 +1150,7 @@
         "family": "regular"
       },
       "labelText" : {
-        "text" : "Voucher",
+        "text" : "Voucher*",
         "color" : "0xFF2854A1",
         "size": "14",
         "family": "regular",
@@ -1111,7 +1175,7 @@
       ]
     },
     "text_field_amount":  {
-      "name": "Amount*",
+      "name": "Amount",
       "apiKey": "amount",
       "type": "text_field_view",
       "inputType": "number",
@@ -1125,7 +1189,7 @@
         "family": "regular"
       },
       "labelText" : {
-        "text" : "Amount",
+        "text" : "Amount*",
         "color" : "0xFF2854A1",
         "size": "14",
         "family": "regular",
@@ -1228,6 +1292,7 @@
         "align": "center-left"
       }
     },
+    "formValidation": ["checkInDate","checkOutDate","selectCity","selectType","text_field_voucher","text_field_amount"],
     "uploadButton":  {
       "text" : "Upload Voucher",
       "color" : "0xFFFFFFFF",
@@ -1792,6 +1857,15 @@
       },
       "validators" : []
     },
+    "uploadButton":  {
+      "text" : "Upload Voucher",
+      "color" : "0xFFFFFFFF",
+      "backgroundColor" : "0xFF2854A1",
+      "size": "14",
+      "borderRadius": 15.0,
+      "family": "regular",
+      "onClick": "/uploadDoc"
+    },
     "bottomButtonLeft": {
       "text" : "Cancel",
       "color" : "0xFFFFFFFF",
@@ -1953,6 +2027,46 @@
     "backgroundColor" : "0xFF2854A1",
     "title":  {
       "text" : "Select Accommodation Type",
+      "color" : "0XFF000000",
+      "size": "18",
+      "family": "bold",
+      "align": "center"
+    },
+    "listView": {
+      "recordsFound":  {
+        "text" : "Records Found",
+        "value" : "0",
+        "color" : "0XFF000000",
+        "size": "12",
+        "family": "regular",
+        "align": "center-right"
+      },
+      "emptyData": {
+        "image_view":   {
+          "image" : "logo_banner.png",
+          "align": "center",
+          "wd": 250.0
+        },
+        "title":  {
+          "text" : "No Data Found!!!",
+          "color" : "0XFF3D3D3D",
+          "size": "16",
+          "family": "regular"
+        }
+      }
+    },
+    "bottomButtonCentre": {
+      "text" : "Cancel",
+      "color" : "0xFFFFFFFF",
+      "backgroundColor" : "0xFF2854A1",
+      "size": "18",
+      "family": "regular"
+    }
+  },
+  "travel_mode_screen_data" : {
+    "backgroundColor" : "0xFF2854A1",
+    "title":  {
+      "text" : "Select Travel Mode",
       "color" : "0XFF000000",
       "size": "18",
       "family": "bold",

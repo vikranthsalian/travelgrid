@@ -3,14 +3,8 @@ import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:travelgrid/common/constants/flavour_constants.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
-import 'package:travelgrid/common/extensions/pretty.dart';
-import 'package:travelgrid/common/injector/injector.dart';
-import 'package:travelgrid/common/utils/date_time_util.dart';
-import 'package:travelgrid/data/datsources/general_expense_list.dart';
-import 'package:travelgrid/presentation/components/bloc_map_event.dart';
-import 'package:travelgrid/presentation/screens/auth/bloc/login_form_bloc.dart';
+import 'package:travelgrid/presentation/screens/ge/bloc/accom_form_bloc.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';
-import 'package:travelgrid/presentation/widgets/checkbox.dart';
 import 'package:travelgrid/presentation/widgets/date_time_view.dart';
 import 'package:travelgrid/presentation/widgets/dialog_selector_view.dart';
 import 'package:travelgrid/presentation/widgets/icon.dart';
@@ -28,16 +22,15 @@ class _CreateAccommodationState extends State<CreateAccommodation> {
   Map<String,dynamic> jsonData = {};
   List items=[];
   double cardHt = 90.h;
-  bool enableSearch = false;
-  final TextEditingController _searchController = TextEditingController();
   bool loaded=false;
   bool showWithBill=true;
+  AccomFormBloc?  formBloc;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     jsonData = FlavourConstants.accomCreateData;
-    prettyPrint(jsonData);
+   // prettyPrint(jsonData);
   }
 
 
@@ -63,7 +56,7 @@ class _CreateAccommodationState extends State<CreateAccommodation> {
             ),
             MetaButton(mapData: jsonData['bottomButtonRight'],
                 onButtonPressed: (){
-
+                  formBloc!.submit();
                 }
             )
           ],
@@ -98,13 +91,13 @@ class _CreateAccommodationState extends State<CreateAccommodation> {
           ),
           Container(
             child: BlocProvider(
-              create: (context) => LoginFormBloc({}),
+              create: (context) => AccomFormBloc(jsonData),
               child: Builder(
                   builder: (context) {
-                    LoginFormBloc  formBloc =  BlocProvider.of<LoginFormBloc>(context);
+                      formBloc =  BlocProvider.of<AccomFormBloc>(context);
                   return Container(
                     margin: EdgeInsets.symmetric(horizontal: 10.w),
-                    child: FormBlocListener<LoginFormBloc, String, String>(
+                    child: FormBlocListener<AccomFormBloc, String, String>(
                         onSubmissionFailed: (context, state) {
 
                         },
@@ -119,77 +112,86 @@ class _CreateAccommodationState extends State<CreateAccommodation> {
 
                         },
                         child: ScrollableFormBlocManager(
-                          formBloc: formBloc,
+                          formBloc: formBloc!,
                           child: ListView(
                               padding: EdgeInsets.zero,
                               shrinkWrap: true,
                               children:[
                                 Container(
-                                  child: MetaDateTimeView(mapData: jsonData['checkInDateTime']),
+                                  child: MetaDateTimeView(mapData: jsonData['checkInDateTime'],onChange: (value){
+                                    formBloc!.checkInDate.updateValue(value.toString());
+                                  },),
                                 ),
                                 Container(
-                                  child: MetaDateTimeView(mapData: jsonData['checkOutDateTime']),
+                                  child: MetaDateTimeView(mapData: jsonData['checkOutDateTime'],onChange: (value){
+                                    formBloc!.checkOutDate.updateValue(value.toString());
+                                  },),
                                 ),
                                 Row(
                                     children: [
                                   Expanded(
                                     child: Container(
-                                      child: MetaSearchSelectorView(mapData: jsonData['selectCity']),
+                                      child: MetaSearchSelectorView(mapData: jsonData['selectCity'],
+                                        onChange:(value){
+                                           formBloc!.city.updateValue(value);
+                                        },),
                                       alignment: Alignment.centerLeft,
                                     ),
                                   ),
                                   Expanded(
                                     child: Container(
-                                      child: MetaDialogSelectorView(mapData: jsonData['selectType']),
+                                      child: MetaDialogSelectorView(mapData: jsonData['selectType'],
+                                        onChange:(value){
+
+                                        },),
                                     ),
                                   ),
                                 ]),
 
-                                showWithBill ?  MetaTextFieldView(mapData: jsonData['text_field_voucher'],
-                                    textFieldBloc: formBloc.tfUsername,
+                                showWithBill ?  MetaTextFieldBlocView(mapData: jsonData['text_field_voucher'],
+                                    textFieldBloc: formBloc!.tfVoucher,
                                     onChanged:(value){
-                                      formBloc.tfUsername.updateValue(value);
+                                      formBloc!.tfVoucher.updateValue(value);
                                     }):SizedBox(),
                                 Container(
                                   child: Row(
                                     children: [
                                           Expanded(
-                                            child: MetaTextFieldView(mapData: jsonData['text_field_amount'],
-                                            textFieldBloc: formBloc.tfUsername,
+                                            child: MetaTextFieldBlocView(mapData: jsonData['text_field_amount'],
+                                            textFieldBloc: formBloc!.tfAmount,
                                             onChanged:(value){
-                                              formBloc.tfUsername.updateValue(value);
+                                              formBloc!.tfAmount.updateValue(value);
                                             }),
                                           ),
                                       SizedBox(width: 30.w,),
                                       Expanded(
-                                        child: MetaTextFieldView(mapData: jsonData['text_field_tax'],
-                                            textFieldBloc: formBloc.tfUsername,
+                                        child: MetaTextFieldBlocView(mapData: jsonData['text_field_tax'],
+                                            textFieldBloc: formBloc!.tfTax,
                                             onChanged:(value){
-                                              formBloc.tfUsername.updateValue(value);
+                                              formBloc!.tfTax.updateValue(value);
                                             }),
                                       ),
                                         ],
                                   ),
                                 ),
-                                MetaTextFieldView(mapData: jsonData['text_field_desc'],
-                                    textFieldBloc: formBloc.tfUsername,
+                                MetaTextFieldBlocView(mapData: jsonData['text_field_desc'],
+                                    textFieldBloc: formBloc!.tfDescription,
                                     onChanged:(value){
-                                      formBloc.tfUsername.updateValue(value);
+                                      formBloc!.tfDescription.updateValue(value);
                                     }),
 
                                 Row(
                                   children: [
-                                    Container(
-                                      child: MetaSwitch(mapData:  jsonData['withBillCheckBox'],
-                                        value: showWithBill,
-                                        onSwitchPressed: (value){
+                                    MetaSwitch(mapData:  jsonData['withBillCheckBox'],
+                                      value:  formBloc!.swWithBill.value,
+                                      onSwitchPressed: (value){
 
                                         setState(() {
-                                          showWithBill=value;
+                                         showWithBill=value;
+                                         formBloc!.swWithBill.updateValue(value);
                                         });
 
                                       },),
-                                    ),
                                     showWithBill ? Container(
                                       margin: EdgeInsets.symmetric(vertical: 20.h),
                                       width: 180.w,

@@ -1,10 +1,16 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:travelgrid/common/constants/flavour_constants.dart';
+import 'package:travelgrid/common/enum/dropdown_types.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
 import 'package:travelgrid/common/extensions/pretty.dart';
-import 'package:travelgrid/presentation/screens/auth/bloc/login_form_bloc.dart';
+import 'package:travelgrid/common/utils/show_alert.dart';
+import 'package:travelgrid/data/models/expense_model.dart';
+import 'package:travelgrid/data/models/ge_misc_model.dart';
+import 'package:travelgrid/presentation/screens/ge/bloc/misc_form_bloc.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';
 import 'package:travelgrid/presentation/widgets/date_time_view.dart';
 import 'package:travelgrid/presentation/widgets/dialog_selector_view.dart';
@@ -15,6 +21,8 @@ import 'package:travelgrid/presentation/widgets/text_field.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
 
 class CreateMiscExpense extends StatefulWidget {
+  Function(Map)? onAdd;
+  CreateMiscExpense({this.onAdd});
   @override
   _CreateMiscExpenseState createState() => _CreateMiscExpenseState();
 }
@@ -23,9 +31,8 @@ class _CreateMiscExpenseState extends State<CreateMiscExpense> {
   Map<String,dynamic> jsonData = {};
   List items=[];
   double cardHt = 90.h;
-  bool enableSearch = false;
+  MiscFormBloc? formBloc;
   bool loaded=false;
-  bool showWithBill=true;
   @override
   void initState() {
     // TODO: implement initState
@@ -59,6 +66,8 @@ class _CreateMiscExpenseState extends State<CreateMiscExpense> {
             MetaButton(mapData: jsonData['bottomButtonRight'],
                 onButtonPressed: (){
 
+
+                formBloc!.submit();
                 }
             )
           ],
@@ -93,28 +102,47 @@ class _CreateMiscExpenseState extends State<CreateMiscExpense> {
           ),
           Container(
             child: BlocProvider(
-              create: (context) => LoginFormBloc({}),
+              create: (context) => MiscFormBloc(jsonData),
               child: Builder(
                   builder: (context) {
-                    LoginFormBloc  formBloc =  BlocProvider.of<LoginFormBloc>(context);
+
+                   formBloc =  BlocProvider.of<MiscFormBloc>(context);
+                   formBloc!.miscName.updateValue("Initial UD");
+                   formBloc!.miscID.updateValue("21");
+
                   return Container(
                     margin: EdgeInsets.symmetric(horizontal: 10.w),
-                    child: FormBlocListener<LoginFormBloc, String, String>(
+                    child: FormBlocListener<MiscFormBloc, String, String>(
                         onSubmissionFailed: (context, state) {
+                          print(state);
+                          MetaAlert.showErrorAlert(
+                            message: "Please Select All Fields",
+                          );
 
                         },
                         onSubmitting: (context, state) {
                           FocusScope.of(context).unfocus();
                         },
                         onSuccess: (context, state) {
+                          print(state.successResponse);
+                          GEMiscModel modelResponse = GEMiscModel.fromJson(jsonDecode(state.successResponse.toString()));
+
+                          widget.onAdd!(
+                              {
+                                "data": modelResponse.toMap(),
+                                "item" : ExpenseModel(type: GETypes.MISCELLANEOUS,amount: modelResponse.amount)
+                              }
+                          );
+                          Navigator.pop(context);
+
 
                         },
                         onFailure: (context, state) {
-
+                          print(state);
 
                         },
                         child: ScrollableFormBlocManager(
-                          formBloc: formBloc,
+                          formBloc: formBloc!,
                           child: ListView(
                               padding: EdgeInsets.zero,
                               shrinkWrap: true,
@@ -122,10 +150,14 @@ class _CreateMiscExpenseState extends State<CreateMiscExpense> {
                                 Row(
                                   children: [
                                     Container(
-                                      child: MetaDateTimeView(mapData: jsonData['checkInDateTime']),
+                                      child: MetaDateTimeView(mapData: jsonData['checkInDateTime'],onChange: (value){
+                                        formBloc!.checkInDate.updateValue(value.toString());
+                                      }),
                                     ),
                                     Container(
-                                      child: MetaDateTimeView(mapData: jsonData['checkOutDateTime']),
+                                      child: MetaDateTimeView(mapData: jsonData['checkOutDateTime'],onChange: (value){
+                                        formBloc!.checkOutDate.updateValue(value.toString());
+                                      }),
                                     ),
                                   ],
                                 ),
@@ -134,57 +166,66 @@ class _CreateMiscExpenseState extends State<CreateMiscExpense> {
                                     children: [
                                   Expanded(
                                     child: Container(
-                                      child: MetaSearchSelectorView(mapData: jsonData['selectCity']),
+                                      child: MetaSearchSelectorView(mapData: jsonData['selectCity'],
+                                        onChange:(value){
+                                          formBloc!.cityName.updateValue(value.name);
+                                          formBloc!.cityID.updateValue(value.id.toString());
+                                        },),
                                       alignment: Alignment.centerLeft,
                                     ),
                                   ),
                                   Expanded(
                                     child: Container(
-                                      child: MetaDialogSelectorView(mapData: jsonData['selectMiscType']),
+                                      child: MetaDialogSelectorView(mapData: jsonData['selectMiscType'],
+                                        onChange:(value){
+                                          formBloc!.miscName.updateValue(value.name);
+                                          formBloc!.miscID.updateValue(value.id.toString());
+                                        },),
                                     ),
                                   ),
                                 ]),
 
-                                Row(
-                                  children: [
-                                    Container(
-                                      child: MetaSwitch(mapData:  jsonData['unitType'],
-                                        value: showWithBill,
-                                        onSwitchPressed: (value){
-
-                                          setState(() {
-                                            showWithBill=value;
-                                          });
-
-                                        },),
-                                    ),
-                                  ],
+                                Container(
+                                  child: MetaSwitchBloc(
+                                      mapData:  jsonData['unitType'],
+                                      bloc:  formBloc!.swUnitType,
+                                      onSwitchPressed: (value){
+                                        formBloc!.swUnitType.updateValue(value);
+                                      }),
                                 ),
 
-                                MetaTextFieldView(mapData: jsonData['text_field_voucher'],
-                                    textFieldBloc: formBloc.tfUsername,
+                                MetaTextFieldBlocView(mapData: jsonData['text_field_voucher'],
+                                    textFieldBloc: formBloc!.tfVoucher,
                                     onChanged:(value){
-                                      formBloc.tfUsername.updateValue(value);
+                                      formBloc!.tfVoucher.updateValue(value);
                                     }),
                                 Container(
                                   child: Row(
                                     children: [
                                           Expanded(
-                                            child: MetaTextFieldView(mapData: jsonData['text_field_amount'],
-                                            textFieldBloc: formBloc.tfUsername,
+                                            child: MetaTextFieldBlocView(mapData: jsonData['text_field_amount'],
+                                            textFieldBloc: formBloc!.tfAmount,
                                             onChanged:(value){
-                                              formBloc.tfUsername.updateValue(value);
+                                              formBloc!.tfAmount.updateValue(value);
                                             }),
                                           ),
                                         ],
                                   ),
                                 ),
-                                MetaTextFieldView(mapData: jsonData['text_field_desc'],
-                                    textFieldBloc: formBloc.tfUsername,
+                                MetaTextFieldBlocView(mapData: jsonData['text_field_desc'],
+                                    textFieldBloc: formBloc!.tfDescription,
                                     onChanged:(value){
-                                      formBloc.tfUsername.updateValue(value);
+                                      formBloc!.tfDescription.updateValue(value);
                                     }),
+                                Container(
+                                  margin: EdgeInsets.symmetric(vertical: 20.h,horizontal: 20.w),
+                                  width: 180.w,
+                                  child: MetaButton(mapData: jsonData['uploadButton'],
+                                      onButtonPressed: (){
 
+                                      }
+                                  ),
+                                )
 
                               ]
                           ),
@@ -235,6 +276,14 @@ class _CreateMiscExpenseState extends State<CreateMiscExpense> {
      // "sgstPrc": 0.0,
     //  "igstPrc": 0.0
   //  };
+  }
+
+  void otherValidations(json) {
+    print(json);
+
+
+
+
   }
 
 

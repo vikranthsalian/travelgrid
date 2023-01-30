@@ -28,8 +28,6 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
   Map<String,dynamic> jsonData = {};
   List items=[];
   double cardHt = 90.h;
-  bool enableSearch = false;
-  final TextEditingController _searchController = TextEditingController();
   bool loaded=false;
   bool showWithBill=true;
   @override
@@ -45,11 +43,6 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
 
   @override
   Widget build(BuildContext context) {
-
-
-
-
-
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -150,7 +143,7 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
                                 Container(
                                   child: MetaDialogSelectorView(mapData: jsonData['selectMode']),
                                 ),
-                                showWithBill ?  MetaTextFieldView(mapData: jsonData['text_field_voucher'],
+                                showWithBill ?  MetaTextFieldBlocView(mapData: jsonData['text_field_voucher'],
                                     textFieldBloc: formBloc.tfUsername,
                                     onChanged:(value){
                                       formBloc.tfUsername.updateValue(value);
@@ -159,7 +152,7 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
                                   child: Row(
                                     children: [
                                           Expanded(
-                                            child: MetaTextFieldView(mapData: jsonData['text_field_amount'],
+                                            child: MetaTextFieldBlocView(mapData: jsonData['text_field_amount'],
                                             textFieldBloc: formBloc.tfUsername,
                                             onChanged:(value){
                                               formBloc.tfUsername.updateValue(value);
@@ -167,7 +160,7 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
                                           ),
                                       SizedBox(width: 30.w,),
                                       Expanded(
-                                        child: MetaTextFieldView(mapData: jsonData['text_field_tax'],
+                                        child: MetaTextFieldBlocView(mapData: jsonData['text_field_tax'],
                                             textFieldBloc: formBloc.tfUsername,
                                             onChanged:(value){
                                               formBloc.tfUsername.updateValue(value);
@@ -176,7 +169,7 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
                                         ],
                                   ),
                                 ),
-                                MetaTextFieldView(mapData: jsonData['text_field_desc'],
+                                MetaTextFieldBlocView(mapData: jsonData['text_field_desc'],
                                     textFieldBloc: formBloc.tfUsername,
                                     onChanged:(value){
                                       formBloc.tfUsername.updateValue(value);

@@ -37,7 +37,22 @@ class CommonRepository extends CommonAPIAbstract {
 
     Map<String,dynamic> data= {};
 
-    var response = await apiRemoteDatasource.getAccomTypes("getAccomodationType",data);
+    var response = await apiRemoteDatasource.getCommonTypes("getAccomodationType",data);
+
+    if(response!=null) {
+      MetaAccomTypeListResponse modelResponse = MetaAccomTypeListResponse.fromJson(response);
+      return modelResponse;
+    }
+
+    return MetaAccomTypeListResponse(status: false);
+  }
+
+  @override
+  Future<MetaAccomTypeListResponse> getMiscTypesList() async {
+
+    Map<String,dynamic> data= {};
+
+    var response = await apiRemoteDatasource.getCommonTypes("getMiscellaneousType",data);
 
     if(response!=null) {
       MetaAccomTypeListResponse modelResponse = MetaAccomTypeListResponse.fromJson(response);
@@ -52,7 +67,7 @@ class CommonRepository extends CommonAPIAbstract {
 
     Map<String,dynamic> data= {};
 
-    var response = await apiRemoteDatasource.getAccomTypes("getModeOfTravel",data);
+    var response = await apiRemoteDatasource.getCommonTypes("getModeOfTravel",data);
 
     if(response!=null) {
       MetaTravelModeListResponse modelResponse = MetaTravelModeListResponse.fromJson(response);

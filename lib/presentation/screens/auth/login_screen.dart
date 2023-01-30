@@ -10,6 +10,7 @@ import 'package:travelgrid/common/extensions/pretty.dart';
 import 'package:travelgrid/common/injector/injector.dart';
 import 'package:travelgrid/common/utils/show_alert.dart';
 import 'package:travelgrid/data/blocs/accom/accom_type_bloc.dart';
+import 'package:travelgrid/data/blocs/travel/travel_mode_bloc.dart';
 import 'package:travelgrid/data/cubits/login_cubit/login_cubit.dart';
 import 'package:travelgrid/data/datsources/login_response.dart';
 import 'package:travelgrid/presentation/screens/auth/bloc/login_form_bloc.dart';
@@ -77,6 +78,7 @@ class _LoginScreenState extends State<_Login> {
                          message: "Login Success"
                        );
                        Injector.resolve<AccomTypeBloc>()..add(GetAccomTypeListEvent());
+                       Injector.resolve<TravelModeBloc>()..add(GetTravelModeListEvent());
 
 
                        Navigator.of(context).pushNamed(RouteConstants.dashboardPath);
@@ -105,12 +107,12 @@ class _LoginScreenState extends State<_Login> {
                               MetaImageView(mapData: loginJsonData['image_view']),
                               SizedBox(height: _sizedBoxHeight),
                               SizedBox(height: _sizedBoxHeight),
-                              MetaTextFieldView(mapData: loginJsonData['text_field_username'],
+                              MetaTextFieldBlocView(mapData: loginJsonData['text_field_username'],
                                   textFieldBloc: formBloc.tfUsername,
                                   onChanged:(value){
                                     formBloc.tfUsername.updateValue(value);
                                   }),
-                              MetaTextFieldView(mapData: loginJsonData['text_field_password'],
+                              MetaTextFieldBlocView(mapData: loginJsonData['text_field_password'],
                                   textFieldBloc: formBloc.tfPassword,
                                   onChanged: (value){
                                     formBloc.tfPassword.updateValue(value);

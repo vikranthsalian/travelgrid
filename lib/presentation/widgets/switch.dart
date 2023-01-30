@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
 
@@ -35,12 +36,60 @@ class _MetaSwitchState extends State<MetaSwitch> {
             value: widget.value,
             onChanged:(bool value) {
               setState(() {
-                widget.value = value;
-                widget.onSwitchPressed!(value);
+
               });
+                widget.onSwitchPressed!(value);
             },
           ),
         ],
+      ),
+    );
+  }
+
+}
+
+
+class MetaSwitchBloc extends StatelessWidget {
+  final bloc;
+  Function(bool)? onSwitchPressed;
+  Map mapData;
+
+  MetaSwitchBloc({
+    this.onSwitchPressed,
+    this.bloc,
+    required this.mapData
+  });
+  @override
+  Widget build(BuildContext context) {
+
+    return Theme(
+      data: Theme.of(context).copyWith(
+        colorScheme: ColorScheme.light(
+          primary:Colors.green,
+          secondary: Colors.green,
+          onPrimary: Colors.white,
+          onSurface: Colors.black,
+        ),
+        textButtonTheme: TextButtonThemeData(
+          style: TextButton.styleFrom(
+            primary: Colors.black, // button text color
+          ),
+        ),
+      ),
+      child:Container(
+        margin: EdgeInsets.symmetric(horizontal: 10.w,vertical: 5.h),
+        child: SwitchFieldBlocBuilder(
+          booleanFieldBloc: bloc,
+          body:Container(child: MetaTextView(mapData: mapData['label'])),
+        ),
+      )
+    );
+
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 10.w,vertical: 5.h),
+      child: SwitchFieldBlocBuilder(
+        booleanFieldBloc: bloc,
+        body:Container(child: MetaTextView(mapData: mapData['label'])),
       ),
     );
 

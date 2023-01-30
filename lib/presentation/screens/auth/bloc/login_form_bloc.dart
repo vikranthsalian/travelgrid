@@ -22,8 +22,6 @@ class LoginFormBloc extends FormBloc<String, String> {
 
       }
 
-
-
     addFieldBlocs(fieldBlocs: [
       tfUsername,
       tfPassword,

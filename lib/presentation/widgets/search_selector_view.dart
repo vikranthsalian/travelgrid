@@ -4,11 +4,14 @@ import 'package:travelgrid/common/extensions/pretty.dart';
 import 'package:travelgrid/presentation/screens/common/cities_screen.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
 
+import '../../data/datsources/cities_list.dart';
+
 class MetaSearchSelectorView extends StatefulWidget {
 
   Map mapData;
   String? text;
-  MetaSearchSelectorView({super.key, required this.mapData,this.text});
+  Function? onChange;
+  MetaSearchSelectorView({super.key, required this.mapData,this.text,this.onChange});
 
   @override
   State<StatefulWidget> createState() => _MetaSearchSelectorViewState();
@@ -26,12 +29,13 @@ class _MetaSearchSelectorViewState extends State<MetaSearchSelectorView> {
           InkWell(
             onTap: (){
               Navigator.of(context).push(MaterialPageRoute(builder: (context) => CityScreen(
-                onTap: (Map data){
+                onTap: (data){
                   Navigator.pop(context);
                   prettyPrint("MetaSearchSelectorView");
                   prettyPrint(data);
                   setState(() {
-                    widget.text=data['name'];
+                    widget.text = data.name;
+                    widget.onChange!(data);
                   });
                 },
               )));

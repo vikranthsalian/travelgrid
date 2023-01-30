@@ -26,4 +26,12 @@ class Validators{
 
   }
 
+  static String? emptyValidator(dynamic value) {
+    if (value.isEmpty) {
+      return "Cannot be empty";
+    }
+    return null;
+  }
+
+
 }

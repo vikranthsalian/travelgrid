@@ -92,7 +92,7 @@ class APIRemoteDatasource{
 
   }
 
-  Future<dynamic> getAccomTypes(pathUrl,Map<String,dynamic> data) async {
+  Future<dynamic> getCommonTypes(pathUrl,Map<String,dynamic> data) async {
 
     data["token"]=appNavigatorKey.currentState!.context.read<LoginCubit>().getLoginToken();
 
