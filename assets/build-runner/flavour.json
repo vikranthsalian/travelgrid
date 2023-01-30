@@ -709,23 +709,39 @@
           "flex": 1
         }
       ],
-      "item": {
-        "text" : "",
-        "color" : "0XFF000000",
-        "size": "10",
-        "family": "regular",
-        "align": "center",
-        "items": [
-          {
-            "icon": "edit.svg",
-            "color" : "0xFF2854A1"
+      "listView": {
+        "item": {
+          "text" : "",
+          "color" : "0XFF000000",
+          "size": "10",
+          "family": "regular",
+          "align": "center",
+          "items": [
+            {
+              "icon": "edit.svg",
+              "color" : "0xFF2854A1"
+            },
+            {
+              "icon": "delete.svg",
+              "color" : "0xFFff0000"
+            }
+          ]
+        },
+        "emptyData": {
+          "image_view":   {
+            "image" : "logo_banner.png",
+            "align": "center",
+            "wd": 250.0
           },
-          {
-            "icon": "delete.svg",
-            "color" : "0xFFff0000"
+          "title":  {
+            "text" : "No item Added!!!",
+            "color" : "0XFF3D3D3D",
+            "size": "16",
+            "family": "regular"
           }
-        ]
+        }
       }
+
     },
     "summaryDetails": {
       "label": {
@@ -1720,7 +1736,7 @@
     },
     "selectMiscType": {
       "showView": true,
-      "key":"accom_type_view",
+      "key":"misc_type_view",
       "label":  {
         "text" : "Misc. Type*",
         "color" : "0xFF2854A1",

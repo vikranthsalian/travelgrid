@@ -72,7 +72,7 @@ class AppRoutes {
         return PDFComponent(path: args.toString());
 
       case RouteConstants.createAccommodationExpensePath:
-        return CreateAccommodation();
+        return CreateAccommodationExpense();
 
       case RouteConstants.createTravelExpensePath:
         return CreateTravelExpense();

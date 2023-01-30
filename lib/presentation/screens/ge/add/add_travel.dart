@@ -20,6 +20,8 @@ import 'package:travelgrid/presentation/widgets/text_field.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
 
 class CreateTravelExpense extends StatefulWidget {
+  Function(Map)? onAdd;
+  CreateTravelExpense({this.onAdd});
   @override
   _CreateTravelExpenseState createState() => _CreateTravelExpenseState();
 }

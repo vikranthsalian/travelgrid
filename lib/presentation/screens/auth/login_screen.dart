@@ -10,6 +10,7 @@ import 'package:travelgrid/common/extensions/pretty.dart';
 import 'package:travelgrid/common/injector/injector.dart';
 import 'package:travelgrid/common/utils/show_alert.dart';
 import 'package:travelgrid/data/blocs/accom/accom_type_bloc.dart';
+import 'package:travelgrid/data/blocs/misc/misc_type_bloc.dart';
 import 'package:travelgrid/data/blocs/travel/travel_mode_bloc.dart';
 import 'package:travelgrid/data/cubits/login_cubit/login_cubit.dart';
 import 'package:travelgrid/data/datsources/login_response.dart';
@@ -79,6 +80,7 @@ class _LoginScreenState extends State<_Login> {
                        );
                        Injector.resolve<AccomTypeBloc>()..add(GetAccomTypeListEvent());
                        Injector.resolve<TravelModeBloc>()..add(GetTravelModeListEvent());
+                       Injector.resolve<MiscTypeBloc>()..add(GetMiscTypeListEvent());
 
 
                        Navigator.of(context).pushNamed(RouteConstants.dashboardPath);

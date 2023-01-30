@@ -13,12 +13,14 @@ import 'package:travelgrid/presentation/widgets/switch.dart';
 import 'package:travelgrid/presentation/widgets/text_field.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
 
-class CreateAccommodation extends StatefulWidget {
+class CreateAccommodationExpense extends StatefulWidget {
+  Function(Map)? onAdd;
+  CreateAccommodationExpense({this.onAdd});
   @override
-  _CreateAccommodationState createState() => _CreateAccommodationState();
+  _CreateAccommodationExpenseState createState() => _CreateAccommodationExpenseState();
 }
 
-class _CreateAccommodationState extends State<CreateAccommodation> {
+class _CreateAccommodationExpenseState extends State<CreateAccommodationExpense> {
   Map<String,dynamic> jsonData = {};
   List items=[];
   double cardHt = 90.h;
