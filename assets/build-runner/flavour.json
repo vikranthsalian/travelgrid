@@ -2159,5 +2159,40 @@
       "size": "18",
       "family": "regular"
     }
+  },
+  "upload_screen_data" : {
+    "backgroundColor" : "0xFF2854A1",
+    "title":  {
+      "text" : "Upload",
+      "color" : "0XFF000000",
+      "size": "18",
+      "family": "bold",
+      "align": "center"
+    },
+    "listView": {
+      "data": [
+        {
+          "text" : "Camera",
+          "color" : "0XFF000000",
+          "size": "12",
+          "family": "regular",
+          "align": "center-left"
+        },
+        {
+          "text" : "Gallery",
+          "color" : "0XFF000000",
+          "size": "12",
+          "family": "regular",
+          "align": "center-left"
+        }
+      ]
+    },
+    "bottomButtonCentre": {
+      "text" : "Cancel",
+      "color" : "0xFFFFFFFF",
+      "backgroundColor" : "0xFF2854A1",
+      "size": "18",
+      "family": "regular"
+    }
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:travelgrid/presentation/components/dialog_accom_type.dart';
+import 'package:travelgrid/presentation/components/dialog_type.dart';
 import 'package:travelgrid/presentation/screens/common/accom_type_screen.dart';
 import 'package:travelgrid/presentation/screens/common/misc_type_screen.dart';
 import 'package:travelgrid/presentation/screens/common/travel_mode_screen.dart';
@@ -30,7 +30,7 @@ class _MetaDialogSelectorViewState extends State<MetaDialogSelectorView> {
             onTap: () async{
               await showDialog(
                   context: context,
-                  builder: (_) => DialogAccomType(
+                  builder: (_) => DialogType(
                     size: getSize(widget.mapData['key']),
                     child: getDialogViews(widget.mapData['key']),
               ));

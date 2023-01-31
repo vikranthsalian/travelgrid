@@ -10,6 +10,7 @@ import 'package:travelgrid/common/extensions/pretty.dart';
 import 'package:travelgrid/common/utils/show_alert.dart';
 import 'package:travelgrid/data/models/expense_model.dart';
 import 'package:travelgrid/data/models/ge_misc_model.dart';
+import 'package:travelgrid/presentation/components/dialog_upload.dart';
 import 'package:travelgrid/presentation/screens/ge/bloc/misc_form_bloc.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';
 import 'package:travelgrid/presentation/widgets/date_time_view.dart';
@@ -244,8 +245,10 @@ class _CreateMiscExpenseState extends State<CreateMiscExpense> {
                                   margin: EdgeInsets.symmetric(vertical: 20.h,horizontal: 20.w),
                                   width: 180.w,
                                   child: MetaButton(mapData: jsonData['uploadButton'],
-                                      onButtonPressed: (){
-
+                                      onButtonPressed: () async {
+                                        await showDialog(
+                                            context: context,
+                                            builder: (_) => DialogUpload());
                                       }
                                   ),
                                 )
