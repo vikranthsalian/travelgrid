@@ -3,11 +3,11 @@ import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:travelgrid/common/config/navigator_key.dart';
 import 'package:travelgrid/common/constants/flavour_constants.dart';
-import 'package:travelgrid/common/extensions/parse_data_type.dart';
-import 'package:travelgrid/data/cubits/accom_type_cubit/accom_type_cubit.dart';
-import 'package:travelgrid/data/datsources/accom_type_list.dart';
+import 'package:travelgrid/data/cubits/misc_type_cubit/misc_type_cubit.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
+
+import '../../../data/datsources/misc_type_list.dart';
 
 
 class MiscellaneousTypeScreen extends StatelessWidget {
@@ -20,7 +20,7 @@ class MiscellaneousTypeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    jsonData = FlavourConstants.accomTypeData;
+    jsonData = FlavourConstants.miscTypeData;
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -45,7 +45,7 @@ class MiscellaneousTypeScreen extends StatelessWidget {
 
   Widget getListView(){
     List<Data> list = [];
-    list = appNavigatorKey.currentState!.context.read<AccomTypeCubit>().getAccomTypeResponse();
+    list = appNavigatorKey.currentState!.context.read<MiscTypeCubit>().getMiscTypeResponse();
 
     return  list.isNotEmpty ? ListView.separated(
       shrinkWrap: true,

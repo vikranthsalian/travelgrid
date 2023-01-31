@@ -83,8 +83,12 @@ class MiscFormBloc extends FormBloc<String, String> {
       "city": cityID.value,
       "cityName":cityName.value,
 
-      "voucher": tfVoucher.value,
+      "unitType":288,
+
       "amount": tfAmount.value,
+
+      "voucher": tfVoucher.value,
+
       "description": tfDescription.value,
 
       "voucherPath": flUpload.value,

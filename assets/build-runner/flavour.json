@@ -2080,6 +2080,46 @@
       "family": "regular"
     }
   },
+  "misc_type_screen_data" : {
+    "backgroundColor" : "0xFF2854A1",
+    "title":  {
+      "text" : "Select Miscellaneous Type",
+      "color" : "0XFF000000",
+      "size": "18",
+      "family": "bold",
+      "align": "center"
+    },
+    "listView": {
+      "recordsFound":  {
+        "text" : "Records Found",
+        "value" : "0",
+        "color" : "0XFF000000",
+        "size": "12",
+        "family": "regular",
+        "align": "center-right"
+      },
+      "emptyData": {
+        "image_view":   {
+          "image" : "logo_banner.png",
+          "align": "center",
+          "wd": 250.0
+        },
+        "title":  {
+          "text" : "No Data Found!!!",
+          "color" : "0XFF3D3D3D",
+          "size": "16",
+          "family": "regular"
+        }
+      }
+    },
+    "bottomButtonCentre": {
+      "text" : "Cancel",
+      "color" : "0xFFFFFFFF",
+      "backgroundColor" : "0xFF2854A1",
+      "size": "18",
+      "family": "regular"
+    }
+  },
   "travel_mode_screen_data" : {
     "backgroundColor" : "0xFF2854A1",
     "title":  {

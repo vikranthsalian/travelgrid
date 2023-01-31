@@ -27,6 +27,7 @@ class FlavourConstants {
 
   //Dialogs
   static  Map<String,dynamic> accomTypeData = FlavorConfig.instance.variables["accom_type_screen_data"];
+  static  Map<String,dynamic> miscTypeData = FlavorConfig.instance.variables["misc_type_screen_data"];
   static  Map<String,dynamic> travelModeData = FlavorConfig.instance.variables["travel_mode_screen_data"];
 
   //Create Data

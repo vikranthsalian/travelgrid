@@ -109,9 +109,6 @@ class _CreateMiscExpenseState extends State<CreateMiscExpense> {
                   builder: (context) {
 
                    formBloc =  BlocProvider.of<MiscFormBloc>(context);
-                   formBloc!.miscName.updateValue("Initial UD");
-                   formBloc!.miscID.updateValue("21");
-
 
 
                    if(widget.isEdit){
@@ -190,7 +187,7 @@ class _CreateMiscExpenseState extends State<CreateMiscExpense> {
                                   Expanded(
                                     child: Container(
                                       child: MetaSearchSelectorView(mapData: jsonData['selectCity'],
-                                        text: formBloc!.cityName.value,
+                                        text: getInitialText(formBloc!.cityName.value),
                                         onChange:(value){
                                           formBloc!.cityName.updateValue(value.name);
                                           formBloc!.cityID.updateValue(value.id.toString());
@@ -201,10 +198,11 @@ class _CreateMiscExpenseState extends State<CreateMiscExpense> {
                                   Expanded(
                                     child: Container(
                                       child: MetaDialogSelectorView(mapData: jsonData['selectMiscType'],
-                                        text :formBloc!.miscName.value,
+                                        text :getInitialText(formBloc!.miscName.value),
                                         onChange:(value){
-                                          formBloc!.miscName.updateValue(value.name);
-                                          formBloc!.miscID.updateValue(value.id.toString());
+                                        print(value);
+                                          formBloc!.miscName.updateValue(value['label']);
+                                          formBloc!.miscID.updateValue(value['id'].toString());
                                         },),
                                     ),
                                   ),
@@ -309,6 +307,14 @@ class _CreateMiscExpenseState extends State<CreateMiscExpense> {
 
 
 
+  }
+
+  getInitialText(String text) {
+
+    if(text.isNotEmpty){
+      return text;
+    }
+    return null;
   }
 
 

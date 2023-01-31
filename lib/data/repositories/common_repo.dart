@@ -53,7 +53,7 @@ class CommonRepository extends CommonAPIAbstract {
 
     Map<String,dynamic> data= {};
 
-    var response = await apiRemoteDatasource.getCommonTypes("getMiscellaneousType",data);
+    var response = await apiRemoteDatasource.getCommonTypes("te/getMiscellaneousType",data);
 
     if(response!=null) {
       MetaMiscTypeListResponse modelResponse = MetaMiscTypeListResponse.fromJson(response);

@@ -9,7 +9,7 @@ import 'package:travelgrid/presentation/widgets/text_view.dart';
 class MetaDialogSelectorView extends StatefulWidget {
   Map mapData;
   String? text;
-  Function? onChange;
+  Function(Map)? onChange;
   MetaDialogSelectorView({super.key, required this.mapData,this.text,this.onChange});
 
   @override
@@ -42,6 +42,7 @@ class _MetaDialogSelectorViewState extends State<MetaDialogSelectorView> {
   }
 
   Widget getDialogViews(text){
+    print(text);
 
     switch(text){
       case "accom_type_view":
@@ -49,7 +50,7 @@ class _MetaDialogSelectorViewState extends State<MetaDialogSelectorView> {
             onTap:(value){
               setState(() {
                 widget.text= value['label'];
-                widget.onChange!(widget.text);
+                widget.onChange!(value);
 
               });
 
@@ -59,7 +60,7 @@ class _MetaDialogSelectorViewState extends State<MetaDialogSelectorView> {
             onTap:(value){
               setState(() {
                 widget.text= value['label'];
-                widget.onChange!(widget.text);
+                widget.onChange!(value);
               });
 
             });
@@ -68,7 +69,7 @@ class _MetaDialogSelectorViewState extends State<MetaDialogSelectorView> {
             onTap:(value){
               setState(() {
                 widget.text= value['label'];
-                widget.onChange!(widget.text);
+                widget.onChange!(value);
               });
             });
       default:
@@ -78,14 +79,16 @@ class _MetaDialogSelectorViewState extends State<MetaDialogSelectorView> {
   }
 
   getSize(key) {
+    print(key);
     switch(key){
       case "accom_type_view":
         return 0.3;
-      case "misc_mode_view":
+      case "misc_type_view":
         return 0.8;
       case "travel_mode_view":
         return 0.5;
-
+      default:
+        return 0.3;
     }
   }
 
