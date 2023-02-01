@@ -15,7 +15,8 @@ class _$InjectorConfig extends InjectorConfig {
       ..registerSingleton((c) => CityBloc(c<GeUseCase>()))
       ..registerSingleton((c) => AccomTypeBloc(c<GeUseCase>()))
       ..registerSingleton((c) => MiscTypeBloc(c<GeUseCase>()))
-      ..registerSingleton((c) => TravelModeBloc(c<GeUseCase>()));
+      ..registerSingleton((c) => TravelModeBloc(c<GeUseCase>()))
+      ..registerSingleton((c) => ApproverTypeBloc(c<GeUseCase>()));
   }
 
   @override

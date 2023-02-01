@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:travelgrid/presentation/components/dialog_type.dart';
 import 'package:travelgrid/presentation/screens/common/accom_type_screen.dart';
+import 'package:travelgrid/presentation/screens/common/common_type_screen.dart';
 import 'package:travelgrid/presentation/screens/common/misc_type_screen.dart';
 import 'package:travelgrid/presentation/screens/common/travel_mode_screen.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
@@ -27,13 +28,18 @@ class _MetaDialogSelectorViewState extends State<MetaDialogSelectorView> {
         children: [
           MetaTextView(mapData: widget.mapData['label']),
           InkWell(
-            onTap: () async{
-              await showDialog(
-                  context: context,
-                  builder: (_) => DialogType(
-                    size: getSize(widget.mapData['key']),
-                    child: getDialogViews(widget.mapData['key']),
-              ));
+            onTap: () async {
+
+              if(widget.mapData['key']!="disabled"){
+                await showDialog(
+                    context: context,
+                    builder: (_) => DialogType(
+                      size: getSize(widget.mapData['key']),
+                      child: getDialogViews(widget.mapData['key']),
+                    ));
+              }
+
+
             },
               child: MetaTextView(mapData: widget.mapData['dataText'],text: widget.text,)),
         ],
@@ -72,6 +78,15 @@ class _MetaDialogSelectorViewState extends State<MetaDialogSelectorView> {
                 widget.onChange!(value);
               });
             });
+      case "common_type_view":
+        return CommonTypeScreen(
+            mapData: widget.mapData,
+            onTap:(value){
+              setState(() {
+                widget.text= value['text'];
+                widget.onChange!(value);
+              });
+            });
       default:
        return Container();
     }
@@ -88,7 +103,7 @@ class _MetaDialogSelectorViewState extends State<MetaDialogSelectorView> {
       case "travel_mode_view":
         return 0.5;
       default:
-        return 0.3;
+        return 0.25;
     }
   }
 

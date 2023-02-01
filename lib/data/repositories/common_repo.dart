@@ -1,4 +1,8 @@
+import 'package:flutter_form_bloc/flutter_form_bloc.dart';
+import 'package:travelgrid/common/config/navigator_key.dart';
+import 'package:travelgrid/data/cubits/login_cubit/login_cubit.dart';
 import 'package:travelgrid/data/datsources/accom_type_list.dart';
+import 'package:travelgrid/data/datsources/approver_list.dart';
 import 'package:travelgrid/data/datsources/cities_list.dart';
 import 'package:travelgrid/data/datsources/login_response.dart';
 import 'package:travelgrid/data/datsources/misc_type_list.dart';
@@ -78,6 +82,19 @@ class CommonRepository extends CommonAPIAbstract {
     return MetaTravelModeListResponse(status: false);
   }
 
+  @override
+  Future<MetaApproverListResponse> getApproverTypeList() async {
 
+    Map<String,dynamic> data= {"loginId":appNavigatorKey.currentState!.context.read<LoginCubit>().getLoginID()};
+
+    var response = await apiRemoteDatasource.getCommonTypes("getMaApprovers",data);
+
+    if(response!=null) {
+      MetaApproverListResponse modelResponse = MetaApproverListResponse.fromJson(response);
+      return modelResponse;
+    }
+
+    return MetaApproverListResponse(status: false);
+  }
 
 }

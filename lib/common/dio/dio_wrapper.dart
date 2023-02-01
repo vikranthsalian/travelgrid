@@ -170,7 +170,7 @@ class MetaDioWrapper implements BaseDioWrapper {
       }
 
       return response;
-    } on DioError catch (e, stackTrace) {
+    } on DioError catch (e) {
       print("PARSE ERROR RESPONSE===========> "+e.response.toString());
       parseErrorResponse(e);
       // Logger.captureException(e, stackTrace: stackTrace);

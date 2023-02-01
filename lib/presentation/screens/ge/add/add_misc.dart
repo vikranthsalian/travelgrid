@@ -10,7 +10,7 @@ import 'package:travelgrid/common/extensions/pretty.dart';
 import 'package:travelgrid/common/utils/show_alert.dart';
 import 'package:travelgrid/data/models/expense_model.dart';
 import 'package:travelgrid/data/models/ge_misc_model.dart';
-import 'package:travelgrid/presentation/components/dialog_upload.dart';
+import 'package:travelgrid/presentation/components/dialog_upload_type.dart';
 import 'package:travelgrid/presentation/screens/ge/bloc/misc_form_bloc.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';
 import 'package:travelgrid/presentation/widgets/date_time_view.dart';
@@ -120,7 +120,14 @@ class _CreateMiscExpenseState extends State<CreateMiscExpense> {
                      formBloc!.cityName.updateValue(widget.miscModel!.cityName.toString());
                      formBloc!.cityID.updateValue(widget.miscModel!.city.toString());
 
-                    formBloc!.tfVoucher.updateValue(widget.miscModel!.voucher.toString());
+                     formBloc!.miscID.updateValue(widget.miscModel!.miscellaneousType.toString());
+                     formBloc!.miscName.updateValue(widget.miscModel!.miscellaneousTypeName.toString());
+
+
+                     formBloc!.unitTypeName.updateValue("test");
+                     formBloc!.unitTypeID.updateValue(widget.miscModel!.unitType.toString());
+
+                    formBloc!.tfVoucher.updateValue(widget.miscModel!.voucherNumber.toString());
                     formBloc!.tfAmount.updateValue(widget.miscModel!.amount.toString());
                     formBloc!.tfDescription.updateValue(widget.miscModel!.description.toString());
                    }
@@ -142,12 +149,12 @@ class _CreateMiscExpenseState extends State<CreateMiscExpense> {
                         },
                         onSuccess: (context, state) {
                           print(state.successResponse);
-                          GEMiscModel modelResponse = GEMiscModel.fromJson(jsonDecode(state.successResponse.toString()));
+                         GEMiscModel modelResponse = GEMiscModel.fromJson(jsonDecode(state.successResponse.toString()));
 
                           widget.onAdd!(
                               {
-                                "data": modelResponse.toMap(),
-                                "item" : ExpenseModel(type: GETypes.MISCELLANEOUS,amount: modelResponse.amount)
+                                "data": jsonDecode(state.successResponse.toString()),
+                                "item" : ExpenseModel(type: GETypes.MISCELLANEOUS,amount: modelResponse.amount.toString())
                               }
                           );
                           Navigator.pop(context);
@@ -183,40 +190,49 @@ class _CreateMiscExpenseState extends State<CreateMiscExpense> {
                                   ],
                                 ),
 
+                                Container(
+                                  child: MetaSearchSelectorView(mapData: jsonData['selectCity'],
+                                    text: getInitialText(formBloc!.cityName.value),
+                                    onChange:(value){
+                                      formBloc!.cityName.updateValue(value.name);
+                                      formBloc!.cityID.updateValue(value.id.toString());
+                                    },),
+                                  alignment: Alignment.centerLeft,
+                                ),
+
                                 Row(
                                     children: [
-                                  Expanded(
-                                    child: Container(
-                                      child: MetaSearchSelectorView(mapData: jsonData['selectCity'],
-                                        text: getInitialText(formBloc!.cityName.value),
-                                        onChange:(value){
-                                          formBloc!.cityName.updateValue(value.name);
-                                          formBloc!.cityID.updateValue(value.id.toString());
-                                        },),
-                                      alignment: Alignment.centerLeft,
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Container(
-                                      child: MetaDialogSelectorView(mapData: jsonData['selectMiscType'],
-                                        text :getInitialText(formBloc!.miscName.value),
-                                        onChange:(value){
-                                        print(value);
-                                          formBloc!.miscName.updateValue(value['label']);
-                                          formBloc!.miscID.updateValue(value['id'].toString());
-                                        },),
-                                    ),
-                                  ),
-                                ]),
+                                      Expanded(
+                                        child: Container(
+                                          child: MetaDialogSelectorView(mapData: jsonData['selectMiscType'],
+                                            text :getInitialText(formBloc!.miscName.value),
+                                            onChange:(value){
+                                              print(value);
+                                              formBloc!.miscName.updateValue(value['label']);
+                                              formBloc!.miscID.updateValue(value['id'].toString());
+                                            },),
+                                        ),
+                                      ),
+                                      Container(
+                                        child: MetaDialogSelectorView(mapData: jsonData['selectUnitType'],
+                                          text :getInitialText(formBloc!.unitTypeName.value),
+                                          onChange:(value){
+                                            print(value);
+                                            formBloc!.unitTypeName.updateValue(value['text']);
+                                            formBloc!.unitTypeID.updateValue(value['id'].toString());
+                                          },),
+                                      ),
+                                    ]),
 
-                                Container(
-                                  child: MetaSwitchBloc(
-                                      mapData:  jsonData['unitType'],
-                                      bloc:  formBloc!.swUnitType,
-                                      onSwitchPressed: (value){
-                                        formBloc!.swUnitType.updateValue(value);
-                                      }),
-                                ),
+
+                                // Container(
+                                //   child: MetaSwitchBloc(
+                                //       mapData:  jsonData['unitType'],
+                                //       bloc:  formBloc!.swUnitType,
+                                //       onSwitchPressed: (value){
+                                //         formBloc!.swUnitType.updateValue(value);
+                                //       }),
+                                // ),
 
                                 MetaTextFieldBlocView(mapData: jsonData['text_field_voucher'],
                                     textFieldBloc: formBloc!.tfVoucher,
@@ -248,7 +264,9 @@ class _CreateMiscExpenseState extends State<CreateMiscExpense> {
                                       onButtonPressed: () async {
                                         await showDialog(
                                             context: context,
-                                            builder: (_) => DialogUpload());
+                                            builder: (_) => DialogUploadType(
+                                              mapData: jsonData['uploadButton'],
+                                            ));
                                       }
                                   ),
                                 )

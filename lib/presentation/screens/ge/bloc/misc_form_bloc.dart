@@ -2,13 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
-import 'package:travelgrid/common/config/navigator_key.dart';
-import 'package:travelgrid/common/injector/injector.dart';
 import 'package:travelgrid/common/utils/validators.dart';
-import 'package:travelgrid/data/cubits/login_cubit/login_cubit.dart';
-import 'package:travelgrid/domain/usecases/login_usecase.dart';
-
-import '../../../../data/datsources/cities_list.dart';
 
 
 class MiscFormBloc extends FormBloc<String, String> {
@@ -20,8 +14,9 @@ class MiscFormBloc extends FormBloc<String, String> {
   final cityID =  TextFieldBloc(validators: [emptyValidator]);
   final miscName =  TextFieldBloc(validators: [emptyValidator]);
   final miscID =  TextFieldBloc(validators: [emptyValidator]);
+  final unitTypeID =  TextFieldBloc(validators: [emptyValidator]);
+  final unitTypeName =  TextFieldBloc(validators: [emptyValidator]);
 
-  final swUnitType = BooleanFieldBloc(initialValue: true);
   final tfVoucher = TextFieldBloc();
   final tfAmount = TextFieldBloc();
   final tfDescription = TextFieldBloc();
@@ -36,23 +31,13 @@ class MiscFormBloc extends FormBloc<String, String> {
 
 
   MiscFormBloc(Map<String, dynamic> data):super(autoValidate: true) {
-    Map emptyValidator = {
-      "validators" : [
-        {
-          "type" : "empty"
-        }
-      ]
-    };
 
       if(data!=null && data.isNotEmpty){
-        // checkInDate.addValidators([]);
-        // checkOutDate.addValidators(Validators().getValidators(emptyValidator));
-        // city.addValidators(Validators().getValidators(emptyValidator));
-        // misc.addValidators(Validators().getValidators(emptyValidator));
 
         tfVoucher.addValidators(Validators().getValidators(data['text_field_voucher']));
         tfAmount.addValidators(Validators().getValidators(data['text_field_amount']));
         tfDescription.addValidators(Validators().getValidators(data['text_field_desc']));
+
       }
 
     addFieldBlocs(fieldBlocs: [
@@ -62,7 +47,7 @@ class MiscFormBloc extends FormBloc<String, String> {
       cityName,
       miscID,
       miscName,
-      swUnitType,
+      unitTypeID,
       tfVoucher,
       tfAmount,
       tfDescription,
@@ -75,23 +60,20 @@ class MiscFormBloc extends FormBloc<String, String> {
 
     Map<String,dynamic> saveMiscData = {
       "miscellaneousTypeName": miscName.value,
-      "miscellaneousType":miscID.value,
-
+      "miscellaneousType":int.parse(miscID.value),
       "startDate": checkInDate.value,
       "endDate": checkOutDate.value,
-
-      "city": cityID.value,
+      "city":int.parse(cityID.value),
       "cityName":cityName.value,
-
-      "unitType":288,
-
-      "amount": tfAmount.value,
-
-      "voucher": tfVoucher.value,
-
+      "unitType":int.parse(unitTypeID.value),
+    //  "unitName":unitTypeName.value,
+      "amount": int.parse(tfAmount.value),
+      "voucherNumber": tfVoucher.value,
       "description": tfDescription.value,
+      "voucherPath": "",
 
-      "voucherPath": flUpload.value,
+      "voucherFile": null,
+      "voilationMessage": "Exception due to manual creation of Miscellaneous",
     };
      emitSuccess(successResponse: jsonEncode(saveMiscData));
 

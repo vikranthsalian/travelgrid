@@ -36,6 +36,17 @@ class GeRepository extends GeAPIAbstract {
     return GEListResponse(status: false);
   }
 
+  @override
+  Future<GEListResponse> createGE(data,body) async {
 
+    var response = await apiRemoteDatasource.createGE("ge/submitMaGeneralExpense",data,body);
+
+    if(response!=null) {
+      GEListResponse modelResponse = GEListResponse.fromJson(response);
+      return modelResponse;
+    }
+
+    return GEListResponse(status: false);
+  }
 
 }

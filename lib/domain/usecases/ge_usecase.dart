@@ -8,4 +8,6 @@ class GeUseCase {
   Future<GEListResponse> callApi() async => apiAbstract.callList();
 
   Future<GEListResponse> getSummary(id) async => apiAbstract.getGE(id);
+
+  Future<GEListResponse> createGE(data,body) async => apiAbstract.createGE(data,body);
 }

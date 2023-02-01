@@ -1,14 +1,17 @@
 class GEMiscModel {
   String? miscellaneousTypeName;
-  String? miscellaneousType;
+  int? miscellaneousType;
   String? startDate;
   String? endDate;
-  String? city;
+  int? city;
   String? cityName;
-  String? voucher;
-  String? amount;
+  int? unitType;
+  int? amount;
+  String? voucherNumber;
   String? description;
   String? voucherPath;
+  String? voucherFile;
+  String? voilationMessage;
 
   GEMiscModel(
       {this.miscellaneousTypeName,
@@ -17,10 +20,13 @@ class GEMiscModel {
         this.endDate,
         this.city,
         this.cityName,
-        this.voucher,
+        this.unitType,
         this.amount,
+        this.voucherNumber,
         this.description,
-        this.voucherPath});
+        this.voucherPath,
+        this.voucherFile,
+        this.voilationMessage});
 
   GEMiscModel.fromJson(Map<String, dynamic> json) {
     miscellaneousTypeName = json['miscellaneousTypeName'];
@@ -29,10 +35,13 @@ class GEMiscModel {
     endDate = json['endDate'];
     city = json['city'];
     cityName = json['cityName'];
-    voucher = json['voucher'];
+    unitType = json['unitType'];
     amount = json['amount'];
+    voucherNumber = json['voucherNumber'];
     description = json['description'];
     voucherPath = json['voucherPath'];
+    voucherFile = json['voucherFile'];
+    voilationMessage = json['voilationMessage'];
   }
 
   Map<String, dynamic> toJson() {
@@ -43,10 +52,13 @@ class GEMiscModel {
     data['endDate'] = this.endDate;
     data['city'] = this.city;
     data['cityName'] = this.cityName;
-    data['voucher'] = this.voucher;
+    data['unitType'] = this.unitType;
     data['amount'] = this.amount;
+    data['voucherNumber'] = this.voucherNumber;
     data['description'] = this.description;
     data['voucherPath'] = this.voucherPath;
+    data['voucherFile'] = this.voucherFile;
+    data['voilationMessage'] = this.voilationMessage;
     return data;
   }
 
@@ -58,25 +70,31 @@ class GEMiscModel {
       'endDate': this.endDate,
       'city': this.city,
       'cityName': this.cityName,
-      'voucher': this.voucher,
+      'unitType': this.unitType,
       'amount': this.amount,
+      'voucherNumber': this.voucherNumber,
       'description': this.description,
       'voucherPath': this.voucherPath,
+      'voucherFile': this.voucherFile,
+      'voilationMessage': this.voilationMessage,
     };
   }
 
   factory GEMiscModel.fromMap(Map<String, dynamic> map) {
     return GEMiscModel(
       miscellaneousTypeName: map['miscellaneousTypeName'] as String,
-      miscellaneousType: map['miscellaneousType'] as String,
+      miscellaneousType: map['miscellaneousType'] as int,
       startDate: map['startDate'] as String,
       endDate: map['endDate'] as String,
-      city: map['city'] as String,
+      city: map['city'] as int,
       cityName: map['cityName'] as String,
-      voucher: map['voucher'] as String,
-      amount: map['amount'] as String,
+      unitType: map['unitType'] as int,
+      amount: map['amount'] as int,
+      voucherNumber: map['voucherNumber'] as String,
       description: map['description'] as String,
-      voucherPath: map['voucherPath'],
+      voucherPath: map['voucherPath'] as String,
+      voucherFile: map['voucherPath']!=null ? map['voucherFile']  : "",
+      voilationMessage: map['voilationMessage'] as String,
     );
   }
 }

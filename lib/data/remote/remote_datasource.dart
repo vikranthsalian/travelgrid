@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:travelgrid/common/config/navigator_key.dart';
@@ -69,6 +71,28 @@ class APIRemoteDatasource{
     }
 
   }
+
+  Future<dynamic> createGE(pathUrl,data,body) async {
+    data["token"]=appNavigatorKey.currentState!.context.read<LoginCubit>().getLoginToken();
+    try {
+      final responseJson = await CustomDio().getWrapper().post(
+        pathUrl,
+        data:body,
+        loadingMessage:"Loading Data...",
+        queryParameters:data,
+      );
+      return responseJson.data;
+    } on DioError catch (e) {
+      print("DioError :====>"+e.toString());
+      return MetaLoginResponse(status: false);
+
+    }catch(e){
+      print("CatchError :====>"+e.toString());
+      return MetaLoginResponse(status: false);
+    }
+
+  }
+
 
   Future<dynamic> getAllCities(pathUrl,Map<String,dynamic> data) async {
 

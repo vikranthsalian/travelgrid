@@ -633,8 +633,8 @@
         },
         "onClick": "/createAccommodationExpense",
         "svgIcon":{
-          "icon": "briefcase.svg",
-          "color" : "0xFF2854A1"
+          "icon": "accom.svg",
+          "color" : "0xFFFFFFFF"
         }
       },
       {
@@ -647,8 +647,8 @@
         },
         "onClick": "/createTravelExpense",
         "svgIcon":{
-          "icon": "briefcase.svg",
-          "color" : "0xFF2854A1"
+          "icon": "conv.svg",
+          "color" : "0xFFFFFFFF"
         }
       },
       {
@@ -661,8 +661,8 @@
         },
         "onClick": "/createMiscExpense",
         "svgIcon":{
-          "icon": "briefcase.svg",
-          "color" : "0xFF2854A1"
+          "icon": "misc.svg",
+          "color" : "0xFFFFFFFF"
         }
       }
     ],
@@ -882,6 +882,7 @@
       },
       "selectApprover1": {
         "showView": true,
+        "key": "disabled",
         "label":  {
           "text" : "Approver 1",
           "color" : "0xFF2854A1",
@@ -899,6 +900,7 @@
       },
       "selectApprover2": {
         "showView": true,
+        "key": "disabled",
         "label":  {
           "text" : "Approver 2",
           "color" : "0xFF2854A1",
@@ -986,14 +988,14 @@
       }
     },
     "bottomButtonLeft": {
-      "text" : "Sort",
+      "text" : "Draft",
       "color" : "0xFFFFFFFF",
       "backgroundColor" : "0xFF2854A1",
       "size": "18",
       "family": "regular"
     },
     "bottomButtonRight": {
-      "text" : "Filter",
+      "text" : "Submit",
       "color" : "0xFFFFFFFF",
       "backgroundColor" : "0xFF2854A1",
       "size": "18",
@@ -1752,13 +1754,77 @@
         "align": "center-left"
       }
     },
-    "unitType":  {
+    "selectUnitType": {
+      "showView": true,
+      "key":"common_type_view",
       "label":  {
-        "text" : "Within Unit",
+        "text" : "Unit Type*",
         "color" : "0xFF2854A1",
         "size": "14",
-        "family": "bold",
+        "family": "regular",
         "align": "center-left"
+      },
+      "dataText":  {
+        "text" : "Choose Type",
+        "color" : "0xFFCCCCCC",
+        "size": "18",
+        "family": "regular",
+        "align": "center-left"
+      },
+      "title":{
+        "text" : "Select Unit Type",
+        "color" : "0xFF2854A1",
+        "size": "18",
+        "family": "bold",
+        "align": "center"
+      },
+      "listView": {
+        "data": [
+          {
+            "text" : "Within Unit",
+            "color" : "0xFF000000",
+            "size": "12",
+            "family": "regular",
+            "align": "center-left",
+            "id": "288"
+          },{
+            "text" : "Out Side Unit",
+            "color" : "0xFF000000",
+            "size": "12",
+            "family": "regular",
+            "align": "center-left",
+            "id": "289"
+          }
+        ],
+        "emptyData": {
+          "image_view":   {
+            "image" : "logo_banner.png",
+            "align": "center",
+            "wd": 250.0
+          },
+          "title":  {
+            "text" : "No Data Found!!!",
+            "color" : "0XFF3D3D3D",
+            "size": "16",
+            "family": "regular"
+          },
+          "bottomButtonRefresh": {
+            "text" : "Refresh",
+            "height": 35.0,
+            "color" : "0xFFFFFFFF",
+            "borderRadius": 30.0,
+            "backgroundColor" : "0xFF2854A1",
+            "size": "15",
+            "family": "regular"
+          }
+        }
+      },
+      "bottomButtonCentre": {
+        "text" : "Cancel",
+        "color" : "0xFFFFFFFF",
+        "backgroundColor" : "0xFF2854A1",
+        "size": "18",
+        "family": "regular"
       }
     },
     "text_field_voucher":  {
@@ -1881,7 +1947,39 @@
       "size": "14",
       "borderRadius": 15.0,
       "family": "regular",
-      "onClick": "/uploadDoc"
+      "onClick": "/uploadDoc",
+      "title":  {
+        "text" : "Upload",
+        "color" : "0XFF000000",
+        "size": "18",
+        "family": "bold",
+        "align": "center"
+      },
+      "listView": {
+        "data": [
+          {
+            "text" : "Camera",
+            "color" : "0XFF000000",
+            "size": "12",
+            "family": "regular",
+            "align": "center-left"
+          },
+          {
+            "text" : "Gallery",
+            "color" : "0XFF000000",
+            "size": "12",
+            "family": "regular",
+            "align": "center-left"
+          }
+        ]
+      },
+      "bottomButtonCentre": {
+        "text" : "Cancel",
+        "color" : "0xFFFFFFFF",
+        "backgroundColor" : "0xFF2854A1",
+        "size": "18",
+        "family": "regular"
+      }
     },
     "bottomButtonLeft": {
       "text" : "Cancel",

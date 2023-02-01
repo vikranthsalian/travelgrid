@@ -1,4 +1,5 @@
 import 'package:travelgrid/data/datsources/accom_type_list.dart';
+import 'package:travelgrid/data/datsources/approver_list.dart';
 import 'package:travelgrid/data/datsources/cities_list.dart';
 import 'package:travelgrid/data/datsources/general_expense_list.dart';
 import 'package:travelgrid/data/datsources/login_response.dart';
@@ -12,6 +13,7 @@ abstract class LoginAPIAbstract {
 abstract class GeAPIAbstract {
   Future<GEListResponse> callList();
   Future<GEListResponse> getGE(id);
+  Future<GEListResponse> createGE(data,body);
 }
 abstract class CommonAPIAbstract {
   Future<MetaCityListResponse> getCities(countryCode,tripType);
@@ -21,5 +23,7 @@ abstract class CommonAPIAbstract {
   Future<MetaTravelModeListResponse> getTravelModeList();
 
   Future<MetaMiscTypeListResponse> getMiscTypeList();
+
+  Future<MetaApproverListResponse> getApproverTypeList();
 
 }

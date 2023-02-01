@@ -2,6 +2,7 @@
 import 'package:kiwi/kiwi.dart';
 import 'package:travelgrid/common/http/http_client.dart';
 import 'package:travelgrid/data/blocs/accom/accom_type_bloc.dart';
+import 'package:travelgrid/data/blocs/approver/approver_type_bloc.dart';
 import 'package:travelgrid/data/blocs/cities/city_bloc.dart';
 import 'package:travelgrid/data/blocs/general_expense/ge_bloc.dart';
 import 'package:travelgrid/data/blocs/misc/misc_type_bloc.dart';
@@ -42,6 +43,7 @@ abstract class InjectorConfig {
   @Register.singleton(AccomTypeBloc)
   @Register.singleton(MiscTypeBloc)
   @Register.singleton(TravelModeBloc)
+  @Register.singleton(ApproverTypeBloc)
   void _configureBlocs();
   //
   // ============ USECASES ============

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,11 +11,15 @@ import 'package:travelgrid/common/constants/route_constants.dart';
 import 'package:travelgrid/common/enum/dropdown_types.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
 import 'package:travelgrid/common/extensions/pretty.dart';
+import 'package:travelgrid/common/injector/injector.dart';
+import 'package:travelgrid/data/cubits/approver_type_cubit/approver_type_cubit.dart';
 import 'package:travelgrid/data/cubits/login_cubit/login_cubit.dart';
+import 'package:travelgrid/data/datsources/approver_list.dart' as app;
+import 'package:travelgrid/data/datsources/general_expense_list.dart';
 import 'package:travelgrid/data/datsources/login_response.dart';
 import 'package:travelgrid/data/models/expense_model.dart';
 import 'package:travelgrid/data/models/ge_misc_model.dart';
-import 'package:travelgrid/presentation/screens/auth/bloc/login_form_bloc.dart';
+import 'package:travelgrid/domain/usecases/ge_usecase.dart';
 import 'package:travelgrid/presentation/screens/ge/add/add_accom.dart';
 import 'package:travelgrid/presentation/screens/ge/add/add_misc.dart';
 import 'package:travelgrid/presentation/screens/ge/add/add_travel.dart';
@@ -34,18 +39,23 @@ class CreateGeneralExpense extends StatefulWidget {
 
 class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
   Map<String,dynamic> jsonData = {};
+  Map<String,dynamic> submitMap = {};
   List details=[];
   List expenseTypes=[];
   List<Tuple2<ExpenseModel,Map<String,dynamic>>> summaryItems=[];
   List<Tuple2<Map,String>> summaryDetails=[];
   bool loaded=false;
-  LoginFormBloc? formBloc;
   List<String> values=[];
   bool showRequesterDetails=false;
   bool showSummaryItems=true;
   bool showSummaryDetails=true;
   bool showApproverDetails=true;
   String total="0.00";
+  MetaLoginResponse loginResponse = MetaLoginResponse();
+
+  Tuple2<String,String>? approver1;
+  Tuple2<String,String>? approver2;
+  String description="";
   @override
   void initState() {
     // TODO: implement initState
@@ -56,7 +66,9 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
      details = jsonData['requesterDetails']['data'];
      expenseTypes = jsonData['expensesTypes'];
 
-    MetaLoginResponse loginResponse = context.read<LoginCubit>().getLoginResponse();
+    loginResponse = context.read<LoginCubit>().getLoginResponse();
+
+
     values.add(loginResponse.data!.fullName ?? "");
     values.add(loginResponse.data!.grade!.organizationGradeName ?? "");
     values.add(loginResponse.data!.gender ?? "");
@@ -73,6 +85,17 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
       summaryDetails.add(Tuple2(item, "0"));
     }
 
+    Tuple2<app.Data,app.Data> approvers = context.read<ApproverTypeCubit>().getApprovers();
+
+    approver1 = Tuple2(approvers.item1.approverName.toString(), approvers.item1.approverCode.toString());
+    approver2 = Tuple2(approvers.item2.approverName.toString(), approvers.item1.approverCode.toString());
+
+
+    submitMap['employeeName']= loginResponse.data!.fullName;
+    submitMap['selfApprovals']= false;
+    submitMap['violated']= false;
+
+    createGe();
   }
 
 
@@ -98,7 +121,7 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
             ),
             MetaButton(mapData: jsonData['bottomButtonRight'],
                 onButtonPressed: (){
-
+                  submitGe("submit");
                 }
             )
           ],
@@ -140,9 +163,9 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
                               navigate(e,false,{},0);
                             },
                             child: Container(
-                              height: 60.h,
+                              height: 50.h,
                               decoration: BoxDecoration(
-                                color: Colors.lightBlueAccent,
+                                color: ParseDataType().getHexToColor(jsonData['backgroundColor']),
                                 shape: BoxShape.circle,
                               ),
                               child: Stack(
@@ -153,7 +176,7 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
                                     height: 25.w,
                                     child: SvgPicture.asset(
                                       AssetConstants.assetsBaseURLSVG +"/"+  e['svgIcon']['icon'],//e['svgIcon']['color']
-                                      // color: ParseDataType().getHexToColor(e['svgIcon']['color']),
+                                      color: ParseDataType().getHexToColor(e['svgIcon']['color']),
                                       width: 25.w,
                                       height: 25.w,
                                     ),
@@ -169,37 +192,14 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
             Expanded(
               child: Container(
                 color:Colors.white,
-                child:BlocProvider(
-                  create: (context) => LoginFormBloc({}),
-                  child: Builder(
-                      builder: (context) {
-                        formBloc =  BlocProvider.of<LoginFormBloc>(context);
-                        return FormBlocListener<LoginFormBloc, String, String>(
-                            onSubmissionFailed: (context, state) {
-
-                            },
-                            onSubmitting: (context, state) {
-                              FocusScope.of(context).unfocus();
-                            },
-                            onSuccess: (context, state) {
-
-                            },
-                            onFailure: (context, state) {
-
-
-                            },
-                            child:  SingleChildScrollView(
-                              child: Column(
-                                children: [
-                                  buildExpandableView(jsonData,"requesterDetails"),
-                                  buildExpandableView(jsonData,"summaryItems"),
-                                  buildExpandableView(jsonData,"summaryDetails"),
-                                  buildExpandableView(jsonData,"approverDetails"),
-                                ],
-                              ),
-                            )
-                        );
-                      }
+                child:SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      buildExpandableView(jsonData,"requesterDetails"),
+                      buildExpandableView(jsonData,"summaryItems"),
+                      buildExpandableView(jsonData,"summaryDetails"),
+                      buildExpandableView(jsonData,"approverDetails"),
+                    ],
                   ),
                 ),
               ),
@@ -282,7 +282,7 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
         case "summaryDetails":
           return showSummaryDetails ? buildSummaryWidget(map):Container();
         case "approverDetails":
-          return showApproverDetails ? buildApproverWidget(map, formBloc):Container();
+          return showApproverDetails ? buildApproverWidget(map):Container();
         default:
           return Container();
       }
@@ -370,13 +370,11 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
           );
   }
 
-  Container buildApproverWidget(Map map,bloc){
+  Container buildApproverWidget(Map map){
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20.w,vertical: 10.h),
       color: Colors.white,
-      child: ScrollableFormBlocManager(
-        formBloc: bloc,
-        child: ListView(
+      child:ListView(
         padding: EdgeInsets.zero,
         shrinkWrap: true,
         children:[
@@ -384,24 +382,31 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
               children: [
                 Expanded(
                   child: Container(
-                    child: MetaDialogSelectorView(mapData: map['selectApprover1']),
+                    child: MetaDialogSelectorView(
+                        text: approver1!.item1,
+                        mapData: map['selectApprover1']
+                    ),
                     alignment: Alignment.centerLeft,
                   ),
                 ),
                 Expanded(
                   child: Container(
-                    child: MetaDialogSelectorView(mapData: map['selectApprover1']),
+                    child: MetaDialogSelectorView(
+                        text: approver2!.item1,
+                        mapData: map['selectApprover1']
+                    ),
                   ),
                 ),
               ]),
-          MetaTextFieldBlocView(mapData: map['text_field_desc'],
-              textFieldBloc: bloc.tfUsername,
+          MetaTextFieldView(
+             controller: TextEditingController(),
+              mapData: map['text_field_desc'],
               onChanged:(value){
-                bloc.tfUsername.updateValue(value);
+                description=value;
               }),
 
         ],
-      )),
+      ),
     );
   }
 
@@ -531,6 +536,22 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
     }
 
     total =( miscTotal+accomTotal+travelTotal+dailyTotal).toString();
+    List items=[];
+    for(var item in summaryItems){
+      items.add(item.item2);
+    }
+
+    submitMap['maGeAccomodationExpense']=[];
+    submitMap['maGeConveyanceExpense']=[];
+    submitMap['maGeMiscellaneousExpense']= items;
+
+
+
+    submitMap['accommodationSelf']= accomTotal;
+    submitMap['conveyanceSelf']= travelTotal;
+    submitMap['miscellaneousSelf']= miscTotal;
+    submitMap['totalExpense']= double.parse(total);
+
 
     setState(() {
 
@@ -583,6 +604,49 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
           },)));
     }
 
+  }
+
+  void createGe() {
+    Map<String, dynamic> mapData ={
+      "accommodationSelf":0,
+      "conveyanceSelf":0,
+      "miscellaneousSelf":0,
+      "employeeName":"Abhilash",
+      "maGeAccomodationExpense":[],
+      "maGeConveyanceExpense": [],
+      "maGeMiscellaneousExpense":[],
+      "totalExpense":0,
+
+      "selfApprovals":false,
+      "violated":false,
+      "id":0,
+    };
+
+
+
+  }
+
+  void submitGe(text) async{
+    submitMap['selfApprovals']= false;
+    submitMap['violated']= false;
+
+    final String requestBody = json.encoder.convert(submitMap);
+
+    Map<String, dynamic> valueMap = json.decode(requestBody);
+
+   Map<String,dynamic> queryParams = {
+     "approver1":"cm01",
+     "approver1":approver1!.item2.toString().toLowerCase(),
+     "approver2":approver2!.item2.toString().toLowerCase(),
+     "approver2":"cm02",
+     "action":text,
+     "comment":"daskdsakdkasdka",
+   };
+
+   prettyPrint(valueMap);
+
+  // FormData formData = FormData.fromMap(valueMap);
+   await Injector.resolve<GeUseCase>().createGE(queryParams,valueMap);
   }
 
 }
