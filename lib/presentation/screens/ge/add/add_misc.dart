@@ -229,16 +229,6 @@ class _CreateMiscExpenseState extends State<CreateMiscExpense> {
                                       ),
                                     ]),
 
-
-                                // Container(
-                                //   child: MetaSwitchBloc(
-                                //       mapData:  jsonData['unitType'],
-                                //       bloc:  formBloc!.swUnitType,
-                                //       onSwitchPressed: (value){
-                                //         formBloc!.swUnitType.updateValue(value);
-                                //       }),
-                                // ),
-
                                 MetaTextFieldBlocView(mapData: jsonData['text_field_voucher'],
                                     textFieldBloc: formBloc!.tfVoucher,
                                     onChanged:(value){

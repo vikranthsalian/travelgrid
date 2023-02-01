@@ -50,7 +50,7 @@ class _MetaSwitchState extends State<MetaSwitch> {
 
 
 class MetaSwitchBloc extends StatelessWidget {
-  final bloc;
+  BooleanFieldBloc? bloc;
   Function(bool)? onSwitchPressed;
   Map mapData;
 
@@ -61,6 +61,11 @@ class MetaSwitchBloc extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
+
+
+    bloc!.stream.listen((event) {
+      onSwitchPressed!(event.value);
+    });
 
     return Theme(
       data: Theme.of(context).copyWith(
@@ -79,19 +84,12 @@ class MetaSwitchBloc extends StatelessWidget {
       child:Container(
         margin: EdgeInsets.symmetric(horizontal: 10.w,vertical: 5.h),
         child: SwitchFieldBlocBuilder(
-          booleanFieldBloc: bloc,
+          booleanFieldBloc: bloc!,
           body:Container(child: MetaTextView(mapData: mapData['label'])),
         ),
       )
     );
 
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 10.w,vertical: 5.h),
-      child: SwitchFieldBlocBuilder(
-        booleanFieldBloc: bloc,
-        body:Container(child: MetaTextView(mapData: mapData['label'])),
-      ),
-    );
 
   }
 

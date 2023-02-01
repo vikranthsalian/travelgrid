@@ -1,8 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:travelgrid/common/constants/flavour_constants.dart';
+import 'package:travelgrid/common/enum/dropdown_types.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
+import 'package:travelgrid/data/models/expense_model.dart';
+import 'package:travelgrid/data/models/ge_accom_model.dart';
 import 'package:travelgrid/presentation/screens/ge/bloc/accom_form_bloc.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';
 import 'package:travelgrid/presentation/widgets/date_time_view.dart';
@@ -15,7 +20,9 @@ import 'package:travelgrid/presentation/widgets/text_view.dart';
 
 class CreateAccommodationExpense extends StatefulWidget {
   Function(Map)? onAdd;
-  CreateAccommodationExpense({this.onAdd});
+  bool isEdit;
+  GEAccomModel? accomModel;
+  CreateAccommodationExpense({this.onAdd,this.isEdit=false,this.accomModel});
   @override
   _CreateAccommodationExpenseState createState() => _CreateAccommodationExpenseState();
 }
@@ -93,127 +100,184 @@ class _CreateAccommodationExpenseState extends State<CreateAccommodationExpense>
               ],
             ),
           ),
-          Container(
-            child: BlocProvider(
-              create: (context) => AccomFormBloc(jsonData),
-              child: Builder(
-                  builder: (context) {
-                      formBloc =  BlocProvider.of<AccomFormBloc>(context);
-                  return Container(
-                    margin: EdgeInsets.symmetric(horizontal: 10.w),
-                    child: FormBlocListener<AccomFormBloc, String, String>(
-                        onSubmissionFailed: (context, state) {
+          Expanded(
+            child: Container(
+              child: BlocProvider(
+                create: (context) => AccomFormBloc(jsonData),
+                child: Builder(
+                    builder: (context) {
+                    formBloc =  BlocProvider.of<AccomFormBloc>(context);
 
-                        },
-                        onSubmitting: (context, state) {
-                          FocusScope.of(context).unfocus();
-                        },
-                        onSuccess: (context, state) {
+                    String  dateText = DateFormat('dd-MM-yyyy').format(DateTime.now());
 
-                        },
-                        onFailure: (context, state) {
+                 //   formBloc!.checkInDate.updateValue(dateText);
+                  //  formBloc!.checkOutDate.updateValue(dateText);
 
+                    return Container(
+                      margin: EdgeInsets.symmetric(horizontal: 10.w),
+                      child: FormBlocListener<AccomFormBloc, String, String>(
+                          onSubmissionFailed: (context, state) {
+                          print(state);
+                          },
+                          onSubmitting: (context, state) {
+                            FocusScope.of(context).unfocus();
+                          },
+                          onSuccess: (context, state) {
+                            print(state.successResponse);
+                            GEAccomModel modelResponse = GEAccomModel.fromJson(jsonDecode(state.successResponse.toString()));
 
-                        },
-                        child: ScrollableFormBlocManager(
-                          formBloc: formBloc!,
-                          child: ListView(
-                              padding: EdgeInsets.zero,
-                              shrinkWrap: true,
-                              children:[
-                                Container(
-                                  child: MetaDateTimeView(mapData: jsonData['checkInDateTime'],onChange: (value){
-                                    formBloc!.checkInDate.updateValue(value.toString());
-                                  },),
-                                ),
-                                Container(
-                                  child: MetaDateTimeView(mapData: jsonData['checkOutDateTime'],onChange: (value){
-                                    formBloc!.checkOutDate.updateValue(value.toString());
-                                  },),
-                                ),
-                                Row(
-                                    children: [
-                                  Expanded(
-                                    child: Container(
-                                      child: MetaSearchSelectorView(mapData: jsonData['selectCity'],
-                                        onChange:(value){
-                                           formBloc!.city.updateValue(value);
-                                        },),
-                                      alignment: Alignment.centerLeft,
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Container(
-                                      child: MetaDialogSelectorView(mapData: jsonData['selectType'],
-                                        onChange:(value){
+                            widget.onAdd!(
+                                {
+                                  "data": jsonDecode(state.successResponse.toString()),
+                                  "item" : ExpenseModel(type: GETypes.ACCOMMODATION,amount: modelResponse.amount.toString())
+                                }
+                            );
+                            Navigator.pop(context);
 
-                                        },),
-                                    ),
-                                  ),
-                                ]),
+                          },
+                          onFailure: (context, state) {
 
-                                showWithBill ?  MetaTextFieldBlocView(mapData: jsonData['text_field_voucher'],
-                                    textFieldBloc: formBloc!.tfVoucher,
-                                    onChanged:(value){
-                                      formBloc!.tfVoucher.updateValue(value);
-                                    }):SizedBox(),
-                                Container(
-                                  child: Row(
-                                    children: [
-                                          Expanded(
-                                            child: MetaTextFieldBlocView(mapData: jsonData['text_field_amount'],
-                                            textFieldBloc: formBloc!.tfAmount,
-                                            onChanged:(value){
-                                              formBloc!.tfAmount.updateValue(value);
-                                            }),
-                                          ),
-                                      SizedBox(width: 30.w,),
-                                      Expanded(
-                                        child: MetaTextFieldBlocView(mapData: jsonData['text_field_tax'],
-                                            textFieldBloc: formBloc!.tfTax,
-                                            onChanged:(value){
-                                              formBloc!.tfTax.updateValue(value);
-                                            }),
-                                      ),
-                                        ],
-                                  ),
-                                ),
-                                MetaTextFieldBlocView(mapData: jsonData['text_field_desc'],
-                                    textFieldBloc: formBloc!.tfDescription,
-                                    onChanged:(value){
-                                      formBloc!.tfDescription.updateValue(value);
-                                    }),
-
-                                Row(
-                                  children: [
-                                    MetaSwitch(mapData:  jsonData['withBillCheckBox'],
-                                      value:  formBloc!.swWithBill.value,
-                                      onSwitchPressed: (value){
-
-                                        setState(() {
-                                         showWithBill=value;
-                                         formBloc!.swWithBill.updateValue(value);
-                                        });
-
+                            print(state);
+                          },
+                          child: ScrollableFormBlocManager(
+                            formBloc: formBloc!,
+                            child:ListView(
+                                padding: EdgeInsets.zero,
+                                shrinkWrap: true,
+                                children:[
+                                  Container(
+                                    child: MetaDateTimeView(mapData: jsonData['checkInDateTime'],
+                                      value: {
+                                        "date": formBloc!.checkInDate.value,
+                                        "time": formBloc!.checkInTime.value,
+                                      },
+                                      onChange: (value){
+                                        print(value);
+                                        formBloc!.checkInDate.updateValue(value['date'].toString());
+                                        formBloc!.checkInTime.updateValue(value['time'].toString());
                                       },),
-                                    showWithBill ? Container(
-                                      margin: EdgeInsets.symmetric(vertical: 20.h),
-                                      width: 180.w,
-                                      child: MetaButton(mapData: jsonData['uploadButton'],
-                                          onButtonPressed: (){
+                                  ),
+                                  Container(
+                                    child: MetaDateTimeView(mapData: jsonData['checkOutDateTime'],
+                                      value: {
+                                        "date": formBloc!.checkOutDate.value,
+                                        "time": formBloc!.checkOutTime.value,
+                                      },
+                                      onChange: (value){
+                                        formBloc!.checkOutDate.updateValue(value['date'].toString());
+                                        formBloc!.checkOutTime.updateValue(value['time'].toString());
+                                      },),
+                                  ),
+                                  Row(
+                                      children: [
+                                        Expanded(
+                                          child: Container(
+                                            child: MetaSearchSelectorView(mapData: jsonData['selectCity'],
+                                              text: getInitialText(formBloc!.cityName.value),
+                                              onChange:(value){
+                                                formBloc!.cityName.updateValue(value.name);
+                                                formBloc!.cityID.updateValue(value.id.toString());
+                                              },),
+                                            alignment: Alignment.centerLeft,
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Container(
+                                            child: MetaDialogSelectorView(mapData: jsonData['selectType'],
+                                              text :getInitialText(formBloc!.accomName.value),
+                                              onChange:(value){
+                                                print(value);
+                                                formBloc!.selectAccomID.updateValue(value['id'].toString());
+                                                formBloc!.accomName.updateValue(value['label']);
+                                              },),
+                                          ),
+                                        ),
+                                      ]),
+                                  BlocBuilder<SelectFieldBloc, SelectFieldBlocState>(
+                                      bloc: formBloc!.selectAccomID,
+                                      builder: (context, state) {
+                                        return Visibility(
+                                          visible: state.value == "250" ? true : false,
+                                          child:MetaTextFieldBlocView(mapData: jsonData['text_field_hotel'],
+                                              textFieldBloc: formBloc!.tfHotelName,
+                                              onChanged:(value){
+                                                formBloc!.tfHotelName.updateValue(value);
+                                              }),
+                                        );
+                                      }
+                                  ),
+                                  BlocBuilder<SelectFieldBloc, SelectFieldBlocState>(
+                                      bloc: formBloc!.selectWithBill,
+                                      builder: (context, state) {
+                                        return
+                                          Visibility(
+                                            visible: state.value == "true" ? true : false,
+                                            child:MetaTextFieldBlocView(mapData: jsonData['text_field_voucher'],
+                                                textFieldBloc: formBloc!.tfVoucher,
+                                                onChanged:(value){
+                                                  formBloc!.tfVoucher.updateValue(value);
+                                                }),
+                                          );
+                                      }
+                                  ),
 
-                                          }
-                                      ),
-                                    ):SizedBox(),
-                                  ],
-                                )
+                                  Container(
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          child: MetaTextFieldBlocView(mapData: jsonData['text_field_amount'],
+                                              textFieldBloc: formBloc!.tfAmount,
+                                              onChanged:(value){
+                                                formBloc!.tfAmount.updateValue(value);
+                                              }),
+                                        ),
+                                        SizedBox(width: 30.w,),
+                                        Expanded(
+                                          child: MetaTextFieldBlocView(mapData: jsonData['text_field_tax'],
+                                              textFieldBloc: formBloc!.tfTax,
+                                              onChanged:(value){
+                                                formBloc!.tfTax.updateValue(value);
+                                              }),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  MetaTextFieldBlocView(mapData: jsonData['text_field_desc'],
+                                      textFieldBloc: formBloc!.tfDescription,
+                                      onChanged:(value){
+                                        formBloc!.tfDescription.updateValue(value);
+                                      }),
+                                  Container(
+                                    child: MetaSwitchBloc(
+                                        mapData:  jsonData['withBillCheckBox'],
+                                        bloc:  formBloc!.swWithBill,
+                                        onSwitchPressed: (value){
+                                          formBloc!.selectWithBill.updateValue(value.toString());
+                                          formBloc!.swWithBill.updateValue(value);
+                                        }),
+                                  ),
+                                  Row(
+                                    children: [
 
-                              ]
-                          ),
-                        )
-                    ),
-                  );
-                }
+                                      showWithBill ? Container(
+                                        margin: EdgeInsets.symmetric(vertical: 20.h),
+                                        width: 180.w,
+                                        child: MetaButton(mapData: jsonData['uploadButton'],
+                                            onButtonPressed: (){
+
+                                            }
+                                        ),
+                                      ):SizedBox(),
+                                    ],
+                                  )
+
+                                ]
+                            ),
+                          )
+                      ),
+                    );
+                  }
+                ),
               ),
             ),
           )
@@ -242,6 +306,14 @@ class _CreateAccommodationExpenseState extends State<CreateAccommodationExpense>
     "voucherPath": "",
     "voucherNumber": "245665"
   };
+
+  getInitialText(String text) {
+
+    if(text.isNotEmpty){
+      return text;
+    }
+    return null;
+  }
 
 
 }

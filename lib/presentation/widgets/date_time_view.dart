@@ -55,13 +55,12 @@ class _MetaDateTimeViewState extends State<MetaDateTimeView> {
     }else{
 
       DateTime dateTime = MetaDateTime().getDateTime(widget.value['date'].toString(),format: "dd-MM-yyyy");
-      print(dateTime);
+      dateText =  widget.value['date'];
 
       date= dateTime.day.toString();
       week= DateFormat('EEEE').format(dateTime);
       month= DateFormat('MMMM, y').format(dateTime);
-      time = widget.value['time'] ?? "00:00";
-
+      time = "00:00";
     }
   }
 
@@ -185,7 +184,7 @@ class _MetaDateTimeViewState extends State<MetaDateTimeView> {
                   }
               );
             }else{
-              widget.onChange!({"time":dateText});
+              widget.onChange!({"time":time});
             }
 
 

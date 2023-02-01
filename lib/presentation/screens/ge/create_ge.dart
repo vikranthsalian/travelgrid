@@ -18,6 +18,7 @@ import 'package:travelgrid/data/datsources/approver_list.dart' as app;
 import 'package:travelgrid/data/datsources/general_expense_list.dart';
 import 'package:travelgrid/data/datsources/login_response.dart';
 import 'package:travelgrid/data/models/expense_model.dart';
+import 'package:travelgrid/data/models/ge_accom_model.dart';
 import 'package:travelgrid/data/models/ge_misc_model.dart';
 import 'package:travelgrid/data/models/success_model.dart';
 import 'package:travelgrid/domain/usecases/ge_usecase.dart';
@@ -96,7 +97,6 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
     submitMap['selfApprovals']= false;
     submitMap['violated']= false;
 
-    createGe();
   }
 
 
@@ -497,6 +497,7 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
                               print("removing index:"+index.toString() );
                               setState(() {
                                 summaryItems.removeAt(index);
+                                calculateSummary();
                               });
 
                             },
@@ -528,27 +529,65 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
     double travelTotal=0;
     double dailyTotal=0;
     for(var item in summaryItems){
+
+      if(item.item1.type==GETypes.ACCOMMODATION){
+        accomTotal=accomTotal + double.parse(item.item1.amount.toString() ?? "0");
+      }
+
+      if(item.item1.type==GETypes.TRAVEL){
+        travelTotal=travelTotal + double.parse(item.item1.amount.toString() ?? "0");
+      }
+
+
+
       if(item.item1.type==GETypes.MISCELLANEOUS){
         miscTotal=miscTotal + double.parse(item.item1.amount.toString() ?? "0");
       }
+
+
     }
     for(int i=0;i<summaryDetails.length;i++){
       Map map = summaryDetails[i].item1;
 
+      if(summaryDetails[i].item1['key']=="AE"){
+        summaryDetails[i]= Tuple2(map, accomTotal.toString());
+      }
+
+      if(summaryDetails[i].item1['key']=="TE"){
+        summaryDetails[i]= Tuple2(map, travelTotal.toString());
+      }
+
       if(summaryDetails[i].item1['key']=="ME"){
         summaryDetails[i]= Tuple2(map, miscTotal.toString());
       }
+
+
     }
 
     total =( miscTotal+accomTotal+travelTotal+dailyTotal).toString();
-    List items=[];
+    List items1=[];
+    List items2=[];
+    List items3=[];
     for(var item in summaryItems){
-      items.add(item.item2);
+
+      if(item.item1.type == GETypes.ACCOMMODATION){
+        items1.add(item.item2);
+      }
+
+      if(item.item1.type == GETypes.TRAVEL){
+        items2.add(item.item2);
+      }
+
+      if(item.item1.type == GETypes.MISCELLANEOUS){
+        items3.add(item.item2);
+      }
+
+
     }
 
-    submitMap['maGeAccomodationExpense']=[];
-    submitMap['maGeConveyanceExpense']=[];
-    submitMap['maGeMiscellaneousExpense']= items;
+    submitMap['maGeAccomodationExpense']=items1;
+    submitMap['maGeConveyanceExpense']=items2;
+    submitMap['maGeMiscellaneousExpense']= items3;
 
 
 
@@ -580,22 +619,27 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
             isEdit:isEdit,
             miscModel:model,
             onAdd: (values){
-
               if(isEdit){
                 summaryItems.removeAt(index);
               }
-                summaryItems.add(Tuple2(values['item'] as ExpenseModel, values['data']));
-
-
+              summaryItems.add(Tuple2(values['item'] as ExpenseModel, values['data']));
               calculateSummary();
             },)));
-    }else{
-      print("else");
     }
 
     if(e['onClick'] == RouteConstants.createAccommodationExpensePath){
+
+      print(data);
+      GEAccomModel? model;
+      if(data.isNotEmpty){
+        model =  GEAccomModel.fromMap(data);
+      }
+
       Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
-          CreateAccommodationExpense(onAdd: (values){
+          CreateAccommodationExpense(
+            isEdit:isEdit,
+            accomModel:model,
+            onAdd: (values){
             summaryItems.add(Tuple2(values['item'] as ExpenseModel, values['data']));
             calculateSummary();
           },)));
@@ -611,26 +655,6 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
 
   }
 
-  void createGe() {
-    Map<String, dynamic> mapData ={
-      "accommodationSelf":0,
-      "conveyanceSelf":0,
-      "miscellaneousSelf":0,
-      "employeeName":"Abhilash",
-      "maGeAccomodationExpense":[],
-      "maGeConveyanceExpense": [],
-      "maGeMiscellaneousExpense":[],
-      "totalExpense":0,
-
-      "selfApprovals":false,
-      "violated":false,
-      "id":0,
-    };
-
-
-
-  }
-
   void submitGe(text) async{
     submitMap['selfApprovals']= false;
     submitMap['violated']= false;
@@ -640,17 +664,16 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
     Map<String, dynamic> valueMap = json.decode(requestBody);
 
    Map<String,dynamic> queryParams = {
-     "approver1":"cm01",
+     //"approver1":"cm01",
      "approver1":approver1!.item2.toString().toLowerCase(),
      "approver2":approver2!.item2.toString().toLowerCase(),
-     "approver2":"cm02",
+     //"approver2":"cm02",
      "action":text,
      "comment":"daskdsakdkasdka",
    };
 
    prettyPrint(valueMap);
 
-  // FormData formData = FormData.fromMap(valueMap);
     SuccessModel model =   await Injector.resolve<GeUseCase>().createGE(queryParams,valueMap);
 
     if(model.status==true){
