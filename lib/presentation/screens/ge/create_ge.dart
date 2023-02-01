@@ -19,6 +19,7 @@ import 'package:travelgrid/data/datsources/general_expense_list.dart';
 import 'package:travelgrid/data/datsources/login_response.dart';
 import 'package:travelgrid/data/models/expense_model.dart';
 import 'package:travelgrid/data/models/ge_misc_model.dart';
+import 'package:travelgrid/data/models/success_model.dart';
 import 'package:travelgrid/domain/usecases/ge_usecase.dart';
 import 'package:travelgrid/presentation/screens/ge/add/add_accom.dart';
 import 'package:travelgrid/presentation/screens/ge/add/add_misc.dart';
@@ -151,40 +152,44 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
             ),
             Container(
               color: Colors.white,
-              height:80,
+              height:70.h,
               child: Container(
                 margin: EdgeInsets.symmetric(horizontal: 10.w),
                 child: Row(
                   children: expenseTypes.map((e) {
 
-                    return Expanded(
-                        child: InkWell(
-                            onTap: () async{
-                              navigate(e,false,{},0);
-                            },
-                            child: Container(
-                              height: 50.h,
-                              decoration: BoxDecoration(
-                                color: ParseDataType().getHexToColor(jsonData['backgroundColor']),
-                                shape: BoxShape.circle,
-                              ),
-                              child: Stack(
-                                alignment: Alignment.center,
-                                children: [
-                                  Container(
+                    return Container(
+                      margin: EdgeInsets.symmetric(horizontal: 5.w),
+                      width: 60.w,
+                      height: 60.w,
+                      child: InkWell(
+                          onTap: () async{
+                            navigate(e,false,{},0);
+                          },
+                          child:Container(
+                            height: 50.h,
+                            decoration: BoxDecoration(
+                              color: ParseDataType().getHexToColor(jsonData['backgroundColor']),
+                              shape: BoxShape.circle,
+                            ),
+                            child: Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                Container(
+                                  width: 25.w,
+                                  height: 25.w,
+                                  child: SvgPicture.asset(
+                                    AssetConstants.assetsBaseURLSVG +"/"+  e['svgIcon']['icon'],//e['svgIcon']['color']
+                                    color: ParseDataType().getHexToColor(e['svgIcon']['color']),
                                     width: 25.w,
                                     height: 25.w,
-                                    child: SvgPicture.asset(
-                                      AssetConstants.assetsBaseURLSVG +"/"+  e['svgIcon']['icon'],//e['svgIcon']['color']
-                                      color: ParseDataType().getHexToColor(e['svgIcon']['color']),
-                                      width: 25.w,
-                                      height: 25.w,
-                                    ),
                                   ),
-                                ],
-                              ),
-                            )
-                        ));
+                                ),
+                              ],
+                            ),
+                          )
+                      ),
+                    );
                   }).toList(),
                 ),
               ),
@@ -646,7 +651,12 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
    prettyPrint(valueMap);
 
   // FormData formData = FormData.fromMap(valueMap);
-   await Injector.resolve<GeUseCase>().createGE(queryParams,valueMap);
+    SuccessModel model =   await Injector.resolve<GeUseCase>().createGE(queryParams,valueMap);
+
+    if(model.status==true){
+      Navigator.pop(context);
+    }
+
   }
 
 }

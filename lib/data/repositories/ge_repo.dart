@@ -1,5 +1,6 @@
 import 'package:travelgrid/data/datsources/general_expense_list.dart';
 import 'package:travelgrid/data/datsources/login_response.dart';
+import 'package:travelgrid/data/models/success_model.dart';
 import 'package:travelgrid/data/remote/remote_datasource.dart';
 import 'package:travelgrid/domain/repo_abstract/api_abstract.dart';
 
@@ -37,16 +38,16 @@ class GeRepository extends GeAPIAbstract {
   }
 
   @override
-  Future<GEListResponse> createGE(data,body) async {
+  Future<SuccessModel> createGE(data,body) async {
 
     var response = await apiRemoteDatasource.createGE("ge/submitMaGeneralExpense",data,body);
 
     if(response!=null) {
-      GEListResponse modelResponse = GEListResponse.fromJson(response);
+      SuccessModel modelResponse = SuccessModel.fromJson(response);
       return modelResponse;
     }
 
-    return GEListResponse(status: false);
+    return SuccessModel(status: false);
   }
 
 }

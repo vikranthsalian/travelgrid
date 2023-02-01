@@ -163,7 +163,7 @@ class MetaDioWrapper implements BaseDioWrapper {
       Map<String,dynamic> dataMap = response.data as Map<String, dynamic>;
       try {
         MetaAlert.showSuccessAlert(
-          message: dataMap["SUCCESS"],
+          message: dataMap["message"],
         );
       }catch(e){
 

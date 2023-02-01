@@ -17,7 +17,6 @@ import 'package:travelgrid/presentation/widgets/date_time_view.dart';
 import 'package:travelgrid/presentation/widgets/dialog_selector_view.dart';
 import 'package:travelgrid/presentation/widgets/icon.dart';
 import 'package:travelgrid/presentation/widgets/search_selector_view.dart';
-import 'package:travelgrid/presentation/widgets/switch.dart';
 import 'package:travelgrid/presentation/widgets/text_field.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
 
@@ -130,6 +129,12 @@ class _CreateMiscExpenseState extends State<CreateMiscExpense> {
                     formBloc!.tfVoucher.updateValue(widget.miscModel!.voucherNumber.toString());
                     formBloc!.tfAmount.updateValue(widget.miscModel!.amount.toString());
                     formBloc!.tfDescription.updateValue(widget.miscModel!.description.toString());
+                   }else{
+
+                   String  dateText = DateFormat('dd-MM-yyyy').format(DateTime.now());
+
+                     formBloc!.checkInDate.updateValue(dateText);
+                     formBloc!.checkOutDate.updateValue(dateText);
                    }
 
 

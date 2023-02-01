@@ -893,7 +893,7 @@
         "dataText":  {
           "text" : "Choose Approver",
           "color" : "0xFFCCCCCC",
-          "size": "16",
+          "size": "14",
           "family": "regular",
           "align": "center-left"
         }
@@ -911,7 +911,7 @@
         "dataText":  {
           "text" : "Choose Approver",
           "color" : "0xFFCCCCCC",
-          "size": "16",
+          "size": "14",
           "family": "regular",
           "align": "center-left"
         },

@@ -48,12 +48,12 @@ class _GeneralExpenseState extends State<GeneralExpense> {
       backgroundColor: Colors.white,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton:  FloatingActionButton(
-        child:MetaIcon(mapData:jsonData['bottomButtonFab'],onButtonPressed: (){
+        child:MetaIcon(mapData:jsonData['bottomButtonFab'],onButtonPressed: ()async{
           if(jsonData['bottomButtonFab']['onClick'].isNotEmpty){
 
-           // MetaAlert.showErrorAlert(message: "Work in Progress");
-
-            Navigator.of(context).pushNamed(jsonData['bottomButtonFab']['onClick']);
+           Navigator.of(context).pushNamed(jsonData['bottomButtonFab']['onClick']).then((value) {
+             bloc!.add(GetGeneralExpenseListEvent());
+           });
           }
         },),
         backgroundColor: ParseDataType().getHexToColor(jsonData['backgroundColor']),
@@ -221,7 +221,7 @@ class _GeneralExpenseState extends State<GeneralExpense> {
         };
 
         return Container(
-          padding: EdgeInsets.symmetric(horizontal: 20.w),
+          padding: EdgeInsets.symmetric(horizontal: 15.w),
           child: Row(
             children: [
               Card(
