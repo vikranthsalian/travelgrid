@@ -2096,19 +2096,25 @@
       "validators" : []
     },
     "uploadButton":  {
-      "text" : "Upload Voucher",
-      "color" : "0xFFFFFFFF",
       "backgroundColor" : "0xFF2854A1",
-      "size": "14",
-      "borderRadius": 15.0,
-      "family": "regular",
       "onClick": "/uploadDoc",
       "title":  {
-        "text" : "Upload",
+        "text" : "Browse for Documents/Images here",
         "color" : "0XFF000000",
-        "size": "18",
+        "size": "12",
         "family": "bold",
         "align": "center"
+      },
+      "subtitle":  {
+        "text" : "PNG,JPEG,JPG,PDF",
+        "color" : "0XFFCCCCCC",
+        "size": "10",
+        "family": "regular",
+        "align": "center"
+      },
+      "svgIcon":{
+        "icon": "upload.svg",
+        "color" : "0xFF2854A1"
       },
       "listView": {
         "data": [
