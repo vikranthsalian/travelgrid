@@ -1440,39 +1440,83 @@
         }
       }
     },
-    "selectOrigin": {
-      "showView": true,
-      "label":  {
+    "text_field_origin":  {
+      "name": "Origin",
+      "apiKey": "origin",
+      "type": "text_field_view",
+      "inputType": "text",
+      "isPassword": false,
+      "backgroundColor": "0XFFFFFFFF",
+      "borderColor": "0XFFCCCCCC",
+      "text" : {
+        "text" : "",
+        "color" : "0xFF2854A1",
+        "size": "14",
+        "family": "regular"
+      },
+      "labelText" : {
         "text" : "Origin",
         "color" : "0xFF2854A1",
         "size": "14",
         "family": "regular",
-        "align": "center-left"
+        "align" : "center-left"
       },
-      "dataText":  {
-        "text" : "Choose Origin",
-        "color" : "0xFFCCCCCC",
-        "size": "18",
-        "family": "regular",
-        "align": "center-left"
-      }
+      "hintText" : {
+        "text" : "Enter Origin",
+        "color" : "0xFF2854A1",
+        "size": "14",
+        "family": "regular"
+      },
+      "errorText" : {
+        "text" : "",
+        "color" : "0xFFFF0000",
+        "size": "14",
+        "family": "regular"
+      },
+      "validators" : [
+        {
+          "type" : "empty"
+        }
+      ]
     },
-    "selectDestination": {
-      "showView": true,
-      "label":  {
+    "text_field_destination":  {
+      "name": "Destination",
+      "apiKey": "destination",
+      "type": "text_field_view",
+      "inputType": "text",
+      "isPassword": false,
+      "backgroundColor": "0XFFFFFFFF",
+      "borderColor": "0XFFCCCCCC",
+      "text" : {
+        "text" : "",
+        "color" : "0xFF2854A1",
+        "size": "14",
+        "family": "regular"
+      },
+      "labelText" : {
         "text" : "Destination",
         "color" : "0xFF2854A1",
         "size": "14",
         "family": "regular",
-        "align": "center-left"
+        "align" : "center-left"
       },
-      "dataText":  {
-        "text" : "Choose Dest.",
-        "color" : "0xFFCCCCCC",
-        "size": "18",
-        "family": "regular",
-        "align": "center-left"
-      }
+      "hintText" : {
+        "text" : "Enter Destination",
+        "color" : "0xFF2854A1",
+        "size": "14",
+        "family": "regular"
+      },
+      "errorText" : {
+        "text" : "",
+        "color" : "0xFFFF0000",
+        "size": "14",
+        "family": "regular"
+      },
+      "validators" : [
+        {
+          "type" : "empty"
+        }
+      ]
     },
     "selectMode": {
       "showView": true,
