@@ -1536,6 +1536,79 @@
         "align": "center-left"
       }
     },
+    "selectVehicleType": {
+      "showView": true,
+      "key":"common_type_view",
+      "label":  {
+        "text" : "Vehicle Type*",
+        "color" : "0xFF2854A1",
+        "size": "14",
+        "family": "regular",
+        "align": "center-left"
+      },
+      "dataText":  {
+        "text" : "Choose Type",
+        "color" : "0xFFCCCCCC",
+        "size": "18",
+        "family": "regular",
+        "align": "center-left"
+      },
+      "title":{
+        "text" : "Select Vehicle Type",
+        "color" : "0xFF2854A1",
+        "size": "18",
+        "family": "bold",
+        "align": "center"
+      },
+      "listView": {
+        "data": [
+          {
+            "text" : "Two-Wheeler",
+            "color" : "0xFF000000",
+            "size": "12",
+            "family": "regular",
+            "align": "center-left",
+            "fuelPrice": 6
+          },{
+            "text" : "Four-Wheeler",
+            "color" : "0xFF000000",
+            "size": "12",
+            "family": "regular",
+            "align": "center-left",
+            "fuelPrice": 10
+          }
+        ],
+        "emptyData": {
+          "image_view":   {
+            "image" : "logo_banner.png",
+            "align": "center",
+            "wd": 250.0
+          },
+          "title":  {
+            "text" : "No Data Found!!!",
+            "color" : "0XFF3D3D3D",
+            "size": "16",
+            "family": "regular"
+          },
+          "bottomButtonRefresh": {
+            "text" : "Refresh",
+            "height": 35.0,
+            "color" : "0xFFFFFFFF",
+            "borderRadius": 30.0,
+            "backgroundColor" : "0xFF2854A1",
+            "size": "15",
+            "family": "regular"
+          }
+        }
+      },
+      "bottomButtonCentre": {
+        "text" : "Cancel",
+        "color" : "0xFFFFFFFF",
+        "backgroundColor" : "0xFF2854A1",
+        "size": "18",
+        "family": "regular"
+      }
+    },
     "text_field_voucher":  {
       "name": "Voucher",
       "apiKey": "voucher",

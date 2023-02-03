@@ -1,4 +1,4 @@
-class MetaAccomTypeListResponse {
+  class MetaAccomTypeListResponse {
   bool? status;
   String? token;
   String? message;

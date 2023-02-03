@@ -4,7 +4,6 @@ import 'package:travelgrid/data/cubits/login_cubit/login_cubit.dart';
 import 'package:travelgrid/data/datsources/accom_type_list.dart';
 import 'package:travelgrid/data/datsources/approver_list.dart';
 import 'package:travelgrid/data/datsources/cities_list.dart';
-import 'package:travelgrid/data/datsources/login_response.dart';
 import 'package:travelgrid/data/datsources/misc_type_list.dart';
 import 'package:travelgrid/data/datsources/travel_mode_list.dart';
 import 'package:travelgrid/data/remote/remote_datasource.dart';
@@ -72,7 +71,7 @@ class CommonRepository extends CommonAPIAbstract {
 
     Map<String,dynamic> data= {};
 
-    var response = await apiRemoteDatasource.getCommonTypes("getModeOfTravel",data);
+    var response = await apiRemoteDatasource.getCommonTypes("te/getConveyanceMode",data);
 
     if(response!=null) {
       MetaTravelModeListResponse modelResponse = MetaTravelModeListResponse.fromJson(response);

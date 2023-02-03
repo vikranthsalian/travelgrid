@@ -66,8 +66,6 @@ class _CreateMiscExpenseState extends State<CreateMiscExpense> {
             ),
             MetaButton(mapData: jsonData['bottomButtonRight'],
                 onButtonPressed: (){
-
-
                 formBloc!.submit();
                 }
             )
@@ -125,8 +123,14 @@ class _CreateMiscExpenseState extends State<CreateMiscExpense> {
                      formBloc!.unitTypeName.updateValue("test");
                      formBloc!.unitTypeID.updateValue(widget.miscModel!.unitType.toString());
 
-                    formBloc!.tfVoucher.updateValue(widget.miscModel!.voucherNumber.toString());
-                    formBloc!.tfAmount.updateValue(widget.miscModel!.amount.toString());
+
+                     formBloc!.tfVoucher.updateValue(widget.miscModel!.voucherNumber.toString());
+                     if(widget.miscModel!.voucherNumber.toString().isEmpty){
+                       formBloc!.tfVoucher.updateValue("nill");
+                     }
+
+
+                     formBloc!.tfAmount.updateValue(widget.miscModel!.amount.toString());
                     formBloc!.tfDescription.updateValue(widget.miscModel!.description.toString());
                    }else{
 

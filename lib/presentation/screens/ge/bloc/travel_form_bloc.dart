@@ -16,18 +16,19 @@ class TravelFormBloc extends FormBloc<String, String> {
   final selectWithBill = SelectFieldBloc<String, dynamic>();
   final checkInDate =  TextFieldBloc(validators: [emptyValidator]);
   final checkInTime =  TextFieldBloc(validators: [emptyValidator]);
-  final checkOutDate =  TextFieldBloc(validators: [emptyValidator]);
   final checkOutTime =  TextFieldBloc(validators: [emptyValidator]);
-  final cityName =  TextFieldBloc(validators: [emptyValidator]);
-  final cityID =  TextFieldBloc(validators: [emptyValidator]);
-  final modeName =  TextFieldBloc(validators: [emptyValidator]);
 
-  final tfHotelName =  TextFieldBloc(validators: [emptyValidator],initialValue: "nill");
+
+  final modeName =  TextFieldBloc(validators: [emptyValidator]);
+  final VehicleTypeName =  TextFieldBloc(validators: [emptyValidator]);
+
+//  final tfHotelName =  TextFieldBloc(validators: [emptyValidator],initialValue: "nill");
 
   final swWithBill = BooleanFieldBloc(initialValue: false);
+  final tfDestination =  TextFieldBloc(validators: [emptyValidator]);
+  final tfOrigin =  TextFieldBloc(validators: [emptyValidator]);
   final tfVoucher = TextFieldBloc(initialValue: "nill");
   final tfAmount = TextFieldBloc();
-  final tfTax= TextFieldBloc();
   final tfDescription = TextFieldBloc();
 
   final flUpload = SelectFieldBloc();
@@ -44,25 +45,25 @@ class TravelFormBloc extends FormBloc<String, String> {
       if(data.isNotEmpty){
 
         tfVoucher.addValidators(Validators().getValidators(data['text_field_voucher']));
+        tfVoucher.addValidators(Validators().getValidators(data['text_field_voucher']));
+        tfVoucher.addValidators(Validators().getValidators(data['text_field_voucher']));
         tfAmount.addValidators(Validators().getValidators(data['text_field_amount']));
         tfDescription.addValidators(Validators().getValidators(data['text_field_desc']));
       }
 
     addFieldBlocs(fieldBlocs: [
       checkInDate,
-      checkInTime,
-      checkOutDate,
-      checkOutTime,
-      cityName,
-      cityID,
+    //  checkInTime,
+    //  checkOutTime,
+      tfOrigin,
+      tfDestination,
       selectModeID,
       modeName,
-      tfHotelName,
+   //   VehicleTypeName,
       tfVoucher,
       tfAmount,
-      tfTax,
       tfDescription,
-      selectWithBill,
+   //   selectWithBill,
       swWithBill,
       flUpload
     ]);
@@ -77,50 +78,40 @@ class TravelFormBloc extends FormBloc<String, String> {
 
       selectModeID.onValueChanges(onData: (previous, current) async* {
         if(current.value == "250") {
-          tfHotelName.updateValue("");
+       //   tfHotelName.updateValue("");
         } else {
-          tfHotelName.updateValue("nill");
+      //    tfHotelName.updateValue("nill");
         }
       });
   }
 
   @override
   FutureOr<void> onSubmitting() async {
-    print("differenceInYears");
-    DateTime dob1 = MetaDateTime().getDateTime(checkInDate.value);
-    print(dob1);
 
-    DateTime dob2 = MetaDateTime().getDateTime(checkOutDate.value);
-    print(dob2);
-    print("differenceInYears 2");
-    Duration dur =  dob2.difference(dob1);
+    Map<String,dynamic> saveConvMap = {
+      "conveyanceDate":  checkInDate.value,
+      "origin": tfOrigin.value,
+      "destination":  tfDestination.value,
 
-    int differenceInYears = (dur.inDays);
+      "startTime": "00:00",
+      "endTime": "00:00",
+      "distance": 0,
+      "fuelPricePerLitre": 0,
+      "violated": true,
 
-    print(differenceInYears);
-
-    Map<String,dynamic> saveAccomMap = {
-      "checkInDate": checkInDate.value,
-      "checkInTime": checkInTime.value,
-      "checkOutDate": checkOutDate.value,
-      "checkOutTime": checkInTime.value,
-
-      "noOfDays":dur.inDays,
-      "city": int.parse(cityID.value),
-      "cityName": cityName.value,
-      "hotelName": selectModeID.value == "250" ? tfHotelName.value :"",
-
-      "accomodationType": int.parse(selectModeID.value.toString()),
-      "accomodationTypeName": modeName.value,
-
+      "travelMode": int.parse(selectModeID.value.toString()),
+      "travelModeName":  modeName.value,
       "amount": int.parse(tfAmount.value),
-      "tax": int.parse(tfTax.value.isEmpty ? "0.0" : tfTax.value),
+      "maGeConveyanceCityPair": [],
       "description": tfDescription.value,
-      "withBill":swWithBill.value,
+      "voucherNumber": swWithBill.value ? tfVoucher.value : "",
+      "withBill": swWithBill.value,
       "voucherPath": "",
-      "voucherNumber":swWithBill.value ? tfVoucher.value : ""
+      "voucherFile": null,
+      "voilationMessage": "Exception due to manual creation of Conveyance",
     };
-    emitSuccess(successResponse: jsonEncode(saveAccomMap));
+
+    emitSuccess(successResponse: jsonEncode(saveConvMap));
 
   }
 

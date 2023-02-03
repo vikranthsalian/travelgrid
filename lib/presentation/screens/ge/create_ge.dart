@@ -19,6 +19,7 @@ import 'package:travelgrid/data/datsources/general_expense_list.dart';
 import 'package:travelgrid/data/datsources/login_response.dart';
 import 'package:travelgrid/data/models/expense_model.dart';
 import 'package:travelgrid/data/models/ge_accom_model.dart';
+import 'package:travelgrid/data/models/ge_conveyance_model.dart';
 import 'package:travelgrid/data/models/ge_misc_model.dart';
 import 'package:travelgrid/data/models/success_model.dart';
 import 'package:travelgrid/domain/usecases/ge_usecase.dart';
@@ -542,7 +543,7 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
         accomTotal=accomTotal + double.parse(item.item1.amount.toString() ?? "0");
       }
 
-      if(item.item1.type==GETypes.TRAVEL){
+      if(item.item1.type==GETypes.CONVEYANCE){
         travelTotal=travelTotal + double.parse(item.item1.amount.toString() ?? "0");
       }
 
@@ -582,7 +583,7 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
         items1.add(item.item2);
       }
 
-      if(item.item1.type == GETypes.TRAVEL){
+      if(item.item1.type == GETypes.CONVEYANCE){
         items2.add(item.item2);
       }
 
@@ -657,9 +658,21 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
           },)));
     }
 
-    if(e['onClick'] == RouteConstants.createTravelExpensePath){
+    if(e['onClick'] == RouteConstants.createTravelExpensePath || e['onClick']  == GETypes.CONVEYANCE.toString()){
+
+
+      print(data);
+      GeConveyanceModel? model;
+      if(data.isNotEmpty){
+        model =  GeConveyanceModel.fromMap(data);
+      }
+
+
       Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
-          CreateTravelExpense(onAdd: (values){
+          CreateTravelExpense(
+            isEdit:isEdit,
+            conveyanceModel:model,
+            onAdd: (values){
             if(isEdit){
               summaryItems.removeAt(index);
             }
