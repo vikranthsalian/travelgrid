@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -7,10 +9,12 @@ import 'package:travelgrid/common/constants/flavour_constants.dart';
 import 'package:travelgrid/common/enum/dropdown_types.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
 import 'package:travelgrid/common/extensions/pretty.dart';
+import 'package:travelgrid/common/injector/injector.dart';
 import 'package:travelgrid/common/utils/show_alert.dart';
 import 'package:travelgrid/data/models/expense_model.dart';
 import 'package:travelgrid/data/models/ge_misc_model.dart';
-import 'package:travelgrid/presentation/components/dialog_upload_type.dart';
+import 'package:travelgrid/data/models/success_model.dart';
+import 'package:travelgrid/domain/usecases/common_usecase.dart';
 import 'package:travelgrid/presentation/components/upload_component.dart';
 import 'package:travelgrid/presentation/screens/ge/bloc/misc_form_bloc.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';
@@ -36,6 +40,7 @@ class _CreateMiscExpenseState extends State<CreateMiscExpense> {
   double cardHt = 90.h;
   MiscFormBloc? formBloc;
   bool loaded=false;
+  File? file;
   @override
   void initState() {
     // TODO: implement initState
@@ -66,9 +71,22 @@ class _CreateMiscExpenseState extends State<CreateMiscExpense> {
                 }
             ),
             MetaButton(mapData: jsonData['bottomButtonRight'],
-                onButtonPressed: (){
+                onButtonPressed: ()async{
+              if(file!=null){
+                String fileName = file!.path.split('/').last;
+                String  dateText = DateFormat('dd-MM-yyyy_hh:ss').format(DateTime.now());
+                FormData formData = FormData.fromMap({
+                  "file": await MultipartFile.fromFile(file!.path, filename:dateText+"_"+fileName),
+                });
+              SuccessModel model =  await Injector.resolve<CommonUseCase>().uploadFile(formData,"GE");
+              if(model.status!){
+                formBloc!.voucherPath.updateValue(model.data!);
                 formBloc!.submit();
-                }
+              }
+              }else{
+               formBloc!.submit();
+              }
+           }
             )
           ],
         ),
@@ -263,21 +281,10 @@ class _CreateMiscExpenseState extends State<CreateMiscExpense> {
                                       onChanged:(value){
                                         formBloc!.tfDescription.updateValue(value);
                                       }),
-                                  UploadComponent(jsonData: jsonData['uploadButton']),
-                                  // Container(
-                                  //   margin: EdgeInsets.symmetric(vertical: 20.h,horizontal: 20.w),
-                                  //   width: 180.w,
-                                  //   child: MetaButton(mapData: jsonData['uploadButton'],
-                                  //       onButtonPressed: () async {
-                                  //         await showDialog(
-                                  //             context: context,
-                                  //             builder: (_) => DialogUploadType(
-                                  //               mapData: jsonData['uploadButton'],
-                                  //             ));
-                                  //       }
-                                  //   ),
-                                  // )
-
+                                  UploadComponent(jsonData: jsonData['uploadButton'],
+                                      onSelected: (dataFile){
+                                        file=dataFile;
+                                  }),
                                 ]
                             ),
                           )

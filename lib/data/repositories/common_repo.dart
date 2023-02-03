@@ -6,6 +6,7 @@ import 'package:travelgrid/data/datsources/approver_list.dart';
 import 'package:travelgrid/data/datsources/cities_list.dart';
 import 'package:travelgrid/data/datsources/misc_type_list.dart';
 import 'package:travelgrid/data/datsources/travel_mode_list.dart';
+import 'package:travelgrid/data/models/success_model.dart';
 import 'package:travelgrid/data/remote/remote_datasource.dart';
 import 'package:travelgrid/domain/repo_abstract/api_abstract.dart';
 
@@ -95,5 +96,20 @@ class CommonRepository extends CommonAPIAbstract {
 
     return MetaApproverListResponse(status: false);
   }
+
+
+  @override
+  Future<SuccessModel> uploadFile(formData,type) async {
+
+    var response = await apiRemoteDatasource.upload("uploadAttachment/"+type,formData);
+
+    if(response!=null) {
+      SuccessModel modelResponse = SuccessModel.fromJson(response);
+      return modelResponse;
+    }
+
+    return SuccessModel(status: false);
+  }
+
 
 }

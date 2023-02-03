@@ -117,13 +117,10 @@ class CustomDio {
 
   addMultipartHeaders() {
     print("Adding Multipart Headers");
-    if (authTokens != null && authTokens.isNotEmpty) {
       _dio.options.headers = {
-        'Authorization': 'Bearer $authTokens',
         'Accept': 'application/json',
         'Content-Type': 'multipart/form-data',
       };
-    }
   }
 
 

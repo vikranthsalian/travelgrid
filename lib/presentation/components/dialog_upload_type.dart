@@ -2,18 +2,15 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:travelgrid/common/constants/flavour_constants.dart';
-import 'package:travelgrid/presentation/screens/common/accom_type_screen.dart';
-import 'package:travelgrid/presentation/screens/common/file_upload_screen.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
 
 
 class DialogUploadType extends StatelessWidget{
   Map<String,dynamic> mapData = {};
-  DialogUploadType({required this.mapData});
+  Function? imageSelected;
+  DialogUploadType({required this.mapData,this.imageSelected});
   @override
   Widget build(BuildContext context) {
     print(mapData);
@@ -62,6 +59,9 @@ class DialogUploadType extends StatelessWidget{
               FilePickerResult? result = await FilePicker.platform.pickFiles();
               if (result != null) {
                 File file = File(result.files.single.path.toString());
+
+                imageSelected!(file);
+
                 print(file);
               } else {
                 // User canceled the picker

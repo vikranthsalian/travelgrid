@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:travelgrid/common/utils/validators.dart';
@@ -20,7 +21,7 @@ class MiscFormBloc extends FormBloc<String, String> {
   final tfVoucher = TextFieldBloc();
   final tfAmount = TextFieldBloc();
   final tfDescription = TextFieldBloc();
-  final flUpload = SelectFieldBloc();
+  final voucherPath = TextFieldBloc();
 
   static String? emptyValidator(dynamic value) {
     if (value.isEmpty) {
@@ -51,7 +52,7 @@ class MiscFormBloc extends FormBloc<String, String> {
       tfVoucher,
       tfAmount,
       tfDescription,
-      flUpload,
+      voucherPath,
     ]);
 
       miscID.onValueChanges(onData: (previous, current) async* {
@@ -82,9 +83,10 @@ class MiscFormBloc extends FormBloc<String, String> {
       "amount": int.parse(tfAmount.value),
       "voucherNumber": tfVoucher.value,
       "description": tfDescription.value,
-      "voucherPath": "",
 
+      "voucherPath": voucherPath.value,
       "voucherFile": null,
+
       "voilationMessage": "Exception due to manual creation of Miscellaneous",
     };
      emitSuccess(successResponse: jsonEncode(saveMiscData));

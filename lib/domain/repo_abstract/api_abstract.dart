@@ -27,4 +27,6 @@ abstract class CommonAPIAbstract {
 
   Future<MetaApproverListResponse> getApproverTypeList();
 
+  Future<SuccessModel> uploadFile(formData,type);
+
 }

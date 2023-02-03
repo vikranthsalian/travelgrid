@@ -2,7 +2,7 @@ class SuccessModel {
   bool? status;
   String? token;
   String? message;
-  int? data;
+  String? data;
 
   SuccessModel({this.status, this.token, this.message, this.data});
 
@@ -10,7 +10,7 @@ class SuccessModel {
     status = json['status'] == "SUCCESS" ? true:false;
     token = json['token'];
     message = json['message'];
-    data = json['data'];
+    data = json['data'].toString();
   }
 
   Map<String, dynamic> toJson() {

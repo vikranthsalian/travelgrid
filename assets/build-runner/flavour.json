@@ -2453,5 +2453,29 @@
       "size": "18",
       "family": "regular"
     }
+  },
+  "dialog_yes_no_data" : {
+    "backgroundColor" : "0xFF2854A1",
+    "title":  {
+      "text" : "Do you want the remove the Document/Image ?",
+      "color" : "0XFF000000",
+      "size": "14",
+      "family": "bold",
+      "align": "center"
+    },
+    "buttonYes": {
+      "text" : "YES",
+      "color" : "0xFFFFFFFF",
+      "backgroundColor" : "0xFF2854A1",
+      "size": "12",
+      "family": "regular"
+    },
+    "buttonNo": {
+      "text" : "NO",
+      "color" : "0xFFFFFFFF",
+      "backgroundColor" : "0xFF2854A1",
+      "size": "12",
+      "family": "regular"
+    }
   }
 }

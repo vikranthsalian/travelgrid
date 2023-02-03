@@ -616,6 +616,7 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
   void navigate(e,bool isEdit,Map<String,dynamic> data,int index) {
 
     if(e['onClick'] == RouteConstants.createMiscExpensePath || e['onClick']  == GETypes.MISCELLANEOUS.toString()){
+      print(GETypes.MISCELLANEOUS);
       print(data);
       GEMiscModel? model;
       if(data.isNotEmpty){

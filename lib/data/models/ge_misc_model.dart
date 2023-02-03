@@ -88,7 +88,7 @@ class GEMiscModel {
       endDate: map['endDate'] as String,
       city: map['city'] as int,
       cityName: map['cityName'] as String,
-      unitType: map['unitType'] as int,
+      unitType: map['unitType'] ?? 0,
       amount: map['amount'] as int,
       voucherNumber: map['voucherNumber'] as String,
       description: map['description'] as String,

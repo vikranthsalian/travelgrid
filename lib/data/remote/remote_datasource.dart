@@ -138,5 +138,33 @@ class APIRemoteDatasource{
 
   }
 
+  Future<dynamic> upload(pathUrl,formData) async {
+
+    CustomDio().addMultipartHeaders();
+
+    try {
+      final responseJson = await CustomDio().getWrapper().post(
+        pathUrl,
+        data:formData,
+        loadingMessage:"Uploading File...",
+        queryParameters:{
+                "token" :appNavigatorKey.currentState!.context.read<LoginCubit>().getLoginToken()
+        },
+      );
+      return responseJson.data;
+    } on DioError catch (e) {
+      print("DioError"+e.toString());
+      return MetaAccomTypeListResponse(status: false);
+
+    }catch(e){
+      print("CatchError"+e.toString());
+      return MetaAccomTypeListResponse(status: false);
+    }finally{
+      CustomDio().addHeaders();
+    }
+
+  }
+
+
 
 }
