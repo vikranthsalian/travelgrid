@@ -9,11 +9,10 @@ import 'package:travelgrid/presentation/widgets/text_view.dart';
 
 class DialogUploadType extends StatelessWidget{
   Map<String,dynamic> mapData = {};
-  Function? imageSelected;
-  DialogUploadType({required this.mapData,this.imageSelected});
+  Function? onSelected;
+  DialogUploadType({required this.mapData,this.onSelected});
   @override
   Widget build(BuildContext context) {
-    print(mapData);
     return Dialog(
       backgroundColor: Colors.transparent,
       child: Container(
@@ -55,20 +54,8 @@ class DialogUploadType extends StatelessWidget{
 
         return InkWell(
           onTap: () async{
-            if(list[index]['text']=="Gallery"){
-              FilePickerResult? result = await FilePicker.platform.pickFiles();
-              if (result != null) {
-                File file = File(result.files.single.path.toString());
-
-                imageSelected!(file);
-
-                print(file);
-              } else {
-                // User canceled the picker
-              }
-            }
-
-
+            Navigator.pop(context);
+            onSelected!(list[index]['text']);
           },
           child: Container(
               padding: EdgeInsets.symmetric(horizontal: 20.w),
@@ -92,5 +79,7 @@ class DialogUploadType extends StatelessWidget{
         ]
     );
   }
+
+
 
 }

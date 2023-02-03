@@ -31,7 +31,7 @@ class TravelFormBloc extends FormBloc<String, String> {
   final tfAmount = TextFieldBloc();
   final tfDescription = TextFieldBloc();
 
-  final flUpload = SelectFieldBloc();
+  final voucherPath = TextFieldBloc();
 
   static String? emptyValidator(dynamic value) {
     if (value.isEmpty) {
@@ -65,7 +65,7 @@ class TravelFormBloc extends FormBloc<String, String> {
       tfDescription,
    //   selectWithBill,
       swWithBill,
-      flUpload
+      voucherPath
     ]);
 
       swWithBill.onValueChanges(onData: (previous, current) async* {
@@ -106,8 +106,10 @@ class TravelFormBloc extends FormBloc<String, String> {
       "description": tfDescription.value,
       "voucherNumber": swWithBill.value ? tfVoucher.value : "",
       "withBill": swWithBill.value,
-      "voucherPath": "",
+
+      "voucherPath": voucherPath.value,
       "voucherFile": null,
+
       "voilationMessage": "Exception due to manual creation of Conveyance",
     };
 

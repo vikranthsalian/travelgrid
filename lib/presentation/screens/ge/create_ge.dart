@@ -75,14 +75,14 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
     try {
       values.add(loginResponse.data!.fullName ?? "");
       values.add(loginResponse.data!.grade!.organizationGradeName ?? "");
-      values.add(loginResponse.data!.gender ?? "");
+   //   values.add(loginResponse.data!.gender ?? "");
       values.add(loginResponse.data!.employeecode ?? "");
-      values.add(loginResponse.data!.divName ?? "");
+   //   values.add(loginResponse.data!.divName ?? "");
       values.add(loginResponse.data!.deptName ?? "");
-      values.add(loginResponse.data!.costCenter!.costcenterName ?? "");
+    //  values.add(loginResponse.data!.costCenter!.costcenterName ?? "");
       values.add(loginResponse.data!.worklocation!.locationName ?? "");
-      values.add(loginResponse.data!.currentContact!.mobile ?? "");
-      values.add(loginResponse.data!.permanentContact ?? "");
+   //   values.add(loginResponse.data!.currentContact!.mobile ?? "");
+    //  values.add(loginResponse.data!.permanentContact ?? "");
 
 
       Tuple2<app.Data,app.Data> approvers = context.read<ApproverTypeCubit>().getApprovers();

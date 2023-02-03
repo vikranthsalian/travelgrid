@@ -166,7 +166,7 @@ class _GeneralExpenseState extends State<GeneralExpense> {
 
         Map date = {
           "text" : MetaDateTime().getDate(item.date.toString(),format: "dd MMM"),
-          "color" : "0xFF2854A1",
+          "color" : "0xFF990099",
           "size": "20",
           "family": "bold",
           "align" : "center"
@@ -174,7 +174,7 @@ class _GeneralExpenseState extends State<GeneralExpense> {
 
         Map week = {
           "text" : MetaDateTime().getDate(item.date.toString(),format: "EEE").toUpperCase(),
-          "color" : "0xFF2854A1",
+          "color" : "0xFF990099",
           "size": "13",
           "family": "bold",
           "align" : "center-right"
@@ -190,7 +190,7 @@ class _GeneralExpenseState extends State<GeneralExpense> {
 
         Map recordLocator = {
           "text" :"#"+ item.recordLocator.toString().toUpperCase(),
-          "color" : "0xFF2854A1",
+          "color" : "0xFF990099",
           "size": "15",
           "family": "bold",
           "align" : "center-left"
@@ -225,7 +225,7 @@ class _GeneralExpenseState extends State<GeneralExpense> {
           child: Row(
             children: [
               Card(
-                color: Color(0xFF2854A1),
+                color: Color(0xFF990099),
                 elevation: 5,
                 child: Container(
                   width: cardHt,
@@ -262,7 +262,7 @@ class _GeneralExpenseState extends State<GeneralExpense> {
               SizedBox(width: 3.w,),
               Expanded(
                 child: Card(
-                  color: Color(0xFF2854A1),
+                  color: Color(0xFF990099),
                   elevation: 5,
                   child: Container(
                     width: cardHt,

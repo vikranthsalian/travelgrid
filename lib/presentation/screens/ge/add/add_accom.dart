@@ -1,13 +1,19 @@
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:travelgrid/common/constants/flavour_constants.dart';
 import 'package:travelgrid/common/enum/dropdown_types.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
+import 'package:travelgrid/common/injector/injector.dart';
 import 'package:travelgrid/data/models/expense_model.dart';
 import 'package:travelgrid/data/models/ge_accom_model.dart';
+import 'package:travelgrid/data/models/success_model.dart';
+import 'package:travelgrid/domain/usecases/common_usecase.dart';
+import 'package:travelgrid/presentation/components/upload_component.dart';
 import 'package:travelgrid/presentation/screens/ge/bloc/accom_form_bloc.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';
 import 'package:travelgrid/presentation/widgets/date_time_view.dart';
@@ -29,11 +35,8 @@ class CreateAccommodationExpense extends StatefulWidget {
 
 class _CreateAccommodationExpenseState extends State<CreateAccommodationExpense> {
   Map<String,dynamic> jsonData = {};
-  List items=[];
-  double cardHt = 90.h;
-  bool loaded=false;
-  bool showWithBill=true;
   AccomFormBloc?  formBloc;
+  File? file;
   @override
   void initState() {
     // TODO: implement initState
@@ -41,7 +44,6 @@ class _CreateAccommodationExpenseState extends State<CreateAccommodationExpense>
     jsonData = FlavourConstants.accomCreateData;
    // prettyPrint(jsonData);
 
-    createMapData();
   }
 
 
@@ -66,8 +68,22 @@ class _CreateAccommodationExpenseState extends State<CreateAccommodationExpense>
                 }
             ),
             MetaButton(mapData: jsonData['bottomButtonRight'],
-                onButtonPressed: (){
-                  formBloc!.submit();
+                onButtonPressed: () async{
+                  if(formBloc!.swWithBill.value && file!=null){
+                    String fileName = file!.path.split('/').last;
+                    String  dateText = DateFormat('dd-MM-yyyy_hh:ss').format(DateTime.now());
+                    FormData formData = FormData.fromMap({
+                      "file": await MultipartFile.fromFile(file!.path, filename:dateText+"_"+fileName),
+                    });
+                    SuccessModel model =  await Injector.resolve<CommonUseCase>().uploadFile(formData,"GE");
+                    if(model.status!){
+                      formBloc!.voucherPath.updateValue(model.data!);
+                      formBloc!.submit();
+                    }
+                  }
+                  else{
+                    formBloc!.submit();
+                  }
                 }
             )
           ],
@@ -133,7 +149,7 @@ class _CreateAccommodationExpenseState extends State<CreateAccommodationExpense>
                         formBloc!.tfVoucher.updateValue("nill");
                       }
 
-
+                      formBloc!.voucherPath.updateValue(widget.accomModel!.voucherPath.toString());
 
                       formBloc!.tfTax.updateValue(widget.accomModel!.tax.toString());
                       formBloc!.tfAmount.updateValue(widget.accomModel!.amount.toString());
@@ -289,19 +305,17 @@ class _CreateAccommodationExpenseState extends State<CreateAccommodationExpense>
                                           formBloc!.swWithBill.updateValue(value);
                                         }),
                                   ),
-                                  Row(
-                                    children: [
-
-                                      showWithBill ? Container(
-                                        margin: EdgeInsets.symmetric(vertical: 20.h),
-                                        width: 180.w,
-                                        child: MetaButton(mapData: jsonData['uploadButton'],
-                                            onButtonPressed: (){
-
-                                            }
-                                        ),
-                                      ):SizedBox(),
-                                    ],
+                                  BlocBuilder<SelectFieldBloc, SelectFieldBlocState>(
+                                      bloc: formBloc!.selectWithBill,
+                                      builder: (context, state) {
+                                        return Visibility(
+                                          visible: state.value == "true" ? true : false,
+                                          child:UploadComponent(jsonData: jsonData['uploadButton'],
+                                              onSelected: (dataFile){
+                                                file=dataFile;
+                                              }),
+                                        );
+                                      }
                                   )
 
                                 ]
@@ -319,27 +333,6 @@ class _CreateAccommodationExpenseState extends State<CreateAccommodationExpense>
       ),
     );
   }
-
-  void createMapData() {}
-  Map<String,dynamic> map = {
-    "id": 10,
-    "checkInDate": "10-01-2023",
-    "checkInTime": "08:10",
-    "checkOutDate": "12-01-2023",
-    "checkOutTime": "10:10",
-    "noOfDays": 0,
-    "city": 2029,
-    "cityName": "bangalore",
-    "accomodationType": 249,
-    "accomodationTypeName": "Lodging",
-    "amount": 4000,
-    "tax": 0,
-    "description": "",
-    "withBill": true,
-    "voucherPath": "",
-    "voucherNumber": "245665"
-  };
-
   getInitialText(String text) {
 
     if(text.isNotEmpty){

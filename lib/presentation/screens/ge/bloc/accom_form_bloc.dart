@@ -30,7 +30,7 @@ class AccomFormBloc extends FormBloc<String, String> {
   final tfTax= TextFieldBloc();
   final tfDescription = TextFieldBloc();
 
-  final flUpload = SelectFieldBloc();
+  final voucherPath = TextFieldBloc();
 
   static String? emptyValidator(dynamic value) {
     if (value.isEmpty) {
@@ -67,12 +67,12 @@ class AccomFormBloc extends FormBloc<String, String> {
       tfDescription,
       selectWithBill,
       swWithBill,
-      flUpload
+      voucherPath
     ]);
 
       swWithBill.onValueChanges(onData: (previous, current) async* {
         if(current.value == true) {
-          if(current.value=="nill"){
+          if(tfVoucher.value=="nill"){
             tfVoucher.updateValue("");
           }
         } else {
@@ -82,7 +82,7 @@ class AccomFormBloc extends FormBloc<String, String> {
 
       selectAccomID.onValueChanges(onData: (previous, current) async* {
         if(current.value == "250") {
-          if(current.value=="nill"){
+          if(tfHotelName.value=="nill"){
             tfHotelName.updateValue("");
           }
         } else {
@@ -125,7 +125,9 @@ class AccomFormBloc extends FormBloc<String, String> {
       "tax": int.parse(tfTax.value.isEmpty ? "0.0" : tfTax.value),
       "description": tfDescription.value,
       "withBill":swWithBill.value,
-      "voucherPath": "",
+
+      "voucherPath": voucherPath.value,
+
       "voucherNumber":swWithBill.value ? tfVoucher.value : ""
     };
     emitSuccess(successResponse: jsonEncode(saveAccomMap));

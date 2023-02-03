@@ -83,7 +83,7 @@ class _PolicyHomeState extends State<PolicyHome> {
         return Container(
           padding: EdgeInsets.symmetric(horizontal: 10.w),
           child: Card(
-            color: Color(0xFF2854A1),
+            color: Color(0xFF990099),
             elevation: 5,
             child: Container(
               child: Column(

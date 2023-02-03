@@ -47,5 +47,9 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+    <string>This app needs camera access to upload vouchers</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>This app needs camera access to upload vouchers</string>
 </dict>
 </plist>

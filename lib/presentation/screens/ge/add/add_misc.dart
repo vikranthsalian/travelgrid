@@ -148,9 +148,9 @@ class _CreateMiscExpenseState extends State<CreateMiscExpense> {
                        if(widget.miscModel!.voucherNumber.toString().isEmpty){
                          formBloc!.tfVoucher.updateValue("nill");
                        }
+                       formBloc!.voucherPath.updateValue(widget.miscModel!.voucherPath.toString());
 
-
-                       formBloc!.tfAmount.updateValue(widget.miscModel!.amount.toString());
+                      formBloc!.tfAmount.updateValue(widget.miscModel!.amount.toString());
                       formBloc!.tfDescription.updateValue(widget.miscModel!.description.toString());
                      }else{
 

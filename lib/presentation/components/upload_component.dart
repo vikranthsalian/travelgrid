@@ -1,16 +1,13 @@
 import 'dart:io';
 
+import 'package:camera/camera.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:travelgrid/common/constants/asset_constants.dart';
-import 'package:travelgrid/common/constants/flavour_constants.dart';
-import 'package:travelgrid/common/constants/route_constants.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
-import 'package:travelgrid/common/extensions/pretty.dart';
+import 'package:travelgrid/common/utils/show_alert.dart';
 import 'package:travelgrid/presentation/components/dialog_upload_type.dart';
 import 'package:travelgrid/presentation/components/dialog_yes_no.dart';
-import 'package:travelgrid/presentation/widgets/icon.dart';
 import 'package:travelgrid/presentation/widgets/svg_view.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
 
@@ -26,13 +23,22 @@ class UploadComponent extends StatefulWidget {
 }
 
 class _UploadComponentState extends State<UploadComponent> {
-  File? file;
+  XFile? file;
+  late CameraController controller;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-  }
 
+   // setupCamera();
+
+
+  }
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +82,7 @@ class _UploadComponentState extends State<UploadComponent> {
                   Container(
                       height: 70.h,
                       width: 70.h,
-                      child: Image.file(file!)
+                      child: Image.file(File(file!.path))
                   ),
                   InkWell(
                     onTap: ()async{
@@ -114,12 +120,24 @@ class _UploadComponentState extends State<UploadComponent> {
             context: context,
             builder: (_) => DialogUploadType(
                 mapData: widget.jsonData,
-                imageSelected: (dataFile){
-                  Navigator.pop(context);
-                  widget.onSelected!(dataFile);
-                  setState(() {
-                    file=dataFile;
-                  });
+                onSelected: (value)async{
+                  if(value == "Gallery"){
+                    FilePickerResult? result = await FilePicker.platform.pickFiles(allowMultiple: false);
+                    if (result != null) {
+                      file =  XFile(result.files.single.path.toString()) ;
+
+                      setState(() {
+
+                      });
+                    } else {
+                      // User canceled the picker
+                    }
+                  }else{
+                  MetaAlert.showErrorAlert(message: "Working on it.");
+                //  takePicture();
+                  }
+
+
                 }
             ));
       },
@@ -145,4 +163,52 @@ class _UploadComponentState extends State<UploadComponent> {
     );
   }
 
+  void setupCamera() {
+    availableCameras().then((_cameras) {
+      print(_cameras[0]);
+      controller = CameraController(_cameras[0], ResolutionPreset.medium);
+      controller.initialize().then((_) {
+        if (!mounted) {
+          return;
+        }
+        setState(() {});
+      }).catchError((Object e) {
+        print(e);
+        if (e is CameraException) {
+          switch (e.code) {
+            case 'CameraAccessDenied':
+            // Handle access errors here.
+              break;
+            default:
+            // Handle other errors here.
+              break;
+          }
+        }
+      });
+    });
+  }
+
+  Future takePicture() async {
+    if (!controller.value.isInitialized) {
+      print("!isInitialized");
+      return null;
+    }
+    if (controller.value.isTakingPicture) {
+      print("!isTakingPicture");
+      return null;
+    }
+    try {
+      await controller.setFlashMode(FlashMode.off);
+      XFile picture = await controller.takePicture();
+
+
+      setState(() {
+      file = picture;
+      });
+
+    } on CameraException catch (e) {
+      debugPrint('Error occured while taking picture: $e');
+      return null;
+    }
+  }
 }
