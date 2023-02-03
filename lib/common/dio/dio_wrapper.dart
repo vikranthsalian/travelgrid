@@ -119,12 +119,12 @@ class MetaDioWrapper implements BaseDioWrapper {
 
 
       return response;
-    } on DioError catch (e, stackTrace) {
+    } on DioError catch (e) {
       print("PARSE ERROR RESPONSE===========> "+e.response.toString());
       parseErrorResponse(e);
       // Logger.captureException(e, stackTrace: stackTrace);
       rethrow;
-    } catch (e, stackTrace) {
+    } catch (e) {
       // Logger.captureException(e, stackTrace: stackTrace);
       rethrow;
     } finally {
@@ -175,7 +175,7 @@ class MetaDioWrapper implements BaseDioWrapper {
       parseErrorResponse(e);
       // Logger.captureException(e, stackTrace: stackTrace);
       rethrow;
-    } catch (e, stackTrace) {
+    } catch (e) {
       // Logger.captureException(e, stackTrace: stackTrace);
       rethrow;
     } finally {
@@ -207,11 +207,11 @@ class MetaDioWrapper implements BaseDioWrapper {
         onReceiveProgress: onReceiveProgress,
       );
       return response;
-    } on DioError catch (e, stackTrace) {
+    } on DioError catch (e) {
       parseErrorResponse(e);
       // Logger.captureException(e, stackTrace: stackTrace);
       rethrow;
-    } catch (e, stackTrace) {
+    } catch (e) {
       // Logger.captureException(e, stackTrace: stackTrace);
       rethrow;
     } finally {
@@ -251,12 +251,12 @@ class MetaDioWrapper implements BaseDioWrapper {
       );
 
       return response;
-    } on DioError catch (e, stackTrace) {
+    } on DioError catch (e) {
       print("PARSE ERROR RESPONSE===========> "+e.response.toString());
       parseErrorResponse(e);
       // Logger.captureException(e, stackTrace: stackTrace);
       rethrow;
-    } catch (e, stackTrace) {
+    } catch (e) {
       // Logger.captureException(e, stackTrace: stackTrace);
       rethrow;
     } finally {
@@ -284,11 +284,11 @@ class MetaDioWrapper implements BaseDioWrapper {
         cancelToken: cancelToken,
       );
       return response;
-    } on DioError catch (e, stackTrace) {
+    } on DioError catch (e) {
       parseErrorResponse(e);
       // Logger.captureException(e, stackTrace: stackTrace);
       rethrow;
-    } catch (e, stackTrace) {
+    } catch (e) {
       // Logger.captureException(e, stackTrace: stackTrace);
       rethrow;
     } finally {
@@ -360,7 +360,7 @@ class MetaDioWrapper implements BaseDioWrapper {
       } else if (errorObj is String) {
         errorMessage = errorObj;
       }
-    } catch (e, stackTrace) {
+    } catch (e) {
 
       // Do nothing
     }

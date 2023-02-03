@@ -71,31 +71,39 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
     loginResponse = context.read<LoginCubit>().getLoginResponse();
 
 
-    values.add(loginResponse.data!.fullName ?? "");
-    values.add(loginResponse.data!.grade!.organizationGradeName ?? "");
-    values.add(loginResponse.data!.gender ?? "");
-    values.add(loginResponse.data!.employeecode ?? "");
-    values.add(loginResponse.data!.divName ?? "");
-    values.add(loginResponse.data!.deptName ?? "");
-    values.add(loginResponse.data!.costCenter!.costcenterName ?? "");
-    values.add(loginResponse.data!.worklocation!.locationName ?? "");
-    values.add(loginResponse.data!.currentContact!.mobile ?? "");
-    values.add(loginResponse.data!.permanentContact?? "");
+    try {
+      values.add(loginResponse.data!.fullName ?? "");
+      values.add(loginResponse.data!.grade!.organizationGradeName ?? "");
+      values.add(loginResponse.data!.gender ?? "");
+      values.add(loginResponse.data!.employeecode ?? "");
+      values.add(loginResponse.data!.divName ?? "");
+      values.add(loginResponse.data!.deptName ?? "");
+      values.add(loginResponse.data!.costCenter!.costcenterName ?? "");
+      values.add(loginResponse.data!.worklocation!.locationName ?? "");
+      values.add(loginResponse.data!.currentContact!.mobile ?? "");
+      values.add(loginResponse.data!.permanentContact ?? "");
+
+
+      Tuple2<app.Data,app.Data> approvers = context.read<ApproverTypeCubit>().getApprovers();
+
+      approver1 = Tuple2(approvers.item1.approverName.toString(), approvers.item1.approverCode.toString());
+      approver2 = Tuple2(approvers.item2.approverName.toString(), approvers.item1.approverCode.toString());
+
+
+
+      submitMap['employeeName']= loginResponse.data!.fullName;
+      submitMap['selfApprovals']= false;
+      submitMap['violated']= false;
+    }catch(ex){
+      approver1 = Tuple2("DUMMY", "cm01");
+      approver2 = Tuple2("DUMMY", "cm02");
+    }
 
 
     for(var item in jsonData['summaryDetails']['data']){
       summaryDetails.add(Tuple2(item, "0"));
     }
 
-    Tuple2<app.Data,app.Data> approvers = context.read<ApproverTypeCubit>().getApprovers();
-
-    approver1 = Tuple2(approvers.item1.approverName.toString(), approvers.item1.approverCode.toString());
-    approver2 = Tuple2(approvers.item2.approverName.toString(), approvers.item1.approverCode.toString());
-
-
-    submitMap['employeeName']= loginResponse.data!.fullName;
-    submitMap['selfApprovals']= false;
-    submitMap['violated']= false;
 
   }
 
@@ -627,7 +635,7 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
             },)));
     }
 
-    if(e['onClick'] == RouteConstants.createAccommodationExpensePath){
+    if(e['onClick'] == RouteConstants.createAccommodationExpensePath  || e['onClick']  == GETypes.ACCOMMODATION.toString()){
 
       print(data);
       GEAccomModel? model;
@@ -640,14 +648,21 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
             isEdit:isEdit,
             accomModel:model,
             onAdd: (values){
-            summaryItems.add(Tuple2(values['item'] as ExpenseModel, values['data']));
-            calculateSummary();
+              if(isEdit){
+                summaryItems.removeAt(index);
+              }
+              summaryItems.add(Tuple2(values['item'] as ExpenseModel, values['data']));
+              calculateSummary();
+
           },)));
     }
 
     if(e['onClick'] == RouteConstants.createTravelExpensePath){
       Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
           CreateTravelExpense(onAdd: (values){
+            if(isEdit){
+              summaryItems.removeAt(index);
+            }
             summaryItems.add(Tuple2(values['item'] as ExpenseModel, values['data']));
             calculateSummary();
           },)));

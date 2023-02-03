@@ -42,7 +42,6 @@ class _CreateMiscExpenseState extends State<CreateMiscExpense> {
     jsonData = FlavourConstants.miscCreateData;
   //  prettyPrint(jsonData);
 
-    createMap();
   }
 
 
@@ -218,15 +217,30 @@ class _CreateMiscExpenseState extends State<CreateMiscExpense> {
                                             },),
                                         ),
                                       ),
-                                      Container(
-                                        child: MetaDialogSelectorView(mapData: jsonData['selectUnitType'],
-                                          text :getInitialText(formBloc!.unitTypeName.value),
-                                          onChange:(value){
-                                            print(value);
-                                            formBloc!.unitTypeName.updateValue(value['text']);
-                                            formBloc!.unitTypeID.updateValue(value['id'].toString());
-                                          },),
+                                      BlocBuilder<SelectFieldBloc, SelectFieldBlocState>(
+                                          bloc: formBloc!.miscID,
+                                          builder: (context, state) {
+                                            return Visibility(
+                                              visible: state.value == "212" ? true : false,
+                                              child:MetaDialogSelectorView(mapData: jsonData['selectUnitType'],
+                                                text :getInitialText(formBloc!.unitTypeName.value),
+                                                onChange:(value){
+                                                  print(value);
+                                                  formBloc!.unitTypeName.updateValue(value['text']);
+                                                  formBloc!.unitTypeID.updateValue(value['id'].toString());
+                                                },),
+                                            );
+                                          }
                                       ),
+                                      // Container(
+                                      //   child: MetaDialogSelectorView(mapData: jsonData['selectUnitType'],
+                                      //     text :getInitialText(formBloc!.unitTypeName.value),
+                                      //     onChange:(value){
+                                      //       print(value);
+                                      //       formBloc!.unitTypeName.updateValue(value['text']);
+                                      //       formBloc!.unitTypeID.updateValue(value['id'].toString());
+                                      //     },),
+                                      // ),
                                     ]),
 
                                 MetaTextFieldBlocView(mapData: jsonData['text_field_voucher'],
@@ -279,50 +293,6 @@ class _CreateMiscExpenseState extends State<CreateMiscExpense> {
         ],
       ),
     );
-  }
-
-  void createMap() {
-    Map<String,dynamic> saveMiscData = {
-      "miscellaneousTypeName": "Incidental",
-      "miscellaneousType": 213,
-      "startDate": "05-01-2023",
-      "endDate": "06-01-2023",
-      "city": 1751,
-      "cityName": "hyderabad",
-      "amount": 500.0,
-      "description": "",
-      "voucherPath": "",
-    };
-    //  "id": 6,
-    //  "withBill": false,
-     // "violated": true,
-     // "voilationMessage": "Expense will be sent for exceptional approval",
-
-
-     // "voucherFile": null,
-
-
-    //  "hsnCode": "",
-    //  "gstNumber": "",
-    //  "tax": 0.0,
-    //  "cgst": 0.0,
-    //  "sgst": 0.0,
-    //  "igst": 0.0,
-    //  "totalAmt": 500.0,
-    //  "vendorName": "",
-    //  "invoiceDate": "",
-     // "cgstPrc": 0.0,
-     // "sgstPrc": 0.0,
-    //  "igstPrc": 0.0
-  //  };
-  }
-
-  void otherValidations(json) {
-    print(json);
-
-
-
-
   }
 
   getInitialText(String text) {

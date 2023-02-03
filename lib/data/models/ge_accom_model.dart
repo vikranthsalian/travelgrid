@@ -6,6 +6,7 @@ class GEAccomModel {
   int? noOfDays;
   int? city;
   String? cityName;
+  String? hotelName;
   int? accomodationType;
   String? accomodationTypeName;
   int? amount;
@@ -24,6 +25,7 @@ class GEAccomModel {
         this.noOfDays,
         this.city,
         this.cityName,
+        this.hotelName,
         this.accomodationType,
         this.accomodationTypeName,
         this.amount,
@@ -41,6 +43,7 @@ class GEAccomModel {
     noOfDays = json['noOfDays'];
     city = json['city'];
     cityName = json['cityName'];
+    hotelName = json['hotelName'];
     accomodationType = json['accomodationType'];
     accomodationTypeName = json['accomodationTypeName'];
     amount = json['amount'];
@@ -60,6 +63,7 @@ class GEAccomModel {
     data['noOfDays'] = this.noOfDays;
     data['city'] = this.city;
     data['cityName'] = this.cityName;
+    data['hotelName'] = this.hotelName;
     data['accomodationType'] = this.accomodationType;
     data['accomodationTypeName'] = this.accomodationTypeName;
     data['amount'] = this.amount;
@@ -80,6 +84,7 @@ class GEAccomModel {
       'noOfDays': this.noOfDays,
       'city': this.city,
       'cityName': this.cityName,
+      'hotelName': this.hotelName,
       'accomodationType': this.accomodationType,
       'accomodationTypeName': this.accomodationTypeName,
       'amount': this.amount,
@@ -100,6 +105,7 @@ class GEAccomModel {
       noOfDays: map['noOfDays'] as int,
       city: map['city'] as int,
       cityName: map['cityName'] as String,
+      hotelName: map['hotelName'] as String,
       accomodationType: map['accomodationType'] as int,
       accomodationTypeName: map['accomodationTypeName'] as String,
       amount: map['amount'] as int,

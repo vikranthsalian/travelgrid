@@ -108,10 +108,43 @@ class _CreateAccommodationExpenseState extends State<CreateAccommodationExpense>
                     builder: (context) {
                     formBloc =  BlocProvider.of<AccomFormBloc>(context);
 
-                    String  dateText = DateFormat('dd-MM-yyyy').format(DateTime.now());
+                    if(widget.isEdit){
 
-                 //   formBloc!.checkInDate.updateValue(dateText);
-                  //  formBloc!.checkOutDate.updateValue(dateText);
+                      formBloc!.checkInDate.updateValue(widget.accomModel!.checkInDate.toString());
+                      formBloc!.checkInTime.updateValue(widget.accomModel!.checkInTime.toString());
+
+                      formBloc!.checkOutDate.updateValue(widget.accomModel!.checkOutDate.toString());
+                      formBloc!.checkOutTime.updateValue(widget.accomModel!.checkOutTime.toString());
+
+                      formBloc!.cityName.updateValue(widget.accomModel!.cityName.toString());
+                      formBloc!.cityID.updateValue(widget.accomModel!.city.toString());
+
+                      formBloc!.selectAccomID.updateValue(widget.accomModel!.accomodationType.toString());
+                      formBloc!.accomName.updateValue(widget.accomModel!.accomodationTypeName.toString());
+
+                      formBloc!.tfHotelName.updateValue(widget.accomModel!.hotelName.toString());
+                      if(widget.accomModel!.hotelName.toString().isEmpty){
+                        formBloc!.tfHotelName.updateValue("nill");
+                      }
+
+
+                      formBloc!.tfVoucher.updateValue(widget.accomModel!.voucherNumber.toString());
+                      if(widget.accomModel!.voucherNumber.toString().isEmpty){
+                        formBloc!.tfVoucher.updateValue("nill");
+                      }
+
+
+
+                      formBloc!.tfTax.updateValue(widget.accomModel!.tax.toString());
+                      formBloc!.tfAmount.updateValue(widget.accomModel!.amount.toString());
+                      formBloc!.tfDescription.updateValue(widget.accomModel!.description.toString());
+                    }else{
+
+                      String  dateText = DateFormat('dd-MM-yyyy').format(DateTime.now());
+
+                      formBloc!.checkInDate.updateValue(dateText);
+                      formBloc!.checkOutDate.updateValue(dateText);
+                    }
 
                     return Container(
                       margin: EdgeInsets.symmetric(horizontal: 10.w),

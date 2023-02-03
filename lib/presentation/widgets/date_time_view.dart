@@ -52,6 +52,7 @@ class _MetaDateTimeViewState extends State<MetaDateTimeView> {
       date= currentDateTime.day.toString();
       week= DateFormat('EEEE').format(currentDateTime);
       month= DateFormat('MMMM, y').format(currentDateTime);
+      time = "00:00";
     }else{
 
       DateTime dateTime = MetaDateTime().getDateTime(widget.value['date'].toString(),format: "dd-MM-yyyy");
@@ -60,7 +61,13 @@ class _MetaDateTimeViewState extends State<MetaDateTimeView> {
       date= dateTime.day.toString();
       week= DateFormat('EEEE').format(dateTime);
       month= DateFormat('MMMM, y').format(dateTime);
-      time = "00:00";
+      print(widget.value);
+
+      if(widget.value['time']!=null && widget.value['time'].toString().isNotEmpty){
+        time = widget.value['time'];
+        print(widget.value['time']);
+      }
+
     }
   }
 

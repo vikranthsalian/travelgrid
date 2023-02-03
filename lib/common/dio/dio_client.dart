@@ -9,6 +9,7 @@ class CustomDio {
   static final CustomDio _singleton = CustomDio._internal();
   String authTokens="";
   factory CustomDio() {
+
     return _singleton;
   }
 

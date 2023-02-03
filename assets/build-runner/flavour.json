@@ -1395,7 +1395,7 @@
       "showView": "date",
       "dateView": {
         "label":  {
-          "text" : "Check-In Date",
+          "text" : "Check-In Date*",
           "color" : "0xFF2854A1",
           "size": "14",
           "family": "regular",
@@ -1425,7 +1425,7 @@
       },
       "timeView": {
         "label":  {
-          "text" : "Date",
+          "text" : "Check-In Time*",
           "color" : "0xFF2854A1",
           "size": "14",
           "family": "regular",
@@ -1439,7 +1439,6 @@
           "align": "center-left"
         }
       }
-
     },
     "selectOrigin": {
       "showView": true,

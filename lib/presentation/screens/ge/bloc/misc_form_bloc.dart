@@ -7,13 +7,13 @@ import 'package:travelgrid/common/utils/validators.dart';
 
 class MiscFormBloc extends FormBloc<String, String> {
 
-
+  final miscID =  SelectFieldBloc<String, dynamic>();
   final checkInDate = TextFieldBloc(validators: [emptyValidator]);
   final checkOutDate =  TextFieldBloc(validators: [emptyValidator]);
   final cityName =  TextFieldBloc(validators: [emptyValidator]);
   final cityID =  TextFieldBloc(validators: [emptyValidator]);
   final miscName =  TextFieldBloc(validators: [emptyValidator]);
-  final miscID =  TextFieldBloc(validators: [emptyValidator]);
+
   final unitTypeID =  TextFieldBloc(validators: [emptyValidator]);
   final unitTypeName =  TextFieldBloc(validators: [emptyValidator]);
 
@@ -53,6 +53,17 @@ class MiscFormBloc extends FormBloc<String, String> {
       tfDescription,
       flUpload,
     ]);
+
+      miscID.onValueChanges(onData: (previous, current) async* {
+        if(current.value == "212") {
+          if(current.value=="nill"){
+            unitTypeID.updateValue("");
+          }
+
+        } else {
+          unitTypeID.updateValue("nill");
+        }
+      });
   }
 
   @override
@@ -60,11 +71,12 @@ class MiscFormBloc extends FormBloc<String, String> {
 
     Map<String,dynamic> saveMiscData = {
       "miscellaneousTypeName": miscName.value,
-      "miscellaneousType":int.parse(miscID.value),
+      "miscellaneousType":int.parse(miscID.value ?? "0"),
       "startDate": checkInDate.value,
       "endDate": checkOutDate.value,
       "city":int.parse(cityID.value),
       "cityName":cityName.value,
+      if(miscID.value == "212")
       "unitType":int.parse(unitTypeID.value),
     //  "unitName":unitTypeName.value,
       "amount": int.parse(tfAmount.value),
