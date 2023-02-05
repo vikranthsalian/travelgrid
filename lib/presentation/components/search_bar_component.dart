@@ -55,14 +55,14 @@ class _SearchBarComponentState extends State<SearchBarComponent> {
                 },
                 controller: widget.searchController,
                 style: MetaStyle(mapData: {
-                  "color" : "0xFF990099",
+                  "color" : "0xFF2854A1",
                   "size": "14",
                   "family": "regular"
                 }).getStyle(),
                 decoration: InputDecoration(
                   hintStyle: MetaStyle(mapData: {
                     "text" : "Search Username",
-                    "color" : "0xFF990099",
+                    "color" : "0xFF2854A1",
                     "size": "14",
                     "family": "regular"
                   }).getStyle(),

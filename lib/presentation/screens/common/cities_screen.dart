@@ -138,7 +138,7 @@ class _CityScreenState extends State<CityScreen> {
 
         Map state = {
           "text" :"",
-          "color" : "0xFFCCCCCC",
+          "color" : "0xFFAEAEAE",
           "size": "12",
           "family": "bold",
           "align" : "center-left"

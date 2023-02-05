@@ -7,6 +7,7 @@ const Color textColor100 = Color(0xFF000000);
 const Color textColor50 = Color(0xFF3D3D3D);
 const Color textColor10 = Color(0xFF737171);
 const Color textColor3D = Color(0xFF3D3D3D);
+const Color greyColorCC = Color(0xFFAEAEAE);
 const Color greyColorC3 = Color(0xFFC3C3C3);
 const Color greyColor8A = Color(0x668A8A8A);
 const Color colorRed = Color(0xFFE90C0C);

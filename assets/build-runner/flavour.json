@@ -17,7 +17,7 @@
   "privacy_policy_url": "",
   "terms_of_use_url": "",
   "app_theme" : {
-    "primary_color" : "0xFF990099",
+    "primary_color" : "0xFF2854A1",
     "secondary_color" : "0XFFFFFFFF",
     "cursor_color" : "0XFF000000"
   },
@@ -37,21 +37,21 @@
     "bottomButton": {
       "text" : "Log In",
       "color" : "0xFFFFFFFF",
-      "backgroundColor" : "0xFF990099",
+      "backgroundColor" : "0xFF2854A1",
       "size": "18",
       "family": "regular",
       "borderRadius": 25.0
     },
     "text_title": {
       "text" : "Welcome!!!",
-      "color" : "0xFF990099",
+      "color" : "0xFF2854A1",
       "size": "28",
       "family": "bold",
       "align" : "center-left"
     },
     "text_subtitle":{
       "text" : "Sign in to continue",
-      "color" : "0xFFCCCCCC",
+      "color" : "0xFFAEAEAE",
       "size": "14",
       "family": "regular",
       "align" : "center-left"
@@ -68,23 +68,23 @@
       "inputType": "text",
       "isPassword": false,
       "backgroundColor": "0XFFFFFFFF",
-      "borderColor": "0XFFCCCCCC",
+      "borderColor": "0XFFAEAEAE",
       "text" : {
         "text" : "",
-        "color" : "0xFF990099",
+        "color" : "0xFF2854A1",
         "size": "14",
         "family": "regular"
       },
       "labelText" : {
         "text" : "Username",
-        "color" : "0xFF990099",
+        "color" : "0xFF2854A1",
         "size": "14",
         "family": "regular",
         "align" : "center-left"
       },
       "hintText" : {
         "text" : "Enter Username",
-        "color" : "0xFF990099",
+        "color" : "0xFF2854A1",
         "size": "14",
         "family": "regular"
       },
@@ -107,23 +107,23 @@
       "inputType": "text",
       "isPassword": true,
       "backgroundColor": "0XFFFFFFFF",
-      "borderColor": "0XFFCCCCCC",
+      "borderColor": "0XFFAEAEAE",
       "text" : {
         "text" : "",
-        "color" : "0xFF990099",
+        "color" : "0xFF2854A1",
         "size": "14",
         "family": "regular"
       },
       "labelText" : {
         "text" : "Password",
-        "color" : "0xFF990099",
+        "color" : "0xFF2854A1",
         "size": "14",
         "family": "regular",
         "align" : "center-left"
       },
       "hintText" : {
         "text" : "Enter Password",
-        "color" : "0xFF990099",
+        "color" : "0xFF2854A1",
         "size": "14",
         "family": "regular"
       },
@@ -279,7 +279,7 @@
     "policiesButton": {
       "text" : "Polices",
       "color" : "0xFFFFFFFF",
-      "backgroundColor" : "0xFF990099",
+      "backgroundColor" : "0xFF2854A1",
       "size": "18",
       "family": "regular",
       "onClick": "/viewPolicies"
@@ -287,7 +287,7 @@
     "walletButton": {
       "text" : "Wallet",
       "color" : "0xFFFFFFFF",
-      "backgroundColor" : "0xFF990099",
+      "backgroundColor" : "0xFF2854A1",
       "size": "18",
       "family": "regular"
     }
@@ -295,7 +295,7 @@
   "tr_screen_data" : {
     "app_bar": {
       "isCenter": true,
-      "backgroundColor" : "0xFF990099",
+      "backgroundColor" : "0xFF2854A1",
       "title":  {
         "text" : "Travel Request",
         "color" : "0XFFFFFFFF",
@@ -331,7 +331,7 @@
           "height": 35.0,
           "color" : "0xFFFFFFFF",
           "borderRadius": 30.0,
-          "backgroundColor" : "0xFF990099",
+          "backgroundColor" : "0xFF2854A1",
           "size": "15",
           "family": "regular"
         }
@@ -341,7 +341,7 @@
     "bottomButtonLeft": {
       "text" : "Sort",
       "color" : "0xFFFFFFFF",
-      "backgroundColor" : "0xFF990099",
+      "backgroundColor" : "0xFF2854A1",
       "size": "18",
       "family": "regular"
     },
@@ -354,7 +354,7 @@
     "bottomButtonRight": {
       "text" : "Filter",
       "color" : "0xFFFFFFFF",
-      "backgroundColor" : "0xFF990099",
+      "backgroundColor" : "0xFF2854A1",
       "size": "18",
       "family": "regular"
     }
@@ -362,7 +362,7 @@
   "te_screen_data" : {
     "app_bar": {
       "isCenter": true,
-      "backgroundColor" : "0xFF990099",
+      "backgroundColor" : "0xFF2854A1",
       "title":  {
         "text" : "Travel Expense",
         "color" : "0XFFFFFFFF",
@@ -398,7 +398,7 @@
           "height": 35.0,
           "color" : "0xFFFFFFFF",
           "borderRadius": 30.0,
-          "backgroundColor" : "0xFF990099",
+          "backgroundColor" : "0xFF2854A1",
           "size": "15",
           "family": "regular"
         }
@@ -408,7 +408,7 @@
     "bottomButtonLeft": {
       "text" : "Sort",
       "color" : "0xFFFFFFFF",
-      "backgroundColor" : "0xFF990099",
+      "backgroundColor" : "0xFF2854A1",
       "size": "18",
       "family": "regular"
     },
@@ -421,13 +421,13 @@
     "bottomButtonRight": {
       "text" : "Filter",
       "color" : "0xFFFFFFFF",
-      "backgroundColor" : "0xFF990099",
+      "backgroundColor" : "0xFF2854A1",
       "size": "18",
       "family": "regular"
     }
   },
   "ge_screen_data" : {
-    "backgroundColor" : "0xFF990099",
+    "backgroundColor" : "0xFF2854A1",
     "title":  {
       "text" : "General Expense",
       "color" : "0XFFFFFFFF",
@@ -469,7 +469,7 @@
           "height": 35.0,
           "color" : "0xFFFFFFFF",
           "borderRadius": 30.0,
-          "backgroundColor" : "0xFF990099",
+          "backgroundColor" : "0xFF2854A1",
           "size": "15",
           "family": "regular"
         }
@@ -478,7 +478,7 @@
     "bottomButtonLeft": {
       "text" : "Sort",
       "color" : "0xFFFFFFFF",
-      "backgroundColor" : "0xFF990099",
+      "backgroundColor" : "0xFF2854A1",
       "size": "18",
       "family": "regular"
     },
@@ -491,7 +491,7 @@
     "bottomButtonRight": {
       "text" : "Filter",
       "color" : "0xFFFFFFFF",
-      "backgroundColor" : "0xFF990099",
+      "backgroundColor" : "0xFF2854A1",
       "size": "18",
       "family": "regular"
     }
@@ -499,7 +499,7 @@
   "approval_screen_data" : {
     "app_bar": {
       "isCenter": true,
-      "backgroundColor" : "0xFF990099",
+      "backgroundColor" : "0xFF2854A1",
       "title":  {
         "text" : "Approvals",
         "color" : "0XFFFFFFFF",
@@ -542,7 +542,7 @@
           "height": 35.0,
           "color" : "0xFFFFFFFF",
           "borderRadius": 30.0,
-          "backgroundColor" : "0xFF990099",
+          "backgroundColor" : "0xFF2854A1",
           "size": "15",
           "family": "regular"
         }
@@ -552,7 +552,7 @@
     "bottomButtonLeft": {
       "text" : "Sort",
       "color" : "0xFFFFFFFF",
-      "backgroundColor" : "0xFF990099",
+      "backgroundColor" : "0xFF2854A1",
       "size": "18",
       "family": "regular"
     },
@@ -565,13 +565,13 @@
     "bottomButtonRight": {
       "text" : "Filter",
       "color" : "0xFFFFFFFF",
-      "backgroundColor" : "0xFF990099",
+      "backgroundColor" : "0xFF2854A1",
       "size": "18",
       "family": "regular"
     }
   },
   "ge_create_data": {
-    "backgroundColor" : "0xFF990099",
+    "backgroundColor" : "0xFF2854A1",
     "title":  {
       "text" : "Create General Expense",
       "color" : "0XFFFFFFFF",
@@ -615,7 +615,7 @@
       },
       "gridValue": {
         "text" : "",
-        "color" : "0XFFCCCCCC",
+        "color" : "0XFFAEAEAE",
         "size": "7",
         "family": "regular",
         "align": "center-left"
@@ -625,7 +625,7 @@
       {
         "title": {
           "text" : "Accom. Expense",
-          "color" : "0xFF990099",
+          "color" : "0xFF2854A1",
           "size": "8",
           "family": "regular",
           "align": "center"
@@ -639,7 +639,7 @@
       {
         "title": {
           "text" : "Travel Expense",
-          "color" : "0xFF990099",
+          "color" : "0xFF2854A1",
           "size": "8",
           "family": "regular",
           "align": "center"
@@ -653,7 +653,7 @@
       {
         "title": {
           "text" : "Misc. Allowance",
-          "color" : "0xFF990099",
+          "color" : "0xFF2854A1",
           "size": "8",
           "family": "regular",
           "align": "center"
@@ -718,7 +718,7 @@
           "items": [
             {
               "icon": "edit.svg",
-              "color" : "0xFF990099"
+              "color" : "0xFF2854A1"
             },
             {
               "icon": "delete.svg",
@@ -787,7 +787,7 @@
         },
         "value": {
           "text" : "0.00",
-          "color" : "0xFFCCCCCC",
+          "color" : "0xFFAEAEAE",
           "size": "12",
           "family": "regular",
           "align": "center-right"
@@ -804,7 +804,7 @@
           },
           "value": {
             "text" : "0.00",
-            "color" : "0xFFCCCCCC",
+            "color" : "0xFFAEAEAE",
             "size": "12",
             "family": "regular",
             "align": "center-right"
@@ -821,7 +821,7 @@
           },
           "value": {
             "text" : "0.00",
-            "color" : "0xFFCCCCCC",
+            "color" : "0xFFAEAEAE",
             "size": "12",
             "family": "regular",
             "align": "center-right"
@@ -838,7 +838,7 @@
           },
           "value": {
             "text" : "0.00",
-            "color" : "0xFFCCCCCC",
+            "color" : "0xFFAEAEAE",
             "size": "12",
             "family": "regular",
             "align": "center-right"
@@ -884,14 +884,14 @@
         "key": "disabled",
         "label":  {
           "text" : "Approver 1",
-          "color" : "0xFF990099",
+          "color" : "0xFF2854A1",
           "size": "14",
           "family": "regular",
           "align": "center-left"
         },
         "dataText":  {
           "text" : "Choose Approver",
-          "color" : "0xFFCCCCCC",
+          "color" : "0xFFAEAEAE",
           "size": "14",
           "family": "regular",
           "align": "center-left"
@@ -902,14 +902,14 @@
         "key": "disabled",
         "label":  {
           "text" : "Approver 2",
-          "color" : "0xFF990099",
+          "color" : "0xFF2854A1",
           "size": "14",
           "family": "regular",
           "align": "center-left"
         },
         "dataText":  {
           "text" : "Choose Approver",
-          "color" : "0xFFCCCCCC",
+          "color" : "0xFFAEAEAE",
           "size": "14",
           "family": "regular",
           "align": "center-left"
@@ -921,23 +921,23 @@
           "inputType": "text",
           "isPassword": false,
           "backgroundColor": "0XFFFFFFFF",
-          "borderColor": "0XFFCCCCCC",
+          "borderColor": "0XFFAEAEAE",
           "text" : {
             "text" : "",
-            "color" : "0xFF990099",
+            "color" : "0xFF2854A1",
             "size": "14",
             "family": "regular"
           },
           "labelText" : {
             "text" : "Description",
-            "color" : "0xFF990099",
+            "color" : "0xFF2854A1",
             "size": "14",
             "family": "regular",
             "align" : "center-left"
           },
           "hintText" : {
             "text" : "Enter Description",
-            "color" : "0xFF990099",
+            "color" : "0xFF2854A1",
             "size": "14",
             "family": "regular"
           },
@@ -957,23 +957,23 @@
         "inputType": "text",
         "isPassword": false,
         "backgroundColor": "0XFFFFFFFF",
-        "borderColor": "0XFFCCCCCC",
+        "borderColor": "0XFFAEAEAE",
         "text" : {
           "text" : "",
-          "color" : "0xFF990099",
+          "color" : "0xFF2854A1",
           "size": "14",
           "family": "regular"
         },
         "labelText" : {
           "text" : "Description",
-          "color" : "0xFF990099",
+          "color" : "0xFF2854A1",
           "size": "14",
           "family": "regular",
           "align" : "center-left"
         },
         "hintText" : {
           "text" : "Enter Description",
-          "color" : "0xFF990099",
+          "color" : "0xFF2854A1",
           "size": "14",
           "family": "regular"
         },
@@ -989,20 +989,20 @@
     "bottomButtonLeft": {
       "text" : "Draft",
       "color" : "0xFFFFFFFF",
-      "backgroundColor" : "0xFF990099",
+      "backgroundColor" : "0xFF2854A1",
       "size": "18",
       "family": "regular"
     },
     "bottomButtonRight": {
       "text" : "Submit",
       "color" : "0xFFFFFFFF",
-      "backgroundColor" : "0xFF990099",
+      "backgroundColor" : "0xFF2854A1",
       "size": "18",
       "family": "regular"
     }
   },
   "accom_create_data": {
-    "backgroundColor" : "0xFF990099",
+    "backgroundColor" : "0xFF2854A1",
     "title":  {
       "text" : "Add\nAccommodation Expense",
       "color" : "0XFFFFFFFF",
@@ -1023,7 +1023,7 @@
       "dateView": {
         "label":  {
           "text" : "Check-In Date*",
-          "color" : "0xFF990099",
+          "color" : "0xFF2854A1",
           "size": "14",
           "family": "regular",
           "align": "center-left"
@@ -1044,7 +1044,7 @@
         },
         "weekText":  {
           "text" : "Monday",
-          "color" : "0xFFCCCCCC",
+          "color" : "0xFFAEAEAE",
           "size": "10",
           "family": "regular",
           "align": "center-left"
@@ -1053,7 +1053,7 @@
       "timeView": {
         "label":  {
           "text" : "Check-In Time*",
-          "color" : "0xFF990099",
+          "color" : "0xFF2854A1",
           "size": "14",
           "family": "regular",
           "align": "center-left"
@@ -1072,7 +1072,7 @@
       "dateView": {
         "label":  {
           "text" : "Check-Out Date*",
-          "color" : "0xFF990099",
+          "color" : "0xFF2854A1",
           "size": "14",
           "family": "regular",
           "align": "center-left"
@@ -1093,7 +1093,7 @@
         },
         "weekText":  {
           "text" : "Monday",
-          "color" : "0xFFCCCCCC",
+          "color" : "0xFFAEAEAE",
           "size": "10",
           "family": "regular",
           "align": "center-left"
@@ -1102,7 +1102,7 @@
       "timeView": {
         "label":  {
           "text" : "Check-Out Time*",
-          "color" : "0xFF990099",
+          "color" : "0xFF2854A1",
           "size": "14",
           "family": "regular",
           "align": "center-left"
@@ -1121,14 +1121,14 @@
       "showView": true,
       "label":  {
         "text" : "City*",
-        "color" : "0xFF990099",
+        "color" : "0xFF2854A1",
         "size": "14",
         "family": "regular",
         "align": "center-left"
       },
       "dataText":  {
         "text" : "Choose City",
-        "color" : "0xFFCCCCCC",
+        "color" : "0xFFAEAEAE",
         "size": "18",
         "family": "regular",
         "align": "center-left"
@@ -1139,14 +1139,14 @@
       "key": "accom_type_view",
       "label":  {
         "text" : "Accommodation Type*",
-        "color" : "0xFF990099",
+        "color" : "0xFF2854A1",
         "size": "14",
         "family": "regular",
         "align": "center-left"
       },
       "dataText":  {
         "text" : "Choose Type",
-        "color" : "0xFFCCCCCC",
+        "color" : "0xFFAEAEAE",
         "size": "18",
         "family": "regular",
         "align": "center-left"
@@ -1159,23 +1159,23 @@
       "inputType": "text",
       "isPassword": false,
       "backgroundColor": "0XFFFFFFFF",
-      "borderColor": "0XFFCCCCCC",
+      "borderColor": "0XFFAEAEAE",
       "text" : {
         "text" : "",
-        "color" : "0xFF990099",
+        "color" : "0xFF2854A1",
         "size": "14",
         "family": "regular"
       },
       "labelText" : {
         "text" : "Hotel Name*",
-        "color" : "0xFF990099",
+        "color" : "0xFF2854A1",
         "size": "14",
         "family": "regular",
         "align" : "center-left"
       },
       "hintText" : {
         "text" : "Enter Hotel Name",
-        "color" : "0xFF990099",
+        "color" : "0xFF2854A1",
         "size": "14",
         "family": "regular"
       },
@@ -1198,23 +1198,23 @@
       "inputType": "text",
       "isPassword": false,
       "backgroundColor": "0XFFFFFFFF",
-      "borderColor": "0XFFCCCCCC",
+      "borderColor": "0XFFAEAEAE",
       "text" : {
         "text" : "",
-        "color" : "0xFF990099",
+        "color" : "0xFF2854A1",
         "size": "14",
         "family": "regular"
       },
       "labelText" : {
         "text" : "Voucher*",
-        "color" : "0xFF990099",
+        "color" : "0xFF2854A1",
         "size": "14",
         "family": "regular",
         "align" : "center-left"
       },
       "hintText" : {
         "text" : "Enter Voucher",
-        "color" : "0xFF990099",
+        "color" : "0xFF2854A1",
         "size": "14",
         "family": "regular"
       },
@@ -1237,23 +1237,23 @@
       "inputType": "number",
       "isPassword": false,
       "backgroundColor": "0XFFFFFFFF",
-      "borderColor": "0XFFCCCCCC",
+      "borderColor": "0XFFAEAEAE",
       "text" : {
         "text" : "",
-        "color" : "0xFF990099",
+        "color" : "0xFF2854A1",
         "size": "14",
         "family": "regular"
       },
       "labelText" : {
         "text" : "Amount*",
-        "color" : "0xFF990099",
+        "color" : "0xFF2854A1",
         "size": "14",
         "family": "regular",
         "align" : "center-left"
       },
       "hintText" : {
         "text" : "Enter Amount",
-        "color" : "0xFF990099",
+        "color" : "0xFF2854A1",
         "size": "14",
         "family": "regular"
       },
@@ -1276,23 +1276,23 @@
       "inputType": "number",
       "isPassword": false,
       "backgroundColor": "0XFFFFFFFF",
-      "borderColor": "0XFFCCCCCC",
+      "borderColor": "0XFFAEAEAE",
       "text" : {
         "text" : "",
-        "color" : "0xFF990099",
+        "color" : "0xFF2854A1",
         "size": "14",
         "family": "regular"
       },
       "labelText" : {
         "text" : "Tax",
-        "color" : "0xFF990099",
+        "color" : "0xFF2854A1",
         "size": "14",
         "family": "regular",
         "align" : "center-left"
       },
       "hintText" : {
         "text" : "Enter Tax",
-        "color" : "0xFF990099",
+        "color" : "0xFF2854A1",
         "size": "14",
         "family": "regular"
       },
@@ -1311,23 +1311,23 @@
       "inputType": "text",
       "isPassword": false,
       "backgroundColor": "0XFFFFFFFF",
-      "borderColor": "0XFFCCCCCC",
+      "borderColor": "0XFFAEAEAE",
       "text" : {
         "text" : "",
-        "color" : "0xFF990099",
+        "color" : "0xFF2854A1",
         "size": "14",
         "family": "regular"
       },
       "labelText" : {
         "text" : "Description",
-        "color" : "0xFF990099",
+        "color" : "0xFF2854A1",
         "size": "14",
         "family": "regular",
         "align" : "center-left"
       },
       "hintText" : {
         "text" : "Enter Description",
-        "color" : "0xFF990099",
+        "color" : "0xFF2854A1",
         "size": "14",
         "family": "regular"
       },
@@ -1342,7 +1342,7 @@
     "withBillCheckBox":  {
       "label":  {
         "text" : "With Bill",
-        "color" : "0xFF990099",
+        "color" : "0xFF2854A1",
         "size": "14",
         "family": "bold",
         "align": "center-left"
@@ -1350,7 +1350,7 @@
     },
     "formValidation": ["checkInDate","checkOutDate","selectCity","selectType","text_field_voucher","text_field_amount"],
     "uploadButton":  {
-      "backgroundColor" : "0xFF990099",
+      "backgroundColor" : "0xFF2854A1",
       "onClick": "/uploadDoc",
       "title":  {
         "text" : "Browse for Documents/Images here",
@@ -1361,14 +1361,14 @@
       },
       "subtitle":  {
         "text" : "PNG,JPEG,JPG,PDF",
-        "color" : "0XFFCCCCCC",
+        "color" : "0XFFAEAEAE",
         "size": "10",
         "family": "regular",
         "align": "center"
       },
       "svgIcon":{
         "icon": "upload.svg",
-        "color" : "0xFF990099"
+        "color" : "0xFF2854A1"
       },
       "listView": {
         "data": [
@@ -1391,7 +1391,7 @@
       "bottomButtonCentre": {
         "text" : "Cancel",
         "color" : "0xFFFFFFFF",
-        "backgroundColor" : "0xFF990099",
+        "backgroundColor" : "0xFF2854A1",
         "size": "18",
         "family": "regular"
       }
@@ -1399,20 +1399,20 @@
     "bottomButtonLeft": {
       "text" : "Cancel",
       "color" : "0xFFFFFFFF",
-      "backgroundColor" : "0xFF990099",
+      "backgroundColor" : "0xFF2854A1",
       "size": "18",
       "family": "regular"
     },
     "bottomButtonRight": {
       "text" : "Save",
       "color" : "0xFFFFFFFF",
-      "backgroundColor" : "0xFF990099",
+      "backgroundColor" : "0xFF2854A1",
       "size": "18",
       "family": "regular"
     }
   },
   "travel_create_data": {
-    "backgroundColor" : "0xFF990099",
+    "backgroundColor" : "0xFF2854A1",
     "title":  {
       "text" : "Create\nTravel Expense",
       "color" : "0XFFFFFFFF",
@@ -1433,7 +1433,7 @@
       "dateView": {
         "label":  {
           "text" : "Check-In Date*",
-          "color" : "0xFF990099",
+          "color" : "0xFF2854A1",
           "size": "14",
           "family": "regular",
           "align": "center-left"
@@ -1454,7 +1454,7 @@
         },
         "weekText":  {
           "text" : "Monday",
-          "color" : "0xFFCCCCCC",
+          "color" : "0xFFAEAEAE",
           "size": "10",
           "family": "regular",
           "align": "center-left"
@@ -1463,7 +1463,7 @@
       "timeView": {
         "label":  {
           "text" : "Check-In Time*",
-          "color" : "0xFF990099",
+          "color" : "0xFF2854A1",
           "size": "14",
           "family": "regular",
           "align": "center-left"
@@ -1484,23 +1484,23 @@
       "inputType": "text",
       "isPassword": false,
       "backgroundColor": "0XFFFFFFFF",
-      "borderColor": "0XFFCCCCCC",
+      "borderColor": "0XFFAEAEAE",
       "text" : {
         "text" : "",
-        "color" : "0xFF990099",
+        "color" : "0xFF2854A1",
         "size": "14",
         "family": "regular"
       },
       "labelText" : {
         "text" : "Origin",
-        "color" : "0xFF990099",
+        "color" : "0xFF2854A1",
         "size": "14",
         "family": "regular",
         "align" : "center-left"
       },
       "hintText" : {
         "text" : "Enter Origin",
-        "color" : "0xFF990099",
+        "color" : "0xFF2854A1",
         "size": "14",
         "family": "regular"
       },
@@ -1523,23 +1523,23 @@
       "inputType": "text",
       "isPassword": false,
       "backgroundColor": "0XFFFFFFFF",
-      "borderColor": "0XFFCCCCCC",
+      "borderColor": "0XFFAEAEAE",
       "text" : {
         "text" : "",
-        "color" : "0xFF990099",
+        "color" : "0xFF2854A1",
         "size": "14",
         "family": "regular"
       },
       "labelText" : {
         "text" : "Destination",
-        "color" : "0xFF990099",
+        "color" : "0xFF2854A1",
         "size": "14",
         "family": "regular",
         "align" : "center-left"
       },
       "hintText" : {
         "text" : "Enter Destination",
-        "color" : "0xFF990099",
+        "color" : "0xFF2854A1",
         "size": "14",
         "family": "regular"
       },
@@ -1560,14 +1560,14 @@
       "key": "travel_mode_view",
       "label":  {
         "text" : "Travel Mode*",
-        "color" : "0xFF990099",
+        "color" : "0xFF2854A1",
         "size": "14",
         "family": "regular",
         "align": "center-left"
       },
       "dataText":  {
         "text" : "Choose Mode",
-        "color" : "0xFFCCCCCC",
+        "color" : "0xFFAEAEAE",
         "size": "18",
         "family": "regular",
         "align": "center-left"
@@ -1578,21 +1578,21 @@
       "key":"common_type_view",
       "label":  {
         "text" : "Vehicle Type*",
-        "color" : "0xFF990099",
+        "color" : "0xFF2854A1",
         "size": "14",
         "family": "regular",
         "align": "center-left"
       },
       "dataText":  {
         "text" : "Choose Type",
-        "color" : "0xFFCCCCCC",
+        "color" : "0xFFAEAEAE",
         "size": "18",
         "family": "regular",
         "align": "center-left"
       },
       "title":{
         "text" : "Select Vehicle Type",
-        "color" : "0xFF990099",
+        "color" : "0xFF2854A1",
         "size": "18",
         "family": "bold",
         "align": "center"
@@ -1632,7 +1632,7 @@
             "height": 35.0,
             "color" : "0xFFFFFFFF",
             "borderRadius": 30.0,
-            "backgroundColor" : "0xFF990099",
+            "backgroundColor" : "0xFF2854A1",
             "size": "15",
             "family": "regular"
           }
@@ -1641,7 +1641,7 @@
       "bottomButtonCentre": {
         "text" : "Cancel",
         "color" : "0xFFFFFFFF",
-        "backgroundColor" : "0xFF990099",
+        "backgroundColor" : "0xFF2854A1",
         "size": "18",
         "family": "regular"
       }
@@ -1653,23 +1653,23 @@
       "inputType": "text",
       "isPassword": false,
       "backgroundColor": "0XFFFFFFFF",
-      "borderColor": "0XFFCCCCCC",
+      "borderColor": "0XFFAEAEAE",
       "text" : {
         "text" : "",
-        "color" : "0xFF990099",
+        "color" : "0xFF2854A1",
         "size": "14",
         "family": "regular"
       },
       "labelText" : {
         "text" : "Voucher",
-        "color" : "0xFF990099",
+        "color" : "0xFF2854A1",
         "size": "14",
         "family": "regular",
         "align" : "center-left"
       },
       "hintText" : {
         "text" : "Enter Voucher",
-        "color" : "0xFF990099",
+        "color" : "0xFF2854A1",
         "size": "14",
         "family": "regular"
       },
@@ -1692,23 +1692,23 @@
       "inputType": "number",
       "isPassword": false,
       "backgroundColor": "0XFFFFFFFF",
-      "borderColor": "0XFFCCCCCC",
+      "borderColor": "0XFFAEAEAE",
       "text" : {
         "text" : "",
-        "color" : "0xFF990099",
+        "color" : "0xFF2854A1",
         "size": "14",
         "family": "regular"
       },
       "labelText" : {
         "text" : "Amount",
-        "color" : "0xFF990099",
+        "color" : "0xFF2854A1",
         "size": "14",
         "family": "regular",
         "align" : "center-left"
       },
       "hintText" : {
         "text" : "Enter Amount",
-        "color" : "0xFF990099",
+        "color" : "0xFF2854A1",
         "size": "14",
         "family": "regular"
       },
@@ -1731,23 +1731,23 @@
       "inputType": "number",
       "isPassword": false,
       "backgroundColor": "0XFFFFFFFF",
-      "borderColor": "0XFFCCCCCC",
+      "borderColor": "0XFFAEAEAE",
       "text" : {
         "text" : "",
-        "color" : "0xFF990099",
+        "color" : "0xFF2854A1",
         "size": "14",
         "family": "regular"
       },
       "labelText" : {
         "text" : "Tax",
-        "color" : "0xFF990099",
+        "color" : "0xFF2854A1",
         "size": "14",
         "family": "regular",
         "align" : "center-left"
       },
       "hintText" : {
         "text" : "Enter Tax",
-        "color" : "0xFF990099",
+        "color" : "0xFF2854A1",
         "size": "14",
         "family": "regular"
       },
@@ -1766,23 +1766,23 @@
       "inputType": "text",
       "isPassword": false,
       "backgroundColor": "0XFFFFFFFF",
-      "borderColor": "0XFFCCCCCC",
+      "borderColor": "0XFFAEAEAE",
       "text" : {
         "text" : "",
-        "color" : "0xFF990099",
+        "color" : "0xFF2854A1",
         "size": "14",
         "family": "regular"
       },
       "labelText" : {
         "text" : "Description",
-        "color" : "0xFF990099",
+        "color" : "0xFF2854A1",
         "size": "14",
         "family": "regular",
         "align" : "center-left"
       },
       "hintText" : {
         "text" : "Enter Description",
-        "color" : "0xFF990099",
+        "color" : "0xFF2854A1",
         "size": "14",
         "family": "regular"
       },
@@ -1797,14 +1797,14 @@
     "withBillCheckBox":  {
       "label":  {
         "text" : "With Bill",
-        "color" : "0xFF990099",
+        "color" : "0xFF2854A1",
         "size": "14",
         "family": "bold",
         "align": "center-left"
       }
     },
     "uploadButton":  {
-      "backgroundColor" : "0xFF990099",
+      "backgroundColor" : "0xFF2854A1",
       "onClick": "/uploadDoc",
       "title":  {
         "text" : "Browse for Documents/Images here",
@@ -1815,14 +1815,14 @@
       },
       "subtitle":  {
         "text" : "PNG,JPEG,JPG,PDF",
-        "color" : "0XFFCCCCCC",
+        "color" : "0XFFAEAEAE",
         "size": "10",
         "family": "regular",
         "align": "center"
       },
       "svgIcon":{
         "icon": "upload.svg",
-        "color" : "0xFF990099"
+        "color" : "0xFF2854A1"
       },
       "listView": {
         "data": [
@@ -1845,7 +1845,7 @@
       "bottomButtonCentre": {
         "text" : "Cancel",
         "color" : "0xFFFFFFFF",
-        "backgroundColor" : "0xFF990099",
+        "backgroundColor" : "0xFF2854A1",
         "size": "18",
         "family": "regular"
       }
@@ -1853,20 +1853,20 @@
     "bottomButtonLeft": {
       "text" : "Cancel",
       "color" : "0xFFFFFFFF",
-      "backgroundColor" : "0xFF990099",
+      "backgroundColor" : "0xFF2854A1",
       "size": "18",
       "family": "regular"
     },
     "bottomButtonRight": {
       "text" : "Save",
       "color" : "0xFFFFFFFF",
-      "backgroundColor" : "0xFF990099",
+      "backgroundColor" : "0xFF2854A1",
       "size": "18",
       "family": "regular"
     }
   },
   "misc_create_data": {
-    "backgroundColor" : "0xFF990099",
+    "backgroundColor" : "0xFF2854A1",
     "title":  {
       "text" : "Create\nMiscellaneous Expense",
       "color" : "0XFFFFFFFF",
@@ -1887,7 +1887,7 @@
       "dateView": {
         "label":  {
           "text" : "Start Date",
-          "color" : "0xFF990099",
+          "color" : "0xFF2854A1",
           "size": "14",
           "family": "regular",
           "align": "center-left"
@@ -1908,7 +1908,7 @@
         },
         "weekText":  {
           "text" : "Monday",
-          "color" : "0xFFCCCCCC",
+          "color" : "0xFFAEAEAE",
           "size": "10",
           "family": "regular",
           "align": "center-left"
@@ -1920,7 +1920,7 @@
       "dateView": {
         "label":  {
           "text" : "End Date",
-          "color" : "0xFF990099",
+          "color" : "0xFF2854A1",
           "size": "14",
           "family": "regular",
           "align": "center-left"
@@ -1941,7 +1941,7 @@
         },
         "weekText":  {
           "text" : "Monday",
-          "color" : "0xFFCCCCCC",
+          "color" : "0xFFAEAEAE",
           "size": "10",
           "family": "regular",
           "align": "center-left"
@@ -1953,14 +1953,14 @@
       "onClick": "/viewCities",
       "label":  {
         "text" : "City",
-        "color" : "0xFF990099",
+        "color" : "0xFF2854A1",
         "size": "14",
         "family": "regular",
         "align": "center-left"
       },
       "dataText":  {
         "text" : "Choose City",
-        "color" : "0xFFCCCCCC",
+        "color" : "0xFFAEAEAE",
         "size": "18",
         "family": "regular",
         "align": "center-left"
@@ -1971,14 +1971,14 @@
       "key":"misc_type_view",
       "label":  {
         "text" : "Misc. Type*",
-        "color" : "0xFF990099",
+        "color" : "0xFF2854A1",
         "size": "14",
         "family": "regular",
         "align": "center-left"
       },
       "dataText":  {
         "text" : "Choose Type",
-        "color" : "0xFFCCCCCC",
+        "color" : "0xFFAEAEAE",
         "size": "18",
         "family": "regular",
         "align": "center-left"
@@ -1989,21 +1989,21 @@
       "key":"common_type_view",
       "label":  {
         "text" : "Unit Type*",
-        "color" : "0xFF990099",
+        "color" : "0xFF2854A1",
         "size": "14",
         "family": "regular",
         "align": "center-left"
       },
       "dataText":  {
         "text" : "Choose Type",
-        "color" : "0xFFCCCCCC",
+        "color" : "0xFFAEAEAE",
         "size": "18",
         "family": "regular",
         "align": "center-left"
       },
       "title":{
         "text" : "Select Unit Type",
-        "color" : "0xFF990099",
+        "color" : "0xFF2854A1",
         "size": "18",
         "family": "bold",
         "align": "center"
@@ -2043,7 +2043,7 @@
             "height": 35.0,
             "color" : "0xFFFFFFFF",
             "borderRadius": 30.0,
-            "backgroundColor" : "0xFF990099",
+            "backgroundColor" : "0xFF2854A1",
             "size": "15",
             "family": "regular"
           }
@@ -2052,7 +2052,7 @@
       "bottomButtonCentre": {
         "text" : "Cancel",
         "color" : "0xFFFFFFFF",
-        "backgroundColor" : "0xFF990099",
+        "backgroundColor" : "0xFF2854A1",
         "size": "18",
         "family": "regular"
       }
@@ -2064,23 +2064,23 @@
       "inputType": "text",
       "isPassword": false,
       "backgroundColor": "0XFFFFFFFF",
-      "borderColor": "0XFFCCCCCC",
+      "borderColor": "0XFFAEAEAE",
       "text" : {
         "text" : "",
-        "color" : "0xFF990099",
+        "color" : "0xFF2854A1",
         "size": "14",
         "family": "regular"
       },
       "labelText" : {
         "text" : "Voucher",
-        "color" : "0xFF990099",
+        "color" : "0xFF2854A1",
         "size": "14",
         "family": "regular",
         "align" : "center-left"
       },
       "hintText" : {
         "text" : "Enter Voucher",
-        "color" : "0xFF990099",
+        "color" : "0xFF2854A1",
         "size": "14",
         "family": "regular"
       },
@@ -2103,23 +2103,23 @@
       "inputType": "number",
       "isPassword": false,
       "backgroundColor": "0XFFFFFFFF",
-      "borderColor": "0XFFCCCCCC",
+      "borderColor": "0XFFAEAEAE",
       "text" : {
         "text" : "",
-        "color" : "0xFF990099",
+        "color" : "0xFF2854A1",
         "size": "14",
         "family": "regular"
       },
       "labelText" : {
         "text" : "Amount",
-        "color" : "0xFF990099",
+        "color" : "0xFF2854A1",
         "size": "14",
         "family": "regular",
         "align" : "center-left"
       },
       "hintText" : {
         "text" : "Enter Amount",
-        "color" : "0xFF990099",
+        "color" : "0xFF2854A1",
         "size": "14",
         "family": "regular"
       },
@@ -2142,23 +2142,23 @@
       "inputType": "text",
       "isPassword": false,
       "backgroundColor": "0XFFFFFFFF",
-      "borderColor": "0XFFCCCCCC",
+      "borderColor": "0XFFAEAEAE",
       "text" : {
         "text" : "",
-        "color" : "0xFF990099",
+        "color" : "0xFF2854A1",
         "size": "14",
         "family": "regular"
       },
       "labelText" : {
         "text" : "Description",
-        "color" : "0xFF990099",
+        "color" : "0xFF2854A1",
         "size": "14",
         "family": "regular",
         "align" : "center-left"
       },
       "hintText" : {
         "text" : "Enter Description",
-        "color" : "0xFF990099",
+        "color" : "0xFF2854A1",
         "size": "14",
         "family": "regular"
       },
@@ -2171,7 +2171,7 @@
       "validators" : []
     },
     "uploadButton":  {
-      "backgroundColor" : "0xFF990099",
+      "backgroundColor" : "0xFF2854A1",
       "onClick": "/uploadDoc",
       "title":  {
         "text" : "Browse for Documents/Images here",
@@ -2182,14 +2182,14 @@
       },
       "subtitle":  {
         "text" : "PNG,JPEG,JPG,PDF",
-        "color" : "0XFFCCCCCC",
+        "color" : "0XFFAEAEAE",
         "size": "10",
         "family": "regular",
         "align": "center"
       },
       "svgIcon":{
         "icon": "upload.svg",
-        "color" : "0xFF990099"
+        "color" : "0xFF2854A1"
       },
       "listView": {
         "data": [
@@ -2212,7 +2212,7 @@
       "bottomButtonCentre": {
         "text" : "Cancel",
         "color" : "0xFFFFFFFF",
-        "backgroundColor" : "0xFF990099",
+        "backgroundColor" : "0xFF2854A1",
         "size": "18",
         "family": "regular"
       }
@@ -2220,20 +2220,20 @@
     "bottomButtonLeft": {
       "text" : "Cancel",
       "color" : "0xFFFFFFFF",
-      "backgroundColor" : "0xFF990099",
+      "backgroundColor" : "0xFF2854A1",
       "size": "18",
       "family": "regular"
     },
     "bottomButtonRight": {
       "text" : "Save",
       "color" : "0xFFFFFFFF",
-      "backgroundColor" : "0xFF990099",
+      "backgroundColor" : "0xFF2854A1",
       "size": "18",
       "family": "regular"
     }
   },
   "policy_screen_data" : {
-    "backgroundColor" : "0xFF990099",
+    "backgroundColor" : "0xFF2854A1",
     "title":  {
       "text" : "Policies",
       "color" : "0XFFFFFFFF",
@@ -2250,19 +2250,19 @@
       "align": "center-left"
     },
     "listView": {
-      "svgIconColor" : "0xFF990099",
+      "svgIconColor" : "0xFF2854A1",
       "data": [
         {
           "title": {
             "text" : "NH - Travel Policies",
-            "color" : "0xFF990099",
+            "color" : "0xFF2854A1",
             "size": "12",
             "family": "regular",
             "align": "center"
           },
           "subtitle": {
             "text" : "Tap to view",
-            "color" : "0xFFCCCCCC",
+            "color" : "0xFFAEAEAE",
             "size": "10",
             "family": "bold",
             "align": "center"
@@ -2287,7 +2287,7 @@
           "height": 35.0,
           "color" : "0xFFFFFFFF",
           "borderRadius": 30.0,
-          "backgroundColor" : "0xFF990099",
+          "backgroundColor" : "0xFF2854A1",
           "size": "15",
           "family": "regular"
         }
@@ -2303,7 +2303,7 @@
     }
   },
   "pdf_screen_data" : {
-    "backgroundColor" : "0xFF990099",
+    "backgroundColor" : "0xFF2854A1",
     "title":  {
       "text" : "PDF Viewer",
       "color" : "0XFFFFFFFF",
@@ -2321,7 +2321,7 @@
     }
   },
   "city_screen_data" : {
-    "backgroundColor" : "0xFF990099",
+    "backgroundColor" : "0xFF2854A1",
     "title":  {
       "text" : "Select City",
       "color" : "0XFFFFFFFF",
@@ -2340,7 +2340,7 @@
     "listView": {
       "svgIcon":{
         "icon": "map.svg",
-        "color" : "0xFF990099"
+        "color" : "0xFF2854A1"
       },
       "recordsFound":  {
         "text" : "Records Found",
@@ -2367,7 +2367,7 @@
           "height": 35.0,
           "color" : "0xFFFFFFFF",
           "borderRadius": 30.0,
-          "backgroundColor" : "0xFF990099",
+          "backgroundColor" : "0xFF2854A1",
           "size": "15",
           "family": "regular"
         }
@@ -2375,7 +2375,7 @@
     }
   },
   "accom_type_screen_data" : {
-    "backgroundColor" : "0xFF990099",
+    "backgroundColor" : "0xFF2854A1",
     "title":  {
       "text" : "Select Accommodation Type",
       "color" : "0XFF000000",
@@ -2409,13 +2409,13 @@
     "bottomButtonCentre": {
       "text" : "Cancel",
       "color" : "0xFFFFFFFF",
-      "backgroundColor" : "0xFF990099",
+      "backgroundColor" : "0xFF2854A1",
       "size": "18",
       "family": "regular"
     }
   },
   "misc_type_screen_data" : {
-    "backgroundColor" : "0xFF990099",
+    "backgroundColor" : "0xFF2854A1",
     "title":  {
       "text" : "Select Miscellaneous Type",
       "color" : "0XFF000000",
@@ -2449,13 +2449,13 @@
     "bottomButtonCentre": {
       "text" : "Cancel",
       "color" : "0xFFFFFFFF",
-      "backgroundColor" : "0xFF990099",
+      "backgroundColor" : "0xFF2854A1",
       "size": "18",
       "family": "regular"
     }
   },
   "travel_mode_screen_data" : {
-    "backgroundColor" : "0xFF990099",
+    "backgroundColor" : "0xFF2854A1",
     "title":  {
       "text" : "Select Travel Mode",
       "color" : "0XFF000000",
@@ -2489,13 +2489,13 @@
     "bottomButtonCentre": {
       "text" : "Cancel",
       "color" : "0xFFFFFFFF",
-      "backgroundColor" : "0xFF990099",
+      "backgroundColor" : "0xFF2854A1",
       "size": "18",
       "family": "regular"
     }
   },
   "upload_screen_data" : {
-    "backgroundColor" : "0xFF990099",
+    "backgroundColor" : "0xFF2854A1",
     "title":  {
       "text" : "Upload",
       "color" : "0XFF000000",
@@ -2524,13 +2524,13 @@
     "bottomButtonCentre": {
       "text" : "Cancel",
       "color" : "0xFFFFFFFF",
-      "backgroundColor" : "0xFF990099",
+      "backgroundColor" : "0xFF2854A1",
       "size": "18",
       "family": "regular"
     }
   },
   "dialog_yes_no_data" : {
-    "backgroundColor" : "0xFF990099",
+    "backgroundColor" : "0xFF2854A1",
     "title":  {
       "text" : "Do you want the remove the Document/Image ?",
       "color" : "0XFF000000",
@@ -2541,14 +2541,14 @@
     "buttonYes": {
       "text" : "YES",
       "color" : "0xFFFFFFFF",
-      "backgroundColor" : "0xFF990099",
+      "backgroundColor" : "0xFF2854A1",
       "size": "12",
       "family": "regular"
     },
     "buttonNo": {
       "text" : "NO",
       "color" : "0xFFFFFFFF",
-      "backgroundColor" : "0xFF990099",
+      "backgroundColor" : "0xFF2854A1",
       "size": "12",
       "family": "regular"
     }
