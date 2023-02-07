@@ -8,31 +8,35 @@ import 'package:travelgrid/common/utils/date_time_util.dart';
 import 'package:travelgrid/common/utils/validators.dart';
 import 'package:travelgrid/data/cubits/login_cubit/login_cubit.dart';
 import 'package:travelgrid/data/datsources/login_response.dart';
+import 'package:travelgrid/data/models/ge_conveyance_model.dart';
 import 'package:travelgrid/domain/usecases/login_usecase.dart';
-
+import 'dart:math';
 class TravelFormBloc extends FormBloc<String, String> {
 
   final selectModeID = SelectFieldBloc<String, dynamic>();
   final selectWithBill = SelectFieldBloc<String, dynamic>();
   final checkInDate =  TextFieldBloc(validators: [emptyValidator]);
+
   final checkInTime =  TextFieldBloc(validators: [emptyValidator]);
   final checkOutTime =  TextFieldBloc(validators: [emptyValidator]);
+  final distance =  TextFieldBloc(validators: [emptyValidator]);
 
 
   final modeName =  TextFieldBloc(validators: [emptyValidator]);
+
   final VehicleTypeName =  TextFieldBloc(validators: [emptyValidator]);
 
-//  final tfHotelName =  TextFieldBloc(validators: [emptyValidator],initialValue: "nill");
-
   final swWithBill = BooleanFieldBloc(initialValue: false);
+
   final tfDestination =  TextFieldBloc(validators: [emptyValidator]);
   final tfOrigin =  TextFieldBloc(validators: [emptyValidator]);
+
   final tfVoucher = TextFieldBloc(initialValue: "nill");
   final tfAmount = TextFieldBloc();
   final tfDescription = TextFieldBloc();
 
   final voucherPath = TextFieldBloc();
-
+  final onCityPairAdded = SelectFieldBloc<List<MaGeConveyanceCityPair>,dynamic>(initialValue: []);
   static String? emptyValidator(dynamic value) {
     if (value.isEmpty) {
       return "Cannot be empty";
@@ -44,8 +48,6 @@ class TravelFormBloc extends FormBloc<String, String> {
 
       if(data.isNotEmpty){
 
-        tfVoucher.addValidators(Validators().getValidators(data['text_field_voucher']));
-        tfVoucher.addValidators(Validators().getValidators(data['text_field_voucher']));
         tfVoucher.addValidators(Validators().getValidators(data['text_field_voucher']));
         tfAmount.addValidators(Validators().getValidators(data['text_field_amount']));
         tfDescription.addValidators(Validators().getValidators(data['text_field_desc']));
@@ -87,33 +89,42 @@ class TravelFormBloc extends FormBloc<String, String> {
 
   @override
   FutureOr<void> onSubmitting() async {
+    print("dasdkak");
 
-    Map<String,dynamic> saveConvMap = {
-      "conveyanceDate":  checkInDate.value,
-      "origin": tfOrigin.value,
-      "destination":  tfDestination.value,
+    String amount =  double.parse(tfAmount.value ?? "0").toStringAsFixed(2);
 
-      "startTime": "00:00",
-      "endTime": "00:00",
-      "distance": 0,
-      "fuelPricePerLitre": 0,
-      "violated": true,
+    try {
+      Map<String, dynamic> saveConvMap = {
+        "conveyanceDate": checkInDate.value,
+        "origin": tfOrigin.value,
+        "destination": tfDestination.value,
 
-      "travelMode": int.parse(selectModeID.value.toString()),
-      "travelModeName":  modeName.value,
-      "amount": int.parse(tfAmount.value),
-      "maGeConveyanceCityPair": [],
-      "description": tfDescription.value,
-      "voucherNumber": swWithBill.value ? tfVoucher.value : "",
-      "withBill": swWithBill.value,
+        "startTime": selectModeID.value.toString() == "193" ? checkInTime.value : "00:00",
+        "endTime": selectModeID.value.toString() == "193" ? checkOutTime.value  : "00:00",
+        "distance":selectModeID.value.toString() == "193" ? double.parse(distance.value.toString()) : 0,
 
-      "voucherPath": voucherPath.value,
-      "voucherFile": null,
+        "violated": true,
+        "vehicleType": 271,
 
-      "voilationMessage": "Exception due to manual creation of Conveyance",
-    };
+        "travelMode": int.parse(selectModeID.value.toString()),
+        "travelModeName": modeName.value,
+        "amount": double.parse(amount),
+        "maGeConveyanceCityPair": onCityPairAdded.value,
+        "description": tfDescription.value,
+        "voucherNumber": swWithBill.value ? tfVoucher.value : "",
+        "withBill": swWithBill.value,
 
-    emitSuccess(successResponse: jsonEncode(saveConvMap));
+        "voucherPath": voucherPath.value,
+        "voucherFile": null,
+
+        "voilationMessage": "Exception due to manual creation of Conveyance"
+      };
+      emitSuccess(successResponse: jsonEncode(saveConvMap),canSubmitAgain: true);
+    }catch(e){
+      print(e);
+    }
+
+
 
   }
 

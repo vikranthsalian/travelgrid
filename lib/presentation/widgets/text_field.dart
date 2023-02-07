@@ -102,12 +102,14 @@ class MetaTextFieldBlocView extends StatelessWidget {
     required this.mapData,
     required this.onChanged,
     required this.textFieldBloc,
+     this.isEnabled=true,
   })
       : super(key: key);
   Map mapData;
   TextEditingController? controller;
   Function(String)? onChanged;
   TextFieldBloc textFieldBloc;
+  bool isEnabled;
 
   @override
   Widget build(BuildContext context) {
@@ -128,9 +130,10 @@ class MetaTextFieldBlocView extends StatelessWidget {
       inputFormatters: mapData['inputFormatters']  ?? [],
       maxLines:  mapData['maxLines'] ?? 1 ,
      // autovalidateMode: AutovalidateMode.disabled,
+      isEnabled: isEnabled,
       decoration: InputDecoration(
         isDense: true,
-
+     //   enabled: mapData['readOnly'] ?? isEnabled,
         contentPadding:  EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
         border: _renderBorder(),
      // disabledBorder: _renderBorder(),

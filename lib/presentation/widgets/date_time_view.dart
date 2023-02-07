@@ -12,7 +12,8 @@ class MetaDateTimeView extends StatefulWidget {
   String? text;
   Function(Map)? onChange;
   Map value;
-  MetaDateTimeView({required this.mapData,this.text,this.onChange,this.value=const {}});
+  bool isEnabled;
+  MetaDateTimeView({required this.mapData,this.isEnabled=true,this.text,this.onChange,this.value=const {}});
 
 
   @override
@@ -25,6 +26,11 @@ class _MetaDateTimeViewState extends State<MetaDateTimeView> {
   DateTime currentDateTime = DateTime.now();
   @override
   Widget build(BuildContext context) {
+
+    if(widget.value['time']!=null && widget.value['time'].toString().isNotEmpty){
+      time = widget.value['time'];
+      print(widget.value['time']);
+    }
 
     if(widget.mapData['showView'] == "date"){
       return Container(
@@ -48,7 +54,8 @@ class _MetaDateTimeViewState extends State<MetaDateTimeView> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    if(widget.value['date'].toString().isEmpty){
+    print("Rebuild");
+    if(widget.value['date'].isEmpty){
       date= currentDateTime.day.toString();
       week= DateFormat('EEEE').format(currentDateTime);
       month= DateFormat('MMMM, y').format(currentDateTime);
@@ -82,52 +89,55 @@ class _MetaDateTimeViewState extends State<MetaDateTimeView> {
                 child: MetaTextView(mapData: widget.mapData['dateView']['label'])),
             InkWell(
               onTap: ()async{
-                DateTime? pickedDate = await showDatePicker(
+
+                if(widget.isEnabled){
+
+                  DateTime? pickedDate = await showDatePicker(
                     context: appNavigatorKey.currentState!.context,
                     initialDate: DateTime.now(), //get today's date
                     firstDate:DateTime(2000), //DateTime.now() - not to allow to choose before today.
                     lastDate: DateTime(2101),
-                  builder: (context, child) {
-                    return Theme(
-                      data: Theme.of(context).copyWith(
-                        colorScheme: ColorScheme.light(
-                          primary:ParseDataType().getHexToColor( FlavourConstants.appThemeData['primary_color']), // <-- SEE HERE
-                          onPrimary: Colors.white, // <-- SEE HERE
-                          onSurface: Colors.black, // <-- SEE HERE
-                        ),
-                        textButtonTheme: TextButtonThemeData(
-                          style: TextButton.styleFrom(
-                            primary: Colors.black, // button text color
+                    builder: (context, child) {
+                      return Theme(
+                        data: Theme.of(context).copyWith(
+                          colorScheme: ColorScheme.light(
+                            primary:ParseDataType().getHexToColor( FlavourConstants.appThemeData['primary_color']), // <-- SEE HERE
+                            onPrimary: Colors.white, // <-- SEE HERE
+                            onSurface: Colors.black, // <-- SEE HERE
+                          ),
+                          textButtonTheme: TextButtonThemeData(
+                            style: TextButton.styleFrom(
+                              primary: Colors.black, // button text color
+                            ),
                           ),
                         ),
-                      ),
-                      child: child!,
-                    );
-                  },
-                );
-                if (pickedDate != null) {
-                  setState(() {
-                    date= pickedDate.day.toString();
-                    week= DateFormat('EEEE').format(pickedDate);
-                    month= DateFormat('MMMM, y').format(pickedDate);
-                    dateText = DateFormat('dd-MM-yyyy').format(pickedDate);
-                    print(dateText);
-
-
-                    if(widget.mapData['showView'] == "date_time"){
-                      widget.onChange!(
-                          {
-                            "date":dateText,
-                            "time":time,
-                          }
+                        child: child!,
                       );
-                    }else{
-                      widget.onChange!({"date":dateText});
-                    }
+                    },
+                  );
+                  if (pickedDate != null) {
+                    setState(() {
+                      date= pickedDate.day.toString();
+                      week= DateFormat('EEEE').format(pickedDate);
+                      month= DateFormat('MMMM, y').format(pickedDate);
+                      dateText = DateFormat('dd-MM-yyyy').format(pickedDate);
+                      print(dateText);
 
-                  });
+
+                      if(widget.mapData['showView'] == "date_time"){
+                        widget.onChange!(
+                            {
+                              "date":dateText,
+                              "time":time,
+                            }
+                        );
+                      }else{
+                        widget.onChange!({"date":dateText});
+                      }
+
+                    });
+                  }
                 }
-
 
               },
               child: Row(
@@ -154,31 +164,35 @@ class _MetaDateTimeViewState extends State<MetaDateTimeView> {
   Widget timeView(){
     return InkWell(
       onTap: () async{
-      final TimeOfDay? picked_s = await showTimePicker(
-          context: context,
-          initialTime: TimeOfDay.now(),
-          builder: (BuildContext context, Widget? child) {
-
-            return Theme(
-              data: Theme.of(context).copyWith(
-                colorScheme: ColorScheme.light(
-                  primary:ParseDataType().getHexToColor( FlavourConstants.appThemeData['primary_color']), // <-- SEE HERE
-                  onPrimary: Colors.white, // <-- SEE HERE
-                  onSurface: Colors.black, // <-- SEE HERE
-                ),
-                textButtonTheme: TextButtonThemeData(
-                  style: TextButton.styleFrom(
-                    primary: Colors.black, // button text color
+        if(widget.isEnabled) {
+          final TimeOfDay? picked_s = await showTimePicker(
+              context: context,
+              initialTime: TimeOfDay.now(),
+              builder: (BuildContext context, Widget? child) {
+                return Theme(
+                  data: Theme.of(context).copyWith(
+                    colorScheme: ColorScheme.light(
+                      primary: ParseDataType().getHexToColor(
+                          FlavourConstants.appThemeData['primary_color']),
+                      // <-- SEE HERE
+                      onPrimary: Colors.white,
+                      // <-- SEE HERE
+                      onSurface: Colors.black, // <-- SEE HERE
+                    ),
+                    textButtonTheme: TextButtonThemeData(
+                      style: TextButton.styleFrom(
+                        primary: Colors.black, // button text color
+                      ),
+                    ),
                   ),
-                ),
-              ),
-              child:MediaQuery(
-                data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: false),
-                child: child!,
-              ),
-            );
+                  child: MediaQuery(
+                    data: MediaQuery.of(context).copyWith(
+                        alwaysUse24HourFormat: false),
+                    child: child!,
+                  ),
+                );
+              });
 
-          });
 
         if (picked_s != null )
           setState(() {
@@ -196,6 +210,7 @@ class _MetaDateTimeViewState extends State<MetaDateTimeView> {
 
 
           });
+        }
       },
       child: Container(
           child: Column(

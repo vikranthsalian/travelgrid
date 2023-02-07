@@ -544,6 +544,8 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
       }
 
       if(item.item1.type==GETypes.CONVEYANCE){
+        print("item.item1.amount");
+        print(item.item1.amount);
         travelTotal=travelTotal + double.parse(item.item1.amount.toString() ?? "0");
       }
 

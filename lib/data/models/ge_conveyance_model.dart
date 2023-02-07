@@ -5,8 +5,8 @@ class GeConveyanceModel {
   String? conveyanceDate;
   String? startTime;
   String? endTime;
-  int? amount;
-  int? distance;
+  double? amount;
+  double? distance;
   int? fuelPricePerLitre;
   String? voucherNumber;
   bool? withBill;
@@ -121,7 +121,7 @@ class GeConveyanceModel {
       conveyanceDate: map['conveyanceDate'] as String,
       startTime: map['startTime'] ?? "",
       endTime: map['endTime'] ?? "",
-      amount: map['amount'] as int,
+      amount: map['amount'] as double,
       distance: map['distance'] ?? 0,
       fuelPricePerLitre: map['fuelPricePerLitre'] ?? 0,
       voucherNumber: map['voucherNumber'] as String,
@@ -141,6 +141,7 @@ class GeConveyanceModel {
 class MaGeConveyanceCityPair {
   int? distance;
   int? amount;
+  String? checkInDate;
   String? srcLatLog;
   String? desLatLog;
   String? origin;
@@ -163,6 +164,7 @@ class MaGeConveyanceCityPair {
   MaGeConveyanceCityPair.fromJson(Map<String, dynamic> json) {
     distance = json['distance'];
     amount = json['amount'];
+    checkInDate = json['checkInDate'];
     srcLatLog = json['srcLatLog'];
     desLatLog = json['desLatLog'];
     origin = json['origin'];
@@ -175,6 +177,7 @@ class MaGeConveyanceCityPair {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['distance'] = this.distance;
+    data['checkInDate'] = this.checkInDate;
     data['amount'] = this.amount;
     data['srcLatLog'] = this.srcLatLog;
     data['desLatLog'] = this.desLatLog;
@@ -190,6 +193,7 @@ class MaGeConveyanceCityPair {
     return {
       'distance': this.distance,
       'amount': this.amount,
+      'checkInDate': this.checkInDate,
       'srcLatLog': this.srcLatLog,
       'desLatLog': this.desLatLog,
       'origin': this.origin,

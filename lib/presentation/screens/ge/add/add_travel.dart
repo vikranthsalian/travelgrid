@@ -12,9 +12,11 @@ import 'package:travelgrid/common/extensions/pretty.dart';
 import 'package:travelgrid/common/injector/injector.dart';
 import 'package:travelgrid/data/models/expense_model.dart';
 import 'package:travelgrid/data/models/ge_conveyance_model.dart';
+import 'package:travelgrid/data/models/own_vehicle_model.dart';
 import 'package:travelgrid/data/models/success_model.dart';
 import 'package:travelgrid/domain/usecases/common_usecase.dart';
 import 'package:travelgrid/presentation/components/upload_component.dart';
+import 'package:travelgrid/presentation/screens/ge/add/add_travel_ov.dart';
 import 'package:travelgrid/presentation/screens/ge/bloc/travel_form_bloc.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';
 import 'package:travelgrid/presentation/widgets/date_time_view.dart';
@@ -69,6 +71,7 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
             ),
             MetaButton(mapData: jsonData['bottomButtonRight'],
                 onButtonPressed: () async {
+
                   if(formBloc!.swWithBill.value && file!=null){
                     String fileName = file!.path.split('/').last;
                     String  dateText = DateFormat('dd-MM-yyyy_hh:ss').format(DateTime.now());
@@ -82,6 +85,7 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
                     }
                   }
                   else{
+                    print("sfdfds");
                     formBloc!.submit();
                   }
                 }
@@ -159,15 +163,21 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
                       margin: EdgeInsets.symmetric(horizontal: 10.w),
                       child: FormBlocListener<TravelFormBloc, String, String>(
                           onSubmissionFailed: (context, state) {
+                            print("onSubmissionFailed");
                             print(state);
                           },
                           onSubmitting: (context, state) {
+                            print("onSubmitting");
+                            print(state);
                             FocusScope.of(context).unfocus();
                           },
                           onSuccess: (context, state) {
-
+                            print("onSuccess");
                             print(state.successResponse);
                             GeConveyanceModel modelResponse = GeConveyanceModel.fromJson(jsonDecode(state.successResponse.toString()));
+
+                            print(modelResponse.toJson());
+                            print(modelResponse.amount.toString());
 
                             widget.onAdd!(
                                 {
@@ -178,147 +188,179 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
                             Navigator.pop(context);
                           },
                           onFailure: (context, state) {
-
-
+                            print("onFailure");
+                            print(state);
                           },
                           child: ScrollableFormBlocManager(
                             formBloc: formBloc!,
-                            child: ListView(
-                                padding: EdgeInsets.zero,
-                                shrinkWrap: true,
-                                children:[
-                                  Container(
-                                    child: MetaDateTimeView(mapData: jsonData['checkInDateTime'],
-                                      value: {
-                                        "date": formBloc!.checkInDate.value,
-                                        "time": formBloc!.checkInTime.value,
-                                      },
-                                      onChange: (value){
-                                        print(value);
-                                        formBloc!.checkInDate.updateValue(value['date'].toString());
-                                        formBloc!.checkInTime.updateValue(value['time'].toString());
-                                      },),
-                                  ),
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                        child: Container(
-                                          child:MetaTextFieldBlocView(mapData: jsonData['text_field_origin'],
-                                              textFieldBloc: formBloc!.tfOrigin,
-                                              onChanged:(value){
-                                                formBloc!.tfOrigin.updateValue(value);
-                                              }),
-                                          alignment: Alignment.centerLeft,
+                            child: BlocBuilder<SelectFieldBloc, SelectFieldBlocState>(
+                                bloc: formBloc!.selectModeID,
+                                builder: (context, state) {
+                                  return  ListView(
+                                      padding: EdgeInsets.zero,
+                                      shrinkWrap: true,
+                                      children:[
+                                        Container(
+                                          child: MetaDateTimeView(mapData: jsonData['checkInDateTime'],
+                                            isEnabled: formBloc!.selectModeID.value=="193" ? false: true,
+                                            value: {
+                                              "date": formBloc!.checkInDate.value,
+                                              "time": formBloc!.checkInTime.value,
+                                            },
+                                            onChange: (value){
+                                              print(value);
+                                              formBloc!.checkInDate.updateValue(value['date'].toString());
+                                              formBloc!.checkInTime.updateValue(value['time'].toString());
+                                            },),
                                         ),
-                                      ),
-                                      SizedBox(width: 10.w,),
+                                        Row(
+                                          children: [
+                                            Expanded(
+                                              child: Container(
+                                                child:MetaTextFieldBlocView(mapData: jsonData['text_field_origin'],
+                                                    textFieldBloc: formBloc!.tfOrigin,
+                                                    isEnabled :  formBloc!.selectModeID.value=="193" ? false: true,
+                                                    onChanged:(value){
+                                                      formBloc!.tfOrigin.updateValue(value);
+                                                    }),
+                                                alignment: Alignment.centerLeft,
+                                              ),
+                                            ),
+                                            SizedBox(width: 10.w,),
 
-                                      Expanded(
-                                        child: Container(
-                                          child:MetaTextFieldBlocView(mapData: jsonData['text_field_destination'],
-                                              textFieldBloc: formBloc!.tfDestination,
-                                              onChanged:(value){
-                                                formBloc!.tfDestination.updateValue(value);
-                                              }),
-                                          alignment: Alignment.centerLeft,
+                                            Expanded(
+                                              child: Container(
+                                                child:MetaTextFieldBlocView(mapData: jsonData['text_field_destination'],
+                                                    textFieldBloc: formBloc!.tfDestination,
+                                                    isEnabled :  formBloc!.selectModeID.value=="193" ? false: true,
+                                                    onChanged:(value){
+                                                      formBloc!.tfDestination.updateValue(value);
+                                                    }),
+                                                alignment: Alignment.centerLeft,
+                                              ),
+                                            ),
+                                          ],
                                         ),
-                                      ),
-                                    ],
-                                  ),
 
 
-
-                                  Container(
-                                    child:Container(
-                                      child: MetaDialogSelectorView(mapData: jsonData['selectMode'],
-                                        text :getInitialText(formBloc!.modeName.value),
-                                        onChange:(value){
-                                          print(value);
-                                          formBloc!.selectModeID.updateValue(value['id'].toString());
-                                          formBloc!.modeName.updateValue(value['label']);
-                                        },),
-                                    ) ,
-                                  ),
-                                  BlocBuilder<SelectFieldBloc, SelectFieldBlocState>(
-                                      bloc: formBloc!.selectModeID,
-                                      builder: (context, state) {
-                                        return Visibility(
-                                          visible: state.value == "212" ? true : false,
-                                          child:MetaDialogSelectorView(mapData: jsonData['selectVehicleType'],
-                                            text :getInitialText(formBloc!.VehicleTypeName.value),
+                                        Container(
+                                          child: MetaDialogSelectorView(mapData: jsonData['selectMode'],
+                                            text :getInitialText(formBloc!.modeName.value),
                                             onChange:(value){
                                               print(value);
-                                              formBloc!.VehicleTypeName.updateValue(value['text']);
+                                              formBloc!.selectModeID.updateValue(value['id'].toString());
+                                              formBloc!.modeName.updateValue(value['label']);
+
+                                              if(value['id']==193){
+                                                Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
+                                                    CreateTravelExpenseOV(
+                                                        onClose:(data){
+                                                          formBloc!.selectModeID.updateValue(data['id'].toString());
+                                                          formBloc!.modeName.updateValue(data['label']);
+                                                        },
+                                                        onAdd: (values){
+
+                                                          List<MaGeConveyanceCityPair> list = values;
+
+                                                          formBloc!.checkInDate.updateValue(list[0].checkInDate.toString());
+
+                                                          formBloc!.tfOrigin.updateValue(list[0].origin.toString());
+                                                          formBloc!.tfDestination.updateValue(list[list.length-1].destination.toString());
+                                                           double amt=0;
+                                                           double dist=0;
+                                                           for(int i=0;i<list.length;i++){
+                                                             amt= amt +double.parse(list[i].amount.toString());
+                                                             dist= dist +double.parse(list[i].distance.toString());
+                                                           }
+
+
+                                                          formBloc!.checkInTime.updateValue(list[0].startTime.toString());
+                                                          formBloc!.checkOutTime.updateValue(list[list.length-1].endTime.toString());
+                                                          formBloc!.distance.updateValue(dist.toString());
+                                                          formBloc!.checkInDate.updateValue(list[0].checkInDate.toString());
+
+                                                          formBloc!.tfAmount.updateValue(amt.toString());
+                                                          formBloc!.selectModeID.updateValue("193");
+
+                                                          formBloc!.onCityPairAdded.updateValue(list);
+
+
+                                                        },
+                                                        jsonData: jsonData['own_vehicle'])));
+                                              }
+
 
                                             },),
-                                        );
-                                      }
-                                  ),
-                                  Container(
-                                    child: Row(
-                                      children: [
+                                        ),
+                                        Container(
+                                          child: Row(
+                                            children: [
+                                              Expanded(
+                                                child: Container(
+                                                  child: MetaTextFieldBlocView(mapData: jsonData['text_field_amount'],
+                                                      textFieldBloc: formBloc!.tfAmount,
+                                                      isEnabled :  formBloc!.selectModeID.value=="193" ? false: true,
+                                                      onChanged:(value){
+                                                        formBloc!.tfAmount.updateValue(value);
+                                                      }),
+                                                ),
+                                              ),
 
-                                        Expanded(
-                                          child: BlocBuilder<SelectFieldBloc, SelectFieldBlocState>(
-                                              bloc: formBloc!.selectWithBill,
-                                              builder: (context, state) {
-                                                return
-                                                  Visibility(
-                                                    visible: state.value == "true" ? true : false,
-                                                    child:MetaTextFieldBlocView(mapData: jsonData['text_field_voucher'],
-                                                        textFieldBloc: formBloc!.tfVoucher,
-                                                        onChanged:(value){
-                                                          formBloc!.tfVoucher.updateValue(value);
-                                                        }),
-                                                  );
-                                              }
+                                              SizedBox(width: 10.w,),
+                                              Expanded(
+                                                child: BlocBuilder<SelectFieldBloc, SelectFieldBlocState>(
+                                                    bloc: formBloc!.selectWithBill,
+                                                    builder: (context, state) {
+                                                      return
+                                                        Visibility(
+                                                          visible: state.value == "true" ? true : false,
+                                                          child:MetaTextFieldBlocView(mapData: jsonData['text_field_voucher'],
+                                                              textFieldBloc: formBloc!.tfVoucher,
+                                                              onChanged:(value){
+                                                                formBloc!.tfVoucher.updateValue(value);
+                                                              }),
+                                                        );
+                                                    }
+                                                ),
+                                              ),
+
+                                            ],
                                           ),
                                         ),
-                                        SizedBox(width: 10.w,),
-                                        Expanded(
-                                          child: Container(
-                                            child: MetaTextFieldBlocView(mapData: jsonData['text_field_amount'],
-                                                textFieldBloc: formBloc!.tfAmount,
-                                                onChanged:(value){
-                                                  formBloc!.tfAmount.updateValue(value);
-                                                }),
-                                          ),
-                                        ),
 
-                                      ],
-                                    ),
-                                  ),
+                                        MetaTextFieldBlocView(mapData: jsonData['text_field_desc'],
+                                            textFieldBloc: formBloc!.tfDescription,
+                                            onChanged:(value){
+                                              formBloc!.tfDescription.updateValue(value);
+                                            }),
+                                        Container(
+                                          child: MetaSwitchBloc(
+                                              mapData:  jsonData['withBillCheckBox'],
+                                              bloc:  formBloc!.swWithBill,
+                                              onSwitchPressed: (value){
 
-                                  MetaTextFieldBlocView(mapData: jsonData['text_field_desc'],
-                                      textFieldBloc: formBloc!.tfDescription,
-                                      onChanged:(value){
-                                        formBloc!.tfDescription.updateValue(value);
-                                      }),
-                                  Container(
-                                    child: MetaSwitchBloc(
-                                        mapData:  jsonData['withBillCheckBox'],
-                                        bloc:  formBloc!.swWithBill,
-                                        onSwitchPressed: (value){
-
-                                          formBloc!.selectWithBill.updateValue(value.toString());
-                                          formBloc!.swWithBill.updateValue(value);
-                                        }),
-                                  ),
-                                  BlocBuilder<SelectFieldBloc, SelectFieldBlocState>(
-                                      bloc: formBloc!.selectWithBill,
-                                      builder: (context, state) {
-                                        return Visibility(
-                                          visible: state.value == "true" ? true : false,
-                                          child:UploadComponent(jsonData: jsonData['uploadButton'],
-                                              onSelected: (dataFile){
-                                                file=dataFile;
+                                                formBloc!.selectWithBill.updateValue(value.toString());
+                                                formBloc!.swWithBill.updateValue(value);
                                               }),
-                                        );
-                                      }
-                                  )
+                                        ),
+                                        BlocBuilder<SelectFieldBloc, SelectFieldBlocState>(
+                                            bloc: formBloc!.selectWithBill,
+                                            builder: (context, state) {
+                                              return Visibility(
+                                                visible: state.value == "true" ? true : false,
+                                                child:UploadComponent(jsonData: jsonData['uploadButton'],
+                                                    onSelected: (dataFile){
+                                                      file=dataFile;
+                                                    }),
+                                              );
+                                            }
+                                        )
 
-                                ]
-                            ),
+                                      ]
+                                  );
+                                }
+                            )
+                              ,
                           )
                       ),
                     );
