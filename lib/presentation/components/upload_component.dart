@@ -36,7 +36,7 @@ class _UploadComponentState extends State<UploadComponent> {
   }
   @override
   void dispose() {
-    controller.dispose();
+    //controller.dispose();
     super.dispose();
   }
 

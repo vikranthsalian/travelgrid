@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -15,7 +14,6 @@ import 'package:travelgrid/common/injector/injector.dart';
 import 'package:travelgrid/data/cubits/approver_type_cubit/approver_type_cubit.dart';
 import 'package:travelgrid/data/cubits/login_cubit/login_cubit.dart';
 import 'package:travelgrid/data/datsources/approver_list.dart' as app;
-import 'package:travelgrid/data/datsources/general_expense_list.dart';
 import 'package:travelgrid/data/datsources/login_response.dart';
 import 'package:travelgrid/data/models/expense_model.dart';
 import 'package:travelgrid/data/models/ge_accom_model.dart';
@@ -482,14 +480,14 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
                 padding: EdgeInsets.zero,
                 itemBuilder: (BuildContext context, int index) {
 
-                  String type = summaryItems[index].item1.type.toString();
+                  GETypes? type = summaryItems[index].item1.type;
                   String amount = summaryItems[index].item1.amount.toString();
 
                   return Container(
                     margin: EdgeInsets.symmetric(vertical: 2.h),
                     child: Row(
                       children: [
-                        Expanded(flex:2, child: MetaTextView(mapData: map['listView']['item'],text: type)),
+                        Expanded(flex:2, child: MetaTextView(mapData: map['listView']['item'],text: configureExpenseTypes(type) )),
                         Expanded(flex:1,child: MetaTextView(mapData: map['listView']['item'],text:amount)),
                         Expanded(flex:1,child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -711,6 +709,22 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
       Navigator.pop(context);
     }
 
+  }
+
+
+  String configureExpenseTypes(text){
+
+
+    switch(text){
+      case GETypes.ACCOMMODATION :
+        return "Accommodation";
+      case GETypes.CONVEYANCE :
+        return "Travel";
+      case GETypes.MISCELLANEOUS :
+        return "Miscellaneous";
+    }
+
+    return "";
   }
 
 }

@@ -22,6 +22,7 @@ class CommonRepository extends CommonAPIAbstract {
   Future<MetaCityListResponse> getCities(countryCode,tripType) async {
 
     Map<String,dynamic> data= {
+      "q":"",
       "tripType":tripType,
       "countryCode":countryCode,
     };

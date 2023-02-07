@@ -17,6 +17,7 @@ class TravelOVFormBloc extends FormBloc<String, String> {
   final checkInDate =  TextFieldBloc(validators: [emptyValidator]);
   final startTime =  TextFieldBloc(validators: [emptyValidator]);
   final endTime =  TextFieldBloc(validators: [emptyValidator]);
+  final travelModeID =  TextFieldBloc(validators: [emptyValidator]);
 
   final tfDestination =  TextFieldBloc(validators: [emptyValidator]);
   final tfOrigin =  TextFieldBloc(validators: [emptyValidator]);
@@ -100,11 +101,11 @@ class TravelOVFormBloc extends FormBloc<String, String> {
   FutureOr<void> onSubmitting() async {
 
     Map<String,dynamic> saveOVMap = {
-      "checkInDate": checkInDate.value,
+    //  "checkInDate": checkInDate.value,
       "srcLatLog": "12.96643,77.58718",
       "desLatLog": "18.94017,72.83483",
 
-      "travelMode": 193,
+      "travelMode": int.parse(travelModeID.value),
       "origin": tfOrigin.value,
       "destination": tfDestination.value,
       "distance": int.parse(tfDistance.value),

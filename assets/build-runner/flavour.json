@@ -1004,7 +1004,7 @@
   "accom_create_data": {
     "backgroundColor" : "0xFF2854A1",
     "title":  {
-      "text" : "Add\nAccommodation Expense",
+      "text" : "GE Accommodation",
       "color" : "0XFFFFFFFF",
       "size": "18",
       "family": "bold",
@@ -1414,7 +1414,7 @@
   "travel_create_data": {
     "backgroundColor" : "0xFF2854A1",
     "title":  {
-      "text" : "Create\nTravel Expense",
+      "text" : "GE Travel",
       "color" : "0XFFFFFFFF",
       "size": "18",
       "family": "bold",
@@ -1779,7 +1779,7 @@
     },
     "own_vehicle":{
       "title":  {
-        "text" : "Create\nTravel Expense",
+        "text" : "GE Travel",
         "color" : "0XFFFFFFFF",
         "size": "18",
         "family": "bold",
@@ -2275,7 +2275,6 @@
             }
           }
         }
-
       },
       "addButton": {
         "text" : "Add",
@@ -2317,7 +2316,7 @@
   "misc_create_data": {
     "backgroundColor" : "0xFF2854A1",
     "title":  {
-      "text" : "Create\nMiscellaneous Expense",
+      "text" : "GE Miscellaneous",
       "color" : "0XFFFFFFFF",
       "size": "18",
       "family": "bold",

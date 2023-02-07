@@ -115,7 +115,6 @@ class TravelFormBloc extends FormBloc<String, String> {
         "withBill": swWithBill.value,
 
         "voucherPath": voucherPath.value,
-        "voucherFile": null,
 
         "voilationMessage": "Exception due to manual creation of Conveyance"
       };

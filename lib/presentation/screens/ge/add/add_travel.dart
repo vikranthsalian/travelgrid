@@ -258,11 +258,12 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
                                                           formBloc!.selectModeID.updateValue(data['id'].toString());
                                                           formBloc!.modeName.updateValue(data['label']);
                                                         },
-                                                        onAdd: (values){
+                                                        onAdd: (values,date){
+
+                                                          print("CreateTravelExpenseOVdate");
+                                                          print(date);
 
                                                           List<MaGeConveyanceCityPair> list = values;
-
-                                                          formBloc!.checkInDate.updateValue(list[0].checkInDate.toString());
 
                                                           formBloc!.tfOrigin.updateValue(list[0].origin.toString());
                                                           formBloc!.tfDestination.updateValue(list[list.length-1].destination.toString());
@@ -277,7 +278,7 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
                                                           formBloc!.checkInTime.updateValue(list[0].startTime.toString());
                                                           formBloc!.checkOutTime.updateValue(list[list.length-1].endTime.toString());
                                                           formBloc!.distance.updateValue(dist.toString());
-                                                          formBloc!.checkInDate.updateValue(list[0].checkInDate.toString());
+                                                          formBloc!.checkInDate.updateValue(date);
 
                                                           formBloc!.tfAmount.updateValue(amt.toString());
                                                           formBloc!.selectModeID.updateValue("193");

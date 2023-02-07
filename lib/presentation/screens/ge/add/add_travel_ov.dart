@@ -19,12 +19,13 @@ import 'package:travelgrid/presentation/widgets/text_view.dart';
 
 
 class CreateTravelExpenseOV extends StatelessWidget {
-  Function(List<MaGeConveyanceCityPair>)? onAdd;
+  Function(List<MaGeConveyanceCityPair>,String)? onAdd;
   Function(Map)? onClose;
   Map<String,dynamic> jsonData;
   CreateTravelExpenseOV({this.onAdd,this.onClose,required this.jsonData});
   List<MaGeConveyanceCityPair> dataItems=[];
   TravelOVFormBloc?  formBloc;
+  String? date;
 
 
 
@@ -72,7 +73,8 @@ class CreateTravelExpenseOV extends StatelessWidget {
                     MetaAlert.showErrorAlert(message: "Please Add Own Vehicle Expesne");
                   }else{
                     Navigator.pop(context);
-                    onAdd!(dataItems);
+
+                    onAdd!(dataItems,date!);
                   }
 
 
@@ -136,7 +138,7 @@ class CreateTravelExpenseOV extends StatelessWidget {
 
                             print(state.successResponse);
                             MaGeConveyanceCityPair modelResponse = MaGeConveyanceCityPair.fromJson(jsonDecode(state.successResponse.toString()));
-
+                            date = formBloc!.checkInDate.value;
                             dataItems.add(modelResponse);
 
 
@@ -145,7 +147,7 @@ class CreateTravelExpenseOV extends StatelessWidget {
                             formBloc!.clear();
 
 
-                            formBloc!.checkInDate.updateValue(modelResponse.checkInDate.toString());
+                          //  formBloc!.checkInDate.updateValue(modelResponse.checkInDate.toString());
 
 
                             formBloc!.startTime.updateValue(modelResponse.endTime.toString());
@@ -194,7 +196,6 @@ class CreateTravelExpenseOV extends StatelessWidget {
                                                       if(value == "YES"){
 
                                                         onClose!(data);
-                                                        print("onclose");
 
                                                         Navigator.pop(context);
                                                       }else{
@@ -319,6 +320,7 @@ class CreateTravelExpenseOV extends StatelessWidget {
                                       print(value);
                                       formBloc!.vehicleTypeName.updateValue(value['text']);
                                       formBloc!.tfFuelPrice.updateValue(value['fuelPrice'].toString());
+                                      formBloc!.travelModeID.updateValue(value['id'].toString());
 
                                     },),
                                   Row(
