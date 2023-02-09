@@ -84,6 +84,7 @@ class MetaSwitchBloc extends StatelessWidget {
       child:Container(
         margin: EdgeInsets.symmetric(horizontal: 10.w,vertical: 5.h),
         child: SwitchFieldBlocBuilder(
+
           booleanFieldBloc: bloc!,
           body:Container(child: MetaTextView(mapData: mapData['label'])),
         ),

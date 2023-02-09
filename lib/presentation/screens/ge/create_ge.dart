@@ -34,6 +34,10 @@ import 'package:travelgrid/presentation/widgets/text_view.dart';
 import 'package:tuple/tuple.dart';
 
 class CreateGeneralExpense extends StatefulWidget {
+  bool isEdit;
+  String? title;
+  CreateGeneralExpense({this.isEdit=true,this.title});
+
   @override
   _CreateGeneralExpenseState createState() => _CreateGeneralExpenseState();
 }
@@ -51,6 +55,7 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
   bool showSummaryItems=true;
   bool showSummaryDetails=true;
   bool showApproverDetails=true;
+
   String total="0.00";
   MetaLoginResponse loginResponse = MetaLoginResponse();
 
@@ -118,22 +123,7 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
         shape: CircularNotchedRectangle(),
         notchMargin: 5,
         elevation: 2.0,
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            MetaButton(mapData: jsonData['bottomButtonLeft'],
-                onButtonPressed: (){
-
-                }
-            ),
-            MetaButton(mapData: jsonData['bottomButtonRight'],
-                onButtonPressed: (){
-                  submitGe("submit");
-                }
-            )
-          ],
-        ),
+        child: widget.isEdit ? buildSubmitRow():SizedBox(),
       ),
       body: Container(
         color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
@@ -152,11 +142,12 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
                         Navigator.pop(context);
                       }),
                   Container(
-                    child:MetaTextView(mapData: jsonData['title']),
+                    child:MetaTextView(mapData: jsonData['title'],text: widget.title),
                   ),
                 ],
               ),
             ),
+            widget.isEdit ?
             Container(
               color: Colors.white,
               height:70.h,
@@ -200,7 +191,7 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
                   }).toList(),
                 ),
               ),
-            ),
+            ):SizedBox(),
             Expanded(
               child: Container(
                 color:Colors.white,
@@ -219,6 +210,44 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
           ],
         ),
       ),
+    );
+  }
+
+  Row buildSubmitRow() {
+    return Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          MetaButton(mapData: jsonData['bottomButtonLeft'],
+              onButtonPressed: (){
+
+              }
+          ),
+          MetaButton(mapData: jsonData['bottomButtonRight'],
+              onButtonPressed: (){
+                submitGe("submit");
+              }
+          )
+        ],
+      );
+  }
+
+  Row buildViewRow() {
+    return Row(
+      mainAxisSize: MainAxisSize.max,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        MetaButton(mapData: jsonData['bottomButtonLeft'],
+            onButtonPressed: (){
+
+            }
+        ),
+        MetaButton(mapData: jsonData['bottomButtonRight'],
+            onButtonPressed: (){
+
+            }
+        )
+      ],
     );
   }
 
@@ -410,12 +439,13 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
                   ),
                 ),
               ]),
+          widget.isEdit?
           MetaTextFieldView(
              controller: TextEditingController(),
               mapData: map['text_field_desc'],
               onChanged:(value){
                 description=value;
-              }),
+              }):SizedBox(),
 
         ],
       ),

@@ -139,8 +139,8 @@ class GeConveyanceModel {
 }
 
 class MaGeConveyanceCityPair {
-  int? distance;
-  int? amount;
+  double? distance;
+  double? amount;
   String? srcLatLog;
   String? desLatLog;
   String? origin;
@@ -202,8 +202,8 @@ class MaGeConveyanceCityPair {
 
   factory MaGeConveyanceCityPair.fromMap(Map<String, dynamic> map) {
     return MaGeConveyanceCityPair(
-      distance: map['distance'] as int,
-      amount: map['amount'] as int,
+      distance: map['distance'] as double,
+      amount: map['amount'] as double,
       srcLatLog: map['srcLatLog'] as String,
       desLatLog: map['desLatLog'] as String,
       origin: map['origin'] as String,

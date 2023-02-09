@@ -2276,6 +2276,91 @@
           }
         }
       },
+      "locationItems": {
+        "saveButton": {
+          "text" : "Save Location",
+          "color" : "0xFFFFFFFF",
+          "backgroundColor" : "0xFF2854A1",
+          "size": "12",
+          "family": "regular",
+          "borderRadius": 15.0
+        },
+        "label": {
+          "text" : "Saved Location Details",
+          "color" : "0XFFFFFFFF",
+          "size": "14",
+          "family": "bold",
+          "align": "center-left"
+        },
+        "showDetails": {
+          "label": {
+            "text" : "Show",
+            "color" : "0XFFFFFFFF",
+            "size": "10",
+            "family": "bold",
+            "align": "center-right"
+          }
+        },
+        "dataHeader":  [
+          {
+            "text" : "Location",
+            "color" : "0xFF000000",
+            "size": "10",
+            "family": "bold",
+            "align": "center-left",
+            "flex": 3
+          },
+          {
+            "text" : "Date Time",
+            "color" : "0xFF000000",
+            "size": "10",
+            "family": "bold",
+            "align": "center-left",
+            "flex": 2
+          },
+          {
+            "text" : "Delete",
+            "color" : "0xFF000000",
+            "size": "12",
+            "family": "bold",
+            "align": "center",
+            "flex": 1
+          }
+        ],
+        "listView": {
+          "checkbox": {
+            "text" : "",
+            "color" : "0XFF000000",
+            "size": "10",
+            "family": "regular",
+            "align": "center-left"
+          },
+          "item": {
+            "text" : "",
+            "color" : "0XFF000000",
+            "size": "10",
+            "family": "regular",
+            "align": "center-left",
+            "svgIcon": {
+              "icon": "delete.svg",
+              "color" : "0xFFff0000"
+            }
+          },
+          "emptyData": {
+            "image_view":   {
+              "image" : "logo_banner.png",
+              "align": "center",
+              "wd": 250.0
+            },
+            "title":  {
+              "text" : "No item Added!!!",
+              "color" : "0XFF3D3D3D",
+              "size": "16",
+              "family": "regular"
+            }
+          }
+        }
+      },
       "addButton": {
         "text" : "Add",
         "color" : "0xFFFFFFFF",

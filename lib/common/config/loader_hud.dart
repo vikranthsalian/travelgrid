@@ -1,6 +1,6 @@
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
-class ZBAProgressHUD {
+class MetaProgressHUD {
   /// dismiss hud
   static void dismiss() {
     EasyLoading.dismiss();

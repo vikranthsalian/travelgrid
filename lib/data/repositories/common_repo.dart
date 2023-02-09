@@ -6,6 +6,7 @@ import 'package:travelgrid/data/datsources/approver_list.dart';
 import 'package:travelgrid/data/datsources/cities_list.dart';
 import 'package:travelgrid/data/datsources/misc_type_list.dart';
 import 'package:travelgrid/data/datsources/travel_mode_list.dart';
+import 'package:travelgrid/data/datsources/lat_long_distance_model.dart';
 import 'package:travelgrid/data/models/success_model.dart';
 import 'package:travelgrid/data/remote/remote_datasource.dart';
 import 'package:travelgrid/domain/repo_abstract/api_abstract.dart';
@@ -111,5 +112,19 @@ class CommonRepository extends CommonAPIAbstract {
     return SuccessModel(status: false);
   }
 
+
+  @override
+  Future<MetaLatLongDistanceModel> getDistance(origin,destination) async {
+
+
+    var response = await apiRemoteDatasource.getRoutes(origin,destination);
+
+    if(response!=null) {
+      MetaLatLongDistanceModel modelResponse = MetaLatLongDistanceModel.fromJson(response);
+      return modelResponse;
+    }
+
+    return MetaLatLongDistanceModel();
+  }
 
 }

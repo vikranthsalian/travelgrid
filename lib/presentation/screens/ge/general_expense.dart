@@ -306,7 +306,19 @@ class _GeneralExpenseState extends State<GeneralExpense> {
                                  "align" : "center"
                                }),
                              ),
-                            MetaTextView( mapData:  view )
+                            InkWell(
+                              onTap: (){
+                                Navigator.of(context).pushNamed(jsonData['bottomButtonFab']['onClick'],
+                                    arguments: {
+                                        "isEdit": false,
+                                        "title": "#" +
+                                            item.recordLocator.toString()
+                                                .toUpperCase()
+                                }).then((value) {
+                                  bloc!.add(GetGeneralExpenseListEvent());
+                                });
+                                },
+                                child: MetaTextView( mapData:  view ))
                           ]),
                         ),
                       ],

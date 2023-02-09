@@ -9,6 +9,7 @@ import 'package:travelgrid/common/utils/validators.dart';
 import 'package:travelgrid/data/cubits/login_cubit/login_cubit.dart';
 import 'package:travelgrid/data/datsources/login_response.dart';
 import 'package:travelgrid/data/models/ge_conveyance_model.dart';
+import 'package:travelgrid/data/models/location_model.dart';
 import 'package:travelgrid/domain/usecases/login_usecase.dart';
 
 class TravelOVFormBloc extends FormBloc<String, String> {
@@ -31,6 +32,8 @@ class TravelOVFormBloc extends FormBloc<String, String> {
   final modeName =  TextFieldBloc(validators: [emptyValidator]);
 
 
+  final onAutoSelected =  SelectFieldBloc(initialValue: "auto");
+  final onLocationAdded =  SelectFieldBloc<List<LocationModel>,dynamic>(initialValue: []);
   final onDataAdded = SelectFieldBloc<String,dynamic>();
   final onListLoaded = SelectFieldBloc<List<MaGeConveyanceCityPair>,dynamic>(initialValue: []);
 
@@ -100,21 +103,26 @@ class TravelOVFormBloc extends FormBloc<String, String> {
   @override
   FutureOr<void> onSubmitting() async {
 
-    Map<String,dynamic> saveOVMap = {
-    //  "checkInDate": checkInDate.value,
-      "srcLatLog": "12.96643,77.58718",
-      "desLatLog": "18.94017,72.83483",
+    try {
+      Map<String, dynamic> saveOVMap = {
+        //  "checkInDate": checkInDate.value,
+        "srcLatLog": "12.96643,77.58718",
+        "desLatLog": "18.94017,72.83483",
 
-      "travelMode": int.parse(travelModeID.value),
-      "origin": tfOrigin.value,
-      "destination": tfDestination.value,
-      "distance": int.parse(tfDistance.value),
-      "startTime":  startTime.value,
-      "endTime":  endTime.value,
-      "amount": int.parse(tfAmount.value),
-    };
+        "travelMode": int.parse(travelModeID.value),
+        "origin": tfOrigin.value,
+        "destination": tfDestination.value,
+        "distance": double.parse(tfDistance.value),
+        "startTime": startTime.value,
+        "endTime": endTime.value,
+        "amount": double.parse(tfAmount.value),
+      };
+      emitSuccess(successResponse: jsonEncode(saveOVMap),canSubmitAgain: true);
+    }catch(e){
+      print(e);
+    }
 
-    emitSuccess(successResponse: jsonEncode(saveOVMap),canSubmitAgain: true);
+
 
   }
 

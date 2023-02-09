@@ -101,7 +101,7 @@ class TravelFormBloc extends FormBloc<String, String> {
 
         "startTime": selectModeID.value.toString() == "193" ? checkInTime.value : "00:00",
         "endTime": selectModeID.value.toString() == "193" ? checkOutTime.value  : "00:00",
-        "distance":selectModeID.value.toString() == "193" ? double.parse(distance.value.toString()) : 0,
+        "distance":selectModeID.value.toString() == "193" ? double.parse(distance.value.toString()) : 0.0,
 
         "violated": true,
         "vehicleType": 271,

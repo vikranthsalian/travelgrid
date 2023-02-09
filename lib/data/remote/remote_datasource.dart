@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:travelgrid/common/config/navigator_key.dart';
 import 'package:travelgrid/common/dio/dio_client.dart';
+import 'package:travelgrid/common/utils/loader_hud.dart';
 import 'package:travelgrid/data/cubits/login_cubit/login_cubit.dart';
 import 'package:travelgrid/data/datsources/accom_type_list.dart';
 import 'package:travelgrid/data/datsources/cities_list.dart';
@@ -165,6 +166,32 @@ class APIRemoteDatasource{
 
   }
 
+  Future<dynamic> getRoutes(origin,dest) async {
 
+    MetaProgressHUD.showLoading(text: "Calculating Distance,hang on...");
+
+    try {
+      Response   responseJson = await Dio().get("https://router.hereapi.com/v8/routes",
+          queryParameters: {
+            "transportMode":"car",
+            "origin":origin,
+            "destination":dest,
+            "return":"summary",
+            "apikey":"uFtVTpwklW1Np_0CdVKXSHOdVhiSFHz6nCMwv1Vt3yQ",
+          });
+      print(responseJson.data.toString());
+      return responseJson.data;
+    } on DioError catch (e) {
+      print("DioError"+e.toString());
+      return MetaAccomTypeListResponse(status: false);
+
+    }catch(e){
+      print("CatchError"+e.toString());
+      return MetaAccomTypeListResponse(status: false);
+    }finally{
+      MetaProgressHUD.dismiss();
+    }
+
+  }
 
 }
