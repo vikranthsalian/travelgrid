@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:camera/camera.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -23,8 +22,8 @@ class UploadComponent extends StatefulWidget {
 }
 
 class _UploadComponentState extends State<UploadComponent> {
-  XFile? file;
-  late CameraController controller;
+   File? file;
+ // late CameraController controller;
   @override
   void initState() {
     // TODO: implement initState
@@ -74,14 +73,14 @@ class _UploadComponentState extends State<UploadComponent> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Container(
-            height: 70.h,
-            width: 70.h,
+            height: 60.h,
+            width: 60.h,
             child: Stack(
               alignment: Alignment.bottomCenter,
                 children: [
                   Container(
-                      height: 70.h,
-                      width: 70.h,
+                      height:60.h,
+                      width: 60.h,
                       child: Image.file(File(file!.path))
                   ),
                   InkWell(
@@ -102,7 +101,7 @@ class _UploadComponentState extends State<UploadComponent> {
                     child: Container(
                       color: Colors.red,
                         height: 20.h,
-                        width: 70.h,
+                        width: 60.h,
                         child: MetaTextView(mapData: remove)
                     ),
                   )
@@ -124,7 +123,7 @@ class _UploadComponentState extends State<UploadComponent> {
                   if(value == "Gallery"){
                     FilePickerResult? result = await FilePicker.platform.pickFiles(allowMultiple: false);
                     if (result != null) {
-                      file =  XFile(result.files.single.path.toString()) ;
+                      file =   File(result.files.single.path.toString());
 
                       setState(() {
 
@@ -142,13 +141,13 @@ class _UploadComponentState extends State<UploadComponent> {
             ));
       },
       child: Container(
-        height: 65.h,
+        height: 55.h,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Container(
-                height: 30.w,
-                width: 30.w,
+                height: 25.w,
+                width: 25.w,
                 child: MetaSVGView(mapData:  widget.jsonData['svgIcon'])
             ),
             Container(
@@ -163,52 +162,52 @@ class _UploadComponentState extends State<UploadComponent> {
     );
   }
 
-  void setupCamera() {
-    availableCameras().then((_cameras) {
-      print(_cameras[0]);
-      controller = CameraController(_cameras[0], ResolutionPreset.medium);
-      controller.initialize().then((_) {
-        if (!mounted) {
-          return;
-        }
-        setState(() {});
-      }).catchError((Object e) {
-        print(e);
-        if (e is CameraException) {
-          switch (e.code) {
-            case 'CameraAccessDenied':
-            // Handle access errors here.
-              break;
-            default:
-            // Handle other errors here.
-              break;
-          }
-        }
-      });
-    });
-  }
-
-  Future takePicture() async {
-    if (!controller.value.isInitialized) {
-      print("!isInitialized");
-      return null;
-    }
-    if (controller.value.isTakingPicture) {
-      print("!isTakingPicture");
-      return null;
-    }
-    try {
-      await controller.setFlashMode(FlashMode.off);
-      XFile picture = await controller.takePicture();
-
-
-      setState(() {
-      file = picture;
-      });
-
-    } on CameraException catch (e) {
-      debugPrint('Error occured while taking picture: $e');
-      return null;
-    }
-  }
+  // void setupCamera() {
+  //   availableCameras().then((_cameras) {
+  //     print(_cameras[0]);
+  //     controller = CameraController(_cameras[0], ResolutionPreset.medium);
+  //     controller.initialize().then((_) {
+  //       if (!mounted) {
+  //         return;
+  //       }
+  //       setState(() {});
+  //     }).catchError((Object e) {
+  //       print(e);
+  //       if (e is CameraException) {
+  //         switch (e.code) {
+  //           case 'CameraAccessDenied':
+  //           // Handle access errors here.
+  //             break;
+  //           default:
+  //           // Handle other errors here.
+  //             break;
+  //         }
+  //       }
+  //     });
+  //   });
+  // }
+  //
+  // Future takePicture() async {
+  //   if (!controller.value.isInitialized) {
+  //     print("!isInitialized");
+  //     return null;
+  //   }
+  //   if (controller.value.isTakingPicture) {
+  //     print("!isTakingPicture");
+  //     return null;
+  //   }
+  //   try {
+  //     await controller.setFlashMode(FlashMode.off);
+  //     XFile picture = await controller.takePicture();
+  //
+  //
+  //     setState(() {
+  //     file = picture;
+  //     });
+  //
+  //   } on CameraException catch (e) {
+  //     debugPrint('Error occured while taking picture: $e');
+  //     return null;
+  //   }
+  // }
 }

@@ -258,23 +258,29 @@ class _CreateMiscExpenseState extends State<CreateMiscExpense> {
                                         ),
                                       ]),
 
-                                  MetaTextFieldBlocView(mapData: jsonData['text_field_voucher'],
-                                      textFieldBloc: formBloc!.tfVoucher,
-                                      onChanged:(value){
-                                        formBloc!.tfVoucher.updateValue(value);
-                                      }),
-                                  Container(
-                                    child: Row(
-                                      children: [
-                                            Expanded(
-                                              child: MetaTextFieldBlocView(mapData: jsonData['text_field_amount'],
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: Container(
+                                          child: MetaTextFieldBlocView(mapData: jsonData['text_field_amount'],
                                               textFieldBloc: formBloc!.tfAmount,
                                               onChanged:(value){
                                                 formBloc!.tfAmount.updateValue(value);
                                               }),
-                                            ),
-                                          ],
-                                    ),
+                                        ),
+                                      ),
+
+                                      SizedBox(width: 10.w,),
+
+                                      Expanded(
+                                        child: MetaTextFieldBlocView(mapData: jsonData['text_field_voucher'],
+                                            textFieldBloc: formBloc!.tfVoucher,
+                                            onChanged:(value){
+                                              formBloc!.tfVoucher.updateValue(value);
+                                            }),
+                                      ),
+
+                                    ],
                                   ),
                                   MetaTextFieldBlocView(mapData: jsonData['text_field_desc'],
                                       textFieldBloc: formBloc!.tfDescription,

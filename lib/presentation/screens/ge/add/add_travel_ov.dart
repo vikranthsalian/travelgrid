@@ -149,11 +149,12 @@ class CreateTravelExpenseOV extends StatelessWidget {
                               formBloc!.onListLoaded.clear();
 
                               formBloc!.onListLoaded.changeValue(dataItems);
-
+                              String typeID=   formBloc!.selectTypeID.value.toString();
+                              String typeName=   formBloc!.vehicleTypeName.value.toString();
                               formBloc!.clear();
 
 
-                            //  formBloc!.checkInDate.updateValue(modelResponse.checkInDate.toString());
+                          formBloc!.checkInDate.updateValue(date.toString());
 
 
                               formBloc!.startTime.updateValue(modelResponse.endTime.toString());
@@ -161,6 +162,8 @@ class CreateTravelExpenseOV extends StatelessWidget {
 
                               formBloc!.endTimeWidget.updateValue("00:00");
                               formBloc!.endTime.updateValue("00:00");
+                              formBloc!.vehicleTypeName.updateValue(typeName);
+                              formBloc!.selectTypeID.updateValue(typeID);
 
 
                               formBloc!.tfOrigin.updateValue(modelResponse.destination.toString());
@@ -201,6 +204,7 @@ class CreateTravelExpenseOV extends StatelessWidget {
                                                         groupValue: formBloc!.onAutoSelected.value,
                                                         onChanged: (value){
                                                           formBloc!.clear();
+                                                          formBloc!.checkInDate.updateValue(dateText);
                                                           print(value);
                                                           formBloc!.onAutoSelected.updateValue(value!);
                                                         },
@@ -215,6 +219,7 @@ class CreateTravelExpenseOV extends StatelessWidget {
                                                         groupValue: formBloc!.onAutoSelected.value,
                                                         onChanged: (value){
                                                           formBloc!.clear();
+                                                          formBloc!.checkInDate.updateValue(dateText);
                                                           print(value);
                                                           formBloc!.onAutoSelected.updateValue(value!);
                                                         },
@@ -441,7 +446,7 @@ class CreateTravelExpenseOV extends StatelessWidget {
                print(value);
                formBloc!.vehicleTypeName.updateValue(value['text']);
                formBloc!.tfFuelPrice.updateValue(value['fuelPrice'].toString());
-               formBloc!.travelModeID.updateValue(value['id'].toString());
+               formBloc!.selectTypeID.updateValue(value['id'].toString());
 
              },),
            Row(
@@ -666,9 +671,9 @@ class CreateTravelExpenseOV extends StatelessWidget {
           child: CommonTypeScreen(
               mapData: jsonData['selectVehicleType'],
               onTap:(value)async{
-                formBloc!.vehicleTypeName.updateValue(value['id']);
+                formBloc!.vehicleTypeName.updateValue(value['text']);
+                formBloc!.selectTypeID.updateValue(value['id'].toString());
 
-                formBloc!.travelModeID.updateValue("193");
                 formBloc!.checkInDate.updateValue(list[0].date!);
                 formBloc!.startTime.updateValue(list[0].time!);
                 formBloc!.endTime.updateValue(list[1].time!);

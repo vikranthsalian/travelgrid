@@ -242,57 +242,63 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
                                           ],
                                         ),
 
+                                        BlocBuilder<SelectFieldBloc, SelectFieldBlocState>(
+                                            bloc: formBloc!.selectModeID,
+                                            builder: (context, state) {
+                                              return Container(
+                                                child: MetaDialogSelectorView(mapData: jsonData['selectMode'],
+                                                  text :getInitialText(formBloc!.modeName.value),
+                                                  onChange:(value){
+                                                    print(value);
+                                                    formBloc!.selectModeID.updateValue(value['id'].toString());
+                                                    formBloc!.modeName.updateValue(value['label']);
 
-                                        Container(
-                                          child: MetaDialogSelectorView(mapData: jsonData['selectMode'],
-                                            text :getInitialText(formBloc!.modeName.value),
-                                            onChange:(value){
-                                              print(value);
-                                              formBloc!.selectModeID.updateValue(value['id'].toString());
-                                              formBloc!.modeName.updateValue(value['label']);
+                                                    if(value['id']==193){
+                                                      Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
+                                                          CreateTravelExpenseOV(
+                                                              onClose:(data){
+                                                                print(data);
+                                                                formBloc!.selectModeID.updateValue(data['id'].toString());
+                                                                formBloc!.modeName.updateValue(data['label']);
+                                                              },
+                                                              onAdd: (values,date){
 
-                                              if(value['id']==193){
-                                                Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
-                                                    CreateTravelExpenseOV(
-                                                        onClose:(data){
-                                                          formBloc!.selectModeID.updateValue(data['id'].toString());
-                                                          formBloc!.modeName.updateValue(data['label']);
-                                                        },
-                                                        onAdd: (values,date){
+                                                                print("CreateTravelExpenseOVdate");
+                                                                print(date);
 
-                                                          print("CreateTravelExpenseOVdate");
-                                                          print(date);
+                                                                List<MaGeConveyanceCityPair> list = values;
 
-                                                          List<MaGeConveyanceCityPair> list = values;
-
-                                                          formBloc!.tfOrigin.updateValue(list[0].origin.toString());
-                                                          formBloc!.tfDestination.updateValue(list[list.length-1].destination.toString());
-                                                           double amt=0;
-                                                           double dist=0;
-                                                           for(int i=0;i<list.length;i++){
-                                                             amt= amt +double.parse(list[i].amount.toString());
-                                                             dist= dist +double.parse(list[i].distance.toString());
-                                                           }
-
-
-                                                          formBloc!.checkInTime.updateValue(list[0].startTime.toString());
-                                                          formBloc!.checkOutTime.updateValue(list[list.length-1].endTime.toString());
-                                                          formBloc!.distance.updateValue(dist.toString());
-                                                          formBloc!.checkInDate.updateValue(date);
-
-                                                          formBloc!.tfAmount.updateValue(amt.toString());
-                                                          formBloc!.selectModeID.updateValue("193");
-
-                                                          formBloc!.onCityPairAdded.updateValue(list);
+                                                                formBloc!.tfOrigin.updateValue(list[0].origin.toString());
+                                                                formBloc!.tfDestination.updateValue(list[list.length-1].destination.toString());
+                                                                double amt=0;
+                                                                double dist=0;
+                                                                for(int i=0;i<list.length;i++){
+                                                                  amt= amt +double.parse(list[i].amount.toString());
+                                                                  dist= dist +double.parse(list[i].distance.toString());
+                                                                }
 
 
-                                                        },
-                                                        jsonData: jsonData['own_vehicle'])));
-                                              }
+                                                                formBloc!.checkInTime.updateValue(list[0].startTime.toString());
+                                                                formBloc!.checkOutTime.updateValue(list[list.length-1].endTime.toString());
+                                                                formBloc!.distance.updateValue(dist.toString());
+                                                                formBloc!.checkInDate.updateValue(date);
+
+                                                                formBloc!.tfAmount.updateValue(amt.toString());
+                                                                formBloc!.selectModeID.updateValue("193");
+
+                                                                formBloc!.onCityPairAdded.updateValue(list);
 
 
-                                            },),
+                                                              },
+                                                              jsonData: jsonData['own_vehicle'])));
+                                                    }
+
+
+                                                  },),
+                                              );
+                                            }
                                         ),
+
                                         Container(
                                           child: Row(
                                             children: [

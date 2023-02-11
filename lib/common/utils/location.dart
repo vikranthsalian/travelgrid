@@ -1,5 +1,7 @@
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:travelgrid/common/utils/show_alert.dart';
+import 'package:travelgrid/data/datsources/accom_type_list.dart';
 import 'package:tuple/tuple.dart';
 class LocationUtils{
 
@@ -13,6 +15,7 @@ class LocationUtils{
     // Location services are not enabled don't continue
     // accessing the position and request users of the
     // App to enable the location services.
+    MetaAlert.showErrorAlert(message: "Please Enable Location!!!");
     return Future.error('Location services are disabled.');
   }
 
@@ -25,6 +28,7 @@ class LocationUtils{
       // Android's shouldShowRequestPermissionRationale
       // returned true. According to Android guidelines
       // your App should show an explanatory UI now.
+
       return Future.error('Location permissions are denied');
     }
   }
