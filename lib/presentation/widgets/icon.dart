@@ -17,6 +17,8 @@ class MetaIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    print(mapData);
     return IconButton(
         color: Colors.redAccent,
         icon: FaIcon(

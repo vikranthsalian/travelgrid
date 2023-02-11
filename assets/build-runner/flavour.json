@@ -688,7 +688,7 @@
           "color" : "0xFF000000",
           "size": "12",
           "family": "bold",
-          "align": "center",
+          "align": "center-left",
           "flex": 2
         },
         {
@@ -696,7 +696,7 @@
           "color" : "0xFF000000",
           "size": "12",
           "family": "bold",
-          "align": "center",
+          "align": "center-left",
           "flex": 1
         },
         {
@@ -714,7 +714,7 @@
           "color" : "0XFF000000",
           "size": "10",
           "family": "regular",
-          "align": "center",
+          "align": "center-left",
           "items": [
             {
               "icon": "edit.svg",
@@ -2361,12 +2361,11 @@
           }
         }
       },
-      "addButton": {
-        "text" : "Add",
-        "color" : "0xFFFFFFFF",
-        "backgroundColor" : "0xFF2854A1",
-        "size": "18",
-        "family": "regular"
+      "bottomButtonFab": {
+        "icon": "add",
+        "size": 20.0,
+        "color": "0XFFFFFFFF",
+        "onPress": true
       },
       "bottomButtonLeft": {
         "text" : "Cancel",

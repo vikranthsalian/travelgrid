@@ -522,14 +522,18 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
                         Expanded(flex:1,child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
+                            type != GETypes.CONVEYANCE?
                             InkWell(onTap: (){
                                   navigate({"onClick": type}, true,summaryItems[index].item2,index);
                             },
                             child: Container(
                                 width:25.w,
                                 height:25.w,
-                                child: MetaSVGView(mapData:  map['listView']['item']['items'][0]))),
+                                child: MetaSVGView(mapData:  map['listView']['item']['items'][0]))):Container(
+                              width:25.w,
+                              height:25.w),
                             SizedBox(width: 10.h,),
+
                             InkWell(onTap: (){
                               print("removing index:"+index.toString() );
                               setState(() {

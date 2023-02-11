@@ -7,6 +7,7 @@ import 'package:travelgrid/presentation/screens/dashboard/dashboard_2.dart';
 import 'package:travelgrid/presentation/screens/ge/add/add_accom.dart';
 import 'package:travelgrid/presentation/screens/ge/add/add_misc.dart';
 import 'package:travelgrid/presentation/screens/ge/add/add_travel.dart';
+import 'package:travelgrid/presentation/screens/ge/add/add_travel_ov.dart';
 import 'package:travelgrid/presentation/screens/ge/create_ge.dart';
 import 'package:travelgrid/presentation/screens/policy/policy_screen.dart';
 import 'package:travelgrid/presentation/screens/splash/splash_screen.dart';
@@ -45,7 +46,17 @@ class AppRoutes {
         return  GeneralExpense();
 
       case RouteConstants.generalCreateExpensePath:
-        return  CreateGeneralExpense();
+
+
+        if(args!=null){
+          args as Map<String, dynamic>;
+
+          final bool isEdit = args["isEdit"] ?? false;
+          final String title = args["title"]  ?? null;
+          return  CreateGeneralExpense(isEdit: isEdit,title: title);
+        }
+        return CreateGeneralExpense();
+
 
       case RouteConstants.approvalExpensePath:
         return ApprovalExpense();
@@ -64,8 +75,6 @@ class AppRoutes {
 
       case RouteConstants.createMiscExpensePath:
         return CreateMiscExpense(onAdd: (data){
-          print("data");
-          print(data);
         });
 
       default:

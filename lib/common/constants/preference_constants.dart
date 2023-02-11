@@ -7,4 +7,5 @@ class PreferenceConstants {
   static const enableFingerprint = "fingerprint";
   static const profilePicture = "ProfilePicture";
   static const appName = "AppName";
+  static const location = "location";
 }
