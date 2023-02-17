@@ -7,6 +7,7 @@ import 'package:travelgrid/common/injector/injector.dart';
 import 'package:travelgrid/data/blocs/cities/city_bloc.dart';
 import 'package:travelgrid/data/datsources/cities_list.dart';
 import 'package:travelgrid/presentation/components/bloc_map_event.dart';
+import 'package:travelgrid/presentation/components/search_bar_component.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';
 import 'package:travelgrid/presentation/widgets/icon.dart';
 import 'package:travelgrid/presentation/widgets/svg_view.dart';
@@ -22,7 +23,7 @@ class CityScreen extends StatefulWidget {
 
 class _CityScreenState extends State<CityScreen> {
   Map<String,dynamic> jsonData = {};
-  List items=[];
+  List<Data> dataList = [];
   bool enableSearch = false;
   final TextEditingController _searchController = TextEditingController();
   bool loaded=false;
@@ -32,17 +33,14 @@ class _CityScreenState extends State<CityScreen> {
     // TODO: implement initState
     super.initState();
     jsonData = FlavourConstants.cityData;
-    //prettyPrint(jsonData);
+
+      bloc = Injector.resolve<CityBloc>()..add(GetCityListEvent());
+
   }
 
 
   @override
   Widget build(BuildContext context) {
-
-   if(!loaded){
-     bloc = Injector.resolve<CityBloc>()..add(GetCityListEvent());
-     loaded=true;
-   }
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -57,7 +55,7 @@ class _CityScreenState extends State<CityScreen> {
                     },
                     topComponent:Container(
                       color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
-                      height: 120.h,
+                      height: 170.h,
                       child:  Column(
                         children: [
                           SizedBox(height:40.h),
@@ -78,28 +76,30 @@ class _CityScreenState extends State<CityScreen> {
                               ],
                             ),
                           ),
-                          // Container(
-                          //   margin: EdgeInsets.symmetric(horizontal: 20.w,vertical: 5.h),
-                          //   padding: EdgeInsets.symmetric(vertical: 5.h),
-                          //   decoration: BoxDecoration(
-                          //       borderRadius: BorderRadius.circular(8.r),
-                          //       color: Color(0xFFFFFFFF),
-                          //       border: Border.all(color: Colors.black12)),
-                          //   child: SearchBarComponent(
-                          //     barHeight: 40.h,
-                          //     hintText: "Search.....",
-                          //     searchController: _searchController,
-                          //     onClear: (){
-                          //
-                          //     },
-                          //     onSubmitted: (text) {
-                          //
-                          //     },
-                          //     onChange: (text) {
-                          //
-                          //     },
-                          //   ),
-                          // ),
+                          Container(
+                            margin: EdgeInsets.symmetric(horizontal: 20.w),
+                            padding: EdgeInsets.symmetric(vertical: 5.h),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8.r),
+                                color: Color(0xFFFFFFFF),
+                                border: Border.all(color: Colors.black12)),
+                            child: SearchBarComponent(
+                              barHeight: 40.h,
+                              hintText: "Search.....",
+                              searchController: _searchController,
+                              onClear: (){
+
+                              },
+                              onSubmitted: (text) {
+
+                              },
+                              onChange: (text) {
+
+                                search(text);
+
+                              },
+                            ),
+                          ),
                           SizedBox(height:10.h),
                           Container(
                             margin: EdgeInsets.symmetric(horizontal: 20.w),
@@ -121,8 +121,12 @@ class _CityScreenState extends State<CityScreen> {
 
 
   Widget getListView(CityState state){
+    if(!loaded){
+      dataList = state.response?.data ?? [];
+      loaded=true;
+    }
+    
     List<Data>? list = state.response?.data ?? [];
-
     return  list.isNotEmpty ? ListView.separated(
       shrinkWrap: true,
       padding: EdgeInsets.zero,
@@ -155,7 +159,7 @@ class _CityScreenState extends State<CityScreen> {
             title: Container(
                 child: MetaTextView(mapData: city,
                     text:(list[index].name.toString() +
-                        (list[index].code!="" ? "${( list[index].code.toString())}" :""  ) ))
+                        (list[index].code!="" ? " (${( list[index].code.toString())})" :""  ) ))
             ),
             trailing: const Icon(Icons.flight_outlined),
             subtitle:  Container(
@@ -185,6 +189,17 @@ class _CityScreenState extends State<CityScreen> {
             })
       ],
     );
+  }
+
+  void search(String key) {
+
+    List<Data> newList=[];
+    for(var item in dataList){
+      if (item.name!.toLowerCase().contains(key.toLowerCase())) {
+        newList.add(item);
+      }
+    }
+    bloc!.add(SearchCityListEvent(list: newList));
   }
 
 }

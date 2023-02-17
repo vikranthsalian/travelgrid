@@ -1,3 +1,4 @@
+import 'package:travelgrid/data/datsources/ge_summary_response.dart';
 import 'package:travelgrid/data/datsources/general_expense_list.dart';
 import 'package:travelgrid/data/datsources/login_response.dart';
 import 'package:travelgrid/data/models/success_model.dart';
@@ -8,7 +9,7 @@ class GeUseCase {
   GeUseCase(this.apiAbstract);
   Future<GEListResponse> callApi() async => apiAbstract.callList();
 
-  Future<GEListResponse> getSummary(id) async => apiAbstract.getGE(id);
+  Future<GESummaryResponse> getSummary(id) async => apiAbstract.getGE(id);
 
   Future<SuccessModel> createGE(data,body) async => apiAbstract.createGE(data,body);
 }

@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,9 +10,11 @@ import 'package:travelgrid/common/enum/dropdown_types.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
 import 'package:travelgrid/common/extensions/pretty.dart';
 import 'package:travelgrid/common/injector/injector.dart';
+import 'package:travelgrid/data/blocs/general_expense/ge_bloc.dart';
 import 'package:travelgrid/data/cubits/approver_type_cubit/approver_type_cubit.dart';
 import 'package:travelgrid/data/cubits/login_cubit/login_cubit.dart';
 import 'package:travelgrid/data/datsources/approver_list.dart' as app;
+import 'package:travelgrid/data/datsources/ge_summary_response.dart';
 import 'package:travelgrid/data/datsources/login_response.dart';
 import 'package:travelgrid/data/models/expense_model.dart';
 import 'package:travelgrid/data/models/ge_accom_model.dart';
@@ -21,6 +22,7 @@ import 'package:travelgrid/data/models/ge_conveyance_model.dart';
 import 'package:travelgrid/data/models/ge_misc_model.dart';
 import 'package:travelgrid/data/models/success_model.dart';
 import 'package:travelgrid/domain/usecases/ge_usecase.dart';
+import 'package:travelgrid/presentation/components/bloc_map_event.dart';
 import 'package:travelgrid/presentation/screens/ge/add/add_accom.dart';
 import 'package:travelgrid/presentation/screens/ge/add/add_misc.dart';
 import 'package:travelgrid/presentation/screens/ge/add/add_travel.dart';
@@ -49,12 +51,12 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
   List expenseTypes=[];
   List<Tuple2<ExpenseModel,Map<String,dynamic>>> summaryItems=[];
   List<Tuple2<Map,String>> summaryDetails=[];
-  bool loaded=false;
   List<String> values=[];
+
   bool showRequesterDetails=false;
   bool showSummaryItems=true;
-  bool showSummaryDetails=true;
-  bool showApproverDetails=true;
+  bool showSummaryDetails=false;
+  bool showApproverDetails=false;
 
   String total="0.00";
   MetaLoginResponse loginResponse = MetaLoginResponse();
@@ -62,6 +64,13 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
   Tuple2<String,String>? approver1;
   Tuple2<String,String>? approver2;
   String description="";
+
+
+
+
+
+  GeneralExpenseBloc?  bloc;
+  bool loaded =false;
   @override
   void initState() {
     // TODO: implement initState
@@ -109,12 +118,17 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
     }
 
 
+    if(!widget.isEdit){
+      bloc = Injector.resolve<GeneralExpenseBloc>()..add(GetGeneralExpenseSummaryEvent(recordLocator: widget.title!));
+    }else{
+      bloc = Injector.resolve<GeneralExpenseBloc>();
+    }
+
   }
 
 
   @override
   Widget build(BuildContext context) {
-
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -142,7 +156,7 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
                         Navigator.pop(context);
                       }),
                   Container(
-                    child:MetaTextView(mapData: jsonData['title'],text: widget.title),
+                    child:MetaTextView(mapData: jsonData['title'],text:widget.title),
                   ),
                 ],
               ),
@@ -193,20 +207,81 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
               ),
             ):SizedBox(),
             Expanded(
-              child: Container(
-                color:Colors.white,
-                child:SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      buildExpandableView(jsonData,"requesterDetails"),
-                      buildExpandableView(jsonData,"summaryItems"),
-                      buildExpandableView(jsonData,"summaryDetails"),
-                      buildExpandableView(jsonData,"approverDetails"),
-                    ],
-                  ),
-                ),
-              ),
+              child:  BlocBuilder<GeneralExpenseBloc, GeneralExpenseState>(
+                  bloc: bloc,
+                  builder:(context, state) {
+                    return Container(
+                        child: BlocMapToEvent(state: state.eventState, message: state.message,
+                            callback: (){
+
+                            },
+                            child:buildView(state)
+                        )
+                    );
+                  }
+              )
             ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget buildView(GeneralExpenseState state){
+    if(state.responseSum!=null && !loaded) {
+      GESummaryResponse? response = state.responseSum;
+      for(int i=0;i<summaryDetails.length;i++){
+        Map map = summaryDetails[i].item1;
+        if(summaryDetails[i].item1['key']=="AE"){
+          summaryDetails[i]= Tuple2(map, response!.data![0].accommodationSelf.toString());
+        }
+        if(summaryDetails[i].item1['key']=="TE"){
+          summaryDetails[i]= Tuple2(map,  response!.data![0].conveyanceSelf.toString());
+        }
+        if(summaryDetails[i].item1['key']=="ME"){
+          summaryDetails[i]= Tuple2(map,  response!.data![0].miscellaneousSelf.toString());
+        }
+      }
+      total = response!.data![0].totalExpense.toString();
+
+      for (var item in response.data![0].maGeConveyanceExpense!) {
+        summaryItems.add(
+            Tuple2(
+                ExpenseModel(id: item.id,
+                    type: GETypes.CONVEYANCE,
+                    amount: item.amount.toString()),
+                item.toJson()));
+      }
+      for (var item in response.data![0].maGeAccomodationExpense!) {
+        summaryItems.add(
+            Tuple2(
+                ExpenseModel(id: item.id,
+                    type: GETypes.ACCOMMODATION,
+                    amount: item.amount.toString()),
+                item.toJson()));
+      }
+      for (var item in response.data![0].maGeMiscellaneousExpense!) {
+        summaryItems.add(
+            Tuple2(
+                ExpenseModel(id: item.id,
+                    type: GETypes.MISCELLANEOUS,
+                    amount: item.amount.toString()),
+                item.toJson()));
+      }
+      loaded=true;
+    }
+
+
+    return Container(
+      color:Colors.white,
+      child:SingleChildScrollView(
+        child: Column(
+          children: [
+            if(widget.isEdit)
+            buildExpandableView(jsonData,"requesterDetails"),
+            buildExpandableView(jsonData,"summaryItems"),
+            buildExpandableView(jsonData,"summaryDetails"),
+            buildExpandableView(jsonData,"approverDetails"),
           ],
         ),
       ),
@@ -519,11 +594,13 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
                       children: [
                         Expanded(flex:2, child: MetaTextView(mapData: map['listView']['item'],text: configureExpenseTypes(type) )),
                         Expanded(flex:1,child: MetaTextView(mapData: map['listView']['item'],text:amount)),
+                        widget.isEdit?
                         Expanded(flex:1,child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             type != GETypes.CONVEYANCE?
-                            InkWell(onTap: (){
+                            InkWell(
+                            onTap: (){
                                   navigate({"onClick": type}, true,summaryItems[index].item2,index);
                             },
                             child: Container(
@@ -547,7 +624,8 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
                                 height:25.w,
                                 child: MetaSVGView(mapData:  map['listView']['item']['items'][1]))),
                           ],
-                        ))
+                        )):
+                        Expanded(flex:1,child: SizedBox())
                         ]),
                   );
                 },
@@ -576,12 +654,8 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
       }
 
       if(item.item1.type==GETypes.CONVEYANCE){
-        print("item.item1.amount");
-        print(item.item1.amount);
         travelTotal=travelTotal + double.parse(item.item1.amount.toString() ?? "0");
       }
-
-
 
       if(item.item1.type==GETypes.MISCELLANEOUS){
         miscTotal=miscTotal + double.parse(item.item1.amount.toString() ?? "0");
@@ -744,7 +818,6 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
     }
 
   }
-
 
   String configureExpenseTypes(text){
 

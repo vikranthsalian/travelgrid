@@ -13,10 +13,10 @@ class CityBloc extends Bloc<CityEvent, CityState> {
   final GeUseCase apiUseCase;
 
   CityBloc(this.apiUseCase) : super(CityInitialState()) {
-    on<GetCityListEvent>(_init);
+    on<CityEvent>(_init);
   }
 
-  void _init(GetCityListEvent event, Emitter<CityState> emit) async {
+  void _init(CityEvent event, Emitter<CityState> emit) async {
     emit(CityInitialState());
     if(event is GetCityListEvent) {
       MetaCityListResponse? response = await Injector.resolve<CommonUseCase>().getCities("IN","D");
@@ -30,6 +30,10 @@ class CityBloc extends Bloc<CityEvent, CityState> {
         emit(CityLoadedState(data: MetaCityListResponse(data: [],message: response.message)));
       }
 
+    }
+
+    if(event is SearchCityListEvent) {
+    emit(CityLoadedState(data: MetaCityListResponse(data: event.list,message: "") ));
     }
 
 

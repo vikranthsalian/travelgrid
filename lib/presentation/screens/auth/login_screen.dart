@@ -58,9 +58,11 @@ class _LoginScreenState extends State<_Login> {
         create: (context) => LoginFormBloc(loginJsonData),
         child: Builder(
             builder: (context) {
+
               LoginFormBloc  formBloc =  BlocProvider.of<LoginFormBloc>(context);
               formBloc.tfUsername.updateValue("cm05");
               formBloc.tfPassword.updateValue("Test123#");
+
               return Scaffold(
                 backgroundColor: ParseDataType().getHexToColor(loginJsonData['backgroundColor']),
                 body: Container(

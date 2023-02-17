@@ -1,5 +1,6 @@
 import 'package:chips_choice/chips_choice.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:travelgrid/common/config/navigator_key.dart';
 import 'package:travelgrid/common/constants/flavour_constants.dart';
@@ -21,6 +22,7 @@ class _HomePageState extends State<HomePage> {
   Map<String,dynamic> jsonData = {};
   List items=[];
   int _choiceIndex=0;
+  String?  dateText;
   @override
   void initState() {
     // TODO: implement initState
@@ -30,11 +32,15 @@ class _HomePageState extends State<HomePage> {
     for(var badges in jsonData['badges']){
       items.add(badges);
     }
+
+
+    dateText = DateFormat('dd MMM y, EEEE').format(DateTime.now());
   }
 
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -47,7 +53,7 @@ class _HomePageState extends State<HomePage> {
         }) ,
         title: Container(
           height: 25.h,
-          child: MetaTextView(mapData: jsonData['app_bar']['title']),
+          child: MetaTextView(mapData: jsonData['app_bar']['title'],text: dateText.toString()),
         ),
         centerTitle: jsonData['app_bar']['isCenter'] ?? false,
         actions: [

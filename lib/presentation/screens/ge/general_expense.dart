@@ -311,7 +311,7 @@ class _GeneralExpenseState extends State<GeneralExpense> {
                                 Navigator.of(context).pushNamed(jsonData['bottomButtonFab']['onClick'],
                                     arguments: {
                                         "isEdit": false,
-                                        "title": "#" +
+                                        "title":
                                             item.recordLocator.toString()
                                                 .toUpperCase()
                                 }).then((value) {
