@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:travelgrid/common/constants/event_types.dart';
 import 'package:travelgrid/common/constants/flavour_constants.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
 import 'package:travelgrid/common/injector/injector.dart';
 import 'package:travelgrid/data/blocs/cities/city_bloc.dart';
-import 'package:travelgrid/data/datsources/cities_list.dart';
+import 'package:travelgrid/data/datasources/cities_list.dart';
 import 'package:travelgrid/presentation/components/bloc_map_event.dart';
 import 'package:travelgrid/presentation/components/search_bar_component.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';
@@ -109,9 +110,7 @@ class _CityScreenState extends State<CityScreen> {
                         ],
                       ),
                     ),
-                    child:Transform.translate(
-                        offset: Offset(0,0.h),
-                        child: getListView(state))
+                    child: getListView(state)
                 )
             );
           }
@@ -121,9 +120,9 @@ class _CityScreenState extends State<CityScreen> {
 
 
   Widget getListView(CityState state){
-    if(!loaded){
+    if(!loaded && state.eventState == BlocEventState.LOADED){
       dataList = state.response?.data ?? [];
-      loaded=true;
+      loaded = true;
     }
     
     List<Data>? list = state.response?.data ?? [];
@@ -192,9 +191,9 @@ class _CityScreenState extends State<CityScreen> {
   }
 
   void search(String key) {
-
     List<Data> newList=[];
     for(var item in dataList){
+      print(item.name!.toLowerCase());
       if (item.name!.toLowerCase().contains(key.toLowerCase())) {
         newList.add(item);
       }

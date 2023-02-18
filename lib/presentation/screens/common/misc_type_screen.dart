@@ -7,7 +7,7 @@ import 'package:travelgrid/data/cubits/misc_type_cubit/misc_type_cubit.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
 
-import '../../../data/datsources/misc_type_list.dart';
+import '../../../data/datasources/misc_type_list.dart';
 
 
 class MiscellaneousTypeScreen extends StatelessWidget {

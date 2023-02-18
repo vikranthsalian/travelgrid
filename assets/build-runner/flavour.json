@@ -360,27 +360,31 @@
     }
   },
   "te_screen_data" : {
-    "app_bar": {
-      "isCenter": true,
-      "backgroundColor" : "0xFF2854A1",
-      "title":  {
-        "text" : "Travel Expense",
-        "color" : "0XFFFFFFFF",
-        "size": "16",
-        "family": "bold"
-      },
-      "actions": [
-        {
-          "icon": "refresh",
-          "size": 20.0,
-          "color": "0XFF000000",
-          "backgroundColor": "0XFFFFFFFF",
-          "onPress": true
-        }
-      ]
+    "backgroundColor" : "0xFF2854A1",
+    "title":  {
+      "text" : "Travel Expense",
+      "color" : "0XFFFFFFFF",
+      "size": "18",
+      "family": "bold",
+      "align": "center-left"
     },
-    "searchBar": {},
+    "backBar": {
+      "icon": "back",
+      "size": 20.0,
+      "color": "0XFFFFFFFF",
+      "backgroundColor": "transparent",
+      "onPress": true,
+      "align": "center-left"
+    },
     "listView": {
+      "recordsFound":  {
+        "text" : "Records Found",
+        "value" : "0",
+        "color" : "0XFFFFFFFF",
+        "size": "12",
+        "family": "regular",
+        "align": "center-right"
+      },
       "emptyData": {
         "image_view":   {
           "image" : "logo_banner.png",
@@ -403,7 +407,6 @@
           "family": "regular"
         }
       }
-
     },
     "bottomButtonLeft": {
       "text" : "Sort",
@@ -411,12 +414,6 @@
       "backgroundColor" : "0xFF2854A1",
       "size": "18",
       "family": "regular"
-    },
-    "bottomButtonFab": {
-      "icon": "add",
-      "size": 20.0,
-      "color": "0XFFFFFFFF",
-      "onPress": true
     },
     "bottomButtonRight": {
       "text" : "Filter",

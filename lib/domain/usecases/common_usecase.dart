@@ -1,10 +1,10 @@
-import 'package:travelgrid/data/datsources/accom_type_list.dart';
-import 'package:travelgrid/data/datsources/approver_list.dart';
-import 'package:travelgrid/data/datsources/cities_list.dart';
-import 'package:travelgrid/data/datsources/lat_long_distance_model.dart';
-import 'package:travelgrid/data/datsources/login_response.dart';
-import 'package:travelgrid/data/datsources/misc_type_list.dart';
-import 'package:travelgrid/data/datsources/travel_mode_list.dart';
+import 'package:travelgrid/data/datasources/accom_type_list.dart';
+import 'package:travelgrid/data/datasources/approver_list.dart';
+import 'package:travelgrid/data/datasources/cities_list.dart';
+import 'package:travelgrid/data/datasources/lat_long_distance_model.dart';
+import 'package:travelgrid/data/datasources/login_response.dart';
+import 'package:travelgrid/data/datasources/misc_type_list.dart';
+import 'package:travelgrid/data/datasources/travel_mode_list.dart';
 import 'package:travelgrid/data/models/success_model.dart';
 import 'package:travelgrid/domain/repo_abstract/api_abstract.dart';
 

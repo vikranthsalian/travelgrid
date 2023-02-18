@@ -5,7 +5,7 @@ import 'package:travelgrid/common/config/navigator_key.dart';
 import 'package:travelgrid/common/constants/event_types.dart';
 import 'package:travelgrid/common/injector/injector.dart';
 import 'package:travelgrid/data/cubits/accom_type_cubit/accom_type_cubit.dart';
-import 'package:travelgrid/data/datsources/accom_type_list.dart';
+import 'package:travelgrid/data/datasources/accom_type_list.dart';
 import 'package:travelgrid/domain/usecases/common_usecase.dart';
 import 'package:travelgrid/domain/usecases/ge_usecase.dart';
 
@@ -13,7 +13,7 @@ part 'accom_type_event.dart';
 part 'accom_type_state.dart';
 
 class AccomTypeBloc extends Bloc<AccomTypeEvent, AccomTypeState> {
-  final GeUseCase apiUseCase;
+  final CommonUseCase apiUseCase;
 
   AccomTypeBloc(this.apiUseCase) : super(AccomTypeInitialState()) {
     on<GetAccomTypeListEvent>(_init);

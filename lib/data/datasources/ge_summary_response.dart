@@ -174,8 +174,8 @@ class MaGeAccomodationExpense {
   String? hotelName;
   int? accomodationType;
   String? accomodationTypeName;
-  int? amount;
-  int? tax;
+  double? amount;
+  double? tax;
   String? description;
   bool? withBill;
   Null? voilationMessage;
@@ -216,8 +216,8 @@ class MaGeAccomodationExpense {
     hotelName = json['hotelName'];
     accomodationType = json['accomodationType'];
     accomodationTypeName = json['accomodationTypeName'];
-    amount = json['amount'];
-    tax = json['tax'];
+    amount = double.parse(json['amount'].toString());
+    tax = double.parse(json['tax'].toString());
     description = json['description'];
     withBill = json['withBill'];
     voilationMessage = json['voilationMessage'];

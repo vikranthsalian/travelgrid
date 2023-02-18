@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:travelgrid/data/datsources/login_response.dart';
+import 'package:travelgrid/data/datasources/login_response.dart';
 
 part 'login_state.dart';
 

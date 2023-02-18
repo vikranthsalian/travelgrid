@@ -257,7 +257,7 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
             Tuple2(
                 ExpenseModel(id: item.id,
                     type: GETypes.ACCOMMODATION,
-                    amount: (item.amount!+item.tax!).toString()),
+                    amount: item.amount.toString()),
                 item.toJson()));
       }
       for (var item in response.data![0].maGeMiscellaneousExpense!) {

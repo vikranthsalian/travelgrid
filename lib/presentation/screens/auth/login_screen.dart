@@ -14,7 +14,7 @@ import 'package:travelgrid/data/blocs/approver/approver_type_bloc.dart';
 import 'package:travelgrid/data/blocs/misc/misc_type_bloc.dart';
 import 'package:travelgrid/data/blocs/travel/travel_mode_bloc.dart';
 import 'package:travelgrid/data/cubits/login_cubit/login_cubit.dart';
-import 'package:travelgrid/data/datsources/login_response.dart';
+import 'package:travelgrid/data/datasources/login_response.dart';
 import 'package:travelgrid/presentation/screens/auth/bloc/login_form_bloc.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';
 import 'package:travelgrid/presentation/widgets/image_view.dart';

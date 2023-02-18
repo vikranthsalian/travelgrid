@@ -6,7 +6,7 @@ import 'package:travelgrid/common/config/navigator_key.dart';
 import 'package:travelgrid/common/injector/injector.dart';
 import 'package:travelgrid/common/utils/validators.dart';
 import 'package:travelgrid/data/cubits/login_cubit/login_cubit.dart';
-import 'package:travelgrid/data/datsources/login_response.dart';
+import 'package:travelgrid/data/datasources/login_response.dart';
 import 'package:travelgrid/domain/usecases/login_usecase.dart';
 
 class LoginFormBloc extends FormBloc<String, String> {

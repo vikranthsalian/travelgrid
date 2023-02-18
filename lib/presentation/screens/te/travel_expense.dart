@@ -7,32 +7,33 @@ import 'package:travelgrid/common/extensions/pretty.dart';
 import 'package:travelgrid/common/injector/injector.dart';
 import 'package:travelgrid/common/utils/date_time_util.dart';
 import 'package:travelgrid/common/utils/show_alert.dart';
-import 'package:travelgrid/data/blocs/general_expense/ge_bloc.dart';
-import 'package:travelgrid/data/datasources/general_expense_list.dart';
+import 'package:travelgrid/data/blocs/travel_expense/te_bloc.dart';
 import 'package:travelgrid/presentation/components/bloc_map_event.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';
 import 'package:travelgrid/presentation/widgets/icon.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
 
-class GeneralExpense extends StatefulWidget {
+import '../../../data/datasources/travel_expense_list.dart';
+
+class TravelExpense extends StatefulWidget {
   @override
-  _GeneralExpenseState createState() => _GeneralExpenseState();
+  _TravelExpenseState createState() => _TravelExpenseState();
 }
 
-class _GeneralExpenseState extends State<GeneralExpense> {
+class _TravelExpenseState extends State<TravelExpense> {
   Map<String,dynamic> jsonData = {};
   List items=[];
   double cardHt = 90.h;
   bool enableSearch = false;
   final TextEditingController _searchController = TextEditingController();
   bool loaded=false;
-  GeneralExpenseBloc? bloc;
+  TravelExpenseBloc? bloc;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    jsonData = FlavourConstants.geData;
-    prettyPrint(jsonData);
+    jsonData = FlavourConstants.teData;
+    //prettyPrint(jsonData);
   }
 
 
@@ -40,24 +41,12 @@ class _GeneralExpenseState extends State<GeneralExpense> {
   Widget build(BuildContext context) {
 
    if(!loaded){
-     bloc = Injector.resolve<GeneralExpenseBloc>()..add(GetGeneralExpenseListEvent());
+     bloc = Injector.resolve<TravelExpenseBloc>()..add(GetTravelExpenseListEvent());
      loaded=true;
    }
 
     return Scaffold(
       backgroundColor: Colors.white,
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton:  FloatingActionButton(
-        child:MetaIcon(mapData:jsonData['bottomButtonFab'],onButtonPressed: ()async{
-          if(jsonData['bottomButtonFab']['onClick'].isNotEmpty){
-
-           Navigator.of(context).pushNamed(jsonData['bottomButtonFab']['onClick']).then((value) {
-             bloc!.add(GetGeneralExpenseListEvent());
-           });
-          }
-        },),
-        backgroundColor: ParseDataType().getHexToColor(jsonData['backgroundColor']),
-        onPressed: () {}),
       bottomNavigationBar: BottomAppBar(
         color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
         shape: CircularNotchedRectangle(),
@@ -80,7 +69,7 @@ class _GeneralExpenseState extends State<GeneralExpense> {
           ],
         ),
       ),
-      body: BlocBuilder<GeneralExpenseBloc, GeneralExpenseState>(
+      body: BlocBuilder<TravelExpenseBloc, TravelExpenseState>(
           bloc: bloc,
           builder:(context, state) {
             jsonData['listView']['recordsFound']['value'] = 0;
@@ -154,7 +143,7 @@ class _GeneralExpenseState extends State<GeneralExpense> {
   }
 
 
-  Widget getListView(GeneralExpenseState state){
+  Widget getListView(TravelExpenseState state){
 
     List<Data>? list = state.response?.data ?? [];
 
@@ -315,7 +304,7 @@ class _GeneralExpenseState extends State<GeneralExpense> {
                                             item.recordLocator.toString()
                                                 .toUpperCase()
                                 }).then((value) {
-                                  bloc!.add(GetGeneralExpenseListEvent());
+                                  bloc!.add(GetTravelExpenseListEvent());
                                 });
                                 },
                                 child: MetaTextView( mapData:  view ))

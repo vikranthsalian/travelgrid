@@ -1,12 +1,14 @@
-import 'package:travelgrid/data/datsources/accom_type_list.dart';
-import 'package:travelgrid/data/datsources/approver_list.dart';
-import 'package:travelgrid/data/datsources/cities_list.dart';
-import 'package:travelgrid/data/datsources/ge_summary_response.dart';
-import 'package:travelgrid/data/datsources/general_expense_list.dart';
-import 'package:travelgrid/data/datsources/lat_long_distance_model.dart';
-import 'package:travelgrid/data/datsources/login_response.dart';
-import 'package:travelgrid/data/datsources/misc_type_list.dart';
-import 'package:travelgrid/data/datsources/travel_mode_list.dart';
+import 'package:travelgrid/data/datasources/accom_type_list.dart';
+import 'package:travelgrid/data/datasources/approver_list.dart';
+import 'package:travelgrid/data/datasources/cities_list.dart';
+import 'package:travelgrid/data/datasources/ge_summary_response.dart';
+import 'package:travelgrid/data/datasources/general_expense_list.dart';
+import 'package:travelgrid/data/datasources/lat_long_distance_model.dart';
+import 'package:travelgrid/data/datasources/login_response.dart';
+import 'package:travelgrid/data/datasources/misc_type_list.dart';
+import 'package:travelgrid/data/datasources/te_summary_response.dart';
+import 'package:travelgrid/data/datasources/travel_expense_list.dart';
+import 'package:travelgrid/data/datasources/travel_mode_list.dart';
 import 'package:travelgrid/data/models/success_model.dart';
 
 abstract class LoginAPIAbstract {
@@ -18,6 +20,13 @@ abstract class GeAPIAbstract {
   Future<GESummaryResponse> getGE(id);
   Future<SuccessModel> createGE(data,body);
 }
+
+abstract class TeAPIAbstract {
+  Future<TEListResponse> callList();
+  Future<TESummaryResponse> getTE(id);
+  Future<SuccessModel> createTE(data,body);
+}
+
 abstract class CommonAPIAbstract {
   Future<MetaCityListResponse> getCities(countryCode,tripType);
 

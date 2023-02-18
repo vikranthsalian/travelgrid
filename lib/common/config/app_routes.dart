@@ -13,8 +13,8 @@ import 'package:travelgrid/presentation/screens/policy/policy_screen.dart';
 import 'package:travelgrid/presentation/screens/splash/splash_screen.dart';
 import 'package:travelgrid/presentation/screens/tabs/approval_expense.dart';
 import 'package:travelgrid/presentation/screens/ge/general_expense.dart';
-import 'package:travelgrid/presentation/screens/tabs/travel_expense.dart';
 import 'package:travelgrid/presentation/screens/tabs/travel_request.dart';
+import 'package:travelgrid/presentation/screens/te/travel_expense.dart';
 class AppRoutes {
 
   Route generateRoute(RouteSettings routeSettings) {

@@ -12,11 +12,12 @@ class _$InjectorConfig extends InjectorConfig {
     final KiwiContainer container = KiwiContainer();
     container
       ..registerSingleton((c) => GeneralExpenseBloc(c<GeUseCase>()))
-      ..registerSingleton((c) => CityBloc(c<GeUseCase>()))
-      ..registerSingleton((c) => AccomTypeBloc(c<GeUseCase>()))
-      ..registerSingleton((c) => MiscTypeBloc(c<GeUseCase>()))
-      ..registerSingleton((c) => TravelModeBloc(c<GeUseCase>()))
-      ..registerSingleton((c) => ApproverTypeBloc(c<GeUseCase>()));
+      ..registerSingleton((c) => TravelExpenseBloc(c<TeUseCase>()))
+      ..registerSingleton((c) => CityBloc(c<CommonUseCase>()))
+      ..registerSingleton((c) => AccomTypeBloc(c<CommonUseCase>()))
+      ..registerSingleton((c) => MiscTypeBloc(c<CommonUseCase>()))
+      ..registerSingleton((c) => TravelModeBloc(c<CommonUseCase>()))
+      ..registerSingleton((c) => ApproverTypeBloc(c<CommonUseCase>()));
   }
 
   @override
@@ -25,6 +26,7 @@ class _$InjectorConfig extends InjectorConfig {
     container
       ..registerSingleton((c) => LoginUseCase(c<LoginAPIAbstract>()))
       ..registerSingleton((c) => GeUseCase(c<GeAPIAbstract>()))
+      ..registerSingleton((c) => TeUseCase(c<TeAPIAbstract>()))
       ..registerSingleton((c) => CommonUseCase(c<CommonAPIAbstract>()));
   }
 
@@ -36,6 +38,8 @@ class _$InjectorConfig extends InjectorConfig {
           (c) => LoginRepository(apiRemoteDatasource: c<APIRemoteDatasource>()))
       ..registerSingleton<GeAPIAbstract>(
           (c) => GeRepository(apiRemoteDatasource: c<APIRemoteDatasource>()))
+      ..registerSingleton<TeAPIAbstract>(
+          (c) => TeRepository(apiRemoteDatasource: c<APIRemoteDatasource>()))
       ..registerSingleton<CommonAPIAbstract>((c) =>
           CommonRepository(apiRemoteDatasource: c<APIRemoteDatasource>()));
   }
