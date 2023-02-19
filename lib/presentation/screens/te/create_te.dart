@@ -25,7 +25,7 @@ import 'package:travelgrid/domain/usecases/ge_usecase.dart';
 import 'package:travelgrid/presentation/components/bloc_map_event.dart';
 import 'package:travelgrid/presentation/screens/ge/add/add_accom.dart';
 import 'package:travelgrid/presentation/screens/ge/add/add_misc.dart';
-import 'package:travelgrid/presentation/screens/ge/add/add_travel.dart';
+import 'package:travelgrid/presentation/screens/te/add/add_travel.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';
 import 'package:travelgrid/presentation/widgets/dialog_selector_view.dart';
 import 'package:travelgrid/presentation/widgets/icon.dart';
@@ -35,16 +35,16 @@ import 'package:travelgrid/presentation/widgets/text_field.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
 import 'package:tuple/tuple.dart';
 
-class CreateGeneralExpense extends StatefulWidget {
+class CreateTravelExpense extends StatefulWidget {
   bool isEdit;
   String? title;
-  CreateGeneralExpense({this.isEdit=true,this.title});
+  CreateTravelExpense({this.isEdit=true,this.title});
 
   @override
-  _CreateGeneralExpenseState createState() => _CreateGeneralExpenseState();
+  _CreateTravelExpenseState createState() => _CreateTravelExpenseState();
 }
 
-class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
+class _CreateTravelExpenseState extends State<CreateTravelExpense> {
   Map<String,dynamic> jsonData = {};
   Map<String,dynamic> submitMap = {};
   List details=[];
@@ -778,7 +778,7 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
 
 
       Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
-          CreateTravelExpense(
+          CreateConveyanceExpense(
             isEdit:isEdit,
             conveyanceModel:model,
             onAdd: (values){

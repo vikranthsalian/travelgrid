@@ -26,16 +26,16 @@ import 'package:travelgrid/presentation/widgets/switch.dart';
 import 'package:travelgrid/presentation/widgets/text_field.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
 
-class CreateTravelExpense extends StatefulWidget {
+class CreateConveyanceExpense extends StatefulWidget {
   Function(Map)? onAdd;
   bool isEdit;
   GeConveyanceModel? conveyanceModel;
-  CreateTravelExpense({this.onAdd,this.isEdit=false,this.conveyanceModel});
+  CreateConveyanceExpense({this.onAdd,this.isEdit=false,this.conveyanceModel});
   @override
-  _CreateTravelExpenseState createState() => _CreateTravelExpenseState();
+  _CreateConveyanceExpenseState createState() => _CreateConveyanceExpenseState();
 }
 
-class _CreateTravelExpenseState extends State<CreateTravelExpense> {
+class _CreateConveyanceExpenseState extends State<CreateConveyanceExpense> {
   Map<String,dynamic> jsonData = {};
   bool loaded=false;
   TravelFormBloc?  formBloc;
@@ -44,7 +44,7 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    jsonData = FlavourConstants.travelCreateData;
+    jsonData = FlavourConstants.conveyanceCreateData;
    // prettyPrint(jsonData);
 
   }

@@ -32,10 +32,10 @@ class FlavourConstants {
   static  Map<String,dynamic> uploadData = FlavorConfig.instance.variables["upload_screen_data"];
   static  Map<String,dynamic> yesNoData = FlavorConfig.instance.variables["dialog_yes_no_data"];
 
-  //Create Data
+  //Create GE Data
   static  Map<String,dynamic> geCreateData = FlavorConfig.instance.variables["ge_create_data"];
   static  Map<String,dynamic> accomCreateData = FlavorConfig.instance.variables["accom_create_data"];
-  static  Map<String,dynamic> travelCreateData = FlavorConfig.instance.variables["travel_create_data"];
+  static  Map<String,dynamic> conveyanceCreateData = FlavorConfig.instance.variables["conveyance_create_data"];
   static  Map<String,dynamic> miscCreateData = FlavorConfig.instance.variables["misc_create_data"];
 
 //  static  String flavour =  FlavorConfig.instance.name.toString();

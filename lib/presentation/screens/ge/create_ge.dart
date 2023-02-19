@@ -778,7 +778,7 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
 
 
       Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
-          CreateTravelExpense(
+          CreateConveyanceExpense(
             isEdit:isEdit,
             conveyanceModel:model,
             onAdd: (values){

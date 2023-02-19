@@ -219,7 +219,7 @@
           "0XFF7b4397",
           "0XFFdc2430"
         ],
-        "onClick": "/travelExpense"
+        "onClick": "/travelCreateExpense"
       },
       {
         "main": 2,
@@ -1408,7 +1408,7 @@
       "family": "regular"
     }
   },
-  "travel_create_data": {
+  "conveyance_create_data": {
     "backgroundColor" : "0xFF2854A1",
     "title":  {
       "text" : "GE Travel",
