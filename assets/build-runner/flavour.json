@@ -3320,6 +3320,155 @@
       "family": "regular"
     }
   },
+  "add_visit_data": {
+    "backgroundColor" : "0xFF2854A1",
+    "title":  {
+      "text" : "TE Visit Details",
+      "color" : "0XFFFFFFFF",
+      "size": "18",
+      "family": "bold",
+      "align": "center-left"
+    },
+    "backBar": {
+      "icon": "back",
+      "size": 20.0,
+      "color": "0XFFFFFFFF",
+      "backgroundColor": "transparent",
+      "onPress": true,
+      "align": "center-left"
+    },
+    "checkInDateTime": {
+      "showView": "date_time",
+      "dateView": {
+        "label":  {
+          "text" : "Check-In Date*",
+          "color" : "0xFF2854A1",
+          "size": "14",
+          "family": "regular",
+          "align": "center-left"
+        },
+        "dateText":  {
+          "text" : "22",
+          "color" : "0xFF000000",
+          "size": "25",
+          "family": "bold",
+          "align": "center-left"
+        },
+        "monthYearText":  {
+          "text" : "January, 2024",
+          "color" : "0xFF000000",
+          "size": "12",
+          "family": "regular",
+          "align": "center-left"
+        },
+        "weekText":  {
+          "text" : "Monday",
+          "color" : "0xFFAEAEAE",
+          "size": "10",
+          "family": "regular",
+          "align": "center-left"
+        }
+      },
+      "timeView": {
+        "label":  {
+          "text" : "Check-In Time*",
+          "color" : "0xFF2854A1",
+          "size": "14",
+          "family": "regular",
+          "align": "center-left"
+        },
+        "timeText":  {
+          "text" : "12:23",
+          "color" : "0xFF000000",
+          "size": "25",
+          "family": "bold",
+          "align": "center-left"
+        }
+      }
+    },
+    "checkOutDateTime": {
+      "showView": "date_time",
+      "dateView": {
+        "label":  {
+          "text" : "Check-Out Date*",
+          "color" : "0xFF2854A1",
+          "size": "14",
+          "family": "regular",
+          "align": "center-left"
+        },
+        "dateText":  {
+          "text" : "22",
+          "color" : "0xFF000000",
+          "size": "25",
+          "family": "bold",
+          "align": "center-left"
+        },
+        "monthYearText":  {
+          "text" : "January, 2024",
+          "color" : "0xFF000000",
+          "size": "12",
+          "family": "regular",
+          "align": "center-left"
+        },
+        "weekText":  {
+          "text" : "Monday",
+          "color" : "0xFFAEAEAE",
+          "size": "10",
+          "family": "regular",
+          "align": "center-left"
+        }
+      },
+      "timeView": {
+        "label":  {
+          "text" : "Check-Out Time*",
+          "color" : "0xFF2854A1",
+          "size": "14",
+          "family": "regular",
+          "align": "center-left"
+        },
+        "timeText":  {
+          "text" : "12:23",
+          "color" : "0xFF000000",
+          "size": "25",
+          "family": "bold",
+          "align": "center-left"
+        }
+      }
+
+    },
+    "selectCity": {
+      "showView": true,
+      "onClick": "/viewCities",
+      "label":  {
+        "text" : "City",
+        "color" : "0xFF2854A1",
+        "size": "14",
+        "family": "regular",
+        "align": "center-left"
+      },
+      "dataText":  {
+        "text" : "Choose City",
+        "color" : "0xFFAEAEAE",
+        "size": "18",
+        "family": "regular",
+        "align": "center-left"
+      }
+    },
+    "bottomButtonLeft": {
+      "text" : "Cancel",
+      "color" : "0xFFFFFFFF",
+      "backgroundColor" : "0xFF2854A1",
+      "size": "18",
+      "family": "regular"
+    },
+    "bottomButtonRight": {
+      "text" : "Save",
+      "color" : "0xFFFFFFFF",
+      "backgroundColor" : "0xFF2854A1",
+      "size": "18",
+      "family": "regular"
+    }
+  },
   "policy_screen_data" : {
     "backgroundColor" : "0xFF2854A1",
     "title":  {
