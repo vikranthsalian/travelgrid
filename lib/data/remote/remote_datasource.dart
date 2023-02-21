@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:travelgrid/common/config/navigator_key.dart';
@@ -121,7 +119,7 @@ class APIRemoteDatasource{
         loadingMessage:"Loading Data...",
         queryParameters:{
           "token":appNavigatorKey.currentState!.context.read<LoginCubit>().getLoginToken(),
-          "recordLocator":id,
+          "tripID":id,
         },
       );
       return responseJson.data;

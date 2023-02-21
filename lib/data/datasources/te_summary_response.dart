@@ -2,7 +2,7 @@ class TESummaryResponse {
   bool? status;
   String? token;
   String? message;
-  List<Data>? data;
+  Data? data;
 
   TESummaryResponse({this.status, this.token, this.message, this.data});
 
@@ -10,12 +10,7 @@ class TESummaryResponse {
     status = json['status'] == "SUCCESS" ? true:false;
     token = json['token'];
     message = json['message'];
-    if (json['data'] != null) {
-      data = <Data>[];
-      json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
-      });
-    }
+    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -24,7 +19,7 @@ class TESummaryResponse {
     data['token'] = this.token;
     data['message'] = this.message;
     if (this.data != null) {
-      data['data'] = this.data!.map((v) => v.toJson()).toList();
+      data['data'] = this.data!.toJson();
     }
     return data;
   }
@@ -34,90 +29,65 @@ class Data {
   int? id;
   String? recordLocator;
   String? currentStatus;
-  bool? violated;
-  String? expenseSubmissionDate;
-  double? accommodationSelf;
-  double? conveyanceSelf;
-  double? dailyAllowanceByCompany;
-  double? miscellaneousSelf;
-  double? channelEngagementself;
-  double? department;
-  double? totalExpense;
-  bool? selfApprovals;
-  List<MaGeAccomodationExpense>? maGeAccomodationExpense;
-  List<MaGeConveyanceExpense>? maGeConveyanceExpense;
-  List<MaGeMiscellaneousExpense>? maGeMiscellaneousExpense;
-//  List<Null>? maGeDailyAllowance;
-  List<MaGeneralExpenseComment>? maGeneralExpenseComment;
-  String? employeeName;
+  String? startDate;
+  String? startTime;
+  String? endDate;
+  String? endTime;
+  MaTravelRequest? maTravelRequest;
+  List<ExpenseVisitDetails>? expenseVisitDetails;
+  List<Null>? ticketExpenses;
+  List<Null>? accommodationExpenses;
+  List<Null>? conveyanceExpenses;
+  List<Null>? miscellaneousExpenses;
+  List<Null>? cashAdvances;
+  List<Null>? dailyAllowances;
+  List<Null>? matravelExpenseComment;
+  MaExpenseSummary? maExpenseSummary;
 
-  Data(
-      {this.id,
-        this.recordLocator,
-        this.currentStatus,
-        this.violated,
-        this.expenseSubmissionDate,
-        this.accommodationSelf,
-        this.conveyanceSelf,
-        this.dailyAllowanceByCompany,
-        this.miscellaneousSelf,
-        this.channelEngagementself,
-        this.department,
-        this.totalExpense,
-        this.selfApprovals,
-        this.maGeConveyanceExpense,
-        // this.maGeAccomodationExpense,
-        // this.maGeMiscellaneousExpense,
-        // this.maGeDailyAllowance,
-        // this.maGeneralExpenseComment,
-        this.employeeName});
+  Data({this.id, this.recordLocator, this.currentStatus, this.startDate, this.startTime, this.endDate, this.endTime, this.maTravelRequest, this.expenseVisitDetails, this.ticketExpenses, this.accommodationExpenses, this.conveyanceExpenses, this.miscellaneousExpenses, this.cashAdvances, this.dailyAllowances, this.matravelExpenseComment, this.maExpenseSummary});
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     recordLocator = json['recordLocator'];
     currentStatus = json['currentStatus'];
-    violated = json['violated'];
-    expenseSubmissionDate = json['expenseSubmissionDate'];
-    accommodationSelf = json['accommodationSelf'];
-    conveyanceSelf = json['conveyanceSelf'];
-    dailyAllowanceByCompany = json['dailyAllowanceByCompany'];
-    miscellaneousSelf = json['miscellaneousSelf'];
-    channelEngagementself = json['channelEngagementself'];
-    department = json['department'];
-    totalExpense = json['totalExpense'];
-    selfApprovals = json['selfApprovals'];
-    if (json['maGeConveyanceExpense'] != null) {
-      maGeConveyanceExpense = <MaGeConveyanceExpense>[];
-      json['maGeConveyanceExpense'].forEach((v) {
-        maGeConveyanceExpense!.add(new MaGeConveyanceExpense.fromJson(v));
-      });
+    startDate = json['startDate'];
+    startTime = json['startTime'];
+    endDate = json['endDate'];
+    endTime = json['endTime'];
+    maTravelRequest = json['maTravelRequest'] != null ? new MaTravelRequest.fromJson(json['maTravelRequest']) : null;
+    if (json['expenseVisitDetails'] != null) {
+      expenseVisitDetails = <ExpenseVisitDetails>[];
+      json['expenseVisitDetails'].forEach((v) { expenseVisitDetails!.add(new ExpenseVisitDetails.fromJson(v)); });
     }
-    if (json['maGeAccomodationExpense'] != null) {
-      maGeAccomodationExpense = <MaGeAccomodationExpense>[];
-      json['maGeAccomodationExpense'].forEach((v) {
-        maGeAccomodationExpense!.add(new MaGeAccomodationExpense.fromJson(v));
-      });
-    }
-
-    if (json['maGeMiscellaneousExpense'] != null) {
-      maGeMiscellaneousExpense = <MaGeMiscellaneousExpense>[];
-      json['maGeMiscellaneousExpense'].forEach((v) {
-        maGeMiscellaneousExpense!.add(new MaGeMiscellaneousExpense.fromJson(v));
-      });
-    }
-    // if (json['maGeDailyAllowance'] != null) {
-    //   maGeDailyAllowance = <Null>[];
-    //   json['maGeDailyAllowance'].forEach((v) {
-    //     maGeDailyAllowance!.add(new Null.fromJson(v));
-    //   });
+    // if (json['ticketExpenses'] != null) {
+    //   ticketExpenses = <Null>[];
+    //   json['ticketExpenses'].forEach((v) { ticketExpenses!.add(new Null.fromJson(v)); });
     // }
-    if (json['maGeneralExpenseComment'] != null) {
-      maGeneralExpenseComment = <MaGeneralExpenseComment>[];
-      json['maGeneralExpenseComment'].forEach((v) {
-        maGeneralExpenseComment!.add(new MaGeneralExpenseComment.fromJson(v));
-      });
-    }
-    employeeName = json['employeeName'];
+    // if (json['accommodationExpenses'] != null) {
+    //   accommodationExpenses = <Null>[];
+    //   json['accommodationExpenses'].forEach((v) { accommodationExpenses!.add(new Null.fromJson(v)); });
+    // }
+    // if (json['conveyanceExpenses'] != null) {
+    //   conveyanceExpenses = <Null>[];
+    //   json['conveyanceExpenses'].forEach((v) { conveyanceExpenses!.add(new Null.fromJson(v)); });
+    // }
+    // if (json['miscellaneousExpenses'] != null) {
+    //   miscellaneousExpenses = <Null>[];
+    //   json['miscellaneousExpenses'].forEach((v) { miscellaneousExpenses!.add(new Null.fromJson(v)); });
+    // }
+    // if (json['cashAdvances'] != null) {
+    //   cashAdvances = <Null>[];
+    //   json['cashAdvances'].forEach((v) { cashAdvances!.add(new Null.fromJson(v)); });
+    // }
+    // if (json['dailyAllowances'] != null) {
+    //   dailyAllowances = <Null>[];
+    //   json['dailyAllowances'].forEach((v) { dailyAllowances!.add(new Null.fromJson(v)); });
+    // }
+    // if (json['matravelExpenseComment'] != null) {
+    //   matravelExpenseComment = <Null>[];
+    //   json['matravelExpenseComment'].forEach((v) { matravelExpenseComment!.add(new Null.fromJson(v)); });
+    // }
+    maExpenseSummary = json['maExpenseSummary'] != null ? new MaExpenseSummary.fromJson(json['maExpenseSummary']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -125,393 +95,603 @@ class Data {
     data['id'] = this.id;
     data['recordLocator'] = this.recordLocator;
     data['currentStatus'] = this.currentStatus;
-    data['violated'] = this.violated;
-    data['expenseSubmissionDate'] = this.expenseSubmissionDate;
-    data['accommodationSelf'] = this.accommodationSelf;
-    data['conveyanceSelf'] = this.conveyanceSelf;
-    data['dailyAllowanceByCompany'] = this.dailyAllowanceByCompany;
-    data['miscellaneousSelf'] = this.miscellaneousSelf;
-    data['channelEngagementself'] = this.channelEngagementself;
-    data['department'] = this.department;
-    data['totalExpense'] = this.totalExpense;
-    data['selfApprovals'] = this.selfApprovals;
-    if (this.maGeConveyanceExpense != null) {
-      data['maGeConveyanceExpense'] =
-          this.maGeConveyanceExpense!.map((v) => v.toJson()).toList();
+    data['startDate'] = this.startDate;
+    data['startTime'] = this.startTime;
+    data['endDate'] = this.endDate;
+    data['endTime'] = this.endTime;
+    if (this.maTravelRequest != null) {
+      data['maTravelRequest'] = this.maTravelRequest!.toJson();
     }
-
-    if (this.maGeAccomodationExpense != null) {
-      data['maGeAccomodationExpense'] =
-          this.maGeAccomodationExpense!.map((v) => v.toJson()).toList();
+    if (this.expenseVisitDetails != null) {
+      data['expenseVisitDetails'] = this.expenseVisitDetails!.map((v) => v.toJson()).toList();
     }
-
-    if (this.maGeMiscellaneousExpense != null) {
-      data['maGeMiscellaneousExpense'] =
-          this.maGeMiscellaneousExpense!.map((v) => v.toJson()).toList();
-    }
-    // if (this.maGeDailyAllowance != null) {
-    //   data['maGeDailyAllowance'] =
-    //       this.maGeDailyAllowance!.map((v) => v.toJson()).toList();
+    // if (this.ticketExpenses != null) {
+    //   data['ticketExpenses'] = this.ticketExpenses!.map((v) => v.toJson()).toList();
     // }
-    if (this.maGeneralExpenseComment != null) {
-      data['maGeneralExpenseComment'] =
-          this.maGeneralExpenseComment!.map((v) => v.toJson()).toList();
+    // if (this.accommodationExpenses != null) {
+    //   data['accommodationExpenses'] = this.accommodationExpenses!.map((v) => v.toJson()).toList();
+    // }
+    // if (this.conveyanceExpenses != null) {
+    //   data['conveyanceExpenses'] = this.conveyanceExpenses!.map((v) => v.toJson()).toList();
+    // }
+    // if (this.miscellaneousExpenses != null) {
+    //   data['miscellaneousExpenses'] = this.miscellaneousExpenses!.map((v) => v.toJson()).toList();
+    // }
+    // if (this.cashAdvances != null) {
+    //   data['cashAdvances'] = this.cashAdvances!.map((v) => v.toJson()).toList();
+    // }
+    // if (this.dailyAllowances != null) {
+    //   data['dailyAllowances'] = this.dailyAllowances!.map((v) => v.toJson()).toList();
+    // }
+    // if (this.matravelExpenseComment != null) {
+    //   data['matravelExpenseComment'] = this.matravelExpenseComment!.map((v) => v.toJson()).toList();
+    // }
+    if (this.maExpenseSummary != null) {
+      data['maExpenseSummary'] = this.maExpenseSummary!.toJson();
     }
-    data['employeeName'] = this.employeeName;
     return data;
   }
 }
 
-class MaGeAccomodationExpense {
+class MaTravelRequest {
   int? id;
-  String? checkInDate;
-  String? checkInTime;
-  String? checkOutDate;
-  String? checkOutTime;
-  int? noOfDays;
-  int? city;
-  String? cityName;
-  String? hotelName;
-  int? accomodationType;
-  String? accomodationTypeName;
-  int? amount;
-  int? tax;
-  String? description;
-  bool? withBill;
-  Null? voilationMessage;
-  String? voucherPath;
-  bool? violated;
-  String? voucherNumber;
-
-  MaGeAccomodationExpense(
-      {this.id,
-        this.checkInDate,
-        this.checkInTime,
-        this.checkOutDate,
-        this.checkOutTime,
-        this.noOfDays,
-        this.city,
-        this.cityName,
-        this.hotelName,
-        this.accomodationType,
-        this.accomodationTypeName,
-        this.amount,
-        this.tax,
-        this.description,
-        this.withBill,
-        this.voilationMessage,
-        this.voucherPath,
-        this.violated,
-        this.voucherNumber});
-
-  MaGeAccomodationExpense.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    checkInDate = json['checkInDate'];
-    checkInTime = json['checkInTime'];
-    checkOutDate = json['checkOutDate'];
-    checkOutTime = json['checkOutTime'];
-    noOfDays = json['noOfDays'];
-    city = json['city'];
-    cityName = json['cityName'];
-    hotelName = json['hotelName'];
-    accomodationType = json['accomodationType'];
-    accomodationTypeName = json['accomodationTypeName'];
-    amount = json['amount'];
-    tax = json['tax'];
-    description = json['description'];
-    withBill = json['withBill'];
-    voilationMessage = json['voilationMessage'];
-    voucherPath = json['voucherPath'];
-    violated = json['violated'];
-    voucherNumber = json['voucherNumber'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['checkInDate'] = this.checkInDate;
-    data['checkInTime'] = this.checkInTime;
-    data['checkOutDate'] = this.checkOutDate;
-    data['checkOutTime'] = this.checkOutTime;
-    data['noOfDays'] = this.noOfDays;
-    data['city'] = this.city;
-    data['cityName'] = this.cityName;
-    data['hotelName'] = this.hotelName;
-    data['accomodationType'] = this.accomodationType;
-    data['accomodationTypeName'] = this.accomodationTypeName;
-    data['amount'] = this.amount;
-    data['tax'] = this.tax;
-    data['description'] = this.description;
-    data['withBill'] = this.withBill;
-    data['voilationMessage'] = this.voilationMessage;
-    data['voucherPath'] = this.voucherPath;
-    data['violated'] = this.violated;
-    data['voucherNumber'] = this.voucherNumber;
-    return data;
-  }
-}
-
-class MaGeMiscellaneousExpense {
-  int? id;
-  double? amount;
-  String? description;
-  String? voucherNumber;
-  bool? violated;
-  String? voilationMessage;
-  int? miscellaneousType;
+  String? tripNumber;
+  String? employeeName;
+  String? mobileNumber;
+  String? emergencyMobileNumber;
   String? startDate;
   String? endDate;
-  String? voucherPath;
-  String? voucherFile;
-  int? city;
-  String? cityName;
-  String? miscellaneousTypeName;
-  int? unitType;
+  String? purposeOfTravel;
+  String? purposeOfVisit;
+  String? origin;
+  String? destination;
+  String? currentStatus;
+  String? tripType;
+  String? tripBillable;
+  String? approver1;
+  String? approver2;
+  String? approver3;
+  String? segmentType;
+  String? voilationMessage;
+  String? travelerName;
+  String? tripPlan;
+  Null? forexAdvance;
+  String? comments;
+  String? grade;
+  MaRequesterDetails? maRequesterDetails;
+  String? maTravelerDetails;
+  List<MaCityPairs>? maCityPairs;
+  Null? maAccomodationPlanDetail;
+  Null? maTaxiPlanDetail;
+  List<Null>? maCashAdvance;
+  List<Null>? maForexAdvance;
+  List<Null>? maTravelVisas;
+  List<Null>? maTravelInsurance;
+  List<TravelComments>? travelComments;
 
-  MaGeMiscellaneousExpense(
-      {this.id,
-        this.amount,
-        this.description,
-        this.voucherNumber,
-        this.violated,
-        this.voilationMessage,
-        this.miscellaneousType,
-        this.startDate,
-        this.endDate,
-        this.voucherPath,
-        this.voucherFile,
-        this.city,
-        this.cityName,
-        this.miscellaneousTypeName,
-        this.unitType});
+  MaTravelRequest({this.id, this.tripNumber, this.employeeName, this.mobileNumber, this.emergencyMobileNumber, this.startDate, this.endDate, this.purposeOfTravel, this.purposeOfVisit, this.origin, this.destination, this.currentStatus, this.tripType, this.tripBillable, this.approver1, this.approver2, this.approver3, this.segmentType, this.voilationMessage, this.travelerName, this.tripPlan, this.forexAdvance, this.comments, this.grade, this.maRequesterDetails, this.maTravelerDetails, this.maCityPairs, this.maAccomodationPlanDetail, this.maTaxiPlanDetail, this.maCashAdvance, this.maForexAdvance, this.maTravelVisas, this.maTravelInsurance, this.travelComments});
 
-  MaGeMiscellaneousExpense.fromJson(Map<String, dynamic> json) {
+  MaTravelRequest.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    amount = json['amount'];
-    description = json['description'];
-    voucherNumber = json['voucherNumber'];
-    violated = json['violated'];
-    voilationMessage = json['voilationMessage'];
-    miscellaneousType = json['miscellaneousType'];
+    tripNumber = json['tripNumber'];
+    employeeName = json['employeeName'];
+    mobileNumber = json['mobileNumber'];
+    emergencyMobileNumber = json['emergencyMobileNumber'];
     startDate = json['startDate'];
     endDate = json['endDate'];
-    voucherPath = json['voucherPath'];
-    voucherFile = json['voucherFile'];
-    city = json['city'];
-    cityName = json['cityName'];
-    miscellaneousTypeName = json['miscellaneousTypeName'];
-    unitType = json['unitType'];
+    purposeOfTravel = json['purposeOfTravel'];
+    purposeOfVisit = json['purposeOfVisit'];
+    origin = json['origin'];
+    destination = json['destination'];
+    currentStatus = json['currentStatus'];
+    tripType = json['tripType'];
+    tripBillable = json['tripBillable'];
+    approver1 = json['approver1'];
+    approver2 = json['approver2'];
+    approver3 = json['approver3'];
+    segmentType = json['segmentType'];
+    voilationMessage = json['voilationMessage'];
+    travelerName = json['travelerName'];
+    tripPlan = json['tripPlan'];
+    forexAdvance = json['forexAdvance'];
+    comments = json['comments'];
+    grade = json['grade'];
+    maRequesterDetails = json['maRequesterDetails'] != null ? new MaRequesterDetails.fromJson(json['maRequesterDetails']) : null;
+    maTravelerDetails = json['maTravelerDetails'];
+    if (json['maCityPairs'] != null) {
+      maCityPairs = <MaCityPairs>[];
+      json['maCityPairs'].forEach((v) { maCityPairs!.add(new MaCityPairs.fromJson(v)); });
+    }
+    maAccomodationPlanDetail = json['maAccomodationPlanDetail'];
+    maTaxiPlanDetail = json['maTaxiPlanDetail'];
+    // if (json['maCashAdvance'] != null) {
+    //   maCashAdvance = <Null>[];
+    //   json['maCashAdvance'].forEach((v) { maCashAdvance!.add(new Null.fromJson(v)); });
+    // }
+    // if (json['maForexAdvance'] != null) {
+    //   maForexAdvance = <Null>[];
+    //   json['maForexAdvance'].forEach((v) { maForexAdvance!.add(new Null.fromJson(v)); });
+    // }
+    // if (json['maTravelVisas'] != null) {
+    //   maTravelVisas = <Null>[];
+    //   json['maTravelVisas'].forEach((v) { maTravelVisas!.add(new Null.fromJson(v)); });
+    // }
+    // if (json['maTravelInsurance'] != null) {
+    //   maTravelInsurance = <Null>[];
+    //   json['maTravelInsurance'].forEach((v) { maTravelInsurance!.add(new Null.fromJson(v)); });
+    // }
+    if (json['travelComments'] != null) {
+      travelComments = <TravelComments>[];
+      json['travelComments'].forEach((v) { travelComments!.add(new TravelComments.fromJson(v)); });
+    }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
-    data['amount'] = this.amount;
-    data['description'] = this.description;
-    data['voucherNumber'] = this.voucherNumber;
-    data['violated'] = this.violated;
-    data['voilationMessage'] = this.voilationMessage;
-    data['miscellaneousType'] = this.miscellaneousType;
+    data['tripNumber'] = this.tripNumber;
+    data['employeeName'] = this.employeeName;
+    data['mobileNumber'] = this.mobileNumber;
+    data['emergencyMobileNumber'] = this.emergencyMobileNumber;
     data['startDate'] = this.startDate;
     data['endDate'] = this.endDate;
-    data['voucherPath'] = this.voucherPath;
-    data['voucherFile'] = this.voucherFile;
-    data['city'] = this.city;
-    data['cityName'] = this.cityName;
-    data['miscellaneousTypeName'] = this.miscellaneousTypeName;
-    data['unitType'] = this.unitType;
-    return data;
-  }
-}
-
-
-class MaGeConveyanceExpense {
-  int? id;
-  String? city;
-  String? origin;
-  String? destination;
-  String? conveyanceDate;
-  String? startTime;
-  String? endTime;
-  double? amount;
-  double? distance;
-  String? voucherNumber;
-  bool? withBill;
-  String? voilationMessage;
-  bool? violated;
-  int? travelMode;
-  int? vehicleType;
-  String? travelModeName;
-  String? description;
-  String? voucherPath;
-  String? voucherFile;
-  List<MaGeConveyanceCityPair>? maGeConveyanceCityPair;
-
-  MaGeConveyanceExpense(
-      {this.id,
-        this.city,
-        this.origin,
-        this.destination,
-        this.conveyanceDate,
-        this.startTime,
-        this.endTime,
-        this.amount,
-        this.distance,
-        this.voucherNumber,
-        this.withBill,
-        this.voilationMessage,
-        this.violated,
-        this.travelMode,
-        this.vehicleType,
-        this.travelModeName,
-        this.description,
-        this.voucherPath,
-        this.voucherFile,
-        this.maGeConveyanceCityPair});
-
-  MaGeConveyanceExpense.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    city = json['city'];
-    origin = json['origin'];
-    destination = json['destination'];
-    conveyanceDate = json['conveyanceDate'];
-    startTime = json['startTime'];
-    endTime = json['endTime'];
-    amount = json['amount'];
-    distance = json['distance'];
-    voucherNumber = json['voucherNumber'];
-    withBill = json['withBill'];
-    voilationMessage = json['voilationMessage'];
-    violated = json['violated'];
-    travelMode = json['travelMode'];
-    vehicleType = json['vehicleType'];
-    travelModeName = json['travelModeName'];
-    description = json['description'];
-    voucherPath = json['voucherPath'];
-    voucherFile = json['voucherFile'];
-    if (json['maGeConveyanceCityPair'] != null) {
-      maGeConveyanceCityPair = <MaGeConveyanceCityPair>[];
-      json['maGeConveyanceCityPair'].forEach((v) {
-        maGeConveyanceCityPair!.add(new MaGeConveyanceCityPair.fromJson(v));
-      });
-    }
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['city'] = this.city;
+    data['purposeOfTravel'] = this.purposeOfTravel;
+    data['purposeOfVisit'] = this.purposeOfVisit;
     data['origin'] = this.origin;
     data['destination'] = this.destination;
-    data['conveyanceDate'] = this.conveyanceDate;
-    data['startTime'] = this.startTime;
-    data['endTime'] = this.endTime;
-    data['amount'] = this.amount;
-    data['distance'] = this.distance;
-    data['voucherNumber'] = this.voucherNumber;
-    data['withBill'] = this.withBill;
+    data['currentStatus'] = this.currentStatus;
+    data['tripType'] = this.tripType;
+    data['tripBillable'] = this.tripBillable;
+    data['approver1'] = this.approver1;
+    data['approver2'] = this.approver2;
+    data['approver3'] = this.approver3;
+    data['segmentType'] = this.segmentType;
     data['voilationMessage'] = this.voilationMessage;
-    data['violated'] = this.violated;
-    data['travelMode'] = this.travelMode;
-    data['vehicleType'] = this.vehicleType;
-    data['travelModeName'] = this.travelModeName;
-    data['description'] = this.description;
-    data['voucherPath'] = this.voucherPath;
-    data['voucherFile'] = this.voucherFile;
-    if (this.maGeConveyanceCityPair != null) {
-      data['maGeConveyanceCityPair'] =
-          this.maGeConveyanceCityPair!.map((v) => v.toJson()).toList();
+    data['travelerName'] = this.travelerName;
+    data['tripPlan'] = this.tripPlan;
+    data['forexAdvance'] = this.forexAdvance;
+    data['comments'] = this.comments;
+    data['grade'] = this.grade;
+    if (this.maRequesterDetails != null) {
+      data['maRequesterDetails'] = this.maRequesterDetails!.toJson();
+    }
+    data['maTravelerDetails'] = this.maTravelerDetails;
+    if (this.maCityPairs != null) {
+      data['maCityPairs'] = this.maCityPairs!.map((v) => v.toJson()).toList();
+    }
+    data['maAccomodationPlanDetail'] = this.maAccomodationPlanDetail;
+    data['maTaxiPlanDetail'] = this.maTaxiPlanDetail;
+    // if (this.maCashAdvance != null) {
+    //   data['maCashAdvance'] = this.maCashAdvance!.map((v) => v.toJson()).toList();
+    // }
+    // if (this.maForexAdvance != null) {
+    //   data['maForexAdvance'] = this.maForexAdvance!.map((v) => v.toJson()).toList();
+    // }
+    // if (this.maTravelVisas != null) {
+    //   data['maTravelVisas'] = this.maTravelVisas!.map((v) => v.toJson()).toList();
+    // }
+    // if (this.maTravelInsurance != null) {
+    //   data['maTravelInsurance'] = this.maTravelInsurance!.map((v) => v.toJson()).toList();
+    // }
+    if (this.travelComments != null) {
+      data['travelComments'] = this.travelComments!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
-class MaGeConveyanceCityPair {
+class MaRequesterDetails {
   int? id;
-  double? distance;
-  double? amount;
-  String? srcLatLog;
-  String? desLatLog;
-  String? origin;
-  String? destination;
-  int? travelMode;
+  String? travelerName;
+  String? employeeCode;
+  String? requestType;
+  String? grade;
+  String? gender;
+  String? division;
+  String? department;
+  String? costCenter;
+  String? email;
+  bool? primaryTraveler;
+  String? mobileNumber;
+  String? emergencyMobileNumber;
+  String? location;
+  String? profitCenter;
+  String? compCode;
+
+  MaRequesterDetails({this.id, this.travelerName, this.employeeCode, this.requestType, this.grade, this.gender, this.division, this.department, this.costCenter, this.email, this.primaryTraveler, this.mobileNumber, this.emergencyMobileNumber, this.location, this.profitCenter, this.compCode});
+
+  MaRequesterDetails.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    travelerName = json['travelerName'];
+    employeeCode = json['employeeCode'];
+    requestType = json['requestType'];
+    grade = json['grade'];
+    gender = json['gender'];
+    division = json['division'];
+    department = json['department'];
+    costCenter = json['costCenter'];
+    email = json['email'];
+    primaryTraveler = json['primaryTraveler'];
+    mobileNumber = json['mobileNumber'];
+    emergencyMobileNumber = json['emergencyMobileNumber'];
+    location = json['location'];
+    profitCenter = json['profitCenter'];
+    compCode = json['compCode'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['travelerName'] = this.travelerName;
+    data['employeeCode'] = this.employeeCode;
+    data['requestType'] = this.requestType;
+    data['grade'] = this.grade;
+    data['gender'] = this.gender;
+    data['division'] = this.division;
+    data['department'] = this.department;
+    data['costCenter'] = this.costCenter;
+    data['email'] = this.email;
+    data['primaryTraveler'] = this.primaryTraveler;
+    data['mobileNumber'] = this.mobileNumber;
+    data['emergencyMobileNumber'] = this.emergencyMobileNumber;
+    data['location'] = this.location;
+    data['profitCenter'] = this.profitCenter;
+    data['compCode'] = this.compCode;
+    return data;
+  }
+}
+
+class MaCityPairs {
+  int? id;
+  LeavingFrom? leavingFrom;
+  LeavingFrom? goingTo;
+  String? startDate;
   String? startTime;
-  String? endTime;
+  ByCompany? byCompany;
+  ByCompany? fareClass;
+  String? travelMode;
+  String? pnr;
+  double? price;
+  String? ticketNo;
+  Null? arrivalDate;
+  Null? arrivalTime;
+  Null? flightNo;
+  Null? airlines;
+  bool? booked;
 
-  MaGeConveyanceCityPair(
-      {this.id,
-        this.distance,
-        this.amount,
-        this.srcLatLog,
-        this.desLatLog,
-        this.origin,
-        this.destination,
-        this.travelMode,
-        this.startTime,
-        this.endTime});
+  MaCityPairs({this.id, this.leavingFrom, this.goingTo, this.startDate, this.startTime, this.byCompany, this.fareClass, this.travelMode, this.pnr, this.price, this.ticketNo, this.arrivalDate, this.arrivalTime, this.flightNo, this.airlines, this.booked});
 
-  MaGeConveyanceCityPair.fromJson(Map<String, dynamic> json) {
+  MaCityPairs.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    distance = json['distance'];
-    amount = json['amount'];
-    srcLatLog = json['srcLatLog'];
-    desLatLog = json['desLatLog'];
-    origin = json['origin'];
-    destination = json['destination'];
-    travelMode = json['travelMode'];
+    leavingFrom = json['leavingFrom'] != null ? new LeavingFrom.fromJson(json['leavingFrom']) : null;
+    goingTo = json['goingTo'] != null ? new LeavingFrom.fromJson(json['goingTo']) : null;
+    startDate = json['startDate'];
     startTime = json['startTime'];
-    endTime = json['endTime'];
+    byCompany = json['byCompany'] != null ? new ByCompany.fromJson(json['byCompany']) : null;
+    fareClass = json['fareClass'] != null ? new ByCompany.fromJson(json['fareClass']) : null;
+    travelMode = json['travelMode'];
+    pnr = json['pnr'];
+    price = json['price'];
+    ticketNo = json['ticketNo'];
+    arrivalDate = json['arrivalDate'];
+    arrivalTime = json['arrivalTime'];
+    flightNo = json['flightNo'];
+    airlines = json['airlines'];
+    booked = json['booked'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
-    data['distance'] = this.distance;
-    data['amount'] = this.amount;
-    data['srcLatLog'] = this.srcLatLog;
-    data['desLatLog'] = this.desLatLog;
-    data['origin'] = this.origin;
-    data['destination'] = this.destination;
-    data['travelMode'] = this.travelMode;
+    if (this.leavingFrom != null) {
+      data['leavingFrom'] = this.leavingFrom!.toJson();
+    }
+    if (this.goingTo != null) {
+      data['goingTo'] = this.goingTo!.toJson();
+    }
+    data['startDate'] = this.startDate;
     data['startTime'] = this.startTime;
-    data['endTime'] = this.endTime;
+    if (this.byCompany != null) {
+      data['byCompany'] = this.byCompany!.toJson();
+    }
+    if (this.fareClass != null) {
+      data['fareClass'] = this.fareClass!.toJson();
+    }
+    data['travelMode'] = this.travelMode;
+    data['pnr'] = this.pnr;
+    data['price'] = this.price;
+    data['ticketNo'] = this.ticketNo;
+    data['arrivalDate'] = this.arrivalDate;
+    data['arrivalTime'] = this.arrivalTime;
+    data['flightNo'] = this.flightNo;
+    data['airlines'] = this.airlines;
+    data['booked'] = this.booked;
     return data;
   }
 }
 
-class MaGeneralExpenseComment {
-  Null? id;
-  String? comments;
-  String? action;
-  String? actionFrom;
-  String? actionBy;
-  String? actionOn;
+class LeavingFrom {
+  int? id;
+  String? name;
+  String? locationName;
+  bool? enabled;
+  String? cityCode;
+  String? cityClass;
+  SSState? state;
 
-  MaGeneralExpenseComment(
-      {this.id,
-        this.comments,
-        this.action,
-        this.actionFrom,
-        this.actionBy,
-        this.actionOn});
+  LeavingFrom({this.id, this.name, this.locationName, this.enabled, this.cityCode, this.cityClass, this.state});
 
-  MaGeneralExpenseComment.fromJson(Map<String, dynamic> json) {
+  LeavingFrom.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    comments = json['comments'];
-    action = json['action'];
-    actionFrom = json['actionFrom'];
-    actionBy = json['actionBy'];
-    actionOn = json['actionOn'];
+    name = json['name'];
+    locationName = json['locationName'];
+    enabled = json['enabled'];
+    cityCode = json['cityCode'];
+    cityClass = json['cityClass'];
+    state = json['state'] != null ? new SSState.fromJson(json['state']) : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
-    data['comments'] = this.comments;
-    data['action'] = this.action;
-    data['actionFrom'] = this.actionFrom;
-    data['actionBy'] = this.actionBy;
-    data['actionOn'] = this.actionOn;
+    data['name'] = this.name;
+    data['locationName'] = this.locationName;
+    data['enabled'] = this.enabled;
+    data['cityCode'] = this.cityCode;
+    data['cityClass'] = this.cityClass;
+    if (this.state != null) {
+      data['state'] = this.state!.toJson();
+    }
     return data;
   }
 }
+
+class SSState {
+  int? id;
+  String? name;
+  String? printableName;
+  String? iso;
+  Null? iso3;
+  bool? enabled;
+  Country? country;
+
+  SSState({this.id, this.name, this.printableName, this.iso, this.iso3, this.enabled, this.country});
+
+  SSState.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+    printableName = json['printableName'];
+    iso = json['iso'];
+    iso3 = json['iso3'];
+    enabled = json['enabled'];
+    country = json['country'] != null ? new Country.fromJson(json['country']) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['name'] = this.name;
+    data['printableName'] = this.printableName;
+    data['iso'] = this.iso;
+    data['iso3'] = this.iso3;
+    data['enabled'] = this.enabled;
+    if (this.country != null) {
+      data['country'] = this.country!.toJson();
+    }
+    return data;
+  }
+}
+
+class Country {
+  int? id;
+  String? iso;
+  String? name;
+  String? printableName;
+  String? iso3;
+  String? currency;
+  bool? enabled;
+  String? countryClass;
+
+  Country({this.id, this.iso, this.name, this.printableName, this.iso3, this.currency, this.enabled, this.countryClass});
+
+  Country.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    iso = json['iso'];
+    name = json['name'];
+    printableName = json['printableName'];
+    iso3 = json['iso3'];
+    currency = json['currency'];
+    enabled = json['enabled'];
+    countryClass = json['countryClass'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['iso'] = this.iso;
+    data['name'] = this.name;
+    data['printableName'] = this.printableName;
+    data['iso3'] = this.iso3;
+    data['currency'] = this.currency;
+    data['enabled'] = this.enabled;
+    data['countryClass'] = this.countryClass;
+    return data;
+  }
+}
+
+class ByCompany {
+  int? id;
+  String? value;
+  bool? disabled;
+  bool? deleted;
+  I18nTextName? i18nTextName;
+  String? label;
+
+  ByCompany({this.id, this.value, this.disabled, this.deleted, this.i18nTextName, this.label});
+
+  ByCompany.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    value = json['value'];
+    disabled = json['disabled'];
+    deleted = json['deleted'];
+    i18nTextName = json['i18nTextName'] != null ? new I18nTextName.fromJson(json['i18nTextName']) : null;
+    label = json['label'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['value'] = this.value;
+    data['disabled'] = this.disabled;
+    data['deleted'] = this.deleted;
+    if (this.i18nTextName != null) {
+      data['i18nTextName'] = this.i18nTextName!.toJson();
+    }
+    data['label'] = this.label;
+    return data;
+  }
+}
+
+class I18nTextName {
+  String? defaultText;
+  String? text;
+
+  I18nTextName({this.defaultText, this.text});
+
+  I18nTextName.fromJson(Map<String, dynamic> json) {
+    defaultText = json['defaultText'];
+    text = json['text'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['defaultText'] = this.defaultText;
+    data['text'] = this.text;
+    return data;
+  }
+}
+
+
+class TravelComments {
+String? comments;
+String? action;
+String? actionForm;
+String? actionBy;
+String? actionOn;
+
+TravelComments({this.comments, this.action, this.actionForm, this.actionBy, this.actionOn});
+
+TravelComments.fromJson(Map<String, dynamic> json) {
+comments = json['comments'];
+action = json['action'];
+actionForm = json['actionForm'];
+actionBy = json['actionBy'];
+actionOn = json['actionOn'];
+}
+
+Map<String, dynamic> toJson() {
+final Map<String, dynamic> data = new Map<String, dynamic>();
+data['comments'] = this.comments;
+data['action'] = this.action;
+data['actionForm'] = this.actionForm;
+data['actionBy'] = this.actionBy;
+data['actionOn'] = this.actionOn;
+return data;
+}
+}
+
+class ExpenseVisitDetails {
+int? id;
+String? city;
+String? evdStartDate;
+String? evdStartTime;
+String? evdEndDate;
+String? evdEndTime;
+
+ExpenseVisitDetails({this.id, this.city, this.evdStartDate, this.evdStartTime, this.evdEndDate, this.evdEndTime});
+
+ExpenseVisitDetails.fromJson(Map<String, dynamic> json) {
+id = json['id'];
+city = json['city'];
+evdStartDate = json['evdStartDate'];
+evdStartTime = json['evdStartTime'];
+evdEndDate = json['evdEndDate'];
+evdEndTime = json['evdEndTime'];
+}
+
+Map<String, dynamic> toJson() {
+final Map<String, dynamic> data = new Map<String, dynamic>();
+data['id'] = this.id;
+data['city'] = this.city;
+data['evdStartDate'] = this.evdStartDate;
+data['evdStartTime'] = this.evdStartTime;
+data['evdEndDate'] = this.evdEndDate;
+data['evdEndTime'] = this.evdEndTime;
+return data;
+}
+}
+
+class MaExpenseSummary {
+int? bookedTicketCost;
+int? ticketByCompany;
+int? ticketSelf;
+int? accommodationByCompany;
+int? accommodationSelf;
+int? dailyAllowanceByCompany;
+int? conveyanceByCompany;
+int? conveyanceSelf;
+int? miscellaneousByCompany;
+int? miscellaneousSelf;
+int? advanceByCash;
+int? advanceByCard;
+int? totalAmountByCompany;
+int? totalAmountSelf;
+int? totalExpense;
+int? dueToCompany;
+int? dueFromCompany;
+
+MaExpenseSummary({this.bookedTicketCost, this.ticketByCompany, this.ticketSelf, this.accommodationByCompany, this.accommodationSelf, this.dailyAllowanceByCompany, this.conveyanceByCompany, this.conveyanceSelf, this.miscellaneousByCompany, this.miscellaneousSelf, this.advanceByCash, this.advanceByCard, this.totalAmountByCompany, this.totalAmountSelf, this.totalExpense, this.dueToCompany, this.dueFromCompany});
+
+MaExpenseSummary.fromJson(Map<String, dynamic> json) {
+bookedTicketCost = json['bookedTicketCost'];
+ticketByCompany = json['ticketByCompany'];
+ticketSelf = json['ticketSelf'];
+accommodationByCompany = json['accommodationByCompany'];
+accommodationSelf = json['accommodationSelf'];
+dailyAllowanceByCompany = json['dailyAllowanceByCompany'];
+conveyanceByCompany = json['conveyanceByCompany'];
+conveyanceSelf = json['conveyanceSelf'];
+miscellaneousByCompany = json['miscellaneousByCompany'];
+miscellaneousSelf = json['miscellaneousSelf'];
+advanceByCash = json['advanceByCash'];
+advanceByCard = json['advanceByCard'];
+totalAmountByCompany = json['totalAmountByCompany'];
+totalAmountSelf = json['totalAmountSelf'];
+totalExpense = json['totalExpense'];
+dueToCompany = json['dueToCompany'];
+dueFromCompany = json['dueFromCompany'];
+}
+
+Map<String, dynamic> toJson() {
+final Map<String, dynamic> data = new Map<String, dynamic>();
+data['bookedTicketCost'] = this.bookedTicketCost;
+data['ticketByCompany'] = this.ticketByCompany;
+data['ticketSelf'] = this.ticketSelf;
+data['accommodationByCompany'] = this.accommodationByCompany;
+data['accommodationSelf'] = this.accommodationSelf;
+data['dailyAllowanceByCompany'] = this.dailyAllowanceByCompany;
+data['conveyanceByCompany'] = this.conveyanceByCompany;
+data['conveyanceSelf'] = this.conveyanceSelf;
+data['miscellaneousByCompany'] = this.miscellaneousByCompany;
+data['miscellaneousSelf'] = this.miscellaneousSelf;
+data['advanceByCash'] = this.advanceByCash;
+data['advanceByCard'] = this.advanceByCard;
+data['totalAmountByCompany'] = this.totalAmountByCompany;
+data['totalAmountSelf'] = this.totalAmountSelf;
+data['totalExpense'] = this.totalExpense;
+data['dueToCompany'] = this.dueToCompany;
+data['dueFromCompany'] = this.dueFromCompany;
+return data;
+}
+}
+

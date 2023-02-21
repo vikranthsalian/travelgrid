@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:travelgrid/common/config/navigator_key.dart';
 import 'package:travelgrid/common/constants/event_types.dart';
 import 'package:travelgrid/common/constants/flavour_constants.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
 import 'package:travelgrid/common/injector/injector.dart';
 import 'package:travelgrid/data/blocs/cities/city_bloc.dart';
+import 'package:travelgrid/data/cubits/common/city_cubit/city_cubit.dart';
 import 'package:travelgrid/data/datasources/cities_list.dart';
 import 'package:travelgrid/presentation/components/bloc_map_event.dart';
 import 'package:travelgrid/presentation/components/search_bar_component.dart';
@@ -29,13 +31,16 @@ class _CityScreenState extends State<CityScreen> {
   final TextEditingController _searchController = TextEditingController();
   bool loaded=false;
   CityBloc? bloc;
+
+  List<Data> list = [];
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     jsonData = FlavourConstants.cityData;
 
-      bloc = Injector.resolve<CityBloc>()..add(GetCityListEvent());
+    list = appNavigatorKey.currentState!.context.read<CityCubit>().getCityResponse();
+    dataList=list;
 
   }
 
@@ -44,88 +49,82 @@ class _CityScreenState extends State<CityScreen> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: BlocBuilder<CityBloc, CityState>(
-          bloc: bloc,
-          builder:(context, state) {
-            jsonData['listView']['recordsFound']['value'] = 0;
-            return Container(
-                child: BlocMapToEvent(state: state.eventState, message: state.message,
-                    callback: (){
-                       jsonData['listView']['recordsFound']['value'] = state.response?.data?.length;
-                    },
-                    topComponent:Container(
-                      color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
-                      height: 170.h,
-                      child:  Column(
-                        children: [
-                          SizedBox(height:40.h),
-                          Container(
-                            height: 40.h,
-                            alignment: Alignment.center,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                MetaIcon(mapData:jsonData['backBar'],
-                                    onButtonPressed: (){
-                                      Navigator.pop(context);
-                                    }),
-                                Container(
-                                  child:MetaTextView(mapData: jsonData['title']),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.symmetric(horizontal: 20.w),
-                            padding: EdgeInsets.symmetric(vertical: 5.h),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8.r),
-                                color: Color(0xFFFFFFFF),
-                                border: Border.all(color: Colors.black12)),
-                            child: SearchBarComponent(
-                              barHeight: 40.h,
-                              hintText: "Search.....",
-                              searchController: _searchController,
-                              onClear: (){
+      backgroundColor:ParseDataType().getHexToColor(jsonData['backgroundColor']),
+      body: Column(
+        children: [
+          SizedBox(height:40.h),
+          Container(
+            height: 40.h,
+            alignment: Alignment.center,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                MetaIcon(mapData:jsonData['backBar'],
+                    onButtonPressed: (){
+                      Navigator.pop(context);
+                    }),
+                Container(
+                  child:MetaTextView(mapData: jsonData['title']),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 20.w),
+            padding: EdgeInsets.symmetric(vertical: 5.h),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8.r),
+                color: Color(0xFFFFFFFF),
+                border: Border.all(color: Colors.black12)),
+            child: SearchBarComponent(
+              barHeight: 40.h,
+              hintText: "Search.....",
+              searchController: _searchController,
+              onClear: (){
 
-                              },
-                              onSubmitted: (text) {
+              },
+              onSubmitted: (text) {
 
-                              },
-                              onChange: (text) {
+              },
+              onChange: (text) {
 
-                                search(text);
+                search(text);
 
-                              },
-                            ),
-                          ),
-                          SizedBox(height:10.h),
-                          Container(
-                            margin: EdgeInsets.symmetric(horizontal: 20.w),
-                            child:MetaTextView(mapData: jsonData['listView']['recordsFound']),
-                          ),
-                          SizedBox(height:10.h),
-                        ],
-                      ),
-                    ),
-                    child: getListView(state)
-                )
-            );
-          }
+              },
+            ),
+          ),
+          SizedBox(height:10.h),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 20.w),
+            child:MetaTextView(mapData: jsonData['listView']['recordsFound'],
+                text: list.length.toString()+" Records Found"),
+          ),
+          SizedBox(height:10.h),
+          Expanded(
+            child: Container(
+              color: Colors.white,
+                child: getListView()),
+          )
+        ],
       ),
     );
   }
 
+  getList(){
+    List listWithVideo = list.where((element) => element.name!.toLowerCase() == 'a').toList();
 
-  Widget getListView(CityState state){
-    if(!loaded && state.eventState == BlocEventState.LOADED){
-      dataList = state.response?.data ?? [];
-      loaded = true;
-    }
-    
-    List<Data>? list = state.response?.data ?? [];
+    return;
+  }
+
+
+  Widget getListView(){
+    // if(!loaded){
+    //   loaded = true;
+    // }
+
+
+
     return  list.isNotEmpty ? ListView.separated(
       shrinkWrap: true,
       padding: EdgeInsets.zero,
@@ -198,7 +197,10 @@ class _CityScreenState extends State<CityScreen> {
         newList.add(item);
       }
     }
-    bloc!.add(SearchCityListEvent(list: newList));
+    setState(() {
+      list=newList;
+    });
+  //  bloc!.add(SearchCityListEvent(list: newList));
   }
 
 }

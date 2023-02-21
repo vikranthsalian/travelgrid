@@ -15,7 +15,7 @@ class TeRepository extends TeAPIAbstract {
   @override
   Future<TEListResponse> callList() async {
 
-    var response = await apiRemoteDatasource.getTEList("te/telist");
+    var response = await apiRemoteDatasource.getTEList("te/teList");
     if(response!=null) {
       TEListResponse modelResponse = TEListResponse.fromJson(response);
       return modelResponse;
@@ -28,7 +28,7 @@ class TeRepository extends TeAPIAbstract {
   @override
   Future<TESummaryResponse> getTE(id) async {
 
-    var response = await apiRemoteDatasource.getTESummary("Te/TESummaryDetails",id);
+    var response = await apiRemoteDatasource.getTESummary("te/getTEDetails",id);
     if(response!=null) {
       TESummaryResponse modelResponse = TESummaryResponse.fromJson(response);
       return modelResponse;
@@ -40,7 +40,7 @@ class TeRepository extends TeAPIAbstract {
   @override
   Future<SuccessModel> createTE(data,body) async {
 
-    var response = await apiRemoteDatasource.createTE("Te/submitMaTeneralExpense",data,body);
+    var response = await apiRemoteDatasource.createTE("Te/submitMaTravelExpense",data,body);
 
     if(response!=null) {
       SuccessModel modelResponse = SuccessModel.fromJson(response);

@@ -10,18 +10,18 @@ import 'package:travelgrid/common/enum/dropdown_types.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
 import 'package:travelgrid/common/extensions/pretty.dart';
 import 'package:travelgrid/common/injector/injector.dart';
-import 'package:travelgrid/data/blocs/general_expense/ge_bloc.dart';
+import 'package:travelgrid/data/blocs/travel_expense/te_bloc.dart';
 import 'package:travelgrid/data/cubits/approver_type_cubit/approver_type_cubit.dart';
 import 'package:travelgrid/data/cubits/login_cubit/login_cubit.dart';
 import 'package:travelgrid/data/datasources/approver_list.dart' as app;
-import 'package:travelgrid/data/datasources/ge_summary_response.dart';
 import 'package:travelgrid/data/datasources/login_response.dart';
+import 'package:travelgrid/data/datasources/te_summary_response.dart';
 import 'package:travelgrid/data/models/expense_model.dart';
 import 'package:travelgrid/data/models/ge_accom_model.dart';
 import 'package:travelgrid/data/models/ge_conveyance_model.dart';
 import 'package:travelgrid/data/models/ge_misc_model.dart';
 import 'package:travelgrid/data/models/success_model.dart';
-import 'package:travelgrid/domain/usecases/ge_usecase.dart';
+import 'package:travelgrid/domain/usecases/te_usecase.dart';
 import 'package:travelgrid/presentation/components/bloc_map_event.dart';
 import 'package:travelgrid/presentation/screens/ge/add/add_accom.dart';
 import 'package:travelgrid/presentation/screens/ge/add/add_misc.dart';
@@ -52,8 +52,10 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
   List<Tuple2<ExpenseModel,Map<String,dynamic>>> summaryItems=[];
   List<Tuple2<Map,String>> summaryDetails=[];
   List<String> values=[];
+  List<ExpenseVisitDetails> visitItems=[];
 
   bool showRequesterDetails=false;
+  bool showVisitDetails=true;
   bool showSummaryItems=true;
   bool showSummaryDetails=false;
   bool showApproverDetails=false;
@@ -69,13 +71,13 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
 
 
 
-  GeneralExpenseBloc?  bloc;
+  TravelExpenseBloc?  bloc;
   bool loaded =false;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    jsonData = FlavourConstants.geCreateData;
+    jsonData = FlavourConstants.teCreateData;
    // prettyPrint(jsonData);
 
      details = jsonData['requesterDetails']['data'];
@@ -118,11 +120,7 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
     }
 
 
-    if(!widget.isEdit){
-      bloc = Injector.resolve<GeneralExpenseBloc>()..add(GetGeneralExpenseSummaryEvent(recordLocator: widget.title!));
-    }else{
-      bloc = Injector.resolve<GeneralExpenseBloc>();
-    }
+      bloc = Injector.resolve<TravelExpenseBloc>()..add(GetTravelExpenseSummaryEvent(recordLocator: widget.title!));
 
   }
 
@@ -207,7 +205,7 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
               ),
             ):SizedBox(),
             Expanded(
-              child:  BlocBuilder<GeneralExpenseBloc, GeneralExpenseState>(
+              child:  BlocBuilder<TravelExpenseBloc, TravelExpenseState>(
                   bloc: bloc,
                   builder:(context, state) {
                     return Container(
@@ -227,49 +225,61 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
     );
   }
 
-  Widget buildView(GeneralExpenseState state){
-    if(state.responseSum!=null && !loaded) {
-      GESummaryResponse? response = state.responseSum;
-      for(int i=0;i<summaryDetails.length;i++){
-        Map map = summaryDetails[i].item1;
-        if(summaryDetails[i].item1['key']=="AE"){
-          summaryDetails[i]= Tuple2(map, response!.data![0].accommodationSelf.toString());
-        }
-        if(summaryDetails[i].item1['key']=="TE"){
-          summaryDetails[i]= Tuple2(map,  response!.data![0].conveyanceSelf.toString());
-        }
-        if(summaryDetails[i].item1['key']=="ME"){
-          summaryDetails[i]= Tuple2(map,  response!.data![0].miscellaneousSelf.toString());
-        }
-      }
-      total = response!.data![0].totalExpense.toString();
+  Widget buildView(TravelExpenseState state){
 
-      for (var item in response.data![0].maGeConveyanceExpense!) {
-        summaryItems.add(
-            Tuple2(
-                ExpenseModel(id: item.id,
-                    type: GETypes.CONVEYANCE,
-                    amount: item.amount.toString()),
-                item.toJson()));
-      }
-      for (var item in response.data![0].maGeAccomodationExpense!) {
-        summaryItems.add(
-            Tuple2(
-                ExpenseModel(id: item.id,
-                    type: GETypes.ACCOMMODATION,
-                    amount: item.amount.toString()),
-                item.toJson()));
-      }
-      for (var item in response.data![0].maGeMiscellaneousExpense!) {
-        summaryItems.add(
-            Tuple2(
-                ExpenseModel(id: item.id,
-                    type: GETypes.MISCELLANEOUS,
-                    amount: item.amount.toString()),
-                item.toJson()));
-      }
-      loaded=true;
-    }
+
+     if(state.responseSum!=null && !loaded) {
+
+      visitItems=state.responseSum!.data!.expenseVisitDetails ?? [];
+
+      print("visitItems");
+      print(state.responseSum!.data);
+      print(visitItems);
+     }
+
+
+    // if(state.responseSum!=null && !loaded) {
+    //   TESummaryResponse? response = state.responseSum;
+    //   for(int i=0;i<summaryDetails.length;i++){
+    //     Map map = summaryDetails[i].item1;
+    //     if(summaryDetails[i].item1['key']=="AE"){
+    //       summaryDetails[i]= Tuple2(map, response!.data![0].accommodationSelf.toString());
+    //     }
+    //     if(summaryDetails[i].item1['key']=="TE"){
+    //       summaryDetails[i]= Tuple2(map,  response!.data![0].conveyanceSelf.toString());
+    //     }
+    //     if(summaryDetails[i].item1['key']=="ME"){
+    //       summaryDetails[i]= Tuple2(map,  response!.data![0].miscellaneousSelf.toString());
+    //     }
+    //   }
+    //   total = response!.data![0].totalExpense.toString();
+    //
+    //   for (var item in response.data![0].maGeConveyanceExpense!) {
+    //     summaryItems.add(
+    //         Tuple2(
+    //             ExpenseModel(id: item.id,
+    //                 type: GETypes.CONVEYANCE,
+    //                 amount: item.amount.toString()),
+    //             item.toJson()));
+    //   }
+    //   for (var item in response.data![0].maGeAccomodationExpense!) {
+    //     summaryItems.add(
+    //         Tuple2(
+    //             ExpenseModel(id: item.id,
+    //                 type: GETypes.ACCOMMODATION,
+    //                 amount: item.amount.toString()),
+    //             item.toJson()));
+    //   }
+    //   for (var item in response.data![0].maGeMiscellaneousExpense!) {
+    //     summaryItems.add(
+    //         Tuple2(
+    //             ExpenseModel(id: item.id,
+    //                 type: GETypes.MISCELLANEOUS,
+    //                 amount: item.amount.toString()),
+    //             item.toJson()));
+    //   }
+    //   loaded=true;
+    // }
 
 
     return Container(
@@ -279,6 +289,7 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
           children: [
             if(widget.isEdit)
             buildExpandableView(jsonData,"requesterDetails"),
+            buildExpandableView(jsonData,"visitItems"),
             buildExpandableView(jsonData,"summaryItems"),
             buildExpandableView(jsonData,"summaryDetails"),
             buildExpandableView(jsonData,"approverDetails"),
@@ -343,6 +354,19 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
                 });
               },),
           );
+        case "visitItems":
+          return Container(
+            alignment: Alignment.centerRight,
+            child: MetaSwitch(mapData: map['showDetails'],
+              value: showVisitDetails,
+              onSwitchPressed: (value){
+
+                setState(() {
+                  showVisitDetails=value;
+                });
+
+              },),
+          );
         case "summaryItems":
           return Container(
             alignment: Alignment.centerRight,
@@ -393,6 +417,8 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
       switch(value){
         case "requesterDetails":
           return showRequesterDetails ? buildRequesterWidget(map):Container();
+        case "visitItems":
+          return showVisitDetails ? buildVisitItemWidget(map):Container();
         case "summaryItems":
           return showSummaryItems ? buildSummaryItemWidget(map):Container();
         case "summaryDetails":
@@ -404,6 +430,7 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
       }
 
     }
+
     return Container(
       child: Column(
         children: [
@@ -554,6 +581,104 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
             );
           },
         )
+    );
+  }
+
+  Container buildVisitItemWidget(Map map) {
+    print("buildVisitItemWidget");
+    List items =[];
+    items =  map['dataHeader'];
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 20.w,vertical: 10.h),
+      color: Colors.white,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Container(
+              child: Row(
+                children: items.map((e) {
+
+                  if(e['flex']==0){
+                    return Container(
+                        width: 50.w,
+                        margin: EdgeInsets.symmetric(horizontal: 0.w),
+                        child: MetaTextView(mapData: e));
+                  }
+
+                  return Expanded(
+                      flex: e['flex'],
+                      child: Container(
+                          margin: EdgeInsets.symmetric(horizontal: 0.w),
+                          child: MetaTextView(mapData: e)));
+                }).toList(),
+              )
+          ),
+          Divider(color: Color(0xff3D3D3D),),
+          ListView.builder(
+              physics: NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              scrollDirection: Axis.vertical,
+              padding: EdgeInsets.zero,
+              itemBuilder: (BuildContext context, int i) {
+
+                print("visitItems[i].toJson()");
+                print(visitItems[i].toJson());
+                return Container(
+                  margin: EdgeInsets.symmetric(vertical: 2.h),
+                  child: Row(
+                      children: [
+                        Expanded(flex:1, child: MetaTextView(mapData: map['listView']['item'],text: visitItems[i].city )),
+                        Expanded(flex:1,child: MetaTextView(mapData: map['listView']['item'],text:visitItems[i].evdStartDate!+"\n-"+visitItems[i].evdStartTime! )),
+                        Expanded(flex:1,child: MetaTextView(mapData: map['listView']['item'],text:visitItems[i].evdEndDate!+"\n-"+visitItems[i].evdEndTime! )),
+                        Container(
+                          width: 50.w,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              InkWell(
+                                  onTap: (){
+                                    // navigate({"onClick": type}, true,summaryItems[index].item2,index);
+                                  },
+                                  child: Container(
+                                      width:20.w,
+                                      height:20.w,
+                                      child: MetaSVGView(mapData:  map['listView']['item']['items'][0]))),
+                              SizedBox(width: 5.h,),
+
+                              InkWell(onTap: (){
+                                // print("removing index:"+index.toString() );
+                                // setState(() {
+                                //   summaryItems.removeAt(index);
+                                //   calculateSummary();
+                                // });
+
+                              },
+                                  child: Container(
+                                      width:20.w,
+                                      height:20.w,
+                                      child: MetaSVGView(mapData:  map['listView']['item']['items'][1]))),
+                            ],
+                          ),
+                        )
+                      ]),
+                );
+              },
+              itemCount: visitItems.length
+          ),
+          Container(
+            margin: EdgeInsets.only(top: 5.h),
+            width: 70.w,
+            height: 20.h,
+            alignment: Alignment.centerRight,
+            child: MetaButton(mapData: map['addButton'],
+                onButtonPressed: ()async{
+
+
+                }
+            ),
+          )
+        ],
+      ),
     );
   }
 
@@ -811,7 +936,7 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
 
    prettyPrint(valueMap);
 
-    SuccessModel model =   await Injector.resolve<GeUseCase>().createGE(queryParams,valueMap);
+    SuccessModel model =   await Injector.resolve<TeUseCase>().createTe(queryParams,valueMap);
 
     if(model.status==true){
       Navigator.pop(context);

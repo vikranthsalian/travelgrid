@@ -11,6 +11,7 @@ import 'package:travelgrid/common/injector/injector.dart';
 import 'package:travelgrid/common/utils/show_alert.dart';
 import 'package:travelgrid/data/blocs/accom/accom_type_bloc.dart';
 import 'package:travelgrid/data/blocs/approver/approver_type_bloc.dart';
+import 'package:travelgrid/data/blocs/cities/city_bloc.dart';
 import 'package:travelgrid/data/blocs/misc/misc_type_bloc.dart';
 import 'package:travelgrid/data/blocs/travel/travel_mode_bloc.dart';
 import 'package:travelgrid/data/cubits/login_cubit/login_cubit.dart';
@@ -81,6 +82,7 @@ class _LoginScreenState extends State<_Login> {
                        MetaAlert.showSuccessAlert(
                          message: "Login Success"
                        );
+                       Injector.resolve<CityBloc>()..add(GetCityListEvent());
                        Injector.resolve<AccomTypeBloc>()..add(GetAccomTypeListEvent());
                        Injector.resolve<TravelModeBloc>()..add(GetTravelModeListEvent());
                        Injector.resolve<MiscTypeBloc>()..add(GetMiscTypeListEvent());

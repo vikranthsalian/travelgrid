@@ -6,7 +6,6 @@ import 'package:travelgrid/common/extensions/parse_data_type.dart';
 import 'package:travelgrid/common/extensions/pretty.dart';
 import 'package:travelgrid/common/injector/injector.dart';
 import 'package:travelgrid/common/utils/date_time_util.dart';
-import 'package:travelgrid/common/utils/show_alert.dart';
 import 'package:travelgrid/data/blocs/travel_expense/te_bloc.dart';
 import 'package:travelgrid/presentation/components/bloc_map_event.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';
@@ -284,7 +283,19 @@ class _TravelExpenseState extends State<TravelExpense> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
-                             MetaTextView( mapData: cancel),
+                                InkWell(
+                                    onTap: (){
+                                      Navigator.of(context).pushNamed(jsonData['listView']['onClick'],
+                                          arguments: {
+                                            "isEdit": true,
+                                            "title":
+                                            item.recordLocator.toString()
+                                                .toUpperCase()
+                                          }).then((value) {
+                                        bloc!.add(GetTravelExpenseListEvent());
+                                      });
+                                    },
+                                 child: MetaTextView( mapData: cancel)),
                              Container(
                                margin: EdgeInsets.symmetric(horizontal: 5.w),
                                child: MetaTextView(mapData: {
@@ -297,7 +308,7 @@ class _TravelExpenseState extends State<TravelExpense> {
                              ),
                             InkWell(
                               onTap: (){
-                                Navigator.of(context).pushNamed(jsonData['bottomButtonFab']['onClick'],
+                                Navigator.of(context).pushNamed(jsonData['listView']['onClick'],
                                     arguments: {
                                         "isEdit": false,
                                         "title":

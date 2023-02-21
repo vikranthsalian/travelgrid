@@ -38,6 +38,9 @@ class FlavourConstants {
   static  Map<String,dynamic> conveyanceCreateData = FlavorConfig.instance.variables["conveyance_create_data"];
   static  Map<String,dynamic> miscCreateData = FlavorConfig.instance.variables["misc_create_data"];
 
+  //Create TE Data
+  static  Map<String,dynamic> teCreateData = FlavorConfig.instance.variables["te_create_data"];
+
 //  static  String flavour =  FlavorConfig.instance.name.toString();
 //  static  bool enableTesting =  FlavorConfig.instance.variables["enableUnitTesting"];
 }

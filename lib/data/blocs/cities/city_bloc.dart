@@ -1,7 +1,10 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:travelgrid/common/config/navigator_key.dart';
 import 'package:travelgrid/common/constants/event_types.dart';
 import 'package:travelgrid/common/injector/injector.dart';
+import 'package:travelgrid/data/cubits/common/city_cubit/city_cubit.dart';
 import 'package:travelgrid/data/datasources/cities_list.dart';
 import 'package:travelgrid/domain/usecases/common_usecase.dart';
 import 'package:travelgrid/domain/usecases/ge_usecase.dart';
@@ -21,14 +24,8 @@ class CityBloc extends Bloc<CityEvent, CityState> {
     if(event is GetCityListEvent) {
       MetaCityListResponse? response = await Injector.resolve<CommonUseCase>().getCities("IN","D");
 
+      appNavigatorKey.currentState!.context.read<CityCubit>().setCityResponse(response.data! ?? []);
 
-      print(response.toJson());
-      if(response!=null && response.status == true){
-
-        emit(CityLoadedState(data: response));
-      }else{
-        emit(CityLoadedState(data: MetaCityListResponse(data: [],message: response.message)));
-      }
 
     }
 

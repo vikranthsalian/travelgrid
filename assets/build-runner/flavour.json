@@ -219,7 +219,7 @@
           "0XFF7b4397",
           "0XFFdc2430"
         ],
-        "onClick": "/travelCreateExpense"
+        "onClick": "/travelExpense"
       },
       {
         "main": 2,
@@ -377,6 +377,7 @@
       "align": "center-left"
     },
     "listView": {
+      "onClick": "/travelCreateExpense",
       "recordsFound":  {
         "text" : "Records Found",
         "value" : "0",
@@ -2755,6 +2756,564 @@
     },
     "bottomButtonRight": {
       "text" : "Save",
+      "color" : "0xFFFFFFFF",
+      "backgroundColor" : "0xFF2854A1",
+      "size": "18",
+      "family": "regular"
+    }
+  },
+  "te_create_data": {
+    "backgroundColor" : "0xFF2854A1",
+    "title":  {
+      "text" : "Create Travel Expense",
+      "color" : "0XFFFFFFFF",
+      "size": "18",
+      "family": "bold",
+      "align": "center-left"
+    },
+    "backBar": {
+      "icon": "back",
+      "size": 20.0,
+      "color": "0XFFFFFFFF",
+      "backgroundColor": "transparent",
+      "onPress": true,
+      "align": "center-left"
+    },
+    "requesterDetails":  {
+      "label": {
+        "text" : "Requester Details",
+        "color" : "0XFFFFFFFF",
+        "size": "14",
+        "family": "bold",
+        "align": "center-left"
+      },
+      "showDetails": {
+        "label": {
+          "text" : "Show",
+          "color" : "0XFFFFFFFF",
+          "size": "10",
+          "family": "bold",
+          "align": "center-left"
+        }
+      },
+      "data": ["Initiator Name","Grade","Emp. Code",
+        "Department","Location"],
+      "gridLabel": {
+        "text" : "",
+        "color" : "0XFF000000",
+        "size": "10",
+        "family": "bold",
+        "align": "center-left"
+      },
+      "gridValue": {
+        "text" : "",
+        "color" : "0XFFAEAEAE",
+        "size": "7",
+        "family": "regular",
+        "align": "center-left"
+      }
+    },
+    "itineraryDetails":  {
+      "label": {
+        "text" : "Itinerary Details",
+        "color" : "0XFFFFFFFF",
+        "size": "14",
+        "family": "bold",
+        "align": "center-left"
+      },
+      "showDetails": {
+        "label": {
+          "text" : "Show",
+          "color" : "0XFFFFFFFF",
+          "size": "10",
+          "family": "bold",
+          "align": "center-left"
+        }
+      },
+      "data": ["Initiator Name","Grade","Emp. Code",
+        "Department","Location"],
+      "gridLabel": {
+        "text" : "",
+        "color" : "0XFF000000",
+        "size": "10",
+        "family": "bold",
+        "align": "center-left"
+      },
+      "gridValue": {
+        "text" : "",
+        "color" : "0XFFAEAEAE",
+        "size": "7",
+        "family": "regular",
+        "align": "center-left"
+      }
+    },
+    "visitItems": {
+      "label": {
+        "text" : "Visit Item Details",
+        "color" : "0XFFFFFFFF",
+        "size": "14",
+        "family": "bold",
+        "align": "center-left"
+      },
+      "showDetails": {
+        "label": {
+          "text" : "Show",
+          "color" : "0XFFFFFFFF",
+          "size": "10",
+          "family": "bold",
+          "align": "center-right"
+        }
+      },
+      "addButton": {
+        "text" : "Add Visit",
+        "color" : "0xFFFFFFFF",
+        "backgroundColor" : "0xFF2854A1",
+        "size": "10",
+        "family": "regular",
+        "borderRadius": 15.0
+      },
+      "dataHeader":  [
+        {
+          "text" : "City",
+          "color" : "0xFF000000",
+          "size": "10",
+          "family": "bold",
+          "align": "center-left",
+          "flex": 1
+        },
+        {
+          "text" : "Start DateTime",
+          "color" : "0xFF000000",
+          "size": "10",
+          "family": "bold",
+          "align": "center-left",
+          "flex": 1
+        },
+        {
+          "text" : "End DateTime",
+          "color" : "0xFF000000",
+          "size": "10",
+          "family": "bold",
+          "align": "center-left",
+          "flex": 1
+        },
+        {
+          "text" : "Update",
+          "color" : "0xFF000000",
+          "size": "10",
+          "family": "bold",
+          "align": "center",
+          "flex": 0
+        }
+      ],
+      "listView": {
+        "item": {
+          "text" : "",
+          "color" : "0XFF000000",
+          "size": "10",
+          "family": "regular",
+          "align": "center-left",
+          "items": [
+            {
+              "icon": "edit.svg",
+              "color" : "0xFF2854A1"
+            },
+            {
+              "icon": "delete.svg",
+              "color" : "0xFFff0000"
+            }
+          ]
+        },
+        "emptyData": {
+          "image_view":   {
+            "image" : "logo_banner.png",
+            "align": "center",
+            "wd": 250.0
+          },
+          "title":  {
+            "text" : "No item Added!!!",
+            "color" : "0XFF3D3D3D",
+            "size": "16",
+            "family": "regular"
+          }
+        }
+      }
+
+    },
+    "expensesTypes": [
+      {
+        "title": {
+          "text" : "Accom. Expense",
+          "color" : "0xFF2854A1",
+          "size": "8",
+          "family": "regular",
+          "align": "center"
+        },
+        "onClick": "/createAccommodationExpense",
+        "svgIcon":{
+          "icon": "accom.svg",
+          "color" : "0xFFFFFFFF"
+        }
+      },
+      {
+        "title": {
+          "text" : "Travel Expense",
+          "color" : "0xFF2854A1",
+          "size": "8",
+          "family": "regular",
+          "align": "center"
+        },
+        "onClick": "/createTravelExpense",
+        "svgIcon":{
+          "icon": "conv.svg",
+          "color" : "0xFFFFFFFF"
+        }
+      },
+      {
+        "title": {
+          "text" : "Misc. Allowance",
+          "color" : "0xFF2854A1",
+          "size": "8",
+          "family": "regular",
+          "align": "center"
+        },
+        "onClick": "/createMiscExpense",
+        "svgIcon":{
+          "icon": "misc.svg",
+          "color" : "0xFFFFFFFF"
+        }
+      }
+    ],
+    "summaryItems": {
+      "label": {
+        "text" : "Expense Item Details",
+        "color" : "0XFFFFFFFF",
+        "size": "14",
+        "family": "bold",
+        "align": "center-left"
+      },
+      "showDetails": {
+        "label": {
+          "text" : "Show",
+          "color" : "0XFFFFFFFF",
+          "size": "10",
+          "family": "bold",
+          "align": "center-right"
+        }
+      },
+      "dataHeader":  [
+        {
+          "text" : "Type",
+          "color" : "0xFF000000",
+          "size": "12",
+          "family": "bold",
+          "align": "center-left",
+          "flex": 2
+        },
+        {
+          "text" : "Amount",
+          "color" : "0xFF000000",
+          "size": "12",
+          "family": "bold",
+          "align": "center-left",
+          "flex": 1
+        },
+        {
+          "text" : "Update",
+          "color" : "0xFF000000",
+          "size": "12",
+          "family": "bold",
+          "align": "center",
+          "flex": 1
+        }
+      ],
+      "listView": {
+        "item": {
+          "text" : "",
+          "color" : "0XFF000000",
+          "size": "10",
+          "family": "regular",
+          "align": "center-left",
+          "items": [
+            {
+              "icon": "edit.svg",
+              "color" : "0xFF2854A1"
+            },
+            {
+              "icon": "delete.svg",
+              "color" : "0xFFff0000"
+            }
+          ]
+        },
+        "emptyData": {
+          "image_view":   {
+            "image" : "logo_banner.png",
+            "align": "center",
+            "wd": 250.0
+          },
+          "title":  {
+            "text" : "No item Added!!!",
+            "color" : "0XFF3D3D3D",
+            "size": "16",
+            "family": "regular"
+          }
+        }
+      }
+
+    },
+    "summaryDetails": {
+      "label": {
+        "text" : "Expense Summary Details",
+        "color" : "0XFFFFFFFF",
+        "size": "14",
+        "family": "bold",
+        "align": "center-left"
+      },
+      "showDetails": {
+        "label": {
+          "text" : "Show",
+          "color" : "0XFFFFFFFF",
+          "size": "10",
+          "family": "bold",
+          "align": "center-right"
+        }
+      },
+      "dataHeader":  {
+        "label": {
+          "text" : "Expense Summary",
+          "color" : "0xFF000000",
+          "size": "12",
+          "family": "bold",
+          "align": "center-left"
+        },
+        "value": {
+          "text" : "Reimbursement",
+          "color" : "0xFF000000",
+          "size": "12",
+          "family": "bold",
+          "align": "center-right"
+        }
+      },
+      "data": [
+        {
+          "key": "AE",
+          "label": {
+            "text" : "Accommodation Expense",
+            "color" : "0xFF000000",
+            "size": "12",
+            "family": "regular",
+            "align": "center-left"
+          },
+          "value": {
+            "text" : "0.00",
+            "color" : "0xFFAEAEAE",
+            "size": "12",
+            "family": "regular",
+            "align": "center-right"
+          }
+        },
+        {
+          "key": "TE",
+          "label": {
+            "text" : "Travel Expense",
+            "color" : "0xFF000000",
+            "size": "12",
+            "family": "regular",
+            "align": "center-left"
+          },
+          "value": {
+            "text" : "0.00",
+            "color" : "0xFFAEAEAE",
+            "size": "12",
+            "family": "regular",
+            "align": "center-right"
+          }
+        },
+        {
+          "key": "DE",
+          "label": {
+            "text" : "Daily Allowance",
+            "color" : "0xFF000000",
+            "size": "12",
+            "family": "regular",
+            "align": "center-left"
+          },
+          "value": {
+            "text" : "0.00",
+            "color" : "0xFFAEAEAE",
+            "size": "12",
+            "family": "regular",
+            "align": "center-right"
+          }
+        },
+        {
+          "key": "ME",
+          "label": {
+            "text" : "Miscellaneous Expense",
+            "color" : "0xFF000000",
+            "size": "12",
+            "family": "regular",
+            "align": "center-left"
+          },
+          "value": {
+            "text" : "0.00",
+            "color" : "0xFFAEAEAE",
+            "size": "12",
+            "family": "regular",
+            "align": "center-right"
+          }
+        }
+      ],
+      "dataFooter":  {
+        "label": {
+          "text" : "Total Expense",
+          "color" : "0xFF000000",
+          "size": "12",
+          "family": "bold",
+          "align": "center-left"
+        },
+        "value": {
+          "text" : "0.00",
+          "color" : "0xFF000000",
+          "size": "12",
+          "family": "bold",
+          "align": "center-right"
+        }
+      }
+    },
+    "approverDetails": {
+      "label": {
+        "text" : "Approver Details",
+        "color" : "0XFFFFFFFF",
+        "size": "14",
+        "family": "bold",
+        "align": "center-left"
+      },
+      "showDetails": {
+        "label": {
+          "text" : "Show",
+          "color" : "0XFFFFFFFF",
+          "size": "10",
+          "family": "bold",
+          "align": "center-right"
+        }
+      },
+      "selectApprover1": {
+        "showView": true,
+        "key": "disabled",
+        "label":  {
+          "text" : "Approver 1",
+          "color" : "0xFF2854A1",
+          "size": "14",
+          "family": "regular",
+          "align": "center-left"
+        },
+        "dataText":  {
+          "text" : "Choose Approver",
+          "color" : "0xFFAEAEAE",
+          "size": "14",
+          "family": "regular",
+          "align": "center-left"
+        }
+      },
+      "selectApprover2": {
+        "showView": true,
+        "key": "disabled",
+        "label":  {
+          "text" : "Approver 2",
+          "color" : "0xFF2854A1",
+          "size": "14",
+          "family": "regular",
+          "align": "center-left"
+        },
+        "dataText":  {
+          "text" : "Choose Approver",
+          "color" : "0xFFAEAEAE",
+          "size": "14",
+          "family": "regular",
+          "align": "center-left"
+        },
+        "text_field_desc":  {
+          "name": "Description",
+          "apiKey": "description",
+          "type": "text_field_view",
+          "inputType": "text",
+          "isPassword": false,
+          "backgroundColor": "0XFFFFFFFF",
+          "borderColor": "0XFFAEAEAE",
+          "text" : {
+            "text" : "",
+            "color" : "0xFF2854A1",
+            "size": "14",
+            "family": "regular"
+          },
+          "labelText" : {
+            "text" : "Description",
+            "color" : "0xFF2854A1",
+            "size": "14",
+            "family": "regular",
+            "align" : "center-left"
+          },
+          "hintText" : {
+            "text" : "Enter Description",
+            "color" : "0xFF2854A1",
+            "size": "14",
+            "family": "regular"
+          },
+          "errorText" : {
+            "text" : "",
+            "color" : "0xFFFF0000",
+            "size": "14",
+            "family": "regular"
+          },
+          "validators" : []
+        }
+      },
+      "text_field_desc":  {
+        "name": "Description",
+        "apiKey": "description",
+        "type": "text_field_view",
+        "inputType": "text",
+        "isPassword": false,
+        "backgroundColor": "0XFFFFFFFF",
+        "borderColor": "0XFFAEAEAE",
+        "text" : {
+          "text" : "",
+          "color" : "0xFF2854A1",
+          "size": "14",
+          "family": "regular"
+        },
+        "labelText" : {
+          "text" : "Description",
+          "color" : "0xFF2854A1",
+          "size": "14",
+          "family": "regular",
+          "align" : "center-left"
+        },
+        "hintText" : {
+          "text" : "Enter Description",
+          "color" : "0xFF2854A1",
+          "size": "14",
+          "family": "regular"
+        },
+        "errorText" : {
+          "text" : "",
+          "color" : "0xFFFF0000",
+          "size": "14",
+          "family": "regular"
+        },
+        "validators" : []
+      }
+    },
+    "bottomButtonLeft": {
+      "text" : "Draft",
+      "color" : "0xFFFFFFFF",
+      "backgroundColor" : "0xFF2854A1",
+      "size": "18",
+      "family": "regular"
+    },
+    "bottomButtonRight": {
+      "text" : "Submit",
       "color" : "0xFFFFFFFF",
       "backgroundColor" : "0xFF2854A1",
       "size": "18",

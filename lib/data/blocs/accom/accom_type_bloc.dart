@@ -23,7 +23,6 @@ class AccomTypeBloc extends Bloc<AccomTypeEvent, AccomTypeState> {
     emit(AccomTypeInitialState());
     if(event is GetAccomTypeListEvent) {
       MetaAccomTypeListResponse? response = await Injector.resolve<CommonUseCase>().getAccomTypesList();
-      print(response.toJson());
       appNavigatorKey.currentState!.context.read<AccomTypeCubit>().setAccomTypeResponse(response.data! ?? []);
     }
 
