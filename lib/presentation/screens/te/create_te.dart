@@ -10,6 +10,7 @@ import 'package:travelgrid/common/enum/dropdown_types.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
 import 'package:travelgrid/common/extensions/pretty.dart';
 import 'package:travelgrid/common/injector/injector.dart';
+import 'package:travelgrid/common/utils/city_util.dart';
 import 'package:travelgrid/data/blocs/travel_expense/te_bloc.dart';
 import 'package:travelgrid/data/cubits/approver_type_cubit/approver_type_cubit.dart';
 import 'package:travelgrid/data/cubits/login_cubit/login_cubit.dart';
@@ -26,6 +27,7 @@ import 'package:travelgrid/presentation/components/bloc_map_event.dart';
 import 'package:travelgrid/presentation/screens/ge/add/add_accom.dart';
 import 'package:travelgrid/presentation/screens/ge/add/add_misc.dart';
 import 'package:travelgrid/presentation/screens/te/add/add_travel.dart';
+import 'package:travelgrid/presentation/screens/te/add/add_visit.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';
 import 'package:travelgrid/presentation/widgets/dialog_selector_view.dart';
 import 'package:travelgrid/presentation/widgets/icon.dart';
@@ -627,7 +629,7 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
                   margin: EdgeInsets.symmetric(vertical: 2.h),
                   child: Row(
                       children: [
-                        Expanded(flex:1, child: MetaTextView(mapData: map['listView']['item'],text: visitItems[i].city )),
+                        Expanded(flex:1, child: MetaTextView(mapData: map['listView']['item'],text: CityUtil.getNameFromID(visitItems[i].city) )),
                         Expanded(flex:1,child: MetaTextView(mapData: map['listView']['item'],text:visitItems[i].evdStartDate!+"\n-"+visitItems[i].evdStartTime! )),
                         Expanded(flex:1,child: MetaTextView(mapData: map['listView']['item'],text:visitItems[i].evdEndDate!+"\n-"+visitItems[i].evdEndTime! )),
                         Container(
@@ -672,8 +674,18 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
             alignment: Alignment.centerRight,
             child: MetaButton(mapData: map['addButton'],
                 onButtonPressed: ()async{
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
+                      AddVisitDetails(
+                        isEdit:false,
+                     //   conveyanceModel:model,
+                        onAdd: (value){
+
+                          setState(() {
+                            visitItems.add(value);
+                          });
 
 
+                        },)));
                 }
             ),
           )

@@ -40,6 +40,7 @@ class FlavourConstants {
 
   //Create TE Data
   static  Map<String,dynamic> teCreateData = FlavorConfig.instance.variables["te_create_data"];
+  static  Map<String,dynamic> teAddVisitData = FlavorConfig.instance.variables["add_visit_data"];
 
 //  static  String flavour =  FlavorConfig.instance.name.toString();
 //  static  bool enableTesting =  FlavorConfig.instance.variables["enableUnitTesting"];
