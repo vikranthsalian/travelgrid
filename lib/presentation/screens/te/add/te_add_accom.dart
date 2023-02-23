@@ -10,11 +10,11 @@ import 'package:travelgrid/common/enum/dropdown_types.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
 import 'package:travelgrid/common/injector/injector.dart';
 import 'package:travelgrid/data/models/expense_model.dart';
-import 'package:travelgrid/data/models/ge_accom_model.dart';
 import 'package:travelgrid/data/models/success_model.dart';
+import 'package:travelgrid/data/models/te/te_accom_model.dart';
 import 'package:travelgrid/domain/usecases/common_usecase.dart';
 import 'package:travelgrid/presentation/components/upload_component.dart';
-import 'package:travelgrid/presentation/screens/ge/bloc/accom_form_bloc.dart';
+import 'package:travelgrid/presentation/screens/te/bloc/te_accom_form_bloc.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';
 import 'package:travelgrid/presentation/widgets/date_time_view.dart';
 import 'package:travelgrid/presentation/widgets/dialog_selector_view.dart';
@@ -24,24 +24,24 @@ import 'package:travelgrid/presentation/widgets/switch.dart';
 import 'package:travelgrid/presentation/widgets/text_field.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
 
-class CreateAccommodationExpense extends StatefulWidget {
+class AddTeAccommodationExpense extends StatefulWidget {
   Function(Map)? onAdd;
   bool isEdit;
-  GEAccomModel? accomModel;
-  CreateAccommodationExpense({this.onAdd,this.isEdit=false,this.accomModel});
+  TEAccomModel? accomModel;
+  AddTeAccommodationExpense({this.onAdd,this.isEdit=false,this.accomModel});
   @override
-  _CreateAccommodationExpenseState createState() => _CreateAccommodationExpenseState();
+  _AddTeAccommodationExpenseState createState() => _AddTeAccommodationExpenseState();
 }
 
-class _CreateAccommodationExpenseState extends State<CreateAccommodationExpense> {
+class _AddTeAccommodationExpenseState extends State<AddTeAccommodationExpense> {
   Map<String,dynamic> jsonData = {};
-  AccomFormBloc?  formBloc;
+  AccomTeFormBloc?  formBloc;
   File? file;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    jsonData = FlavourConstants.accomCreateData;
+    jsonData = FlavourConstants.teAccomAddData;
    // prettyPrint(jsonData);
 
   }
@@ -119,10 +119,10 @@ class _CreateAccommodationExpenseState extends State<CreateAccommodationExpense>
           Expanded(
             child: Container(
               child: BlocProvider(
-                create: (context) => AccomFormBloc(jsonData),
+                create: (context) => AccomTeFormBloc(jsonData),
                 child: Builder(
                     builder: (context) {
-                    formBloc =  BlocProvider.of<AccomFormBloc>(context);
+                    formBloc =  BlocProvider.of<AccomTeFormBloc>(context);
 
                     if(widget.isEdit){
 
@@ -132,11 +132,11 @@ class _CreateAccommodationExpenseState extends State<CreateAccommodationExpense>
                       formBloc!.checkOutDate.updateValue(widget.accomModel!.checkOutDate.toString());
                       formBloc!.checkOutTime.updateValue(widget.accomModel!.checkOutTime.toString());
 
-                      formBloc!.cityName.updateValue(widget.accomModel!.cityName.toString());
+                   //   formBloc!.cityName.updateValue(widget.accomModel!.cityName.toString());
                       formBloc!.cityID.updateValue(widget.accomModel!.city.toString());
 
                       formBloc!.selectAccomID.updateValue(widget.accomModel!.accomodationType.toString());
-                      formBloc!.accomName.updateValue(widget.accomModel!.accomodationTypeName.toString());
+                    //  formBloc!.accomName.updateValue(widget.accomModel!.accomodationTypeName.toString());
 
                       formBloc!.tfHotelName.updateValue(widget.accomModel!.hotelName.toString());
                       if(widget.accomModel!.hotelName.toString().isEmpty){
@@ -164,7 +164,7 @@ class _CreateAccommodationExpenseState extends State<CreateAccommodationExpense>
 
                     return Container(
                       margin: EdgeInsets.symmetric(horizontal: 10.w),
-                      child: FormBlocListener<AccomFormBloc, String, String>(
+                      child: FormBlocListener<AccomTeFormBloc, String, String>(
                           onSubmissionFailed: (context, state) {
                           print(state);
                           },
@@ -173,12 +173,12 @@ class _CreateAccommodationExpenseState extends State<CreateAccommodationExpense>
                           },
                           onSuccess: (context, state) {
                             print(state.successResponse);
-                            GEAccomModel modelResponse = GEAccomModel.fromJson(jsonDecode(state.successResponse.toString()));
+                            TEAccomModel modelResponse = TEAccomModel.fromJson(jsonDecode(state.successResponse.toString()));
 
                             widget.onAdd!(
                                 {
                                   "data": jsonDecode(state.successResponse.toString()),
-                                  "item" : ExpenseModel(type: GETypes.ACCOMMODATION,amount: modelResponse.amount.toString())
+                                  "item" : ExpenseModel(teType: TETypes.ACCOMMODATION,amount: modelResponse.amount.toString())
                                 }
                             );
                             Navigator.pop(context);
@@ -242,6 +242,15 @@ class _CreateAccommodationExpenseState extends State<CreateAccommodationExpense>
                                           ),
                                         ),
                                       ]),
+                                  Container(
+                                    child: MetaSwitchBloc(
+                                        mapData:  jsonData['byCompanySwitch'],
+                                        bloc:  formBloc!.swWithBill,
+                                        onSwitchPressed: (value){
+                                          formBloc!.selectWithBill.updateValue(value.toString());
+                                          formBloc!.swWithBill.updateValue(value);
+                                        }),
+                                  ),
                                   BlocBuilder<SelectFieldBloc, SelectFieldBlocState>(
                                       bloc: formBloc!.selectAccomID,
                                       builder: (context, state) {
@@ -298,7 +307,7 @@ class _CreateAccommodationExpenseState extends State<CreateAccommodationExpense>
                                       }),
                                   Container(
                                     child: MetaSwitchBloc(
-                                        mapData:  jsonData['withBillCheckBox'],
+                                        mapData:  jsonData['withBillSwitch'],
                                         bloc:  formBloc!.swWithBill,
                                         onSwitchPressed: (value){
                                           formBloc!.selectWithBill.updateValue(value.toString());

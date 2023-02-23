@@ -5,7 +5,7 @@ import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:travelgrid/common/utils/date_time_util.dart';
 import 'package:travelgrid/common/utils/validators.dart';
 
-class AccomFormBloc extends FormBloc<String, String> {
+class AccomTeFormBloc extends FormBloc<String, String> {
 
   final selectAccomID = SelectFieldBloc<String, dynamic>();
   final selectWithBill = SelectFieldBloc<String, dynamic>();
@@ -20,12 +20,16 @@ class AccomFormBloc extends FormBloc<String, String> {
   final tfHotelName =  TextFieldBloc(validators: [emptyValidator],initialValue: "nill");
 
   final swWithBill = BooleanFieldBloc(initialValue: false);
+  final swByCompany = BooleanFieldBloc(initialValue: false);
   final tfVoucher = TextFieldBloc(initialValue: "nill");
   final tfAmount = TextFieldBloc();
   final tfTax= TextFieldBloc();
   final tfDescription = TextFieldBloc();
 
   final voucherPath = TextFieldBloc();
+
+  final currency =  TextFieldBloc(validators: [emptyValidator],initialValue: "48");
+  final exchangeRate =  TextFieldBloc(validators: [emptyValidator],initialValue: "1");
 
   static String? emptyValidator(dynamic value) {
     if (value.isEmpty) {
@@ -34,7 +38,7 @@ class AccomFormBloc extends FormBloc<String, String> {
     return null;
   }
 
-  AccomFormBloc(Map<String, dynamic> data):super(autoValidate: true) {
+  AccomTeFormBloc(Map<String, dynamic> data):super(autoValidate: true) {
 
       if(data.isNotEmpty){
 
@@ -54,6 +58,9 @@ class AccomFormBloc extends FormBloc<String, String> {
       cityName,
       cityID,
       selectAccomID,
+      swByCompany,
+      exchangeRate,
+      currency,
       accomName,
       tfHotelName,
       tfVoucher,
@@ -88,43 +95,56 @@ class AccomFormBloc extends FormBloc<String, String> {
 
   @override
   FutureOr<void> onSubmitting() async {
-    print("differenceInYears");
-    DateTime dob1 = MetaDateTime().getDateTime(checkInDate.value);
-    print(dob1);
-
-    DateTime dob2 = MetaDateTime().getDateTime(checkOutDate.value);
-    print(dob2);
-    print("differenceInYears 2");
-    Duration dur =  dob2.difference(dob1);
-
-    int differenceInYears = (dur.inDays);
-
-    print(differenceInYears);
-
     Map<String,dynamic> saveAccomMap = {
-      "checkInDate": checkInDate.value,
-      "checkInTime": checkInTime.value,
-
-      "checkOutDate": checkOutDate.value,
-      "checkOutTime": checkOutTime.value,
-
-      "noOfDays":dur.inDays,
-      "city": int.parse(cityID.value),
-      "cityName": cityName.value,
-      "hotelName": selectAccomID.value == "250" ? tfHotelName.value :"",
-
-      "accomodationType": int.parse(selectAccomID.value.toString()),
-      "accomodationTypeName": accomName.value,
-
-      "amount": int.parse(tfAmount.value),
-      "tax": int.parse(tfTax.value.isEmpty ? "0.0" : tfTax.value),
-      "description": tfDescription.value,
-      "withBill":swWithBill.value,
-
-      "voucherPath": voucherPath.value,
-
-      "voucherNumber":swWithBill.value ? tfVoucher.value : ""
+    "checkInDate": checkInDate.value,
+    "checkInTime": checkInTime.value,
+    "checkOutDate": checkOutDate.value,
+    "checkOutTime": checkOutTime.value,
+    "accomodationType": int.parse(selectAccomID.value.toString()),
+    "hotelName": selectAccomID.value == "250" ? tfHotelName.value :"",
+    "city": cityID.valueToInt,
+    "amount": tfAmount.valueToDouble,
+    "tax": tfTax.valueToDouble,
+    "byCompany": swByCompany.value,
+    "exchangeRate": exchangeRate.valueToInt,
+    "currency": currency.value,
+    "voucherNumber": swWithBill.value ? tfVoucher.value : "",
+    "voucherPath":  voucherPath.value,
+    "eligibleAmount": 1600.0,
+    "withBill": swWithBill.value,
+    "description": tfDescription.value,
+    "voilationMessage": "",
+    "receivedApproval": false,
+    "requireApproval": false,
+    "modified": false,
     };
+
+
+
+    // Map<String,dynamic> saveAccomMap = {
+    //   "checkInDate": checkInDate.value,
+    //   "checkInTime": checkInTime.value,
+    //
+    //   "checkOutDate": checkOutDate.value,
+    //   "checkOutTime": checkOutTime.value,
+    //
+    //   "noOfDays":dur.inDays,
+    //   "city": int.parse(cityID.value),
+    //   "cityName": cityName.value,
+    //   "hotelName": selectAccomID.value == "250" ? tfHotelName.value :"",
+    //
+    //   "accomodationType": int.parse(selectAccomID.value.toString()),
+    //   "accomodationTypeName": accomName.value,
+    //
+    //   "amount": int.parse(tfAmount.value),
+    //   "tax": int.parse(tfTax.value.isEmpty ? "0.0" : tfTax.value),
+    //   "description": tfDescription.value,
+    //   "withBill":swWithBill.value,
+    //
+    //   "voucherPath": voucherPath.value,
+    //
+    //   "voucherNumber":swWithBill.value ? tfVoucher.value : ""
+    // };
     emitSuccess(successResponse: jsonEncode(saveAccomMap));
 
   }

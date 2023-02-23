@@ -29,8 +29,10 @@ class FlavourConstants {
   static  Map<String,dynamic> accomTypeData = FlavorConfig.instance.variables["accom_type_screen_data"];
   static  Map<String,dynamic> miscTypeData = FlavorConfig.instance.variables["misc_type_screen_data"];
   static  Map<String,dynamic> travelModeData = FlavorConfig.instance.variables["travel_mode_screen_data"];
+  static  Map<String,dynamic> fareClassData = FlavorConfig.instance.variables["fare_class_screen_data"];
   static  Map<String,dynamic> uploadData = FlavorConfig.instance.variables["upload_screen_data"];
   static  Map<String,dynamic> yesNoData = FlavorConfig.instance.variables["dialog_yes_no_data"];
+  static  Map<String,dynamic> expensePickerData = FlavorConfig.instance.variables["dialog_expense_picker_data"];
 
   //Create GE Data
   static  Map<String,dynamic> geCreateData = FlavorConfig.instance.variables["ge_create_data"];
@@ -40,7 +42,11 @@ class FlavourConstants {
 
   //Create TE Data
   static  Map<String,dynamic> teCreateData = FlavorConfig.instance.variables["te_create_data"];
-  static  Map<String,dynamic> teAddVisitData = FlavorConfig.instance.variables["add_visit_data"];
+  static  Map<String,dynamic> teAddVisitData = FlavorConfig.instance.variables["te_visit_add_data"];
+  static  Map<String,dynamic> teAccomAddData = FlavorConfig.instance.variables["te_accom_add_data"];
+  static  Map<String,dynamic> teTicketAddData = FlavorConfig.instance.variables["te_ticket_add_data"];
+  static  Map<String,dynamic> teMiscAddData = FlavorConfig.instance.variables["te_misc_add_data"];
+  static  Map<String,dynamic> teConvAddData = FlavorConfig.instance.variables["te_conveyance_add_data"];
 
 //  static  String flavour =  FlavorConfig.instance.name.toString();
 //  static  bool enableTesting =  FlavorConfig.instance.variables["enableUnitTesting"];

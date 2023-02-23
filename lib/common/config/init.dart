@@ -8,6 +8,7 @@ import 'package:travelgrid/common/constants/theme_constants.dart';
 import 'package:travelgrid/data/cubits/accom_type_cubit/accom_type_cubit.dart';
 import 'package:travelgrid/data/cubits/approver_type_cubit/approver_type_cubit.dart';
 import 'package:travelgrid/data/cubits/common/city_cubit/city_cubit.dart';
+import 'package:travelgrid/data/cubits/fare_class_cubit/fare_class_cubit.dart';
 import 'package:travelgrid/data/cubits/login_cubit/login_cubit.dart';
 import 'package:travelgrid/data/cubits/misc_type_cubit/misc_type_cubit.dart';
 import 'package:travelgrid/data/cubits/travel_mode_cubit/travel_mode_cubit.dart';
@@ -67,33 +68,38 @@ class _InitRootState extends State<InitRoot> {
         BlocProvider(create: (context) => TravelModeCubit()),
         BlocProvider(create: (context) => ApproverTypeCubit()),
         BlocProvider(create: (context) => CityCubit()),
+        BlocProvider(create: (context) => FareClassCubit()),
       ],
       child:  BlocBuilder<AccomTypeCubit, AccomTypeState>(
           builder: (context, state) {
             return BlocBuilder<CityCubit, CityState>(
-              builder:  (context, state) {
-                return BlocBuilder<MiscTypeCubit, MiscTypeState>(
-                    builder: (context, state) {
-                      return BlocBuilder<ApproverTypeCubit, ApproverTypeState>(
-                          builder: (context, state) {
-                        return BlocBuilder<TravelModeCubit, TravelModeState>(
-                            builder: (context, state) {
-                          return BlocBuilder<LoginCubit, LoginState>(
+                builder: (context, state) {
+                return BlocBuilder<FareClassCubit, FareClassState>(
+                  builder:  (context, state) {
+                    return BlocBuilder<MiscTypeCubit, MiscTypeState>(
+                        builder: (context, state) {
+                          return BlocBuilder<ApproverTypeCubit, ApproverTypeState>(
                               builder: (context, state) {
-                              return MaterialApp(
-                                useInheritedMediaQuery: true,
-                                navigatorKey: appNavigatorKey,
-                                builder: EasyLoading.init(),
-                                debugShowCheckedModeBanner: false,
-                                title: FlavourConstants.appName,
-                                onGenerateRoute: AppRoutes().generateRoute,
-                                themeMode: ThemeMode.system,
-                                theme: GlobalTheme().globalTheme,
+                            return BlocBuilder<TravelModeCubit, TravelModeState>(
+                                builder: (context, state) {
+                              return BlocBuilder<LoginCubit, LoginState>(
+                                  builder: (context, state) {
+                                  return MaterialApp(
+                                    useInheritedMediaQuery: true,
+                                    navigatorKey: appNavigatorKey,
+                                    builder: EasyLoading.init(),
+                                    debugShowCheckedModeBanner: false,
+                                    title: FlavourConstants.appName,
+                                    onGenerateRoute: AppRoutes().generateRoute,
+                                    themeMode: ThemeMode.system,
+                                    theme: GlobalTheme().globalTheme,
+                                  );
+                                }
                               );
                             }
-                          );
-                        }
           );
+                          }
+                        );
                       }
                     );
                   }

@@ -2,8 +2,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:travelgrid/common/constants/asset_constants.dart';
 import 'package:travelgrid/common/constants/flavour_constants.dart';
 import 'package:travelgrid/common/constants/route_constants.dart';
 import 'package:travelgrid/common/enum/dropdown_types.dart';
@@ -18,16 +16,19 @@ import 'package:travelgrid/data/datasources/approver_list.dart' as app;
 import 'package:travelgrid/data/datasources/login_response.dart';
 import 'package:travelgrid/data/datasources/te_summary_response.dart';
 import 'package:travelgrid/data/models/expense_model.dart';
-import 'package:travelgrid/data/models/ge_accom_model.dart';
-import 'package:travelgrid/data/models/ge_conveyance_model.dart';
-import 'package:travelgrid/data/models/ge_misc_model.dart';
 import 'package:travelgrid/data/models/success_model.dart';
+import 'package:travelgrid/data/models/te/te_accom_model.dart';
+import 'package:travelgrid/data/models/te/te_conveyance_model.dart';
+import 'package:travelgrid/data/models/te/te_misc_model.dart';
+import 'package:travelgrid/data/models/te/te_ticket_model.dart';
 import 'package:travelgrid/domain/usecases/te_usecase.dart';
 import 'package:travelgrid/presentation/components/bloc_map_event.dart';
-import 'package:travelgrid/presentation/screens/ge/add/add_accom.dart';
-import 'package:travelgrid/presentation/screens/ge/add/add_misc.dart';
-import 'package:travelgrid/presentation/screens/te/add/add_travel.dart';
+import 'package:travelgrid/presentation/dialog_expense_picker.dart';
+import 'package:travelgrid/presentation/screens/te/add/te_add_accom.dart';
+import 'package:travelgrid/presentation/screens/te/add/te_add_conveyance.dart';
+import 'package:travelgrid/presentation/screens/te/add/te_add_misc.dart';
 import 'package:travelgrid/presentation/screens/te/add/add_visit.dart';
+import 'package:travelgrid/presentation/screens/te/add/te_add_ticket.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';
 import 'package:travelgrid/presentation/widgets/dialog_selector_view.dart';
 import 'package:travelgrid/presentation/widgets/icon.dart';
@@ -52,7 +53,7 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
   List details=[];
   List expenseTypes=[];
   List<Tuple2<ExpenseModel,Map<String,dynamic>>> summaryItems=[];
-  List<Tuple2<Map,String>> summaryDetails=[];
+  List<Tuple3<Map,String,String>> summaryDetails=[];
   List<String> values=[];
   List<ExpenseVisitDetails> visitItems=[];
 
@@ -62,16 +63,12 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
   bool showSummaryDetails=false;
   bool showApproverDetails=false;
 
-  String total="0.00";
+  Tuple2<String,String> total=Tuple2("0.00", "0.00");
   MetaLoginResponse loginResponse = MetaLoginResponse();
 
   Tuple2<String,String>? approver1;
   Tuple2<String,String>? approver2;
   String description="";
-
-
-
-
 
   TravelExpenseBloc?  bloc;
   bool loaded =false;
@@ -118,7 +115,7 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
 
 
     for(var item in jsonData['summaryDetails']['data']){
-      summaryDetails.add(Tuple2(item, "0"));
+      summaryDetails.add(Tuple3(item, "0","0"));
     }
 
 
@@ -132,6 +129,22 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
 
     return Scaffold(
       backgroundColor: Colors.white,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton:  FloatingActionButton(
+          child:MetaIcon(mapData:jsonData['bottomButtonFab'],onButtonPressed: ()async{
+
+              await showDialog(
+                  context: context,
+                  builder: (_) => DialogExpensePicker(
+                    mapData: expenseTypes,
+                    onSelected: (e){
+                      navigate(e,false,{},0);
+                    },
+                  ));
+
+          },),
+          backgroundColor: ParseDataType().getHexToColor(jsonData['backgroundColor']),
+          onPressed: () {}),
       bottomNavigationBar: BottomAppBar(
         color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
         shape: CircularNotchedRectangle(),
@@ -161,51 +174,51 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
                 ],
               ),
             ),
-            widget.isEdit ?
-            Container(
-              color: Colors.white,
-              height:70.h,
-              child: Container(
-                margin: EdgeInsets.symmetric(horizontal: 10.w),
-                child: Row(
-                  children: expenseTypes.map((e) {
-
-                    return Container(
-                      margin: EdgeInsets.symmetric(horizontal: 5.w),
-                      width: 60.w,
-                      height: 60.w,
-                      child: InkWell(
-                          onTap: () async{
-                            navigate(e,false,{},0);
-                          },
-                          child:Container(
-                            height: 50.h,
-                            decoration: BoxDecoration(
-                              color: ParseDataType().getHexToColor(jsonData['backgroundColor']),
-                              shape: BoxShape.circle,
-                            ),
-                            child: Stack(
-                              alignment: Alignment.center,
-                              children: [
-                                Container(
-                                  width: 25.w,
-                                  height: 25.w,
-                                  child: SvgPicture.asset(
-                                    AssetConstants.assetsBaseURLSVG +"/"+  e['svgIcon']['icon'],//e['svgIcon']['color']
-                                    color: ParseDataType().getHexToColor(e['svgIcon']['color']),
-                                    width: 25.w,
-                                    height: 25.w,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          )
-                      ),
-                    );
-                  }).toList(),
-                ),
-              ),
-            ):SizedBox(),
+            // widget.isEdit ?
+            // Container(
+            //   color: Colors.white,
+            //   height:70.h,
+            //   child: Container(
+            //     margin: EdgeInsets.symmetric(horizontal: 10.w),
+            //     child: Row(
+            //       children: expenseTypes.map((e) {
+            //
+            //         return Container(
+            //           margin: EdgeInsets.symmetric(horizontal: 5.w),
+            //           width: 60.w,
+            //           height: 60.w,
+            //           child: InkWell(
+            //               onTap: () async{
+            //                 navigate(e,false,{},0);
+            //               },
+            //               child:Container(
+            //                 height: 50.h,
+            //                 decoration: BoxDecoration(
+            //                   color: ParseDataType().getHexToColor(jsonData['backgroundColor']),
+            //                   shape: BoxShape.circle,
+            //                 ),
+            //                 child: Stack(
+            //                   alignment: Alignment.center,
+            //                   children: [
+            //                     Container(
+            //                       width: 25.w,
+            //                       height: 25.w,
+            //                       child: SvgPicture.asset(
+            //                         AssetConstants.assetsBaseURLSVG +"/"+  e['svgIcon']['icon'],//e['svgIcon']['color']
+            //                         color: ParseDataType().getHexToColor(e['svgIcon']['color']),
+            //                         width: 25.w,
+            //                         height: 25.w,
+            //                       ),
+            //                     ),
+            //                   ],
+            //                 ),
+            //               )
+            //           ),
+            //         );
+            //       }).toList(),
+            //     ),
+            //   ),
+            // ):SizedBox(),
             Expanded(
               child:  BlocBuilder<TravelExpenseBloc, TravelExpenseState>(
                   bloc: bloc,
@@ -231,57 +244,96 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
 
 
      if(state.responseSum!=null && !loaded) {
+       TESummaryResponse? response = state.responseSum;
+      visitItems = response!.data!.expenseVisitDetails ?? [];
 
-      visitItems=state.responseSum!.data!.expenseVisitDetails ?? [];
+         for (var item in response.data!.conveyanceExpenses!) {
+           summaryItems.add(
+               Tuple2(
+                   ExpenseModel(id: item.id,
+                       teType: TETypes.CONVEYANCE,
+                       amount: item.amount.toString()),
+                   item.toJson()));
+         }
+         for (var item in response.data!.accommodationExpenses!) {
+           summaryItems.add(
+               Tuple2(
+                   ExpenseModel(id: item.id,
+                       teType: TETypes.ACCOMMODATION,
+                       amount:(item.amount!+item.tax!).toString()),
+                   item.toJson()));
+         }
+         for (var item in response.data!.miscellaneousExpenses!) {
+           summaryItems.add(
+               Tuple2(
+                   ExpenseModel(id: item.id,
+                       teType: TETypes.MISCELLANEOUS,
+                       amount: item.amount.toString()),
+                   item.toJson()));
+         }
 
-      print("visitItems");
-      print(state.responseSum!.data);
-      print(visitItems);
+      for (var item in response.data!.ticketExpenses!) {
+        summaryItems.add(
+            Tuple2(
+                ExpenseModel(id: item.id,
+                    teType: TETypes.TICKET,
+                    amount: item.amount.toString()),
+                item.toJson()));
+      }
+
+
+        for(int i=0;i<summaryDetails.length;i++){
+          Map map = summaryDetails[i].item1;
+          if(summaryDetails[i].item1['key']=="BTE"){
+            summaryDetails[i]= Tuple3(map,
+                response.data!.maExpenseSummary!.bookedTicketCost.toString(),
+                response.data!.maExpenseSummary!.bookedTicketCost.toString()
+            );
+          }
+          if(summaryDetails[i].item1['key']=="CA"){
+            summaryDetails[i]= Tuple3(map,
+                response.data!.maExpenseSummary!.advanceByCard.toString(),
+                response.data!.maExpenseSummary!.advanceByCash.toString(),
+            );
+          }
+          if(summaryDetails[i].item1['key']=="TE"){
+            summaryDetails[i]= Tuple3(map,
+                response.data!.maExpenseSummary!.ticketByCompany.toString(),
+                response.data!.maExpenseSummary!.ticketSelf.toString()
+            );
+          }
+          if(summaryDetails[i].item1['key']=="AE"){
+            summaryDetails[i]= Tuple3(map,
+                response.data!.maExpenseSummary!.accommodationByCompany.toString(),
+                response.data!.maExpenseSummary!.accommodationSelf.toString(),
+            );
+          }
+          if(summaryDetails[i].item1['key']=="PE"){
+            summaryDetails[i]= Tuple3(map,
+                response.data!.maExpenseSummary!.dailyAllowanceByCompany.toString(),
+                response.data!.maExpenseSummary!.dailyAllowanceByCompany.toString(),
+            );
+          }
+          if(summaryDetails[i].item1['key']=="CE"){
+            summaryDetails[i]= Tuple3(map,
+                response.data!.maExpenseSummary!.conveyanceByCompany.toString(),
+                response.data!.maExpenseSummary!.conveyanceSelf.toString()
+            );
+          }
+          if(summaryDetails[i].item1['key']=="ME"){
+            summaryDetails[i]= Tuple3(map,
+                response.data!.maExpenseSummary!.miscellaneousByCompany.toString(),
+                response.data!.maExpenseSummary!.miscellaneousSelf.toString()
+            );
+          }
+        }
+        total =Tuple2(
+            response.data!.maExpenseSummary!.totalAmountByCompany.toString(),
+            response.data!.maExpenseSummary!.totalAmountSelf.toString()
+        );
+
+      loaded=true;
      }
-
-
-    // if(state.responseSum!=null && !loaded) {
-    //   TESummaryResponse? response = state.responseSum;
-    //   for(int i=0;i<summaryDetails.length;i++){
-    //     Map map = summaryDetails[i].item1;
-    //     if(summaryDetails[i].item1['key']=="AE"){
-    //       summaryDetails[i]= Tuple2(map, response!.data![0].accommodationSelf.toString());
-    //     }
-    //     if(summaryDetails[i].item1['key']=="TE"){
-    //       summaryDetails[i]= Tuple2(map,  response!.data![0].conveyanceSelf.toString());
-    //     }
-    //     if(summaryDetails[i].item1['key']=="ME"){
-    //       summaryDetails[i]= Tuple2(map,  response!.data![0].miscellaneousSelf.toString());
-    //     }
-    //   }
-    //   total = response!.data![0].totalExpense.toString();
-    //
-    //   for (var item in response.data![0].maGeConveyanceExpense!) {
-    //     summaryItems.add(
-    //         Tuple2(
-    //             ExpenseModel(id: item.id,
-    //                 type: GETypes.CONVEYANCE,
-    //                 amount: item.amount.toString()),
-    //             item.toJson()));
-    //   }
-    //   for (var item in response.data![0].maGeAccomodationExpense!) {
-    //     summaryItems.add(
-    //         Tuple2(
-    //             ExpenseModel(id: item.id,
-    //                 type: GETypes.ACCOMMODATION,
-    //                 amount: item.amount.toString()),
-    //             item.toJson()));
-    //   }
-    //   for (var item in response.data![0].maGeMiscellaneousExpense!) {
-    //     summaryItems.add(
-    //         Tuple2(
-    //             ExpenseModel(id: item.id,
-    //                 type: GETypes.MISCELLANEOUS,
-    //                 amount: item.amount.toString()),
-    //             item.toJson()));
-    //   }
-    //   loaded=true;
-    // }
 
 
     return Container(
@@ -311,6 +363,7 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
 
               }
           ),
+
           MetaButton(mapData: jsonData['bottomButtonRight'],
               onButtonPressed: (){
                 submitGe("submit");
@@ -472,7 +525,8 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
                   child: Row(
                     children: [
                       Expanded(child: MetaTextView(mapData:   map['dataHeader']['label'])),
-                      Expanded(child: MetaTextView(mapData:  map['dataHeader']['value']))
+                      Expanded(child: MetaTextView(mapData:  map['dataHeader']['value'])),
+                      Expanded(child: MetaTextView(mapData:  map['dataHeader']['value2'])),
                     ],
                   ),
                 ),
@@ -490,7 +544,8 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
                           child: Row(
                             children: [
                               Expanded(child: MetaTextView(mapData: summaryDetails[index].item1['label'])),
-                              Expanded(child: MetaTextView(mapData: summaryDetails[index].item1['value'],text:summaryDetails[index].item2))
+                              Expanded(child: MetaTextView(mapData: summaryDetails[index].item1['value'],text:summaryDetails[index].item2)),
+                              Expanded(child: MetaTextView(mapData: summaryDetails[index].item1['value2'],text:summaryDetails[index].item3)),
                             ],
                           ),
                         );
@@ -506,7 +561,8 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
                   child: Row(
                     children: [
                       Expanded(child: MetaTextView(mapData:  map['dataFooter']['label'])),
-                      Expanded(child: MetaTextView(mapData:  map['dataFooter']['value'],text:total))
+                      Expanded(child: MetaTextView(mapData:  map['dataFooter']['value'],text:total.item1)),
+                      Expanded(child: MetaTextView(mapData:  map['dataFooter']['value2'],text:total.item2))
                     ],
                   ),
                 ),
@@ -629,7 +685,7 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
                   margin: EdgeInsets.symmetric(vertical: 2.h),
                   child: Row(
                       children: [
-                        Expanded(flex:1, child: MetaTextView(mapData: map['listView']['item'],text: CityUtil.getNameFromID(visitItems[i].city) )),
+                        Expanded(flex:1, child: MetaTextView(mapData: map['listView']['item'],text: CityUtil.getCityNameFromID(visitItems[i].city) )),
                         Expanded(flex:1,child: MetaTextView(mapData: map['listView']['item'],text:visitItems[i].evdStartDate!+"\n-"+visitItems[i].evdStartTime! )),
                         Expanded(flex:1,child: MetaTextView(mapData: map['listView']['item'],text:visitItems[i].evdEndDate!+"\n-"+visitItems[i].evdEndTime! )),
                         Container(
@@ -722,7 +778,7 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
                 padding: EdgeInsets.zero,
                 itemBuilder: (BuildContext context, int index) {
 
-                  GETypes? type = summaryItems[index].item1.type;
+                  TETypes? type = summaryItems[index].item1.teType;
                   String amount = summaryItems[index].item1.amount.toString();
 
                   return Container(
@@ -735,7 +791,7 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
                         Expanded(flex:1,child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            type != GETypes.CONVEYANCE?
+                            type != TETypes.CONVEYANCE?
                             InkWell(
                             onTap: (){
                                   navigate({"onClick": type}, true,summaryItems[index].item2,index);
@@ -786,15 +842,15 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
     double dailyTotal=0;
     for(var item in summaryItems){
 
-      if(item.item1.type==GETypes.ACCOMMODATION){
+      if(item.item1.type==TETypes.ACCOMMODATION){
         accomTotal=accomTotal + double.parse(item.item1.amount.toString() ?? "0");
       }
 
-      if(item.item1.type==GETypes.CONVEYANCE){
+      if(item.item1.type==TETypes.CONVEYANCE){
         travelTotal=travelTotal + double.parse(item.item1.amount.toString() ?? "0");
       }
 
-      if(item.item1.type==GETypes.MISCELLANEOUS){
+      if(item.item1.type==TETypes.MISCELLANEOUS){
         miscTotal=miscTotal + double.parse(item.item1.amount.toString() ?? "0");
       }
 
@@ -804,35 +860,36 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
       Map map = summaryDetails[i].item1;
 
       if(summaryDetails[i].item1['key']=="AE"){
-        summaryDetails[i]= Tuple2(map, accomTotal.toString());
+        summaryDetails[i]= Tuple3(map, accomTotal.toString(),"");
       }
 
       if(summaryDetails[i].item1['key']=="TE"){
-        summaryDetails[i]= Tuple2(map, travelTotal.toString());
+        summaryDetails[i]= Tuple3(map, travelTotal.toString(),"");
       }
 
       if(summaryDetails[i].item1['key']=="ME"){
-        summaryDetails[i]= Tuple2(map, miscTotal.toString());
+        summaryDetails[i]= Tuple3(map, miscTotal.toString(),"");
       }
 
 
     }
 
-    total =( miscTotal+accomTotal+travelTotal+dailyTotal).toString();
+    total = Tuple2("0.00",
+        ( miscTotal+accomTotal+travelTotal+dailyTotal).toString());
     List items1=[];
     List items2=[];
     List items3=[];
     for(var item in summaryItems){
 
-      if(item.item1.type == GETypes.ACCOMMODATION){
+      if(item.item1.type == TETypes.ACCOMMODATION){
         items1.add(item.item2);
       }
 
-      if(item.item1.type == GETypes.CONVEYANCE){
+      if(item.item1.type == TETypes.CONVEYANCE){
         items2.add(item.item2);
       }
 
-      if(item.item1.type == GETypes.MISCELLANEOUS){
+      if(item.item1.type == TETypes.MISCELLANEOUS){
         items3.add(item.item2);
       }
 
@@ -848,7 +905,7 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
     submitMap['accommodationSelf']= accomTotal;
     submitMap['conveyanceSelf']= travelTotal;
     submitMap['miscellaneousSelf']= miscTotal;
-    submitMap['totalExpense']= double.parse(total);
+    submitMap['totalExpense']= double.parse(total.item1);
 
 
     setState(() {
@@ -860,17 +917,17 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
 
   void navigate(e,bool isEdit,Map<String,dynamic> data,int index) {
 
-    if(e['onClick'] == RouteConstants.createMiscExpensePath || e['onClick']  == GETypes.MISCELLANEOUS.toString()){
-      print(GETypes.MISCELLANEOUS);
+    if(e['onClick'] == RouteConstants.createTeMiscExpensePath || e['onClick']  == TETypes.MISCELLANEOUS.toString()){
+      print(TETypes.MISCELLANEOUS);
       print(data);
-      GEMiscModel? model;
+      TEMiscModel? model;
       if(data.isNotEmpty){
-        model =  GEMiscModel.fromMap(data);
+        model =  TEMiscModel.fromMap(data);
       }
 
 
       Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
-          CreateMiscExpense(
+          AddTeMiscExpense(
             isEdit:isEdit,
             miscModel:model,
             onAdd: (values){
@@ -882,16 +939,16 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
             },)));
     }
 
-    if(e['onClick'] == RouteConstants.createAccommodationExpensePath  || e['onClick']  == GETypes.ACCOMMODATION.toString()){
+    if(e['onClick'] == RouteConstants.createTeAccommodationExpensePath  || e['onClick']  == TETypes.ACCOMMODATION.toString()){
 
       print(data);
-      GEAccomModel? model;
+      TEAccomModel? model;
       if(data.isNotEmpty){
-        model =  GEAccomModel.fromMap(data);
+        model =  TEAccomModel.fromMap(data);
       }
 
       Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
-          CreateAccommodationExpense(
+          AddTeAccommodationExpense(
             isEdit:isEdit,
             accomModel:model,
             onAdd: (values){
@@ -904,20 +961,20 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
           },)));
     }
 
-    if(e['onClick'] == RouteConstants.createTravelExpensePath || e['onClick']  == GETypes.CONVEYANCE.toString()){
+    if(e['onClick'] == RouteConstants.createTeConveyanceExpensePath || e['onClick']  == TETypes.CONVEYANCE.toString()){
 
 
       print(data);
-      GeConveyanceModel? model;
+      TeConveyanceModel? model;
       if(data.isNotEmpty){
-        model =  GeConveyanceModel.fromMap(data);
+        model =  TeConveyanceModel.fromMap(data);
       }
 
 
       Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
-          CreateConveyanceExpense(
+          AddTeConveyance(
             isEdit:isEdit,
-            conveyanceModel:model,
+            teConveyanceModel:model,
             onAdd: (values){
             if(isEdit){
               summaryItems.removeAt(index);
@@ -925,6 +982,29 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
             summaryItems.add(Tuple2(values['item'] as ExpenseModel, values['data']));
             calculateSummary();
           },)));
+    }
+
+    if(e['onClick'] == RouteConstants.createTeTicketExpensePath || e['onClick']  == TETypes.TICKET.toString()){
+
+
+      print(data);
+      TETicketModel? model;
+      if(data.isNotEmpty){
+        model =  TETicketModel.fromMap(data);
+      }
+
+
+      Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
+          AddTeTicketExpense(
+            isEdit:isEdit,
+            teTicketModel:model,
+            onAdd: (values){
+              if(isEdit){
+                summaryItems.removeAt(index);
+              }
+              summaryItems.add(Tuple2(values['item'] as ExpenseModel, values['data']));
+              calculateSummary();
+            },)));
     }
 
   }
@@ -960,12 +1040,14 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
 
 
     switch(text){
-      case GETypes.ACCOMMODATION :
+      case TETypes.ACCOMMODATION :
         return "Accommodation";
-      case GETypes.CONVEYANCE :
-        return "Travel";
-      case GETypes.MISCELLANEOUS :
+      case TETypes.CONVEYANCE :
+        return "Conveyance";
+      case TETypes.MISCELLANEOUS :
         return "Miscellaneous";
+      case TETypes.TICKET :
+        return "Ticket";
     }
 
     return "";

@@ -10,8 +10,17 @@ class RouteConstants {
   static const approvalExpensePath = "/approvalExpense";
   static const policyPath = "/viewPolicies";
   static const pdfPath = "/viewPdfScreen";
+
+  //GE
   static const createAccommodationExpensePath = "/createAccommodationExpense";
   static const createTravelExpensePath = "/createTravelExpense";
   static const createMiscExpensePath = "/createMiscExpense";
+
+  //TE
+  static const createTeAccommodationExpensePath = "/createTeAccommodationExpense";
+  static const createTeTicketExpensePath = "/createTeTicketExpense";
+  static const createTeConveyanceExpensePath = "/createTeConveyanceExpense";
+  static const createTeMiscExpensePath = "/createTeMiscExpense";
+
   static const viewCitiesPath = "/viewCities";
 }

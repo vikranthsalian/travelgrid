@@ -14,38 +14,38 @@ import 'package:travelgrid/common/utils/show_alert.dart';
 import 'package:travelgrid/data/models/expense_model.dart';
 import 'package:travelgrid/data/models/ge_misc_model.dart';
 import 'package:travelgrid/data/models/success_model.dart';
+import 'package:travelgrid/data/models/te/te_misc_model.dart';
 import 'package:travelgrid/domain/usecases/common_usecase.dart';
 import 'package:travelgrid/presentation/components/upload_component.dart';
-import 'package:travelgrid/presentation/screens/ge/bloc/misc_form_bloc.dart';
+import 'package:travelgrid/presentation/screens/te/bloc/te_misc_form_bloc.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';
 import 'package:travelgrid/presentation/widgets/date_time_view.dart';
 import 'package:travelgrid/presentation/widgets/dialog_selector_view.dart';
 import 'package:travelgrid/presentation/widgets/icon.dart';
-import 'package:travelgrid/presentation/widgets/search_selector_view.dart';
 import 'package:travelgrid/presentation/widgets/text_field.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
 
-class CreateMiscExpense extends StatefulWidget {
+class AddTeMiscExpense extends StatefulWidget {
   Function(Map)? onAdd;
   bool isEdit;
-  GEMiscModel? miscModel;
-  CreateMiscExpense({this.onAdd,this.isEdit=false,this.miscModel});
+  TEMiscModel? miscModel;
+  AddTeMiscExpense({this.onAdd,this.isEdit=false,this.miscModel});
   @override
-  _CreateMiscExpenseState createState() => _CreateMiscExpenseState();
+  _AddTeMiscExpenseState createState() => _AddTeMiscExpenseState();
 }
 
-class _CreateMiscExpenseState extends State<CreateMiscExpense> {
+class _AddTeMiscExpenseState extends State<AddTeMiscExpense> {
   Map<String,dynamic> jsonData = {};
   List items=[];
   double cardHt = 90.h;
-  MiscFormBloc? formBloc;
+  MiscTeFormBloc? formBloc;
   bool loaded=false;
   File? file;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    jsonData = FlavourConstants.miscCreateData;
+    jsonData = FlavourConstants.teMiscAddData;
   //  prettyPrint(jsonData);
 
   }
@@ -121,23 +121,20 @@ class _CreateMiscExpenseState extends State<CreateMiscExpense> {
           Expanded(
             child: Container(
               child: BlocProvider(
-                create: (context) => MiscFormBloc(jsonData),
+                create: (context) => MiscTeFormBloc(jsonData),
                 child: Builder(
                     builder: (context) {
 
-                     formBloc =  BlocProvider.of<MiscFormBloc>(context);
+                     formBloc =  BlocProvider.of<MiscTeFormBloc>(context);
 
 
                      if(widget.isEdit){
 
-                       formBloc!.checkInDate.updateValue(widget.miscModel!.startDate.toString());
-                       formBloc!.checkOutDate.updateValue(widget.miscModel!.endDate.toString());
-
-                       formBloc!.cityName.updateValue(widget.miscModel!.cityName.toString());
-                       formBloc!.cityID.updateValue(widget.miscModel!.city.toString());
+                       formBloc!.checkInDate.updateValue(widget.miscModel!.miscellaneousExpenseDate.toString());
+                       formBloc!.checkOutDate.updateValue(widget.miscModel!.miscellaneousExpenseEndDate.toString());
 
                        formBloc!.miscID.updateValue(widget.miscModel!.miscellaneousType.toString());
-                       formBloc!.miscName.updateValue(widget.miscModel!.miscellaneousTypeName.toString());
+                     //  formBloc!.miscName.updateValue(widget.miscModel!.miscellaneousTypeName.toString());
 
 
                        formBloc!.unitTypeName.updateValue("test");
@@ -164,7 +161,7 @@ class _CreateMiscExpenseState extends State<CreateMiscExpense> {
 
                      return Container(
                       margin: EdgeInsets.symmetric(horizontal: 10.w),
-                      child: FormBlocListener<MiscFormBloc, String, String>(
+                      child: FormBlocListener<MiscTeFormBloc, String, String>(
                           onSubmissionFailed: (context, state) {
                             print(state);
                             MetaAlert.showErrorAlert(
@@ -177,12 +174,12 @@ class _CreateMiscExpenseState extends State<CreateMiscExpense> {
                           },
                           onSuccess: (context, state) {
                             print(state.successResponse);
-                           GEMiscModel modelResponse = GEMiscModel.fromJson(jsonDecode(state.successResponse.toString()));
+                           TEMiscModel modelResponse = TEMiscModel.fromJson(jsonDecode(state.successResponse.toString()));
 
                             widget.onAdd!(
                                 {
                                   "data": jsonDecode(state.successResponse.toString()),
-                                  "item" : ExpenseModel(type: GETypes.MISCELLANEOUS,amount: modelResponse.amount.toString())
+                                  "item" : ExpenseModel(teType: TETypes.MISCELLANEOUS,amount: modelResponse.amount.toString())
                                 }
                             );
                             Navigator.pop(context);
@@ -216,16 +213,6 @@ class _CreateMiscExpenseState extends State<CreateMiscExpense> {
                                         }),
                                       ),
                                     ],
-                                  ),
-
-                                  Container(
-                                    child: MetaSearchSelectorView(mapData: jsonData['selectCity'],
-                                      text: getInitialText(formBloc!.cityName.value),
-                                      onChange:(value){
-                                        formBloc!.cityName.updateValue(value.name);
-                                        formBloc!.cityID.updateValue(value.id.toString());
-                                      },),
-                                    alignment: Alignment.centerLeft,
                                   ),
 
                                   Row(
@@ -287,6 +274,7 @@ class _CreateMiscExpenseState extends State<CreateMiscExpense> {
                                       onChanged:(value){
                                         formBloc!.tfDescription.updateValue(value);
                                       }),
+                                  SizedBox(height: 20.h,),
                                   UploadComponent(jsonData: jsonData['uploadButton'],
                                       onSelected: (dataFile){
                                         file=dataFile;

@@ -1,6 +1,7 @@
 import 'package:travelgrid/data/datasources/accom_type_list.dart';
 import 'package:travelgrid/data/datasources/approver_list.dart';
 import 'package:travelgrid/data/datasources/cities_list.dart';
+import 'package:travelgrid/data/datasources/fare_class_list.dart';
 import 'package:travelgrid/data/datasources/ge_summary_response.dart';
 import 'package:travelgrid/data/datasources/general_expense_list.dart';
 import 'package:travelgrid/data/datasources/lat_long_distance_model.dart';
@@ -31,6 +32,8 @@ abstract class CommonAPIAbstract {
   Future<MetaCityListResponse> getCities(countryCode,tripType);
 
   Future<MetaAccomTypeListResponse> getAccomTypesList();
+
+  Future<MetaFareClassListResponse> getFareClassList(mode);
 
   Future<MetaTravelModeListResponse> getTravelModeList();
 

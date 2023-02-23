@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:travelgrid/presentation/components/dialog_type.dart';
 import 'package:travelgrid/presentation/screens/common/accom_type_screen.dart';
 import 'package:travelgrid/presentation/screens/common/common_type_screen.dart';
+import 'package:travelgrid/presentation/screens/common/fare_class_screen.dart';
 import 'package:travelgrid/presentation/screens/common/misc_type_screen.dart';
 import 'package:travelgrid/presentation/screens/common/travel_mode_screen.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
@@ -35,7 +36,7 @@ class _MetaDialogSelectorViewState extends State<MetaDialogSelectorView> {
                     context: context,
                     builder: (_) => DialogType(
                       size: getSize(widget.mapData['key']),
-                      child: getDialogViews(widget.mapData['key']),
+                      child: getDialogViews(widget.mapData),
                     ));
               }
 
@@ -48,9 +49,7 @@ class _MetaDialogSelectorViewState extends State<MetaDialogSelectorView> {
   }
 
   Widget getDialogViews(text){
-    print(text);
-
-    switch(text){
+    switch(text['key']){
       case "accom_type_view":
         return AccommodationTypeScreen(
             onTap:(value){
@@ -72,6 +71,15 @@ class _MetaDialogSelectorViewState extends State<MetaDialogSelectorView> {
             });
       case "travel_mode_view":
         return TravelModeScreen(
+            onTap:(value){
+              setState(() {
+                widget.text= value['label'];
+                widget.onChange!(value);
+              });
+            });
+      case "fare_class_view":
+        return FareClassScreen(
+          mode: text['modeType'],
             onTap:(value){
               setState(() {
                 widget.text= value['label'];
@@ -100,6 +108,8 @@ class _MetaDialogSelectorViewState extends State<MetaDialogSelectorView> {
         return 0.3;
       case "misc_type_view":
         return 0.8;
+      case "fare_class_view":
+        return 0.5;
       case "travel_mode_view":
         return 0.5;
       default:

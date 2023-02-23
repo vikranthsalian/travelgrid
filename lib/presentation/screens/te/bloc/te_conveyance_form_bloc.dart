@@ -2,16 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
-import 'package:travelgrid/common/config/navigator_key.dart';
-import 'package:travelgrid/common/injector/injector.dart';
-import 'package:travelgrid/common/utils/date_time_util.dart';
 import 'package:travelgrid/common/utils/validators.dart';
-import 'package:travelgrid/data/cubits/login_cubit/login_cubit.dart';
-import 'package:travelgrid/data/datasources/login_response.dart';
-import 'package:travelgrid/data/models/ge_conveyance_model.dart';
-import 'package:travelgrid/domain/usecases/login_usecase.dart';
-import 'dart:math';
-class TravelFormBloc extends FormBloc<String, String> {
+class ConveyanceTeFormBloc extends FormBloc<String, String> {
 
   final selectModeID = SelectFieldBloc<String, dynamic>();
   final selectWithBill = SelectFieldBloc<String, dynamic>();
@@ -19,14 +11,11 @@ class TravelFormBloc extends FormBloc<String, String> {
 
   final checkInTime =  TextFieldBloc(validators: [emptyValidator]);
   final checkOutTime =  TextFieldBloc(validators: [emptyValidator]);
-  final distance =  TextFieldBloc(validators: [emptyValidator]);
-
 
   final modeName =  TextFieldBloc(validators: [emptyValidator]);
 
-  final VehicleTypeName =  TextFieldBloc(validators: [emptyValidator]);
-
   final swWithBill = BooleanFieldBloc(initialValue: false);
+  final swByCompany = BooleanFieldBloc(initialValue: false);
 
   final tfDestination =  TextFieldBloc(validators: [emptyValidator]);
   final tfOrigin =  TextFieldBloc(validators: [emptyValidator]);
@@ -36,7 +25,11 @@ class TravelFormBloc extends FormBloc<String, String> {
   final tfDescription = TextFieldBloc();
 
   final voucherPath = TextFieldBloc();
-  final onCityPairAdded = SelectFieldBloc<List<MaGeConveyanceCityPair>,dynamic>(initialValue: []);
+
+
+  final currency =  TextFieldBloc(validators: [emptyValidator],initialValue: "48");
+  final exchangeRate =  TextFieldBloc(validators: [emptyValidator],initialValue: "1");
+
   static String? emptyValidator(dynamic value) {
     if (value.isEmpty) {
       return "Cannot be empty";
@@ -44,10 +37,9 @@ class TravelFormBloc extends FormBloc<String, String> {
     return null;
   }
 
-  TravelFormBloc(Map<String, dynamic> data):super(autoValidate: true) {
+  ConveyanceTeFormBloc(Map<String, dynamic> data):super(autoValidate: true) {
 
       if(data.isNotEmpty){
-
         tfVoucher.addValidators(Validators().getValidators(data['text_field_voucher']));
         tfAmount.addValidators(Validators().getValidators(data['text_field_amount']));
         tfDescription.addValidators(Validators().getValidators(data['text_field_desc']));
@@ -55,17 +47,16 @@ class TravelFormBloc extends FormBloc<String, String> {
 
     addFieldBlocs(fieldBlocs: [
       checkInDate,
-    //  checkInTime,
-    //  checkOutTime,
       tfOrigin,
       tfDestination,
       selectModeID,
       modeName,
-   //   VehicleTypeName,
+      exchangeRate,
+      currency,
+      swByCompany,
       tfVoucher,
       tfAmount,
       tfDescription,
-   //   selectWithBill,
       swWithBill,
       voucherPath
     ]);
@@ -77,46 +68,28 @@ class TravelFormBloc extends FormBloc<String, String> {
           tfVoucher.updateValue("nill");
         }
       });
-
-      selectModeID.onValueChanges(onData: (previous, current) async* {
-        if(current.value == "250") {
-       //   tfHotelName.updateValue("");
-        } else {
-      //    tfHotelName.updateValue("nill");
-        }
-      });
   }
 
   @override
   FutureOr<void> onSubmitting() async {
-    print("dasdkak");
-
-    String amount =  double.parse(tfAmount.value ?? "0").toStringAsFixed(2);
-
     try {
+
       Map<String, dynamic> saveConvMap = {
         "conveyanceDate": checkInDate.value,
-        "origin": tfOrigin.value,
-        "destination": tfDestination.value,
-
-        "startTime": selectModeID.value.toString() == "193" ? checkInTime.value : "00:00",
-        "endTime": selectModeID.value.toString() == "193" ? checkOutTime.value  : "00:00",
-        "distance":selectModeID.value.toString() == "193" ? double.parse(distance.value.toString()) : 0.0,
-
-        "violated": true,
-        "vehicleType": 271,
-
+        "fromPlace": tfOrigin.value,
+        "toPlace": tfDestination.value,
         "travelMode": int.parse(selectModeID.value.toString()),
-        "travelModeName": modeName.value,
-        "amount": double.parse(amount),
-        "maGeConveyanceCityPair": onCityPairAdded.value,
-        "description": tfDescription.value,
-        "voucherNumber": swWithBill.value ? tfVoucher.value : "",
-        "withBill": swWithBill.value,
-
+        "amount": tfAmount.valueToDouble,
+        "byCompany": swByCompany.value,
+        "exchangeRate": exchangeRate.valueToInt,
+        "currency": currency.value,
         "voucherPath": voucherPath.value,
-
-        "voilationMessage": "Exception due to manual creation of Conveyance"
+        "voucherNumber": swWithBill.value ? tfVoucher.value : "",
+        "description":  tfDescription.value,
+        "voilationMessage": "",
+        "requireApproval": false,
+        "withBill": false,
+        "modified": false,
       };
       emitSuccess(successResponse: jsonEncode(saveConvMap),canSubmitAgain: true);
     }catch(e){

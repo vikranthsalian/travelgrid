@@ -17,7 +17,8 @@ class _$InjectorConfig extends InjectorConfig {
       ..registerSingleton((c) => AccomTypeBloc(c<CommonUseCase>()))
       ..registerSingleton((c) => MiscTypeBloc(c<CommonUseCase>()))
       ..registerSingleton((c) => TravelModeBloc(c<CommonUseCase>()))
-      ..registerSingleton((c) => ApproverTypeBloc(c<CommonUseCase>()));
+      ..registerSingleton((c) => ApproverTypeBloc(c<CommonUseCase>()))
+      ..registerSingleton((c) => FareClassBloc(c<CommonUseCase>()));
   }
 
   @override

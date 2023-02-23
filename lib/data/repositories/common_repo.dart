@@ -4,6 +4,7 @@ import 'package:travelgrid/data/cubits/login_cubit/login_cubit.dart';
 import 'package:travelgrid/data/datasources/accom_type_list.dart';
 import 'package:travelgrid/data/datasources/approver_list.dart';
 import 'package:travelgrid/data/datasources/cities_list.dart';
+import 'package:travelgrid/data/datasources/fare_class_list.dart';
 import 'package:travelgrid/data/datasources/misc_type_list.dart';
 import 'package:travelgrid/data/datasources/travel_mode_list.dart';
 import 'package:travelgrid/data/datasources/lat_long_distance_model.dart';
@@ -51,6 +52,21 @@ class CommonRepository extends CommonAPIAbstract {
     }
 
     return MetaAccomTypeListResponse(status: false);
+  }
+
+  @override
+  Future<MetaFareClassListResponse> getFareClassList(mode) async {
+
+    Map<String,dynamic> data= {"mode":mode};
+
+    var response = await apiRemoteDatasource.getCommonTypes("getFareClass",data);
+
+    if(response!=null) {
+      MetaFareClassListResponse modelResponse = MetaFareClassListResponse.fromJson(response);
+      return modelResponse;
+    }
+
+    return MetaFareClassListResponse(status: false);
   }
 
   @override

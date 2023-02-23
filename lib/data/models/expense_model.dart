@@ -4,16 +4,19 @@ import 'package:travelgrid/common/enum/dropdown_types.dart';
 class ExpenseModel {
   int? id;
   GETypes? type;
+  TETypes? teType;
   String? amount;
 
   ExpenseModel(
       {this.id,
         this.type,
+        this.teType,
         this.amount,});
 
   ExpenseModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     type = json['type'];
+    teType = json['teType'];
     amount = json['amount'];
   }
 
@@ -21,6 +24,7 @@ class ExpenseModel {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
     data['type'] = this.type;
+    data['teType'] = this.teType;
     data['amount'] = this.amount;
     return data;
   }
@@ -29,6 +33,7 @@ class ExpenseModel {
     return {
       'id': this.id,
       'type': this.type,
+      'teType': this.teType,
       'amount': this.amount,
     };
   }
@@ -37,6 +42,7 @@ class ExpenseModel {
     return ExpenseModel(
       id: map['id'] as int,
       type: map['type'] as GETypes,
+      teType: map['teType'] as TETypes,
       amount: map['amount'] as String
     );
   }
