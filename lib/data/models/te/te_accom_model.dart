@@ -6,8 +6,8 @@ class TEAccomModel {
   int? accomodationType;
   String? hotelName;
   int? city;
-  double? amount;
-  double? tax;
+  int? amount;
+  int? tax;
   bool? byCompany;
   int? exchangeRate;
   String? currency;
@@ -54,18 +54,18 @@ class TEAccomModel {
     city = json['city'];
     amount = json['amount'];
     tax = json['tax'];
-    byCompany = json['byCompany'];
+    byCompany = json['byCompany']?? false;
     exchangeRate = json['exchangeRate'];
     currency = json['currency'];
     voucherNumber = json['voucherNumber'];
     voucherPath = json['voucherPath'];
     eligibleAmount = json['eligibleAmount'];
-    withBill = json['withBill'];
+    withBill = json['withBill']?? false;
     description = json['description'];
-    voilationMessage = json['voilationMessage'];
-    receivedApproval = json['receivedApproval'];
-    requireApproval = json['requireApproval'];
-    modified = json['modified'];
+    voilationMessage = json['voilationMessage'] ?? "";
+    receivedApproval = json['receivedApproval'] ?? false;
+    requireApproval = json['requireApproval'] ?? false;
+    modified = json['modified'] ?? false;
   }
 
   Map<String, dynamic> toJson() {
@@ -129,8 +129,8 @@ class TEAccomModel {
       accomodationType: map['accomodationType'] as int,
       hotelName: map['hotelName'] as String,
       city: map['city'] as int,
-      amount: map['amount'] as double,
-      tax: map['tax'] as double,
+      amount: map['amount'] as int,
+      tax: map['tax'] as int,
       byCompany: map['byCompany'] as bool,
       exchangeRate: map['exchangeRate'] as int,
       currency: map['currency'] as String,

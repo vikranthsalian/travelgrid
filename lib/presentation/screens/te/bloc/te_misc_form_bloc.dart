@@ -72,9 +72,9 @@ class MiscTeFormBloc extends FormBloc<String, String> {
         "miscellaneousExpenseDate": checkInDate.value,
         "miscellaneousExpenseEndDate": checkOutDate.value,
 
-        "miscellaneousType": int.parse(miscID.value ?? "0"),
+        "miscellaneousType":int.parse(miscID.value.toString()),
         "voucherNumber": tfVoucher.value,
-        "amount": tfAmount.valueToDouble,
+        "amount": tfAmount.valueToInt,
         "byCompany": false,
         if(miscID.value == "212")
         "unitType": int.parse(unitTypeID.value),
@@ -82,7 +82,7 @@ class MiscTeFormBloc extends FormBloc<String, String> {
         "currency": currency.value,
         "voucherPath": voucherPath.value,
         "description": tfDescription.value,
-        "voilationMessage": "Exception due to manual creation of Miscellaneous",
+        "voilationMessage": "",
         "requireApproval": false,
         "withBill": false,
         "modified": false,

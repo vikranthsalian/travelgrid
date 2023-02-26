@@ -16,9 +16,9 @@ class TETicketModel {
   String? voucherPath;
   bool? withBill;
   String? voilationMessage;
-  Null? receivedApproval;
-  Null? requireApproval;
-  Null? modified;
+  bool? receivedApproval;
+  bool? requireApproval;
+  bool? modified;
 
   TETicketModel(
       {this.travelDate,
@@ -48,7 +48,7 @@ class TETicketModel {
     leavingFrom = json['leavingFrom'];
     goingTo = json['goingTo'];
     travelMode = json['travelMode'];
-    byCompany = json['byCompany'];
+    byCompany = json['byCompany']?? false;
     fareClass = json['fareClass'];
     pnrNumber = json['pnrNumber'];
     ticketNumber = json['ticketNumber'];
@@ -58,11 +58,11 @@ class TETicketModel {
     currency = json['currency'];
     description = json['description'];
     voucherPath = json['voucherPath'];
-    withBill = json['withBill'];
-    voilationMessage = json['voilationMessage'];
-    receivedApproval = json['receivedApproval'];
-    requireApproval = json['requireApproval'];
-    modified = json['modified'];
+    withBill = json['withBill']?? false;
+    voilationMessage = json['voilationMessage']??"";
+    receivedApproval = json['receivedApproval']?? false;
+    requireApproval = json['requireApproval']?? false;
+    modified = json['modified']?? false;
   }
 
   Map<String, dynamic> toJson() {

@@ -79,7 +79,7 @@ class ConveyanceTeFormBloc extends FormBloc<String, String> {
         "fromPlace": tfOrigin.value,
         "toPlace": tfDestination.value,
         "travelMode": int.parse(selectModeID.value.toString()),
-        "amount": tfAmount.valueToDouble,
+        "amount": tfAmount.valueToInt,
         "byCompany": swByCompany.value,
         "exchangeRate": exchangeRate.valueToInt,
         "currency": currency.value,

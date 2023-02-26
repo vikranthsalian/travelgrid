@@ -1,10 +1,15 @@
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
+import 'package:travelgrid/data/cubits/accom_type_cubit/accom_type_cubit.dart';
 import 'package:travelgrid/data/cubits/common/city_cubit/city_cubit.dart';
 import 'package:travelgrid/data/cubits/fare_class_cubit/fare_class_cubit.dart';
+import 'package:travelgrid/data/cubits/misc_type_cubit/misc_type_cubit.dart';
+import 'package:travelgrid/data/cubits/travel_mode_cubit/travel_mode_cubit.dart';
 import 'package:travelgrid/data/datasources/cities_list.dart' as city;
 import 'package:travelgrid/data/datasources/fare_class_list.dart' as fare;
+import 'package:travelgrid/data/datasources/misc_type_list.dart' as misc;
+import 'package:travelgrid/data/datasources/accom_type_list.dart' as accom;
+import 'package:travelgrid/data/datasources/travel_mode_list.dart' as mode;
 
-import '../../data/datasources/fare_class_list.dart';
 import '../config/navigator_key.dart';
 
 class CityUtil{
@@ -51,5 +56,63 @@ class CityUtil{
 
     return null;
   }
+
+  static int? getMiscIDFromName(name) {
+
+    if(name.toString().isEmpty){
+      return null;
+    }
+
+    List<misc.Data> list = appNavigatorKey.currentState!.context.read<MiscTypeCubit>().getMiscTypeResponse();
+
+    Iterable<misc.Data> data= list.where((item) => (item.label.toString() == name.toString()));
+    return data.first.id;
+  }
+
+  static int? getAccomIDFromName(name) {
+
+    if(name.toString().isEmpty){
+      return null;
+    }
+
+    List<accom.Data> list = appNavigatorKey.currentState!.context.read<AccomTypeCubit>().getAccomTypeResponse();
+
+    Iterable<accom.Data> data= list.where((item) => (item.label.toString() == name.toString()));
+    return data.first.id;
+  }
   
+  static int? getModeIDFromName(name) {
+
+    if(name.toString().isEmpty){
+      return null;
+    }
+
+    List<mode.Data> list = appNavigatorKey.currentState!.context.read<TravelModeCubit>().getTravelModeResponse();
+
+    Iterable<mode.Data> data= list.where((item) => (item.label.toString() == name.toString()));
+    return data.first.id;
+  }
+
+  static int? getFareIDFromName(name,mode) {
+
+    if(mode=="Air"){
+      mode="A";
+    }
+    if(mode=="Rail"){
+      mode="R";
+    }
+    if(mode=="Road"){
+      mode="B";
+    }
+
+    if(name.toString().isEmpty){
+      return null;
+    }
+
+    List<fare.Data> list = appNavigatorKey.currentState!.context.read<FareClassCubit>().getFareClassResponse(mode);
+
+    Iterable<fare.Data> data= list.where((item) => (item.label.toString() == name.toString()));
+    return data.first.id;
+  }
+
 }

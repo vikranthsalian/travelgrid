@@ -40,7 +40,7 @@ class TeRepository extends TeAPIAbstract {
   @override
   Future<SuccessModel> createTE(data,body) async {
 
-    var response = await apiRemoteDatasource.createTE("Te/submitMaTravelExpense",data,body);
+    var response = await apiRemoteDatasource.createTE("te/submitMaTravelExpense",data,body);
 
     if(response!=null) {
       SuccessModel modelResponse = SuccessModel.fromJson(response);

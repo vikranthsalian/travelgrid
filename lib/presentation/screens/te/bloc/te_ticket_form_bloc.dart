@@ -87,7 +87,7 @@ class TicketTeFormBloc extends FormBloc<String, String> {
       "pnrNumber": tfPNR.value,
       "ticketNumber": tfTicket.value,
       "flightTrainBusNo": tfFlight.value,
-      "amount": tfAmount.valueToDouble,
+      "amount": tfAmount.valueToInt,
       "exchangeRate": exchangeRate.valueToInt,
       "currency": currency.value,
       "description": tfDescription.value,

@@ -68,10 +68,11 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
 
   Tuple2<String,String>? approver1;
   Tuple2<String,String>? approver2;
-  String description="";
+  TextEditingController description = TextEditingController();
 
   TravelExpenseBloc?  bloc;
   bool loaded =false;
+  MaExpenseSummary summary = MaExpenseSummary();
   @override
   void initState() {
     // TODO: implement initState
@@ -105,9 +106,6 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
 
 
 
-      submitMap['employeeName']= loginResponse.data!.fullName;
-      submitMap['selfApprovals']= false;
-      submitMap['violated']= false;
     }catch(ex){
       approver1 = Tuple2("DUMMY", "cm01");
       approver2 = Tuple2("DUMMY", "cm02");
@@ -174,51 +172,6 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
                 ],
               ),
             ),
-            // widget.isEdit ?
-            // Container(
-            //   color: Colors.white,
-            //   height:70.h,
-            //   child: Container(
-            //     margin: EdgeInsets.symmetric(horizontal: 10.w),
-            //     child: Row(
-            //       children: expenseTypes.map((e) {
-            //
-            //         return Container(
-            //           margin: EdgeInsets.symmetric(horizontal: 5.w),
-            //           width: 60.w,
-            //           height: 60.w,
-            //           child: InkWell(
-            //               onTap: () async{
-            //                 navigate(e,false,{},0);
-            //               },
-            //               child:Container(
-            //                 height: 50.h,
-            //                 decoration: BoxDecoration(
-            //                   color: ParseDataType().getHexToColor(jsonData['backgroundColor']),
-            //                   shape: BoxShape.circle,
-            //                 ),
-            //                 child: Stack(
-            //                   alignment: Alignment.center,
-            //                   children: [
-            //                     Container(
-            //                       width: 25.w,
-            //                       height: 25.w,
-            //                       child: SvgPicture.asset(
-            //                         AssetConstants.assetsBaseURLSVG +"/"+  e['svgIcon']['icon'],//e['svgIcon']['color']
-            //                         color: ParseDataType().getHexToColor(e['svgIcon']['color']),
-            //                         width: 25.w,
-            //                         height: 25.w,
-            //                       ),
-            //                     ),
-            //                   ],
-            //                 ),
-            //               )
-            //           ),
-            //         );
-            //       }).toList(),
-            //     ),
-            //   ),
-            // ):SizedBox(),
             Expanded(
               child:  BlocBuilder<TravelExpenseBloc, TravelExpenseState>(
                   bloc: bloc,
@@ -245,92 +198,50 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
 
      if(state.responseSum!=null && !loaded) {
        TESummaryResponse? response = state.responseSum;
-      visitItems = response!.data!.expenseVisitDetails ?? [];
-
-         for (var item in response.data!.conveyanceExpenses!) {
-           summaryItems.add(
-               Tuple2(
-                   ExpenseModel(id: item.id,
-                       teType: TETypes.CONVEYANCE,
-                       amount: item.amount.toString()),
-                   item.toJson()));
-         }
-         for (var item in response.data!.accommodationExpenses!) {
-           summaryItems.add(
-               Tuple2(
-                   ExpenseModel(id: item.id,
-                       teType: TETypes.ACCOMMODATION,
-                       amount:(item.amount!+item.tax!).toString()),
-                   item.toJson()));
-         }
-         for (var item in response.data!.miscellaneousExpenses!) {
-           summaryItems.add(
-               Tuple2(
-                   ExpenseModel(id: item.id,
-                       teType: TETypes.MISCELLANEOUS,
-                       amount: item.amount.toString()),
-                   item.toJson()));
-         }
-
-      for (var item in response.data!.ticketExpenses!) {
-        summaryItems.add(
-            Tuple2(
-                ExpenseModel(id: item.id,
-                    teType: TETypes.TICKET,
-                    amount: item.amount.toString()),
-                item.toJson()));
-      }
 
 
-        for(int i=0;i<summaryDetails.length;i++){
-          Map map = summaryDetails[i].item1;
-          if(summaryDetails[i].item1['key']=="BTE"){
-            summaryDetails[i]= Tuple3(map,
-                response.data!.maExpenseSummary!.bookedTicketCost.toString(),
-                response.data!.maExpenseSummary!.bookedTicketCost.toString()
-            );
-          }
-          if(summaryDetails[i].item1['key']=="CA"){
-            summaryDetails[i]= Tuple3(map,
-                response.data!.maExpenseSummary!.advanceByCard.toString(),
-                response.data!.maExpenseSummary!.advanceByCash.toString(),
-            );
-          }
-          if(summaryDetails[i].item1['key']=="TE"){
-            summaryDetails[i]= Tuple3(map,
-                response.data!.maExpenseSummary!.ticketByCompany.toString(),
-                response.data!.maExpenseSummary!.ticketSelf.toString()
-            );
-          }
-          if(summaryDetails[i].item1['key']=="AE"){
-            summaryDetails[i]= Tuple3(map,
-                response.data!.maExpenseSummary!.accommodationByCompany.toString(),
-                response.data!.maExpenseSummary!.accommodationSelf.toString(),
-            );
-          }
-          if(summaryDetails[i].item1['key']=="PE"){
-            summaryDetails[i]= Tuple3(map,
-                response.data!.maExpenseSummary!.dailyAllowanceByCompany.toString(),
-                response.data!.maExpenseSummary!.dailyAllowanceByCompany.toString(),
-            );
-          }
-          if(summaryDetails[i].item1['key']=="CE"){
-            summaryDetails[i]= Tuple3(map,
-                response.data!.maExpenseSummary!.conveyanceByCompany.toString(),
-                response.data!.maExpenseSummary!.conveyanceSelf.toString()
-            );
-          }
-          if(summaryDetails[i].item1['key']=="ME"){
-            summaryDetails[i]= Tuple3(map,
-                response.data!.maExpenseSummary!.miscellaneousByCompany.toString(),
-                response.data!.maExpenseSummary!.miscellaneousSelf.toString()
-            );
-          }
-        }
-        total =Tuple2(
-            response.data!.maExpenseSummary!.totalAmountByCompany.toString(),
-            response.data!.maExpenseSummary!.totalAmountSelf.toString()
-        );
+
+
+       submitMap['id']= response!.data!.id;
+       submitMap['recordLocator']=  response.data!.recordLocator;
+       submitMap['currentStatus']= response.data!.currentStatus;
+       submitMap['startDate']= response.data!.startDate;;
+       submitMap['startTime']= response.data!.startTime;;
+       submitMap['endDate']= response.data!.endDate;;
+       submitMap['endTime']= response.data!.endTime;;
+
+
+      summary.bookedTicketCost = response.data!.maExpenseSummary?.bookedTicketCost ?? 0.00;
+      summary.advanceByCard = response.data!.maExpenseSummary?.advanceByCard ?? 0.00;
+      summary.advanceByCash =response.data!.maExpenseSummary?.advanceByCash ?? 0.00;
+      summary.ticketByCompany =response.data!.maExpenseSummary?.ticketByCompany ?? 0.00;
+      summary.accommodationByCompany =response.data!.maExpenseSummary?.accommodationByCompany ?? 0.00;
+      summary.dailyAllowanceByCompany =response.data!.maExpenseSummary?.dailyAllowanceByCompany ?? 0.00;
+      summary.conveyanceByCompany =response.data!.maExpenseSummary?.conveyanceByCompany ?? 0.00;
+      summary.miscellaneousByCompany =response.data!.maExpenseSummary?.miscellaneousByCompany ?? 0.00;
+      summary.totalAmountByCompany=response.data!.maExpenseSummary?.totalAmountByCompany ?? 0.00;
+      summary.dueToCompany=response.data!.maExpenseSummary?.dueToCompany ?? 0.00;
+
+       summary.ticketSelf =response.data!.maExpenseSummary?.ticketSelf ?? 0.00;
+       summary.accommodationSelf =response.data!.maExpenseSummary?.accommodationSelf ?? 0.00;
+       summary.miscellaneousSelf =response.data!.maExpenseSummary?.miscellaneousSelf ?? 0.00;
+       summary.conveyanceSelf =response.data!.maExpenseSummary?.conveyanceSelf ?? 0.00;
+       summary.totalAmountSelf=response.data!.maExpenseSummary?.totalAmountSelf ?? 0.00;
+       summary.dueFromCompany=response.data!.maExpenseSummary?.dueFromCompany ?? 0.00;
+       summary.totalExpense=response.data!.maExpenseSummary?.totalExpense ?? 0.00;
+
+
+      getMiscModel(response.data!.miscellaneousExpenses!);
+
+      getAccomModel(response.data!.accommodationExpenses!);
+
+      getConvModel(response.data!.conveyanceExpenses!);
+
+      getTicketModel(response.data!.ticketExpenses!);
+
+      visitItems = response.data!.expenseVisitDetails ?? [];
+
+      getSummaryDetails();
 
       loaded=true;
      }
@@ -360,7 +271,7 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
         children: <Widget>[
           MetaButton(mapData: jsonData['bottomButtonLeft'],
               onButtonPressed: (){
-
+                submitGe("modify");
               }
           ),
 
@@ -601,10 +512,10 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
               ]),
           widget.isEdit?
           MetaTextFieldView(
-             controller: TextEditingController(),
+             controller: description,
               mapData: map['text_field_desc'],
               onChanged:(value){
-                description=value;
+               description.text=value;
               }):SizedBox(),
 
         ],
@@ -733,7 +644,6 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
                   Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
                       AddVisitDetails(
                         isEdit:false,
-                     //   conveyanceModel:model,
                         onAdd: (value){
 
                           setState(() {
@@ -838,74 +748,105 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
   void calculateSummary() {
     double miscTotal=0;
     double accomTotal=0;
-    double travelTotal=0;
-    double dailyTotal=0;
+    double convTotal=0;
+    double ticketTotal=0;
+
     for(var item in summaryItems){
 
-      if(item.item1.type==TETypes.ACCOMMODATION){
-        accomTotal=accomTotal + double.parse(item.item1.amount.toString() ?? "0");
+      if(item.item1.teType==TETypes.ACCOMMODATION){
+        accomTotal=accomTotal + double.parse(item.item1.amount.toString());
       }
 
-      if(item.item1.type==TETypes.CONVEYANCE){
-        travelTotal=travelTotal + double.parse(item.item1.amount.toString() ?? "0");
+      if(item.item1.teType==TETypes.CONVEYANCE){
+        convTotal=convTotal + double.parse(item.item1.amount.toString());
       }
 
-      if(item.item1.type==TETypes.MISCELLANEOUS){
-        miscTotal=miscTotal + double.parse(item.item1.amount.toString() ?? "0");
+      if(item.item1.teType==TETypes.MISCELLANEOUS){
+        miscTotal=miscTotal + double.parse(item.item1.amount.toString());
       }
 
+      if(item.item1.teType==TETypes.TICKET){
+        ticketTotal=ticketTotal + double.parse(item.item1.amount.toString() );
+      }
 
     }
     for(int i=0;i<summaryDetails.length;i++){
       Map map = summaryDetails[i].item1;
+      String value1 = summaryDetails[i].item2;
 
       if(summaryDetails[i].item1['key']=="AE"){
-        summaryDetails[i]= Tuple3(map, accomTotal.toString(),"");
+        summaryDetails[i]= Tuple3(map, value1,accomTotal.toString());
       }
 
-      if(summaryDetails[i].item1['key']=="TE"){
-        summaryDetails[i]= Tuple3(map, travelTotal.toString(),"");
+      if(summaryDetails[i].item1['key']=="CE"){
+        summaryDetails[i]= Tuple3(map, value1,convTotal.toString());
       }
 
       if(summaryDetails[i].item1['key']=="ME"){
-        summaryDetails[i]= Tuple3(map, miscTotal.toString(),"");
+        summaryDetails[i]= Tuple3(map, value1,miscTotal.toString());
+      }
+
+      if(summaryDetails[i].item1['key']=="TE"){
+        summaryDetails[i]= Tuple3(map, value1,ticketTotal.toString());
       }
 
 
     }
 
-    total = Tuple2("0.00",
-        ( miscTotal+accomTotal+travelTotal+dailyTotal).toString());
+    String tot= total.item1;
+
+    double allTotal = miscTotal+accomTotal+convTotal+ticketTotal;
+
+    total = Tuple2(tot, allTotal.toString());
     List items1=[];
     List items2=[];
     List items3=[];
+    List items4=[];
     for(var item in summaryItems){
 
-      if(item.item1.type == TETypes.ACCOMMODATION){
+      if(item.item1.teType == TETypes.ACCOMMODATION){
         items1.add(item.item2);
       }
 
-      if(item.item1.type == TETypes.CONVEYANCE){
+      if(item.item1.teType == TETypes.CONVEYANCE){
         items2.add(item.item2);
       }
 
-      if(item.item1.type == TETypes.MISCELLANEOUS){
+      if(item.item1.teType == TETypes.MISCELLANEOUS){
         items3.add(item.item2);
       }
 
+      if(item.item1.teType == TETypes.TICKET){
+        items4.add(item.item2);
+      }
 
     }
-
-    submitMap['maGeAccomodationExpense']=items1;
-    submitMap['maGeConveyanceExpense']=items2;
-    submitMap['maGeMiscellaneousExpense']= items3;
+    submitMap['expenseVisitDetails']=visitItems;
 
 
+    submitMap['accommodationExpenses']= items1;
+    submitMap['conveyanceExpenses']= items2;
+    submitMap['miscellaneousExpenses']= items3;
+    submitMap['ticketExpenses']=items4;
 
-    submitMap['accommodationSelf']= accomTotal;
-    submitMap['conveyanceSelf']= travelTotal;
-    submitMap['miscellaneousSelf']= miscTotal;
-    submitMap['totalExpense']= double.parse(total.item1);
+    submitMap['cashAdvances']= [];
+    submitMap['dailyAllowances']= [];
+    submitMap['matravelExpenseComment']= [];
+
+
+
+
+    summary.ticketSelf =ticketTotal;
+    summary.accommodationSelf =accomTotal;
+    summary.miscellaneousSelf =miscTotal;
+    summary.conveyanceSelf =convTotal;
+    summary.totalAmountSelf=allTotal;
+    summary.dueFromCompany=allTotal;
+    summary.totalExpense=allTotal;
+    submitMap['maExpenseSummary']= summary;
+    print("summary.toJson()");
+    print(summary.toJson());
+
 
 
     setState(() {
@@ -1010,20 +951,17 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
   }
 
   void submitGe(text) async{
-    submitMap['selfApprovals']= false;
-    submitMap['violated']= false;
 
     final String requestBody = json.encoder.convert(submitMap);
 
     Map<String, dynamic> valueMap = json.decode(requestBody);
 
    Map<String,dynamic> queryParams = {
-     //"approver1":"cm01",
      "approver1":approver1!.item2.toString().toLowerCase(),
      "approver2":approver2!.item2.toString().toLowerCase(),
-     //"approver2":"cm02",
      "action":text,
-     "comment":"daskdsakdkasdka",
+     "recordLocator":widget.title,
+     "comment":description.text,
    };
 
    prettyPrint(valueMap);
@@ -1037,8 +975,6 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
   }
 
   String configureExpenseTypes(text){
-
-
     switch(text){
       case TETypes.ACCOMMODATION :
         return "Accommodation";
@@ -1051,6 +987,191 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
     }
 
     return "";
+  }
+
+  getMiscModel(List<MiscellaneousExpense> miscellaneousExpenses) {
+
+    List<TEMiscModel> list=[];
+
+    for(var item in miscellaneousExpenses){
+      Map<String,dynamic> map = item.toMap();
+      map['currency']="48";
+      map['miscellaneousType']=CityUtil.getMiscIDFromName(item.miscellaneousType);
+      TEMiscModel model = TEMiscModel.fromMap(map);
+      list.add(model);
+    }
+
+
+    for(int i=0;i<list.length;i++) {
+      summaryItems.add(
+          Tuple2(
+              ExpenseModel(id: i+1,
+                  teType: TETypes.MISCELLANEOUS,
+                  amount: list[i].amount.toString()),
+              list[i].toJson()));
+    }
+
+
+    submitMap['miscellaneousExpenses']= list;
+
+  }
+
+  getAccomModel(List<AccommodationExpense> dataList) {
+
+    List<TEAccomModel> list=[];
+
+    for(var item in dataList){
+      Map<String,dynamic> map = item.toMap();
+      map['currency']="48";
+      map['accomodationType']=CityUtil.getAccomIDFromName(item.accomodationType);
+
+      TEAccomModel model = TEAccomModel.fromMap(map);
+
+
+      list.add(model);
+    }
+
+    for (int i=0;i<list.length;i++) {
+      summaryItems.add(
+          Tuple2(
+              ExpenseModel(id: i+1,
+                  teType: TETypes.ACCOMMODATION,
+                  amount: list[i].amount.toString()),
+              list[i].toJson()));
+    }
+
+    submitMap['accommodationExpenses']= list;
+
+  }
+
+  getConvModel(List<ConveyanceExpense> dataList) {
+
+    List<TeConveyanceModel> list=[];
+
+    for(var item in dataList){
+      Map<String,dynamic> map = item.toMap();
+      map['currency']="48";
+      map['travelMode']=CityUtil.getModeIDFromName(item.travelMode);
+
+      TeConveyanceModel model = TeConveyanceModel.fromMap(map);
+
+
+      list.add(model);
+    }
+
+
+    for (int i=0;i<list.length;i++) {
+      summaryItems.add(
+          Tuple2(
+              ExpenseModel(id: i+1,
+                  teType: TETypes.CONVEYANCE,
+                  amount: list[i].amount.toString()),
+              list[i].toJson()));
+    }
+
+
+    submitMap['conveyanceExpenses']= list;
+
+
+
+  }
+
+  getTicketModel(List<TicketExpense> dataList) {
+
+    List<TETicketModel> list=[];
+
+    for(var item in dataList){
+      Map<String,dynamic> map = item.toMap();
+      map['currency']="48";
+      String mode="";
+      if(item.travelMode=="Air"){
+        mode="A";
+      }
+      if(item.travelMode=="Rail"){
+        mode="R";
+      }
+      if(item.travelMode=="Road"){
+        mode="B";
+      }
+      map['travelMode']=mode;
+      map['fareClass'] = CityUtil.getFareIDFromName(item.fareClass,item.travelMode);
+
+      TETicketModel model = TETicketModel.fromMap(map);
+
+
+      list.add(model);
+    }
+
+
+
+
+
+    for (int i=0;i<list.length;i++) {
+      summaryItems.add(
+          Tuple2(
+              ExpenseModel(id: i+1,
+                  teType: TETypes.TICKET,
+                  amount: list[i].amount.toString()),
+              list[i].toJson()));
+    }
+
+    submitMap['ticketExpenses']=list;
+
+
+  }
+
+  void getSummaryDetails() {
+
+    for(int i=0;i<summaryDetails.length;i++){
+      Map map = summaryDetails[i].item1;
+      if(summaryDetails[i].item1['key']=="BTE"){
+        summaryDetails[i]= Tuple3(map,
+            summary.bookedTicketCost.toString(),
+            summary.bookedTicketCost.toString()
+        );
+      }
+      if(summaryDetails[i].item1['key']=="CA"){
+        summaryDetails[i]= Tuple3(map,
+          summary.advanceByCard.toString(),
+          summary.advanceByCash.toString() ,
+        );
+      }
+      if(summaryDetails[i].item1['key']=="TE"){
+        summaryDetails[i]= Tuple3(map,
+            summary.ticketByCompany.toString(),
+            summary.ticketSelf.toString()
+        );
+      }
+      if(summaryDetails[i].item1['key']=="AE"){
+        summaryDetails[i]= Tuple3(map,
+          summary.accommodationByCompany.toString() ,
+          summary.accommodationSelf.toString(),
+        );
+      }
+      if(summaryDetails[i].item1['key']=="PE"){
+        summaryDetails[i]= Tuple3(map,
+          summary.dailyAllowanceByCompany.toString(),
+          summary.dailyAllowanceByCompany.toString(),
+        );
+      }
+      if(summaryDetails[i].item1['key']=="CE"){
+        summaryDetails[i]= Tuple3(map,
+            summary.conveyanceByCompany.toString(),
+            summary.conveyanceSelf.toString()
+        );
+      }
+      if(summaryDetails[i].item1['key']=="ME"){
+        summaryDetails[i]= Tuple3(map,
+            summary.miscellaneousByCompany.toString() ,
+            summary.miscellaneousSelf.toString()
+        );
+      }
+    }
+    total =Tuple2(
+        summary.totalAmountByCompany.toString(),
+        summary.totalAmountSelf.toString()
+    );
+
   }
 
 }

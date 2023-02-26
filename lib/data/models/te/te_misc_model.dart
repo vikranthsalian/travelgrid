@@ -3,7 +3,7 @@ class TEMiscModel {
   String? miscellaneousExpenseEndDate;
   int? miscellaneousType;
   String? voucherNumber;
-  double? amount;
+  int? amount;
   bool? byCompany;
   String? currency;
   int? unitType;
@@ -38,16 +38,16 @@ class TEMiscModel {
     miscellaneousType = json['miscellaneousType'];
     voucherNumber = json['voucherNumber'];
     amount = json['amount'];
-    byCompany = json['byCompany'];
+    byCompany = json['byCompany']?? false;
     currency = json['currency'];
     unitType = json['unitType'];
     exchangeRate = json['exchangeRate'];
     voucherPath = json['voucherPath'];
     description = json['description'];
-    voilationMessage = json['voilationMessage'];
-    requireApproval = json['requireApproval'];
-    withBill = json['withBill'];
-    modified = json['modified'];
+    voilationMessage = json['voilationMessage']??"";
+    requireApproval = json['requireApproval']?? false;
+    withBill = json['withBill']?? false;
+    modified = json['modified']?? false;
   }
 
   Map<String, dynamic> toJson() {
@@ -96,7 +96,7 @@ class TEMiscModel {
       miscellaneousExpenseEndDate: map['miscellaneousExpenseEndDate'] as String,
       miscellaneousType: map['miscellaneousType'] as int,
       voucherNumber: map['voucherNumber'] as String,
-      amount: map['amount'] as double,
+      amount: map['amount'] as int,
       byCompany: map['byCompany'] as bool,
       currency: map['currency'] as String,
       unitType: map['unitType'] as int,

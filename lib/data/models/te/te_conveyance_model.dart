@@ -38,16 +38,16 @@ class TeConveyanceModel {
     toPlace = json['toPlace'];
     travelMode = json['travelMode'];
     amount = json['amount'];
-    byCompany = json['byCompany'];
+    byCompany = json['byCompany']?? false;
     exchangeRate = json['exchangeRate'];
     currency = json['currency'];
     voucherPath = json['voucherPath'];
     voucherNumber = json['voucherNumber'];
     description = json['description'];
-    voilationMessage = json['voilationMessage'];
-    requireApproval = json['requireApproval'];
-    withBill = json['withBill'];
-    modified = json['modified'];
+    voilationMessage = json['voilationMessage']??"";
+    requireApproval = json['requireApproval']?? false;
+    withBill = json['withBill']?? false;
+    modified = json['modified']?? false;
   }
 
   Map<String, dynamic> toJson() {

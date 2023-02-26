@@ -691,16 +691,16 @@ class AccommodationExpense {
     amount = json['amount'];
     tax = json['tax'];
     currency = json['currency'];
-    byCompany = json['byCompany'];
+    byCompany = json['byCompany']??false;
     exchangeRate = json['exchangeRate'];
     voucherNumber = json['voucherNumber'];
     voucherPath = json['voucherPath'];
     eligibleAmount = json['eligibleAmount'];
-    withBill = json['withBill'];
-    voilationMessage = json['voilationMessage'];
-    receivedApproval = json['receivedApproval'];
-    requireApproval = json['requireApproval'];
-    modified = json['modified'];
+    withBill = json['withBill']??false;
+    voilationMessage = json['voilationMessage']??"";
+    receivedApproval = json['receivedApproval']??false;
+    requireApproval = json['requireApproval']??false;
+    modified = json['modified']??false;
     description = json['description'];
   }
 
@@ -729,6 +729,60 @@ class AccommodationExpense {
     data['modified'] = this.modified;
     data['description'] = this.description;
     return data;
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': this.id,
+      'checkInDate': this.checkInDate,
+      'checkInTime': this.checkInTime,
+      'checkOutDate': this.checkOutDate,
+      'checkOutTime': this.checkOutTime,
+      'accomodationType': this.accomodationType,
+      'hotelName': this.hotelName,
+      'city': this.city,
+      'amount': this.amount,
+      'tax': this.tax,
+      'currency': this.currency,
+      'byCompany': this.byCompany,
+      'exchangeRate': this.exchangeRate,
+      'voucherNumber': this.voucherNumber,
+      'voucherPath': this.voucherPath,
+      'eligibleAmount': this.eligibleAmount,
+      'withBill': this.withBill,
+      'voilationMessage': this.voilationMessage,
+      'receivedApproval': this.receivedApproval,
+      'requireApproval': this.requireApproval,
+      'modified': this.modified,
+      'description': this.description,
+    };
+  }
+
+  factory AccommodationExpense.fromMap(Map<String, dynamic> map) {
+    return AccommodationExpense(
+      id: map['id'] as int,
+      checkInDate: map['checkInDate'] as String,
+      checkInTime: map['checkInTime'] as String,
+      checkOutDate: map['checkOutDate'] as String,
+      checkOutTime: map['checkOutTime'] as String,
+      accomodationType: map['accomodationType'] as String,
+      hotelName: map['hotelName'] as String,
+      city: map['city'] as String,
+      amount: map['amount'] as int,
+      tax: map['tax'] as int,
+      currency: map['currency'] as String,
+      byCompany: map['byCompany'] as bool,
+      exchangeRate: map['exchangeRate'] as int,
+      voucherNumber: map['voucherNumber'] as String,
+      voucherPath: map['voucherPath'] as String,
+      eligibleAmount: map['eligibleAmount'] as double,
+      withBill: map['withBill'] as bool,
+      voilationMessage: map['voilationMessage'] as String,
+      receivedApproval: map['receivedApproval'] as bool,
+      requireApproval: map['requireApproval'] as bool,
+      modified: map['modified'] as bool,
+      description: map['description'] as String,
+    );
   }
 }
 
@@ -776,15 +830,15 @@ class MiscellaneousExpense {
     unitType = json['unitType'];
     voucherNumber = json['voucherNumber'];
     amount = json['amount'];
-    byCompany = json['byCompany'];
+    byCompany = json['byCompany']??false;
     currency = json['currency'];
     exchangeRate = json['exchangeRate'];
     voucherPath = json['voucherPath'];
-    voilationMessage = json['voilationMessage'];
-    requireApproval = json['requireApproval'];
-    withBill = json['withBill'];
-    modified = json['modified'];
-    description = json['description'];
+    voilationMessage = json['voilationMessage']??"";
+    requireApproval = json['requireApproval']??false;
+    withBill = json['withBill']??false;
+    modified = json['modified']??false;
+    description = json['description']??"";
   }
 
   Map<String, dynamic> toJson() {
@@ -806,6 +860,48 @@ class MiscellaneousExpense {
     data['modified'] = this.modified;
     data['description'] = this.description;
     return data;
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': this.id,
+      'miscellaneousExpenseDate': this.miscellaneousExpenseDate,
+      'miscellaneousExpenseEndDate': this.miscellaneousExpenseEndDate,
+      'miscellaneousType': this.miscellaneousType,
+      'unitType': this.unitType,
+      'voucherNumber': this.voucherNumber,
+      'amount': this.amount,
+      'byCompany': this.byCompany,
+      'currency': this.currency,
+      'exchangeRate': this.exchangeRate,
+      'voucherPath': this.voucherPath,
+      'voilationMessage': this.voilationMessage,
+      'requireApproval': this.requireApproval,
+      'withBill': this.withBill,
+      'modified': this.modified,
+      'description': this.description,
+    };
+  }
+
+  factory MiscellaneousExpense.fromMap(Map<String, dynamic> map) {
+    return MiscellaneousExpense(
+      id: map['id'] as int,
+      miscellaneousExpenseDate: map['miscellaneousExpenseDate'] as String,
+      miscellaneousExpenseEndDate: map['miscellaneousExpenseEndDate'] as String,
+      miscellaneousType: map['miscellaneousType'] as String,
+      unitType: map['unitType'] as int,
+      voucherNumber: map['voucherNumber'] as String,
+      amount: map['amount'] as int,
+      byCompany: map['byCompany'] as bool,
+      currency: map['currency'] as String,
+      exchangeRate: map['exchangeRate'] as int,
+      voucherPath: map['voucherPath'] as String,
+      voilationMessage: map['voilationMessage'] as String,
+      requireApproval: map['requireApproval'] as bool,
+      withBill: map['withBill'] as bool,
+      modified: map['modified'] as bool,
+      description: map['description'] as String,
+    );
   }
 }
 
@@ -852,15 +948,15 @@ class ConveyanceExpense {
     toPlace = json['toPlace'];
     travelMode = json['travelMode'];
     amount = json['amount'];
-    byCompany = json['byCompany'];
+    byCompany = json['byCompany']??false;
     currency = json['currency'];
     exchangeRate = json['exchangeRate'];
     voucherPath = json['voucherPath'];
     voucherNumber = json['voucherNumber'];
-    voilationMessage = json['voilationMessage'];
-    requireApproval = json['requireApproval'];
-    withBill = json['withBill'];
-    modified = json['modified'];
+    voilationMessage = json['voilationMessage']??"";
+    requireApproval = json['requireApproval']??false;
+    withBill = json['withBill']??false;
+    modified = json['modified']??false;
     description = json['description'];
   }
 
@@ -884,6 +980,48 @@ class ConveyanceExpense {
     data['description'] = this.description;
     return data;
   }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': this.id,
+      'conveyanceDate': this.conveyanceDate,
+      'fromPlace': this.fromPlace,
+      'toPlace': this.toPlace,
+      'travelMode': this.travelMode,
+      'amount': this.amount,
+      'byCompany': this.byCompany,
+      'currency': this.currency,
+      'exchangeRate': this.exchangeRate,
+      'voucherPath': this.voucherPath,
+      'voucherNumber': this.voucherNumber,
+      'voilationMessage': this.voilationMessage,
+      'requireApproval': this.requireApproval,
+      'withBill': this.withBill,
+      'modified': this.modified,
+      'description': this.description,
+    };
+  }
+
+  factory ConveyanceExpense.fromMap(Map<String, dynamic> map) {
+    return ConveyanceExpense(
+      id: map['id'] as int,
+      conveyanceDate: map['conveyanceDate'] as String,
+      fromPlace: map['fromPlace'] as String,
+      toPlace: map['toPlace'] as String,
+      travelMode: map['travelMode'] as String,
+      amount: map['amount'] as int,
+      byCompany: map['byCompany'] as bool,
+      currency: map['currency'] as String,
+      exchangeRate: map['exchangeRate'] as int,
+      voucherPath: map['voucherPath'] as String,
+      voucherNumber: map['voucherNumber'] as String,
+      voilationMessage: map['voilationMessage'] as String,
+      requireApproval: map['requireApproval'] as bool,
+      withBill: map['withBill'] as bool,
+      modified: map['modified'] as bool,
+      description: map['description'] as String,
+    );
+  }
 }
 
 class TicketExpense {
@@ -905,9 +1043,9 @@ class TicketExpense {
   String? voucherPath;
   bool? withBill;
   String? voilationMessage;
-  Null? receivedApproval;
-  Null? requireApproval;
-  Null? modified;
+  bool? receivedApproval;
+  bool? requireApproval;
+  bool? modified;
 
   TicketExpense(
       {this.id,
@@ -939,7 +1077,7 @@ class TicketExpense {
     leavingFrom = json['leavingFrom'];
     goingTo = json['goingTo'];
     travelMode = json['travelMode'];
-    byCompany = json['byCompany'];
+    byCompany = json['byCompany']??false;
     fareClass = json['fareClass'];
     pnrNumber = json['pnrNumber'];
     ticketNumber = json['ticketNumber'];
@@ -949,11 +1087,11 @@ class TicketExpense {
     exchangeRate = json['exchangeRate'];
     description = json['description'];
     voucherPath = json['voucherPath'];
-    withBill = json['withBill'];
-    voilationMessage = json['voilationMessage'];
-    receivedApproval = json['receivedApproval'];
-    requireApproval = json['requireApproval'];
-    modified = json['modified'];
+    withBill = json['withBill']??false;
+    voilationMessage = json['voilationMessage']??"";
+    receivedApproval = json['receivedApproval']??false;
+    requireApproval = json['requireApproval']??false;
+    modified = json['modified']??false;
   }
 
   Map<String, dynamic> toJson() {
@@ -981,70 +1119,123 @@ class TicketExpense {
     data['modified'] = this.modified;
     return data;
   }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': this.id,
+      'travelDate': this.travelDate,
+      'traveltime': this.traveltime,
+      'leavingFrom': this.leavingFrom,
+      'goingTo': this.goingTo,
+      'travelMode': this.travelMode,
+      'byCompany': this.byCompany,
+      'fareClass': this.fareClass,
+      'pnrNumber': this.pnrNumber,
+      'ticketNumber': this.ticketNumber,
+      'flightTrainBusNo': this.flightTrainBusNo,
+      'amount': this.amount,
+      'currency': this.currency,
+      'exchangeRate': this.exchangeRate,
+      'description': this.description,
+      'voucherPath': this.voucherPath,
+      'withBill': this.withBill,
+      'voilationMessage': this.voilationMessage,
+      'receivedApproval': this.receivedApproval,
+      'requireApproval': this.requireApproval,
+      'modified': this.modified,
+    };
+  }
+
+  factory TicketExpense.fromMap(Map<String, dynamic> map) {
+    return TicketExpense(
+      id: map['id'] as int,
+      travelDate: map['travelDate'] as String,
+      traveltime: map['traveltime'] as String,
+      leavingFrom: map['leavingFrom'] as String,
+      goingTo: map['goingTo'] as String,
+      travelMode: map['travelMode'] as String,
+      byCompany: map['byCompany'] as bool,
+      fareClass: map['fareClass'] as String,
+      pnrNumber: map['pnrNumber'] as String,
+      ticketNumber: map['ticketNumber'] as String,
+      flightTrainBusNo: map['flightTrainBusNo'] as String,
+      amount: map['amount'] as int,
+      currency: map['currency'] as String,
+      exchangeRate: map['exchangeRate'] as int,
+      description: map['description'] as String,
+      voucherPath: map['voucherPath'] as String,
+      withBill: map['withBill'] as bool,
+      voilationMessage: map['voilationMessage'] as String,
+      receivedApproval: map['receivedApproval'] as bool,
+      requireApproval: map['requireApproval'] as bool,
+      modified: map['modified'] as bool,
+    );
+  }
 }
 
 
 class MaExpenseSummary {
-int? bookedTicketCost;
-int? ticketByCompany;
-int? ticketSelf;
-int? accommodationByCompany;
-int? accommodationSelf;
-int? dailyAllowanceByCompany;
-int? conveyanceByCompany;
-int? conveyanceSelf;
-int? miscellaneousByCompany;
-int? miscellaneousSelf;
-int? advanceByCash;
-int? advanceByCard;
-int? totalAmountByCompany;
-int? totalAmountSelf;
-int? totalExpense;
-int? dueToCompany;
-int? dueFromCompany;
+  double? bookedTicketCost;
+  double? ticketByCompany;
+  double? ticketSelf;
+  double? accommodationByCompany;
+  double? accommodationSelf;
+  double? dailyAllowanceByCompany;
+  double? conveyanceByCompany;
+  double? conveyanceSelf;
+  double? miscellaneousByCompany;
+  double? miscellaneousSelf;
+  double? advanceByCash;
+  double? advanceByCard;
+  double? totalAmountByCompany;
+  double? totalAmountSelf;
+  double? totalExpense;
+  double? dueToCompany;
+  double? dueFromCompany;
 
-MaExpenseSummary({this.bookedTicketCost, this.ticketByCompany, this.ticketSelf, this.accommodationByCompany, this.accommodationSelf, this.dailyAllowanceByCompany, this.conveyanceByCompany, this.conveyanceSelf, this.miscellaneousByCompany, this.miscellaneousSelf, this.advanceByCash, this.advanceByCard, this.totalAmountByCompany, this.totalAmountSelf, this.totalExpense, this.dueToCompany, this.dueFromCompany});
+  MaExpenseSummary({this.bookedTicketCost, this.ticketByCompany, this.ticketSelf, this.accommodationByCompany, this.accommodationSelf, this.dailyAllowanceByCompany, this.conveyanceByCompany, this.conveyanceSelf, this.miscellaneousByCompany, this.miscellaneousSelf, this.advanceByCash, this.advanceByCard, this.totalAmountByCompany, this.totalAmountSelf, this.totalExpense, this.dueToCompany, this.dueFromCompany});
 
-MaExpenseSummary.fromJson(Map<String, dynamic> json) {
-bookedTicketCost = json['bookedTicketCost'];
-ticketByCompany = json['ticketByCompany'];
-ticketSelf = json['ticketSelf'];
-accommodationByCompany = json['accommodationByCompany'];
-accommodationSelf = json['accommodationSelf'];
-dailyAllowanceByCompany = json['dailyAllowanceByCompany'];
-conveyanceByCompany = json['conveyanceByCompany'];
-conveyanceSelf = json['conveyanceSelf'];
-miscellaneousByCompany = json['miscellaneousByCompany'];
-miscellaneousSelf = json['miscellaneousSelf'];
-advanceByCash = json['advanceByCash'];
-advanceByCard = json['advanceByCard'];
-totalAmountByCompany = json['totalAmountByCompany'];
-totalAmountSelf = json['totalAmountSelf'];
-totalExpense = json['totalExpense'];
-dueToCompany = json['dueToCompany'];
-dueFromCompany = json['dueFromCompany'];
-}
 
-Map<String, dynamic> toJson() {
-final Map<String, dynamic> data = new Map<String, dynamic>();
-data['bookedTicketCost'] = this.bookedTicketCost;
-data['ticketByCompany'] = this.ticketByCompany;
-data['ticketSelf'] = this.ticketSelf;
-data['accommodationByCompany'] = this.accommodationByCompany;
-data['accommodationSelf'] = this.accommodationSelf;
-data['dailyAllowanceByCompany'] = this.dailyAllowanceByCompany;
-data['conveyanceByCompany'] = this.conveyanceByCompany;
-data['conveyanceSelf'] = this.conveyanceSelf;
-data['miscellaneousByCompany'] = this.miscellaneousByCompany;
-data['miscellaneousSelf'] = this.miscellaneousSelf;
-data['advanceByCash'] = this.advanceByCash;
-data['advanceByCard'] = this.advanceByCard;
-data['totalAmountByCompany'] = this.totalAmountByCompany;
-data['totalAmountSelf'] = this.totalAmountSelf;
-data['totalExpense'] = this.totalExpense;
-data['dueToCompany'] = this.dueToCompany;
-data['dueFromCompany'] = this.dueFromCompany;
-return data;
-}
+  MaExpenseSummary.fromJson(Map<String, dynamic> json) {
+    bookedTicketCost = double.parse(json['bookedTicketCost'].toString());
+    ticketByCompany = double.parse(json['ticketByCompany'].toString());
+    ticketSelf = double.parse(json['ticketSelf'].toString());
+    accommodationByCompany = double.parse(json['accommodationByCompany'].toString());
+    accommodationSelf = double.parse(json['accommodationSelf'].toString());
+    dailyAllowanceByCompany = double.parse(json['dailyAllowanceByCompany'].toString());
+    conveyanceByCompany = double.parse(json['conveyanceByCompany'].toString());
+    conveyanceSelf = double.parse(json['conveyanceSelf'].toString());
+    miscellaneousByCompany = double.parse(json['miscellaneousByCompany'].toString());
+    miscellaneousSelf = double.parse(json['miscellaneousSelf'].toString());
+    advanceByCash = double.parse(json['advanceByCash'].toString());
+    advanceByCard = double.parse(json['advanceByCard'].toString());
+    totalAmountByCompany = double.parse(json['totalAmountByCompany'].toString());
+    totalAmountSelf = double.parse(json['totalAmountSelf'].toString());
+    totalExpense = double.parse(json['totalExpense'].toString());
+    dueToCompany = double.parse(json['dueToCompany'].toString());
+    dueFromCompany = double.parse(json['dueFromCompany'].toString());
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['bookedTicketCost'] = this.bookedTicketCost;
+    data['ticketByCompany'] = this.ticketByCompany;
+    data['ticketSelf'] = this.ticketSelf;
+    data['accommodationByCompany'] = this.accommodationByCompany;
+    data['accommodationSelf'] = this.accommodationSelf;
+    data['dailyAllowanceByCompany'] = this.dailyAllowanceByCompany;
+    data['conveyanceByCompany'] = this.conveyanceByCompany;
+    data['conveyanceSelf'] = this.conveyanceSelf;
+    data['miscellaneousByCompany'] = this.miscellaneousByCompany;
+    data['miscellaneousSelf'] = this.miscellaneousSelf;
+    data['advanceByCash'] = this.advanceByCash;
+    data['advanceByCard'] = this.advanceByCard;
+    data['totalAmountByCompany'] = this.totalAmountByCompany;
+    data['totalAmountSelf'] = this.totalAmountSelf;
+    data['totalExpense'] = this.totalExpense;
+    data['dueToCompany'] = this.dueToCompany;
+    data['dueFromCompany'] = this.dueFromCompany;
+    return data;
+  }
 }
 
