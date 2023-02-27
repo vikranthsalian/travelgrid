@@ -12,4 +12,6 @@ class GeUseCase {
   Future<GESummaryResponse> getSummary(id) async => apiAbstract.getGE(id);
 
   Future<SuccessModel> createGE(data,body) async => apiAbstract.createGE(data,body);
+
+  Future<SuccessModel> approveGE(id,comment) async => apiAbstract.approveGE(id,comment);
 }

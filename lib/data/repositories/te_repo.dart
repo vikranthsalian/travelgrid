@@ -50,4 +50,23 @@ class TeRepository extends TeAPIAbstract {
     return SuccessModel(status: false);
   }
 
+  @override
+  Future<SuccessModel> approveTE(id, comment) async{
+
+    Map<String,dynamic> data= {
+      "recordLocator":id,
+      "action":"Approve",
+      "comments":comment
+    };
+
+    var response = await apiRemoteDatasource.approve("/teApproveAction",data);
+
+    if(response!=null) {
+      SuccessModel modelResponse = SuccessModel.fromJson(response);
+      return modelResponse;
+    }
+
+    return SuccessModel(status: false);
+  }
+
 }

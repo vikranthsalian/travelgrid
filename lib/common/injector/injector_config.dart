@@ -2,6 +2,7 @@
 import 'package:kiwi/kiwi.dart';
 import 'package:travelgrid/common/http/http_client.dart';
 import 'package:travelgrid/data/blocs/accom/accom_type_bloc.dart';
+import 'package:travelgrid/data/blocs/approval_expense/ae_bloc.dart';
 import 'package:travelgrid/data/blocs/approver/approver_type_bloc.dart';
 import 'package:travelgrid/data/blocs/cities/city_bloc.dart';
 import 'package:travelgrid/data/blocs/fare_class/fare_class_bloc.dart';
@@ -10,11 +11,13 @@ import 'package:travelgrid/data/blocs/misc/misc_type_bloc.dart';
 import 'package:travelgrid/data/blocs/travel/travel_mode_bloc.dart';
 import 'package:travelgrid/data/blocs/travel_expense/te_bloc.dart';
 import 'package:travelgrid/data/remote/remote_datasource.dart';
+import 'package:travelgrid/data/repositories/ae_repo.dart';
 import 'package:travelgrid/data/repositories/common_repo.dart';
 import 'package:travelgrid/data/repositories/ge_repo.dart';
 import 'package:travelgrid/data/repositories/login_repo.dart';
 import 'package:travelgrid/data/repositories/te_repo.dart';
 import 'package:travelgrid/domain/repo_abstract/api_abstract.dart';
+import 'package:travelgrid/domain/usecases/ae_usecase.dart';
 import 'package:travelgrid/domain/usecases/common_usecase.dart';
 import 'package:travelgrid/domain/usecases/login_usecase.dart';
 import 'package:travelgrid/domain/usecases/ge_usecase.dart';
@@ -44,6 +47,7 @@ abstract class InjectorConfig {
   // ============ BLOCS ============
   @Register.singleton(GeneralExpenseBloc)
   @Register.singleton(TravelExpenseBloc)
+  @Register.singleton(ApprovalExpenseBloc)
   @Register.singleton(CityBloc)
   @Register.singleton(AccomTypeBloc)
   @Register.singleton(MiscTypeBloc)
@@ -56,6 +60,7 @@ abstract class InjectorConfig {
   @Register.singleton(LoginUseCase)
   @Register.singleton(GeUseCase)
   @Register.singleton(TeUseCase)
+  @Register.singleton(AeUseCase)
   @Register.singleton(CommonUseCase)
   void _configureUsecases();
 
@@ -63,6 +68,7 @@ abstract class InjectorConfig {
   @Register.singleton(LoginAPIAbstract,from:LoginRepository)
   @Register.singleton(GeAPIAbstract,from:GeRepository)
   @Register.singleton(TeAPIAbstract,from:TeRepository)
+  @Register.singleton(AeAPIAbstract,from:AeRepository)
   @Register.singleton(CommonAPIAbstract,from:CommonRepository)
   void _configureRepositories();
 

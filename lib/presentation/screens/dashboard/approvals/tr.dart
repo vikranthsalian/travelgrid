@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_flavor/flutter_flavor.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:travelgrid/common/constants/flavour_constants.dart';
@@ -6,33 +7,35 @@ import 'package:travelgrid/common/extensions/parse_data_type.dart';
 import 'package:travelgrid/common/extensions/pretty.dart';
 import 'package:travelgrid/common/injector/injector.dart';
 import 'package:travelgrid/common/utils/date_time_util.dart';
-import 'package:travelgrid/data/blocs/travel_expense/te_bloc.dart';
+import 'package:travelgrid/common/utils/show_alert.dart';
+import 'package:travelgrid/data/blocs/approval_expense/ae_bloc.dart';
+import 'package:travelgrid/data/blocs/general_expense/ge_bloc.dart';
+import 'package:travelgrid/data/datasources/general_expense_list.dart';
 import 'package:travelgrid/presentation/components/bloc_map_event.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';
 import 'package:travelgrid/presentation/widgets/icon.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
 
-import '../../../data/datasources/travel_expense_list.dart';
-
-class TravelExpense extends StatefulWidget {
+class ApprovalTR extends StatefulWidget {
+  String data;
+  ApprovalTR({required this.data});
   @override
-  _TravelExpenseState createState() => _TravelExpenseState();
+  _ApprovalTRState createState() => _ApprovalTRState();
 }
 
-class _TravelExpenseState extends State<TravelExpense> {
-  Map<String,dynamic> jsonData = {};
+class _ApprovalTRState extends State<ApprovalTR> {
   List items=[];
   double cardHt = 90.h;
   bool enableSearch = false;
   final TextEditingController _searchController = TextEditingController();
   bool loaded=false;
-  TravelExpenseBloc? bloc;
+  ApprovalExpenseBloc? bloc;
+  Map<String,dynamic> mapData={};
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    jsonData = FlavourConstants.teData;
-    //prettyPrint(jsonData);
+    mapData = FlavorConfig.instance.variables[widget.data];
   }
 
 
@@ -40,14 +43,13 @@ class _TravelExpenseState extends State<TravelExpense> {
   Widget build(BuildContext context) {
 
    if(!loaded){
-     bloc = Injector.resolve<TravelExpenseBloc>()..add(GetTravelExpenseListEvent());
+     bloc = Injector.resolve<ApprovalExpenseBloc>()..add(GetApprovalExpenseTR());
      loaded=true;
    }
 
     return Scaffold(
-      backgroundColor: Colors.white,
       bottomNavigationBar: BottomAppBar(
-        color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
+        color:ParseDataType().getHexToColor(mapData['backgroundColor']),
         shape: CircularNotchedRectangle(),
         notchMargin: 5,
         elevation: 2.0,
@@ -55,12 +57,12 @@ class _TravelExpenseState extends State<TravelExpense> {
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            MetaButton(mapData: jsonData['bottomButtonLeft'],
+            MetaButton(mapData: mapData['bottomButtonLeft'],
                 onButtonPressed: (){
 
                 }
             ),
-            MetaButton(mapData: jsonData['bottomButtonRight'],
+            MetaButton(mapData: mapData['bottomButtonRight'],
                 onButtonPressed: (){
 
                 }
@@ -68,38 +70,19 @@ class _TravelExpenseState extends State<TravelExpense> {
           ],
         ),
       ),
-      body: BlocBuilder<TravelExpenseBloc, TravelExpenseState>(
+      body: BlocBuilder<ApprovalExpenseBloc, ApprovalExpenseState>(
           bloc: bloc,
           builder:(context, state) {
-            jsonData['listView']['recordsFound']['value'] = 0;
+            mapData['listView']['recordsFound']['value'] = 0;
             return Container(
                 child: BlocMapToEvent(state: state.eventState, message: state.message,
                     callback: (){
-                       jsonData['listView']['recordsFound']['value'] = state.response?.data?.length;
+                       mapData['listView']['recordsFound']['value'] = state.responseGE?.data?.length;
                     },
                     topComponent:Container(
-                      color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
-                      height: 110.h,
+                      color:ParseDataType().getHexToColor(mapData['backgroundColor']),
                       child:  Column(
                         children: [
-                          SizedBox(height:40.h),
-                          Container(
-                            height: 40.h,
-                            alignment: Alignment.center,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                MetaIcon(mapData:jsonData['backBar'],
-                                    onButtonPressed: (){
-                                      Navigator.pop(context);
-                                    }),
-                                Container(
-                                  child:MetaTextView(mapData: jsonData['title']),
-                                ),
-                              ],
-                            ),
-                          ),
                           // Container(
                           //   margin: EdgeInsets.symmetric(horizontal: 20.w,vertical: 5.h),
                           //   padding: EdgeInsets.symmetric(vertical: 5.h),
@@ -125,15 +108,13 @@ class _TravelExpenseState extends State<TravelExpense> {
                           SizedBox(height:5.h),
                           Container(
                             margin: EdgeInsets.symmetric(horizontal: 20.w),
-                            child:MetaTextView(mapData: jsonData['listView']['recordsFound']),
+                            child:MetaTextView(mapData: mapData['listView']['recordsFound']),
                           ),
                           SizedBox(height:5.h),
                         ],
                       ),
                     ),
-                    child:Transform.translate(
-                        offset: Offset(0,0.h),
-                        child: getListView(state))
+                    child:getListView(state)
                 )
             );
           }
@@ -142,9 +123,9 @@ class _TravelExpenseState extends State<TravelExpense> {
   }
 
 
-  Widget getListView(TravelExpenseState state){
+  Widget getListView(ApprovalExpenseState state){
 
-    List<Data>? list = state.response?.data ?? [];
+    List<Data>? list = state.responseGE?.data ?? [];
 
     return  list.isNotEmpty ? ListView.separated(
       shrinkWrap: true,
@@ -283,19 +264,7 @@ class _TravelExpenseState extends State<TravelExpense> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
-                                InkWell(
-                                    onTap: (){
-                                      Navigator.of(context).pushNamed(jsonData['listView']['onClick'],
-                                          arguments: {
-                                            "isEdit": true,
-                                            "title":
-                                            item.recordLocator.toString()
-                                                .toUpperCase()
-                                          }).then((value) {
-                                        bloc!.add(GetTravelExpenseListEvent());
-                                      });
-                                    },
-                                 child: MetaTextView( mapData: cancel)),
+                             MetaTextView( mapData: cancel),
                              Container(
                                margin: EdgeInsets.symmetric(horizontal: 5.w),
                                child: MetaTextView(mapData: {
@@ -308,14 +277,14 @@ class _TravelExpenseState extends State<TravelExpense> {
                              ),
                             InkWell(
                               onTap: (){
-                                Navigator.of(context).pushNamed(jsonData['listView']['onClick'],
+                                Navigator.of(context).pushNamed(mapData['bottomButtonFab']['onClick'],
                                     arguments: {
                                         "isEdit": false,
                                         "title":
                                             item.recordLocator.toString()
                                                 .toUpperCase()
                                 }).then((value) {
-                                  bloc!.add(GetTravelExpenseListEvent());
+                                  bloc!.add(GetApprovalExpenseTR());
                                 });
                                 },
                                 child: MetaTextView( mapData:  view ))
@@ -337,9 +306,9 @@ class _TravelExpenseState extends State<TravelExpense> {
     ):  Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        MetaTextView(mapData: jsonData['listView']['emptyData']['title']),
+        MetaTextView(mapData: mapData['listView']['emptyData']['title']),
         SizedBox(height: 10.h,),
-        MetaButton(mapData: jsonData['listView']['emptyData']['bottomButtonRefresh'],
+        MetaButton(mapData: mapData['listView']['emptyData']['bottomButtonRefresh'],
             onButtonPressed: (){
 
             })

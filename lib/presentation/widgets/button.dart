@@ -42,10 +42,12 @@ class MetaButton extends StatelessWidget {
 
   Function() onButtonPressed;
   Map mapData;
+  String? text;
 
   MetaButton({super.key,
     required this.onButtonPressed ,
-    required this.mapData
+    required this.mapData,
+     this.text,
   });
 
 
@@ -67,7 +69,7 @@ class MetaButton extends StatelessWidget {
         child: Align(
           alignment: Alignment.center,
           child: Text(
-              mapData['text'],
+              text==null ? mapData['text']: text,
               textAlign: TextAlign.center,
               style:MetaStyle(mapData: mapData).getStyle()),
         ),

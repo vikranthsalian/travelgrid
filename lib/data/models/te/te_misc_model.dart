@@ -40,7 +40,7 @@ class TEMiscModel {
     amount = json['amount'];
     byCompany = json['byCompany']?? false;
     currency = json['currency'];
-    unitType = json['unitType'];
+    unitType = json['unitType'] ?? 0;
     exchangeRate = json['exchangeRate'];
     voucherPath = json['voucherPath'];
     description = json['description'];
@@ -95,18 +95,18 @@ class TEMiscModel {
       miscellaneousExpenseDate: map['miscellaneousExpenseDate'] as String,
       miscellaneousExpenseEndDate: map['miscellaneousExpenseEndDate'] as String,
       miscellaneousType: map['miscellaneousType'] as int,
-      voucherNumber: map['voucherNumber'] as String,
+      voucherNumber: map['voucherNumber'] ?? "",
       amount: map['amount'] as int,
-      byCompany: map['byCompany'] as bool,
+      byCompany: map['byCompany'] ?? false,
       currency: map['currency'] as String,
-      unitType: map['unitType'] as int,
+      unitType: map['unitType'] ,
       exchangeRate: map['exchangeRate'] as int,
-      voucherPath: map['voucherPath'] as String,
-      description: map['description'] as String,
-      voilationMessage: map['voilationMessage'] as String,
-      requireApproval: map['requireApproval'] as bool,
-      withBill: map['withBill'] as bool,
-      modified: map['modified'] as bool,
+      voucherPath: map['voucherPath'] ?? "",
+      description: map['description'] ?? "",
+      voilationMessage: map['voilationMessage'] ?? "",
+      requireApproval: map['requireApproval'] ?? false,
+      withBill: map['withBill'] ?? false,
+      modified: map['modified'] ?? false,
     );
   }
 }

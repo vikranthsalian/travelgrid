@@ -28,6 +28,7 @@ class TESummaryResponse {
 class Data {
   int? id;
   String? recordLocator;
+  String? tripNumber;
   String? currentStatus;
   String? startDate;
   String? startTime;
@@ -41,7 +42,7 @@ class Data {
   List<MiscellaneousExpense>? miscellaneousExpenses;
   List<Null>? cashAdvances;
   List<Null>? dailyAllowances;
-  List<Null>? matravelExpenseComment;
+  List<MaTravelExpenseComment>? matravelExpenseComment;
   MaExpenseSummary? maExpenseSummary;
 
   Data({this.id, this.recordLocator, this.currentStatus, this.startDate, this.startTime, this.endDate, this.endTime, this.maTravelRequest, this.expenseVisitDetails, this.ticketExpenses, this.accommodationExpenses, this.conveyanceExpenses, this.miscellaneousExpenses, this.cashAdvances, this.dailyAllowances, this.matravelExpenseComment, this.maExpenseSummary});
@@ -49,6 +50,7 @@ class Data {
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     recordLocator = json['recordLocator'];
+    tripNumber = json['tripNumber'];
     currentStatus = json['currentStatus'];
     startDate = json['startDate'];
     startTime = json['startTime'];
@@ -83,10 +85,10 @@ class Data {
     //   dailyAllowances = <Null>[];
     //   json['dailyAllowances'].forEach((v) { dailyAllowances!.add(new Null.fromJson(v)); });
     // }
-    // if (json['matravelExpenseComment'] != null) {
-    //   matravelExpenseComment = <Null>[];
-    //   json['matravelExpenseComment'].forEach((v) { matravelExpenseComment!.add(new Null.fromJson(v)); });
-    // }
+    if (json['matravelExpenseComment'] != null) {
+      matravelExpenseComment = <MaTravelExpenseComment>[];
+      json['matravelExpenseComment'].forEach((v) { matravelExpenseComment!.add(new MaTravelExpenseComment.fromJson(v)); });
+    }
     maExpenseSummary = json['maExpenseSummary'] != null ? new MaExpenseSummary.fromJson(json['maExpenseSummary']) : null;
   }
 
@@ -123,13 +125,61 @@ class Data {
     // if (this.dailyAllowances != null) {
     //   data['dailyAllowances'] = this.dailyAllowances!.map((v) => v.toJson()).toList();
     // }
-    // if (this.matravelExpenseComment != null) {
-    //   data['matravelExpenseComment'] = this.matravelExpenseComment!.map((v) => v.toJson()).toList();
-    // }
+    if (this.matravelExpenseComment != null) {
+      data['matravelExpenseComment'] = this.matravelExpenseComment!.map((v) => v.toJson()).toList();
+    }
     if (this.maExpenseSummary != null) {
       data['maExpenseSummary'] = this.maExpenseSummary!.toJson();
     }
     return data;
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': this.id,
+      'recordLocator': this.recordLocator,
+      'currentStatus': this.currentStatus,
+      'startDate': this.startDate,
+      'startTime': this.startTime,
+      'endDate': this.endDate,
+      'endTime': this.endTime,
+      'maTravelRequest': this.maTravelRequest,
+      'expenseVisitDetails': this.expenseVisitDetails,
+      'ticketExpenses': this.ticketExpenses,
+      'accommodationExpenses': this.accommodationExpenses,
+      'conveyanceExpenses': this.conveyanceExpenses,
+      'miscellaneousExpenses': this.miscellaneousExpenses,
+      'cashAdvances': this.cashAdvances,
+      'dailyAllowances': this.dailyAllowances,
+      'matravelExpenseComment': this.matravelExpenseComment,
+      'maExpenseSummary': this.maExpenseSummary,
+    };
+  }
+
+  factory Data.fromMap(Map<String, dynamic> map) {
+    return Data(
+      id: map['id'] as int,
+      recordLocator: map['recordLocator'] as String,
+      currentStatus: map['currentStatus'] as String,
+      startDate: map['startDate'] as String,
+      startTime: map['startTime'] as String,
+      endDate: map['endDate'] as String,
+      endTime: map['endTime'] as String,
+      maTravelRequest: map['maTravelRequest'] as MaTravelRequest,
+      expenseVisitDetails:
+          map['expenseVisitDetails'] as List<ExpenseVisitDetails>,
+      ticketExpenses: map['ticketExpenses'] as List<TicketExpense>,
+      accommodationExpenses:
+          map['accommodationExpenses'] as List<AccommodationExpense>,
+      conveyanceExpenses: map['conveyanceExpenses'] as List<ConveyanceExpense>,
+      miscellaneousExpenses:
+          map['miscellaneousExpenses'] as List<MiscellaneousExpense>,
+      cashAdvances: map['cashAdvances'] as List<Null>,
+      dailyAllowances: map['dailyAllowances'] as List<Null>,
+      matravelExpenseComment:
+          map['matravelExpenseComment'] as List<MaTravelExpenseComment>,
+      maExpenseSummary: map['maExpenseSummary'] as MaExpenseSummary,
+    );
   }
 }
 
@@ -575,16 +625,16 @@ class I18nTextName {
 class TravelComments {
 String? comments;
 String? action;
-String? actionForm;
+String? actionFrom;
 String? actionBy;
 String? actionOn;
 
-TravelComments({this.comments, this.action, this.actionForm, this.actionBy, this.actionOn});
+TravelComments({this.comments, this.action, this.actionFrom, this.actionBy, this.actionOn});
 
 TravelComments.fromJson(Map<String, dynamic> json) {
 comments = json['comments'];
 action = json['action'];
-actionForm = json['actionForm'];
+actionFrom = json['actionFrom'];
 actionBy = json['actionBy'];
 actionOn = json['actionOn'];
 }
@@ -593,7 +643,7 @@ Map<String, dynamic> toJson() {
 final Map<String, dynamic> data = new Map<String, dynamic>();
 data['comments'] = this.comments;
 data['action'] = this.action;
-data['actionForm'] = this.actionForm;
+data['actionFrom'] = this.actionFrom;
 data['actionBy'] = this.actionBy;
 data['actionOn'] = this.actionOn;
 return data;
@@ -601,17 +651,15 @@ return data;
 }
 
 class ExpenseVisitDetails {
-int? id;
 String? city;
 String? evdStartDate;
 String? evdStartTime;
 String? evdEndDate;
 String? evdEndTime;
 
-ExpenseVisitDetails({this.id, this.city, this.evdStartDate, this.evdStartTime, this.evdEndDate, this.evdEndTime});
+ExpenseVisitDetails({ this.city, this.evdStartDate, this.evdStartTime, this.evdEndDate, this.evdEndTime});
 
 ExpenseVisitDetails.fromJson(Map<String, dynamic> json) {
-id = json['id'];
 city = json['city'];
 evdStartDate = json['evdStartDate'];
 evdStartTime = json['evdStartTime'];
@@ -621,7 +669,6 @@ evdEndTime = json['evdEndTime'];
 
 Map<String, dynamic> toJson() {
 final Map<String, dynamic> data = new Map<String, dynamic>();
-data['id'] = this.id;
 data['city'] = this.city;
 data['evdStartDate'] = this.evdStartDate;
 data['evdStartTime'] = this.evdStartTime;
@@ -1239,3 +1286,30 @@ class MaExpenseSummary {
   }
 }
 
+class MaTravelExpenseComment {
+  String? comments;
+  String? action;
+  String? actionFrom;
+  String? actionBy;
+  String? actionOn;
+
+  MaTravelExpenseComment({this.comments, this.action, this.actionFrom, this.actionBy, this.actionOn});
+
+  MaTravelExpenseComment.fromJson(Map<String, dynamic> json) {
+    comments = json['comments'];
+    action = json['action'];
+    actionFrom = json['actionFrom'];
+    actionBy = json['actionBy'];
+    actionOn = json['actionOn'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['comments'] = this.comments;
+    data['action'] = this.action;
+    data['actionFrom'] = this.actionFrom;
+    data['actionBy'] = this.actionBy;
+    data['actionOn'] = this.actionOn;
+    return data;
+  }
+}

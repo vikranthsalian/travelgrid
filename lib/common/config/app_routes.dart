@@ -1,21 +1,21 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:travelgrid/common/constants/route_constants.dart';
+import 'package:travelgrid/data/datasources/te_summary_response.dart';
 import 'package:travelgrid/presentation/components/pdf_component.dart';
 import 'package:travelgrid/presentation/screens/auth/login_screen.dart';
+import 'package:travelgrid/presentation/screens/dashboard/approvals/approval_expense.dart';
 import 'package:travelgrid/presentation/screens/dashboard/dashboard_2.dart';
-import 'package:travelgrid/presentation/screens/ge/add/add_accom.dart';
-import 'package:travelgrid/presentation/screens/ge/add/add_misc.dart';
-import 'package:travelgrid/presentation/screens/ge/add/add_travel.dart';
-import 'package:travelgrid/presentation/screens/ge/add/add_travel_ov.dart';
-import 'package:travelgrid/presentation/screens/ge/create_ge.dart';
+import 'package:travelgrid/presentation/screens/dashboard/ge/add/add_accom.dart';
+import 'package:travelgrid/presentation/screens/dashboard/ge/add/add_misc.dart';
+import 'package:travelgrid/presentation/screens/dashboard/ge/add/add_travel.dart';
+import 'package:travelgrid/presentation/screens/dashboard/ge/create_ge.dart';
+import 'package:travelgrid/presentation/screens/dashboard/te/create_te.dart';
 import 'package:travelgrid/presentation/screens/policy/policy_screen.dart';
 import 'package:travelgrid/presentation/screens/splash/splash_screen.dart';
-import 'package:travelgrid/presentation/screens/tabs/approval_expense.dart';
-import 'package:travelgrid/presentation/screens/ge/general_expense.dart';
+import 'package:travelgrid/presentation/screens/dashboard/ge/general_expense.dart';
 import 'package:travelgrid/presentation/screens/tabs/travel_request.dart';
-import 'package:travelgrid/presentation/screens/te/create_te.dart';
-import 'package:travelgrid/presentation/screens/te/travel_expense.dart';
+import 'package:travelgrid/presentation/screens/dashboard/te/travel_expense.dart';
 class AppRoutes {
 
   Route generateRoute(RouteSettings routeSettings) {
@@ -54,7 +54,9 @@ class AppRoutes {
 
           final bool isEdit = args["isEdit"] ?? false;
           final String title = args["title"]  ?? null;
-          return  CreateGeneralExpense(isEdit: isEdit,title: title);
+          final String status = args["status"]  ?? "";
+          final bool isApproval = args["isApproval"]  ?? false;
+          return  CreateGeneralExpense(isEdit: isEdit,title: title,status: status,isApproval: isApproval);
         }
         return CreateGeneralExpense();
 
@@ -66,7 +68,9 @@ class AppRoutes {
 
           final bool isEdit = args["isEdit"] ?? false;
           final String title = args["title"]  ?? null;
-          return  CreateTravelExpense(isEdit: isEdit,title: title);
+          final String status = args["status"]  ?? "";
+          final bool isApproval = args["isApproval"]  ?? false;
+          return  CreateTravelExpense(isEdit: isEdit,title: title,status:status,isApproval: isApproval);
         }
         return CreateTravelExpense();
 

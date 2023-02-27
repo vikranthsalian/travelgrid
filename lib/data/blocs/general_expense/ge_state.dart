@@ -6,7 +6,8 @@ abstract class GeneralExpenseState {
   GESummaryResponse? responseSum ;
   BlocEventState eventState;
   String message;
-  GeneralExpenseState({this.response,this.responseSum, this.message="", this.eventState=BlocEventState.LOADING});
+  SuccessModel? successModel;
+  GeneralExpenseState({this.response,this.responseSum, this.message="",this.successModel, this.eventState=BlocEventState.LOADING});
 }
 
 class GeneralExpenseInitialState extends GeneralExpenseState {
@@ -22,8 +23,6 @@ class GeneralExpenseSummaryLoadedState extends GeneralExpenseState {
   final GESummaryResponse? data;
   GeneralExpenseSummaryLoadedState({required this.data}) : super(responseSum: data, eventState: BlocEventState.LOADED);
 }
-
-
 class ErrorState extends GeneralExpenseState{
   String message;
   ErrorState({required this.message}) : super(eventState:  BlocEventState.ERROR,message: message);

@@ -130,13 +130,13 @@ class TETicketModel {
       amount: map['amount'] as int,
       exchangeRate: map['exchangeRate'] as int,
       currency: map['currency'] as String,
-      description: map['description'] as String,
-      voucherPath: map['voucherPath'] as String,
-      withBill: map['withBill'] as bool,
-      voilationMessage: map['voilationMessage'] as String,
-      receivedApproval: map['receivedApproval'] as Null,
-      requireApproval: map['requireApproval'] as Null,
-      modified: map['modified'] as Null,
+      description: map['description'] ?? "",
+      voucherPath: map['voucherPath'] ?? "",
+      withBill: map['withBill'] ?? false,
+      voilationMessage: map['voilationMessage'] ?? "",
+      receivedApproval: map['receivedApproval'] ?? false,
+      requireApproval: map['requireApproval'] ?? false,
+      modified: map['modified'] ?? false,
     );
   }
 }

@@ -11,3 +11,4 @@ class GetGeneralExpenseSummaryEvent extends GeneralExpenseEvent {
   final String recordLocator;
   GetGeneralExpenseSummaryEvent({required this.recordLocator});
 }
+

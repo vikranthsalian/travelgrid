@@ -11,4 +11,6 @@ class TeUseCase {
   Future<TESummaryResponse> getSummary(id) async => apiAbstract.getTE(id);
 
   Future<SuccessModel> createTe(data,body) async => apiAbstract.createTE(data,body);
+
+  Future<SuccessModel> approveGE(id,comment) async => apiAbstract.approveTE(id,comment);
 }

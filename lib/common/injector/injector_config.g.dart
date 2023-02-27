@@ -13,6 +13,7 @@ class _$InjectorConfig extends InjectorConfig {
     container
       ..registerSingleton((c) => GeneralExpenseBloc(c<GeUseCase>()))
       ..registerSingleton((c) => TravelExpenseBloc(c<TeUseCase>()))
+      ..registerSingleton((c) => ApprovalExpenseBloc(c<AeUseCase>()))
       ..registerSingleton((c) => CityBloc(c<CommonUseCase>()))
       ..registerSingleton((c) => AccomTypeBloc(c<CommonUseCase>()))
       ..registerSingleton((c) => MiscTypeBloc(c<CommonUseCase>()))
@@ -28,6 +29,7 @@ class _$InjectorConfig extends InjectorConfig {
       ..registerSingleton((c) => LoginUseCase(c<LoginAPIAbstract>()))
       ..registerSingleton((c) => GeUseCase(c<GeAPIAbstract>()))
       ..registerSingleton((c) => TeUseCase(c<TeAPIAbstract>()))
+      ..registerSingleton((c) => AeUseCase(c<AeAPIAbstract>()))
       ..registerSingleton((c) => CommonUseCase(c<CommonAPIAbstract>()));
   }
 
@@ -41,6 +43,8 @@ class _$InjectorConfig extends InjectorConfig {
           (c) => GeRepository(apiRemoteDatasource: c<APIRemoteDatasource>()))
       ..registerSingleton<TeAPIAbstract>(
           (c) => TeRepository(apiRemoteDatasource: c<APIRemoteDatasource>()))
+      ..registerSingleton<AeAPIAbstract>(
+          (c) => AeRepository(apiRemoteDatasource: c<APIRemoteDatasource>()))
       ..registerSingleton<CommonAPIAbstract>((c) =>
           CommonRepository(apiRemoteDatasource: c<APIRemoteDatasource>()));
   }

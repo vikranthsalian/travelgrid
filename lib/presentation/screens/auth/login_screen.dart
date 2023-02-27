@@ -50,7 +50,7 @@ class _LoginScreenState extends State<_Login> {
 
     super.initState();
     loginJsonData = FlavourConstants.loginData;
-    prettyPrint(loginJsonData);
+  //  prettyPrint(loginJsonData);
   }
 
   @override
@@ -62,7 +62,7 @@ class _LoginScreenState extends State<_Login> {
             builder: (context) {
 
               LoginFormBloc  formBloc =  BlocProvider.of<LoginFormBloc>(context);
-              formBloc.tfUsername.updateValue("cm05");
+              formBloc.tfUsername.updateValue("cm01");
               formBloc.tfPassword.updateValue("Test123#");
 
               return Scaffold(

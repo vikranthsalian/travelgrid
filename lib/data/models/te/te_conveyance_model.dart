@@ -100,13 +100,13 @@ class TeConveyanceModel {
       byCompany: map['byCompany'] as bool,
       exchangeRate: map['exchangeRate'] as int,
       currency: map['currency'] as String,
-      voucherPath: map['voucherPath'] as String,
-      voucherNumber: map['voucherNumber'] as String,
-      description: map['description'] as String,
-      voilationMessage: map['voilationMessage'] as String,
-      requireApproval: map['requireApproval'] as bool,
-      withBill: map['withBill'] as bool,
-      modified: map['modified'] as bool,
+      voucherPath: map['voucherPath'] ?? "",
+      voucherNumber: map['voucherNumber'] ?? "",
+      description: map['description'] ?? "",
+      voilationMessage: map['voilationMessage'] ?? "",
+      requireApproval: map['requireApproval'] ?? false,
+      withBill: map['withBill'] ?? false,
+      modified: map['modified'] ?? false,
     );
   }
 }

@@ -18,6 +18,8 @@ class CityUtil{
 
   static String? getCityNameFromID(id) {
 
+    print("getCityNameFromID:==>");
+    print(id);
     if(id.toString().isEmpty){
       return null;
     }
@@ -25,6 +27,12 @@ class CityUtil{
    List<city.Data> list = appNavigatorKey.currentState!.context.read<CityCubit>().getCityResponse();
 
    Iterable<city.Data> data= list.where((item) => (item.id.toString() == id.toString()));
+
+   if(data.isEmpty){
+     return id;
+   }
+
+
    return data.first.name;
   }
 
@@ -93,7 +101,7 @@ class CityUtil{
     return data.first.id;
   }
 
-  static int? getFareIDFromName(name,mode) {
+  static String? getFareValueFromName(name,mode) {
 
     if(mode=="Air"){
       mode="A";
@@ -112,7 +120,7 @@ class CityUtil{
     List<fare.Data> list = appNavigatorKey.currentState!.context.read<FareClassCubit>().getFareClassResponse(mode);
 
     Iterable<fare.Data> data= list.where((item) => (item.label.toString() == name.toString()));
-    return data.first.id;
+    return data.first.value;
   }
 
 }

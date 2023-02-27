@@ -17,15 +17,15 @@ import 'package:travelgrid/data/datasources/approver_list.dart' as app;
 import 'package:travelgrid/data/datasources/ge_summary_response.dart';
 import 'package:travelgrid/data/datasources/login_response.dart';
 import 'package:travelgrid/data/models/expense_model.dart';
-import 'package:travelgrid/data/models/ge_accom_model.dart';
-import 'package:travelgrid/data/models/ge_conveyance_model.dart';
-import 'package:travelgrid/data/models/ge_misc_model.dart';
+import 'package:travelgrid/data/models/ge/ge_accom_model.dart';
+import 'package:travelgrid/data/models/ge/ge_conveyance_model.dart';
+import 'package:travelgrid/data/models/ge/ge_misc_model.dart';
 import 'package:travelgrid/data/models/success_model.dart';
 import 'package:travelgrid/domain/usecases/ge_usecase.dart';
 import 'package:travelgrid/presentation/components/bloc_map_event.dart';
-import 'package:travelgrid/presentation/screens/ge/add/add_accom.dart';
-import 'package:travelgrid/presentation/screens/ge/add/add_misc.dart';
-import 'package:travelgrid/presentation/screens/ge/add/add_travel.dart';
+import 'package:travelgrid/presentation/screens/dashboard/ge/add/add_accom.dart';
+import 'package:travelgrid/presentation/screens/dashboard/ge/add/add_misc.dart';
+import 'package:travelgrid/presentation/screens/dashboard/ge/add/add_travel.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';
 import 'package:travelgrid/presentation/widgets/dialog_selector_view.dart';
 import 'package:travelgrid/presentation/widgets/icon.dart';
@@ -38,7 +38,9 @@ import 'package:tuple/tuple.dart';
 class CreateGeneralExpense extends StatefulWidget {
   bool isEdit;
   String? title;
-  CreateGeneralExpense({this.isEdit=true,this.title});
+  bool isApproval;
+  String? status;
+  CreateGeneralExpense({this.isEdit=true,this.title,this.isApproval=false,this.status});
 
   @override
   _CreateGeneralExpenseState createState() => _CreateGeneralExpenseState();
@@ -64,6 +66,7 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
   Tuple2<String,String>? approver1;
   Tuple2<String,String>? approver2;
   String description="";
+  TextEditingController controller =TextEditingController();
 
 
 
@@ -137,7 +140,7 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
         shape: CircularNotchedRectangle(),
         notchMargin: 5,
         elevation: 2.0,
-        child: widget.isEdit ? buildSubmitRow():SizedBox(),
+        child: widget.isEdit ? buildSubmitRow():buildViewRow(),
       ),
       body: Container(
         color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
@@ -308,20 +311,47 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
   }
 
   Row buildViewRow() {
+    bool isTBVisible=false;
+    bool isAPVisible=false;
+    if(widget.status!.toLowerCase()=="approver 1"){
+      isTBVisible=true;
+    }
+
+    if(widget.isApproval){
+      isTBVisible=false;
+      isAPVisible=true;
+    }
+
     return Row(
-      mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        MetaButton(mapData: jsonData['bottomButtonLeft'],
-            onButtonPressed: (){
+        Expanded(
+          child: MetaButton(mapData: jsonData['bottomButtonLeft'],text: "Cancel",
+              onButtonPressed: (){
 
-            }
+              }
+          ),
         ),
-        MetaButton(mapData: jsonData['bottomButtonRight'],
-            onButtonPressed: (){
+        isAPVisible?
+        Expanded(
+          child: MetaButton(mapData: jsonData['bottomButtonRight'],text: "Approve",
+              onButtonPressed: ()async{
+             SuccessModel  model =  await Injector.resolve<GeUseCase>().approveGE(widget.title!,controller.text);
 
-            }
-        )
+                if(model.status==true){
+                Navigator.pop(context);
+                }
+              }
+          ),
+        ):SizedBox(width: 0,),
+        isTBVisible?
+        Expanded(
+          child: MetaButton(mapData: jsonData['bottomButtonRight'],text: "Take Back",
+              onButtonPressed: (){
+
+              }
+          ),
+        ):SizedBox(width: 0),
       ],
     );
   }
@@ -514,9 +544,9 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
                   ),
                 ),
               ]),
-          widget.isEdit?
+          (widget.isEdit || widget.isApproval) ?
           MetaTextFieldView(
-             controller: TextEditingController(),
+             controller: controller,
               mapData: map['text_field_desc'],
               onChanged:(value){
                 description=value;

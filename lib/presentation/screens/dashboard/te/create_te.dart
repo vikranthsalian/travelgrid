@@ -24,11 +24,11 @@ import 'package:travelgrid/data/models/te/te_ticket_model.dart';
 import 'package:travelgrid/domain/usecases/te_usecase.dart';
 import 'package:travelgrid/presentation/components/bloc_map_event.dart';
 import 'package:travelgrid/presentation/dialog_expense_picker.dart';
-import 'package:travelgrid/presentation/screens/te/add/te_add_accom.dart';
-import 'package:travelgrid/presentation/screens/te/add/te_add_conveyance.dart';
-import 'package:travelgrid/presentation/screens/te/add/te_add_misc.dart';
-import 'package:travelgrid/presentation/screens/te/add/add_visit.dart';
-import 'package:travelgrid/presentation/screens/te/add/te_add_ticket.dart';
+import 'package:travelgrid/presentation/screens/dashboard/te/add/te_add_accom.dart';
+import 'package:travelgrid/presentation/screens/dashboard/te/add/te_add_conveyance.dart';
+import 'package:travelgrid/presentation/screens/dashboard/te/add/te_add_misc.dart';
+import 'package:travelgrid/presentation/screens/dashboard/te/add/add_visit.dart';
+import 'package:travelgrid/presentation/screens/dashboard/te/add/te_add_ticket.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';
 import 'package:travelgrid/presentation/widgets/dialog_selector_view.dart';
 import 'package:travelgrid/presentation/widgets/icon.dart';
@@ -40,8 +40,10 @@ import 'package:tuple/tuple.dart';
 
 class CreateTravelExpense extends StatefulWidget {
   bool isEdit;
+  bool isApproval;
   String? title;
-  CreateTravelExpense({this.isEdit=true,this.title});
+  String? status;
+  CreateTravelExpense({this.isEdit=true,this.status,this.title,this.isApproval=false});
 
   @override
   _CreateTravelExpenseState createState() => _CreateTravelExpenseState();
@@ -56,19 +58,21 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
   List<Tuple3<Map,String,String>> summaryDetails=[];
   List<String> values=[];
   List<ExpenseVisitDetails> visitItems=[];
+  List<MaTravelExpenseComment> commentList=[];
 
   bool showRequesterDetails=false;
   bool showVisitDetails=true;
   bool showSummaryItems=true;
   bool showSummaryDetails=false;
   bool showApproverDetails=false;
+  bool showCommentDetails=false;
 
   Tuple2<String,String> total=Tuple2("0.00", "0.00");
   MetaLoginResponse loginResponse = MetaLoginResponse();
 
   Tuple2<String,String>? approver1;
   Tuple2<String,String>? approver2;
-  TextEditingController description = TextEditingController();
+  TextEditingController controller = TextEditingController();
 
   TravelExpenseBloc?  bloc;
   bool loaded =false;
@@ -116,8 +120,9 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
       summaryDetails.add(Tuple3(item, "0","0"));
     }
 
+      bloc = Injector.resolve<TravelExpenseBloc>()
+        ..add(GetTravelExpenseSummaryEvent(recordLocator: widget.title!));
 
-      bloc = Injector.resolve<TravelExpenseBloc>()..add(GetTravelExpenseSummaryEvent(recordLocator: widget.title!));
 
   }
 
@@ -128,7 +133,7 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
     return Scaffold(
       backgroundColor: Colors.white,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton:  FloatingActionButton(
+      floatingActionButton:  widget.isEdit ?  FloatingActionButton(
           child:MetaIcon(mapData:jsonData['bottomButtonFab'],onButtonPressed: ()async{
 
               await showDialog(
@@ -142,13 +147,13 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
 
           },),
           backgroundColor: ParseDataType().getHexToColor(jsonData['backgroundColor']),
-          onPressed: () {}),
+          onPressed: () {}):null,
       bottomNavigationBar: BottomAppBar(
         color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
         shape: CircularNotchedRectangle(),
         notchMargin: 5,
         elevation: 2.0,
-        child: widget.isEdit ? buildSubmitRow():SizedBox(),
+        child: widget.isEdit ? buildSubmitRow():buildViewRow(),
       ),
       body: Container(
         color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
@@ -173,7 +178,7 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
               ),
             ),
             Expanded(
-              child:  BlocBuilder<TravelExpenseBloc, TravelExpenseState>(
+              child:BlocBuilder<TravelExpenseBloc, TravelExpenseState>(
                   bloc: bloc,
                   builder:(context, state) {
                     return Container(
@@ -193,14 +198,10 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
     );
   }
 
-  Widget buildView(TravelExpenseState state){
-
+  Widget buildView(state){
 
      if(state.responseSum!=null && !loaded) {
-       TESummaryResponse? response = state.responseSum;
-
-
-
+       TESummaryResponse? response = state.responseSum!;
 
        submitMap['id']= response!.data!.id;
        submitMap['recordLocator']=  response.data!.recordLocator;
@@ -241,6 +242,8 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
 
       visitItems = response.data!.expenseVisitDetails ?? [];
 
+      commentList= response.data!.matravelExpenseComment ?? [];
+
       getSummaryDetails();
 
       loaded=true;
@@ -257,7 +260,8 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
             buildExpandableView(jsonData,"visitItems"),
             buildExpandableView(jsonData,"summaryItems"),
             buildExpandableView(jsonData,"summaryDetails"),
-            buildExpandableView(jsonData,"approverDetails"),
+           widget.isEdit ? buildExpandableView(jsonData,"approverDetails"):SizedBox(),
+            widget.status!.toLowerCase()!="create"  ?  buildExpandableView(jsonData,"commentDetails"):SizedBox(),
           ],
         ),
       ),
@@ -285,20 +289,47 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
   }
 
   Row buildViewRow() {
+    bool isTBVisible=false;
+    bool isAPVisible=false;
+    if(widget.status!.toLowerCase()=="approver 1"){
+      isTBVisible=true;
+    }
+
+    if(widget.isApproval){
+      isTBVisible=false;
+      isAPVisible=true;
+    }
+
     return Row(
-      mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        MetaButton(mapData: jsonData['bottomButtonLeft'],
-            onButtonPressed: (){
+        Expanded(
+          child: MetaButton(mapData: jsonData['bottomButtonLeft'],text: "Cancel",
+              onButtonPressed: (){
 
-            }
+              }
+          ),
         ),
-        MetaButton(mapData: jsonData['bottomButtonRight'],
-            onButtonPressed: (){
+        isAPVisible?
+          Expanded(
+            child: MetaButton(mapData: jsonData['bottomButtonRight'],text: "Approve",
+                onButtonPressed: ()async{
+                  SuccessModel  model =  await Injector.resolve<TeUseCase>().approveGE(widget.title!,controller.text);
 
-            }
-        )
+                  if(model.status==true){
+                    Navigator.pop(context);
+                  }
+                }
+            ),
+          ):SizedBox(width: 0,),
+        isTBVisible?
+        Expanded(
+          child: MetaButton(mapData: jsonData['bottomButtonRight'],text: "Take Back",
+              onButtonPressed: (){
+
+              }
+          ),
+        ):SizedBox(width: 0),
       ],
     );
   }
@@ -318,7 +349,7 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
                 setState(() {
                   showRequesterDetails=value;
                 });
-              },),
+              })
           );
         case "visitItems":
           return Container(
@@ -372,6 +403,19 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
 
               },),
           );
+        case "commentDetails":
+          return Container(
+            alignment: Alignment.centerRight,
+            child: MetaSwitch(mapData: map['showDetails'],
+              value: showCommentDetails,
+              onSwitchPressed: (value){
+
+                setState(() {
+                  showCommentDetails=value;
+                });
+
+              },),
+          );
         default:
           return Container();
 
@@ -391,6 +435,8 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
           return showSummaryDetails ? buildSummaryWidget(map):Container();
         case "approverDetails":
           return showApproverDetails ? buildApproverWidget(map):Container();
+        case "commentDetails":
+          return showCommentDetails ? buildCommentWidget(map):Container();
         default:
           return Container();
       }
@@ -512,13 +558,36 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
               ]),
           widget.isEdit?
           MetaTextFieldView(
-             controller: description,
+             controller: controller,
               mapData: map['text_field_desc'],
               onChanged:(value){
-               description.text=value;
+                controller.text=value;
               }):SizedBox(),
 
         ],
+      ),
+    );
+  }
+
+  Container buildCommentWidget(Map map){
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 20.w,vertical: 10.h),
+      color: Colors.white,
+      child:ListView.builder(
+        padding: EdgeInsets.zero,
+        itemCount: commentList.length,
+        shrinkWrap: true,
+        itemBuilder: (BuildContext context, int index) {
+          return Container(
+            child: Column(
+                children: [
+                  MetaTextView(mapData:map['name'],text: commentList[index].actionBy!+"("+commentList[index].actionFrom!+")"),
+                  MetaTextView(mapData:map['date'],text: "Last 7 days"),
+                  MetaTextView(mapData:map['message'],text: "Fill out the initial form. You can edit this later if needed. Click Save when done."),
+                ]),
+          );
+
+        }
       ),
     );
   }
@@ -599,7 +668,7 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
                         Expanded(flex:1, child: MetaTextView(mapData: map['listView']['item'],text: CityUtil.getCityNameFromID(visitItems[i].city) )),
                         Expanded(flex:1,child: MetaTextView(mapData: map['listView']['item'],text:visitItems[i].evdStartDate!+"\n-"+visitItems[i].evdStartTime! )),
                         Expanded(flex:1,child: MetaTextView(mapData: map['listView']['item'],text:visitItems[i].evdEndDate!+"\n-"+visitItems[i].evdEndTime! )),
-                        Container(
+                        widget.isEdit? Container(
                           width: 50.w,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -628,12 +697,13 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
                                       child: MetaSVGView(mapData:  map['listView']['item']['items'][1]))),
                             ],
                           ),
-                        )
+                        ):Container(width: 50.w)
                       ]),
                 );
               },
               itemCount: visitItems.length
           ),
+          widget.isEdit?
           Container(
             margin: EdgeInsets.only(top: 5.h),
             width: 70.w,
@@ -654,7 +724,7 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
                         },)));
                 }
             ),
-          )
+          ):SizedBox()
         ],
       ),
     );
@@ -843,7 +913,7 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
     summary.totalAmountSelf=allTotal;
     summary.dueFromCompany=allTotal;
     summary.totalExpense=allTotal;
-    submitMap['maExpenseSummary']= summary;
+    submitMap['maExpenseSummary']= {};
     print("summary.toJson()");
     print(summary.toJson());
 
@@ -961,7 +1031,7 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
      "approver2":approver2!.item2.toString().toLowerCase(),
      "action":text,
      "recordLocator":widget.title,
-     "comment":description.text,
+     "comment":controller.text,
    };
 
    prettyPrint(valueMap);
@@ -993,12 +1063,16 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
 
     List<TEMiscModel> list=[];
 
-    for(var item in miscellaneousExpenses){
-      Map<String,dynamic> map = item.toMap();
-      map['currency']="48";
-      map['miscellaneousType']=CityUtil.getMiscIDFromName(item.miscellaneousType);
-      TEMiscModel model = TEMiscModel.fromMap(map);
-      list.add(model);
+      for (var item in miscellaneousExpenses) {
+        Map<String, dynamic> map = item.toMap();
+
+          map['currency'] = "48";
+          map['miscellaneousType'] =
+              CityUtil.getMiscIDFromName(item.miscellaneousType);
+
+        TEMiscModel model = TEMiscModel.fromMap(map);
+        list.add(model);
+
     }
 
 
@@ -1020,15 +1094,21 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
 
     List<TEAccomModel> list=[];
 
-    for(var item in dataList){
-      Map<String,dynamic> map = item.toMap();
-      map['currency']="48";
-      map['accomodationType']=CityUtil.getAccomIDFromName(item.accomodationType);
 
-      TEAccomModel model = TEAccomModel.fromMap(map);
+      for (var item in dataList) {
+        Map<String, dynamic> map = item.toMap();
+
+          map['currency'] = "48";
+          map['accomodationType'] =
+              CityUtil.getAccomIDFromName(item.accomodationType);
+          map['city'] = int.parse(item.city.toString());
 
 
-      list.add(model);
+        TEAccomModel model = TEAccomModel.fromMap(map);
+
+
+        list.add(model);
+
     }
 
     for (int i=0;i<list.length;i++) {
@@ -1048,16 +1128,16 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
 
     List<TeConveyanceModel> list=[];
 
-    for(var item in dataList){
-      Map<String,dynamic> map = item.toMap();
-      map['currency']="48";
-      map['travelMode']=CityUtil.getModeIDFromName(item.travelMode);
+      for (var item in dataList) {
+        Map<String, dynamic> map = item.toMap();
+        map['currency'] = "48";
+        map['travelMode'] = CityUtil.getModeIDFromName(item.travelMode);
 
-      TeConveyanceModel model = TeConveyanceModel.fromMap(map);
+        TeConveyanceModel model = TeConveyanceModel.fromMap(map);
 
 
-      list.add(model);
-    }
+        list.add(model);
+      }
 
 
     for (int i=0;i<list.length;i++) {
@@ -1080,27 +1160,34 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
 
     List<TETicketModel> list=[];
 
-    for(var item in dataList){
-      Map<String,dynamic> map = item.toMap();
-      map['currency']="48";
-      String mode="";
-      if(item.travelMode=="Air"){
-        mode="A";
-      }
-      if(item.travelMode=="Rail"){
-        mode="R";
-      }
-      if(item.travelMode=="Road"){
-        mode="B";
-      }
-      map['travelMode']=mode;
-      map['fareClass'] = CityUtil.getFareIDFromName(item.fareClass,item.travelMode);
-
-      TETicketModel model = TETicketModel.fromMap(map);
 
 
-      list.add(model);
+
+      for(var item in dataList){
+        Map<String,dynamic> map = item.toMap();
+          map['currency'] = "48";
+          String mode = "";
+          if (item.travelMode == "Air") {
+            mode = "A";
+          }
+          if (item.travelMode == "Rail") {
+            mode = "R";
+          }
+          if (item.travelMode == "Road") {
+            mode = "B";
+          }
+          map['travelMode'] = mode;
+          map['fareClass'] =
+              CityUtil.getFareValueFromName(item.fareClass, item.travelMode)
+                  .toString();
+
+        TETicketModel model = TETicketModel.fromMap(map);
+
+
+        list.add(model);
+
     }
+
 
 
 

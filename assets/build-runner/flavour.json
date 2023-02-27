@@ -494,35 +494,64 @@
       "family": "regular"
     }
   },
-  "approval_screen_data" : {
-    "app_bar": {
-      "isCenter": true,
-      "backgroundColor" : "0xFF2854A1",
-      "title":  {
-        "text" : "Approvals",
-        "color" : "0XFFFFFFFF",
-        "size": "16",
-        "family": "bold"
-      },
-      "leading": {
-        "icon": "back",
-        "size": 20.0,
-        "color": "0XFFFFFFFF",
-        "backgroundColor": "transparent",
-        "onPress": true
-      },
-      "actions": [
-        {
-          "icon": "back",
-          "size": 20.0,
-          "color": "0XFF000000",
-          "backgroundColor": "0XFFFFFFFF",
-          "onPress": true
-        }
-      ]
+  "ae_screen_data" : {
+    "backgroundColor" : "0xFF2854A1",
+    "title":  {
+      "text" : "Approval Expense",
+      "color" : "0XFFFFFFFF",
+      "size": "18",
+      "family": "bold",
+      "align": "center-left"
     },
-    "searchBar": {},
+    "backBar": {
+      "icon": "back",
+      "size": 20.0,
+      "color": "0XFFFFFFFF",
+      "backgroundColor": "transparent",
+      "onPress": true,
+      "align": "center-left"
+    },
+    "tabs": [
+      {
+        "text" : "Travel Request",
+        "type": "TR",
+        "color" : "0xFF000000",
+        "size": "8",
+        "family": "regular",
+        "align": "center",
+        "view": "ae_tr_screen_data"
+      },
+      {
+        "text" : "Travel Expense",
+        "type": "TE",
+        "color" : "0xFF000000",
+        "size": "8",
+        "family": "regular",
+        "align": "center",
+        "view": "ae_te_screen_data"
+      },
+      {
+        "text" : "General Expense",
+        "type": "GE",
+        "color" : "0xFF000000",
+        "size": "8",
+        "family": "regular",
+        "align": "center",
+        "view": "ae_ge_screen_data"
+      }
+    ]
+  },
+  "ae_tr_screen_data" : {
+    "backgroundColor" : "0xFF2854A1",
     "listView": {
+      "recordsFound":  {
+        "text" : "Records Found",
+        "value" : "0",
+        "color" : "0XFFFFFFFF",
+        "size": "12",
+        "family": "regular",
+        "align": "center-right"
+      },
       "emptyData": {
         "image_view":   {
           "image" : "logo_banner.png",
@@ -545,7 +574,6 @@
           "family": "regular"
         }
       }
-
     },
     "bottomButtonLeft": {
       "text" : "Sort",
@@ -554,11 +582,105 @@
       "size": "18",
       "family": "regular"
     },
-    "bottomButtonFab": {
-      "icon": "add",
-      "size": 20.0,
-      "color": "0XFFFFFFFF",
-      "onPress": true
+    "bottomButtonRight": {
+      "text" : "Filter",
+      "color" : "0xFFFFFFFF",
+      "backgroundColor" : "0xFF2854A1",
+      "size": "18",
+      "family": "regular"
+    }
+  },
+  "ae_te_screen_data" : {
+    "backgroundColor" : "0xFF2854A1",
+    "onClick": "/travelCreateExpense",
+    "listView": {
+      "recordsFound":  {
+        "text" : "Records Found",
+        "value" : "0",
+        "color" : "0XFFFFFFFF",
+        "size": "12",
+        "family": "regular",
+        "align": "center-right"
+      },
+      "emptyData": {
+        "image_view":   {
+          "image" : "logo_banner.png",
+          "align": "center",
+          "wd": 250.0
+        },
+        "title":  {
+          "text" : "No Data Found!!!",
+          "color" : "0XFF3D3D3D",
+          "size": "16",
+          "family": "regular"
+        },
+        "bottomButtonRefresh": {
+          "text" : "Refresh",
+          "height": 35.0,
+          "color" : "0xFFFFFFFF",
+          "borderRadius": 30.0,
+          "backgroundColor" : "0xFF2854A1",
+          "size": "15",
+          "family": "regular"
+        }
+      }
+    },
+    "bottomButtonLeft": {
+      "text" : "Sort",
+      "color" : "0xFFFFFFFF",
+      "backgroundColor" : "0xFF2854A1",
+      "size": "18",
+      "family": "regular"
+    },
+    "bottomButtonRight": {
+      "text" : "Filter",
+      "color" : "0xFFFFFFFF",
+      "backgroundColor" : "0xFF2854A1",
+      "size": "18",
+      "family": "regular"
+    }
+  },
+  "ae_ge_screen_data" : {
+    "backgroundColor" : "0xFF2854A1",
+    "listView": {
+      "recordsFound":  {
+        "text" : "Records Found",
+        "value" : "0",
+        "color" : "0XFFFFFFFF",
+        "size": "12",
+        "family": "regular",
+        "align": "center-right"
+      },
+      "emptyData": {
+        "image_view":   {
+          "image" : "logo_banner.png",
+          "align": "center",
+          "wd": 250.0
+        },
+        "title":  {
+          "text" : "No Data Found!!!",
+          "color" : "0XFF3D3D3D",
+          "size": "16",
+          "family": "regular"
+        },
+        "bottomButtonRefresh": {
+          "text" : "Refresh",
+          "height": 35.0,
+          "color" : "0xFFFFFFFF",
+          "borderRadius": 30.0,
+          "backgroundColor" : "0xFF2854A1",
+          "size": "15",
+          "family": "regular"
+        }
+      }
+    },
+    "onClick": "/generalCreateExpense",
+    "bottomButtonLeft": {
+      "text" : "Sort",
+      "color" : "0xFFFFFFFF",
+      "backgroundColor" : "0xFF2854A1",
+      "size": "18",
+      "family": "regular"
     },
     "bottomButtonRight": {
       "text" : "Filter",
@@ -3455,6 +3577,54 @@
           "family": "regular"
         },
         "validators" : []
+      }
+    },
+    "commentDetails": {
+      "label": {
+        "text" : "Comment Details",
+        "color" : "0XFFFFFFFF",
+        "size": "14",
+        "family": "bold",
+        "align": "center-left"
+      },
+      "showDetails": {
+        "label": {
+          "text" : "Show",
+          "color" : "0XFFFFFFFF",
+          "size": "10",
+          "family": "bold",
+          "align": "center-right"
+        }
+      },
+      "backgroundColor" : "0xFF2854A1",
+      "name": {
+        "text" : "",
+        "color" : "0XFF000000",
+        "size": "12",
+        "family": "regular",
+        "align": "center-left"
+      },
+      "type": {
+        "text" : "",
+        "backgroundColor" : "0xFF2854A1",
+        "color" : "0XFFFFFFFF",
+        "size": "14",
+        "family": "bold",
+        "align": "center-left"
+      },
+      "date": {
+        "text" : "",
+        "color" : "0XFFCCCCCC",
+        "size": "9",
+        "family": "regular",
+        "align": "center-left"
+      },
+      "message": {
+        "text" : "",
+        "color" : "0xFF2854A1",
+        "size": "10",
+        "family": "regular",
+        "align": "center-left"
       }
     },
     "bottomButtonLeft": {
