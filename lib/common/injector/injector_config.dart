@@ -10,18 +10,21 @@ import 'package:travelgrid/data/blocs/general_expense/ge_bloc.dart';
 import 'package:travelgrid/data/blocs/misc/misc_type_bloc.dart';
 import 'package:travelgrid/data/blocs/travel/travel_mode_bloc.dart';
 import 'package:travelgrid/data/blocs/travel_expense/te_bloc.dart';
+import 'package:travelgrid/data/blocs/travel_request/tr_bloc.dart';
 import 'package:travelgrid/data/remote/remote_datasource.dart';
 import 'package:travelgrid/data/repositories/ae_repo.dart';
 import 'package:travelgrid/data/repositories/common_repo.dart';
 import 'package:travelgrid/data/repositories/ge_repo.dart';
 import 'package:travelgrid/data/repositories/login_repo.dart';
 import 'package:travelgrid/data/repositories/te_repo.dart';
+import 'package:travelgrid/data/repositories/tr_repo.dart';
 import 'package:travelgrid/domain/repo_abstract/api_abstract.dart';
 import 'package:travelgrid/domain/usecases/ae_usecase.dart';
 import 'package:travelgrid/domain/usecases/common_usecase.dart';
 import 'package:travelgrid/domain/usecases/login_usecase.dart';
 import 'package:travelgrid/domain/usecases/ge_usecase.dart';
 import 'package:travelgrid/domain/usecases/te_usecase.dart';
+import 'package:travelgrid/domain/usecases/tr_usecase.dart';
 part 'injector_config.g.dart';
 
 abstract class InjectorConfig {
@@ -45,6 +48,7 @@ abstract class InjectorConfig {
   }
 
   // ============ BLOCS ============
+  @Register.singleton(TravelRequestBloc)
   @Register.singleton(GeneralExpenseBloc)
   @Register.singleton(TravelExpenseBloc)
   @Register.singleton(ApprovalExpenseBloc)
@@ -58,6 +62,7 @@ abstract class InjectorConfig {
   //
   // ============ USECASES ============
   @Register.singleton(LoginUseCase)
+  @Register.singleton(TrUseCase)
   @Register.singleton(GeUseCase)
   @Register.singleton(TeUseCase)
   @Register.singleton(AeUseCase)
@@ -66,6 +71,7 @@ abstract class InjectorConfig {
 
   // ============ REPOSITORIES ============
   @Register.singleton(LoginAPIAbstract,from:LoginRepository)
+  @Register.singleton(TrAPIAbstract,from:TrRepository)
   @Register.singleton(GeAPIAbstract,from:GeRepository)
   @Register.singleton(TeAPIAbstract,from:TeRepository)
   @Register.singleton(AeAPIAbstract,from:AeRepository)

@@ -14,6 +14,7 @@ class MetaTextView extends StatelessWidget {
         child: Text(
             text==null ?
             mapData['value']!=null ? (mapData['value'].toString() +" "+ mapData['text'].toString()) :mapData['text'] :text,
+            textAlign: TextAlign.center,
             style:Theme.of(context).textTheme.
             caption?.copyWith(
                 fontSize: ParseDataType().getDouble(mapData['size']).sp,

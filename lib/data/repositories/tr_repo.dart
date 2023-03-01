@@ -1,33 +1,32 @@
 import 'package:travelgrid/data/datasources/ge_summary_response.dart';
-import 'package:travelgrid/data/datasources/list/ge_list_response.dart';
-import 'package:travelgrid/data/datasources/login_response.dart';
+import 'package:travelgrid/data/datasources/list/tr_list_response.dart';
 import 'package:travelgrid/data/models/success_model.dart';
 import 'package:travelgrid/data/remote/remote_datasource.dart';
 import 'package:travelgrid/domain/repo_abstract/api_abstract.dart';
 
-class GeRepository extends GeAPIAbstract {
+class TrRepository extends TrAPIAbstract {
   final APIRemoteDatasource apiRemoteDatasource;
 
-  GeRepository({
+  TrRepository({
     required this.apiRemoteDatasource,
   });
 
 
   @override
-  Future<GEListResponse> callList() async {
+  Future<TRListResponse> callList() async {
 
-    var response = await apiRemoteDatasource.getList("ge/gelist");
+    var response = await apiRemoteDatasource.getList("trlist");
     if(response!=null) {
-      GEListResponse modelResponse = GEListResponse.fromJson(response);
+      TRListResponse modelResponse = TRListResponse.fromJson(response);
       return modelResponse;
     }
 
-      return GEListResponse(status: false);
+      return TRListResponse(status: false);
   }
 
 
   @override
-  Future<GESummaryResponse> getGE(id) async {
+  Future<GESummaryResponse> getTR(id) async {
 
     var response = await apiRemoteDatasource.getSummary("ge/geSummaryDetails",id);
     if(response!=null) {
@@ -39,9 +38,9 @@ class GeRepository extends GeAPIAbstract {
   }
 
   @override
-  Future<SuccessModel> createGE(data,body) async {
+  Future<SuccessModel> createTR(data,body) async {
 
-    var response = await apiRemoteDatasource.create("ge/submitMaGeneralExpense",data,body);
+    var response = await apiRemoteDatasource.create("ge/submitMaTrneralExpense",data,body);
 
     if(response!=null) {
       SuccessModel modelResponse = SuccessModel.fromJson(response);
@@ -52,7 +51,7 @@ class GeRepository extends GeAPIAbstract {
   }
 
   @override
-  Future<SuccessModel> approveGE(id, comment) async{
+  Future<SuccessModel> approveTR(id, comment) async{
 
     Map<String,dynamic> data= {
       "recordLocator":id,

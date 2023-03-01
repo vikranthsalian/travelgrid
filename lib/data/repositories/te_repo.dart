@@ -1,5 +1,5 @@
 import 'package:travelgrid/data/datasources/te_summary_response.dart';
-import 'package:travelgrid/data/datasources/travel_expense_list.dart';
+import 'package:travelgrid/data/datasources/list/te_list_response.dart';
 import 'package:travelgrid/data/models/success_model.dart';
 import 'package:travelgrid/data/remote/remote_datasource.dart';
 import 'package:travelgrid/domain/repo_abstract/api_abstract.dart';
@@ -15,7 +15,7 @@ class TeRepository extends TeAPIAbstract {
   @override
   Future<TEListResponse> callList() async {
 
-    var response = await apiRemoteDatasource.getTEList("te/teList");
+    var response = await apiRemoteDatasource.getList("te/teList");
     if(response!=null) {
       TEListResponse modelResponse = TEListResponse.fromJson(response);
       return modelResponse;
@@ -28,7 +28,7 @@ class TeRepository extends TeAPIAbstract {
   @override
   Future<TESummaryResponse> getTE(id) async {
 
-    var response = await apiRemoteDatasource.getTESummary("te/getTEDetails",id);
+    var response = await apiRemoteDatasource.getSummary("te/getTEDetails",id);
     if(response!=null) {
       TESummaryResponse modelResponse = TESummaryResponse.fromJson(response);
       return modelResponse;
@@ -40,7 +40,7 @@ class TeRepository extends TeAPIAbstract {
   @override
   Future<SuccessModel> createTE(data,body) async {
 
-    var response = await apiRemoteDatasource.createTE("te/submitMaTravelExpense",data,body);
+    var response = await apiRemoteDatasource.create("te/submitMaTravelExpense",data,body);
 
     if(response!=null) {
       SuccessModel modelResponse = SuccessModel.fromJson(response);

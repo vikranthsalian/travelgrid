@@ -11,10 +11,10 @@ import 'package:travelgrid/presentation/screens/dashboard/ge/add/add_misc.dart';
 import 'package:travelgrid/presentation/screens/dashboard/ge/add/add_travel.dart';
 import 'package:travelgrid/presentation/screens/dashboard/ge/create_ge.dart';
 import 'package:travelgrid/presentation/screens/dashboard/te/create_te.dart';
+import 'package:travelgrid/presentation/screens/dashboard/tr/travel_request.dart';
 import 'package:travelgrid/presentation/screens/policy/policy_screen.dart';
 import 'package:travelgrid/presentation/screens/splash/splash_screen.dart';
 import 'package:travelgrid/presentation/screens/dashboard/ge/general_expense.dart';
-import 'package:travelgrid/presentation/screens/tabs/travel_request.dart';
 import 'package:travelgrid/presentation/screens/dashboard/te/travel_expense.dart';
 class AppRoutes {
 

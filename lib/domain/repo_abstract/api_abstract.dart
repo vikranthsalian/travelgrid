@@ -3,19 +3,28 @@ import 'package:travelgrid/data/datasources/approver_list.dart';
 import 'package:travelgrid/data/datasources/cities_list.dart';
 import 'package:travelgrid/data/datasources/fare_class_list.dart';
 import 'package:travelgrid/data/datasources/ge_summary_response.dart';
-import 'package:travelgrid/data/datasources/general_expense_list.dart';
+import 'package:travelgrid/data/datasources/list/ge_list_response.dart';
 import 'package:travelgrid/data/datasources/lat_long_distance_model.dart';
 import 'package:travelgrid/data/datasources/login_response.dart';
 import 'package:travelgrid/data/datasources/misc_type_list.dart';
 import 'package:travelgrid/data/datasources/te_approval_list.dart';
 import 'package:travelgrid/data/datasources/te_summary_response.dart';
-import 'package:travelgrid/data/datasources/travel_expense_list.dart';
+import 'package:travelgrid/data/datasources/list/tr_list_response.dart';
+import 'package:travelgrid/data/datasources/list/te_list_response.dart';
 import 'package:travelgrid/data/datasources/travel_mode_list.dart';
 import 'package:travelgrid/data/models/success_model.dart';
 
 abstract class LoginAPIAbstract {
   Future<MetaLoginResponse> callLogin(input);
 }
+
+abstract class TrAPIAbstract {
+  Future<TRListResponse> callList();
+  Future<GESummaryResponse> getTR(id);
+  Future<SuccessModel> createTR(data,body);
+  Future<SuccessModel> approveTR(id,comment);
+}
+
 
 abstract class GeAPIAbstract {
   Future<GEListResponse> callList();

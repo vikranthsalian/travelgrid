@@ -200,7 +200,6 @@ class _CityScreenState extends State<CityScreen> {
     setState(() {
       list=newList;
     });
-  //  bloc!.add(SearchCityListEvent(list: newList));
   }
 
 }

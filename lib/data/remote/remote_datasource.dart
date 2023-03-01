@@ -30,7 +30,7 @@ class APIRemoteDatasource{
 
   }
 
-  Future<dynamic> getGeList(pathUrl) async {
+  Future<dynamic> getList(pathUrl) async {
     try {
       final responseJson = await CustomDio().getWrapper().get(
           pathUrl,
@@ -49,7 +49,7 @@ class APIRemoteDatasource{
 
   }
 
-  Future<dynamic> getGeSummary(pathUrl,id) async {
+  Future<dynamic> getSummary(pathUrl,id) async {
     try {
       final responseJson = await CustomDio().getWrapper().get(
         pathUrl,
@@ -71,7 +71,7 @@ class APIRemoteDatasource{
 
   }
 
-  Future<dynamic> createGE(pathUrl,data,body) async {
+  Future<dynamic> create(pathUrl,data,body) async {
     data["token"]=appNavigatorKey.currentState!.context.read<LoginCubit>().getLoginToken();
     try {
       final responseJson = await CustomDio().getWrapper().post(
@@ -113,67 +113,67 @@ class APIRemoteDatasource{
   }
 
 
-  Future<dynamic> getTEList(pathUrl) async {
-    try {
-      final responseJson = await CustomDio().getWrapper().get(
-        pathUrl,
-        loadingMessage:"Loading Data...",
-        queryParameters:{"token":appNavigatorKey.currentState!.context.read<LoginCubit>().getLoginToken()},
-      );
-      return responseJson.data;
-    } on DioError catch (e) {
-      print("DioError"+e.toString());
-      return MetaLoginResponse(status: false);
-
-    }catch(e){
-      print("CatchError"+e.toString());
-      return MetaLoginResponse(status: false);
-    }
-
-  }
-
-  Future<dynamic> getTESummary(pathUrl,id) async {
-    try {
-      final responseJson = await CustomDio().getWrapper().get(
-        pathUrl,
-        loadingMessage:"Loading Data...",
-        queryParameters:{
-          "token":appNavigatorKey.currentState!.context.read<LoginCubit>().getLoginToken(),
-          "tripID":id,
-        },
-      );
-      return responseJson.data;
-    } on DioError catch (e) {
-      print("DioError"+e.toString());
-      return MetaLoginResponse(status: false);
-
-    }catch(e){
-      print("CatchError"+e.toString());
-      return MetaLoginResponse(status: false);
-    }
-
-  }
-
-  Future<dynamic> createTE(pathUrl,data,body) async {
-    data["token"]=appNavigatorKey.currentState!.context.read<LoginCubit>().getLoginToken();
-    try {
-      final responseJson = await CustomDio().getWrapper().post(
-        pathUrl,
-        data:body,
-        loadingMessage:"Loading Data...",
-        queryParameters:data,
-      );
-      return responseJson.data;
-    } on DioError catch (e) {
-      print("DioError :====>"+e.toString());
-      return MetaLoginResponse(status: false);
-
-    }catch(e){
-      print("CatchError :====>"+e.toString());
-      return MetaLoginResponse(status: false);
-    }
-
-  }
+  // Future<dynamic> getTEList(pathUrl) async {
+  //   try {
+  //     final responseJson = await CustomDio().getWrapper().get(
+  //       pathUrl,
+  //       loadingMessage:"Loading Data...",
+  //       queryParameters:{"token":appNavigatorKey.currentState!.context.read<LoginCubit>().getLoginToken()},
+  //     );
+  //     return responseJson.data;
+  //   } on DioError catch (e) {
+  //     print("DioError"+e.toString());
+  //     return MetaLoginResponse(status: false);
+  //
+  //   }catch(e){
+  //     print("CatchError"+e.toString());
+  //     return MetaLoginResponse(status: false);
+  //   }
+  //
+  // }
+  //
+  // Future<dynamic> getTESummary(pathUrl,id) async {
+  //   try {
+  //     final responseJson = await CustomDio().getWrapper().get(
+  //       pathUrl,
+  //       loadingMessage:"Loading Data...",
+  //       queryParameters:{
+  //         "token":appNavigatorKey.currentState!.context.read<LoginCubit>().getLoginToken(),
+  //         "tripID":id,
+  //       },
+  //     );
+  //     return responseJson.data;
+  //   } on DioError catch (e) {
+  //     print("DioError"+e.toString());
+  //     return MetaLoginResponse(status: false);
+  //
+  //   }catch(e){
+  //     print("CatchError"+e.toString());
+  //     return MetaLoginResponse(status: false);
+  //   }
+  //
+  // }
+  //
+  // Future<dynamic> createTE(pathUrl,data,body) async {
+  //   data["token"]=appNavigatorKey.currentState!.context.read<LoginCubit>().getLoginToken();
+  //   try {
+  //     final responseJson = await CustomDio().getWrapper().post(
+  //       pathUrl,
+  //       data:body,
+  //       loadingMessage:"Loading Data...",
+  //       queryParameters:data,
+  //     );
+  //     return responseJson.data;
+  //   } on DioError catch (e) {
+  //     print("DioError :====>"+e.toString());
+  //     return MetaLoginResponse(status: false);
+  //
+  //   }catch(e){
+  //     print("CatchError :====>"+e.toString());
+  //     return MetaLoginResponse(status: false);
+  //   }
+  //
+  // }
 
 
 

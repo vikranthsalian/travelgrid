@@ -11,6 +11,7 @@ class _$InjectorConfig extends InjectorConfig {
   void _configureBlocs() {
     final KiwiContainer container = KiwiContainer();
     container
+      ..registerSingleton((c) => TravelRequestBloc(c<TrUseCase>()))
       ..registerSingleton((c) => GeneralExpenseBloc(c<GeUseCase>()))
       ..registerSingleton((c) => TravelExpenseBloc(c<TeUseCase>()))
       ..registerSingleton((c) => ApprovalExpenseBloc(c<AeUseCase>()))
@@ -27,6 +28,7 @@ class _$InjectorConfig extends InjectorConfig {
     final KiwiContainer container = KiwiContainer();
     container
       ..registerSingleton((c) => LoginUseCase(c<LoginAPIAbstract>()))
+      ..registerSingleton((c) => TrUseCase(c<TrAPIAbstract>()))
       ..registerSingleton((c) => GeUseCase(c<GeAPIAbstract>()))
       ..registerSingleton((c) => TeUseCase(c<TeAPIAbstract>()))
       ..registerSingleton((c) => AeUseCase(c<AeAPIAbstract>()))
@@ -39,6 +41,8 @@ class _$InjectorConfig extends InjectorConfig {
     container
       ..registerSingleton<LoginAPIAbstract>(
           (c) => LoginRepository(apiRemoteDatasource: c<APIRemoteDatasource>()))
+      ..registerSingleton<TrAPIAbstract>(
+          (c) => TrRepository(apiRemoteDatasource: c<APIRemoteDatasource>()))
       ..registerSingleton<GeAPIAbstract>(
           (c) => GeRepository(apiRemoteDatasource: c<APIRemoteDatasource>()))
       ..registerSingleton<TeAPIAbstract>(

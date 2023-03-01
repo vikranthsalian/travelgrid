@@ -3,10 +3,10 @@ import 'package:meta/meta.dart';
 import 'package:travelgrid/common/constants/event_types.dart';
 import 'package:travelgrid/common/injector/injector.dart';
 import 'package:travelgrid/data/datasources/ge_summary_response.dart';
-import 'package:travelgrid/data/datasources/general_expense_list.dart';
+import 'package:travelgrid/data/datasources/list/ge_list_response.dart';
 import 'package:travelgrid/data/datasources/te_approval_list.dart';
 import 'package:travelgrid/data/datasources/te_summary_response.dart';
-import 'package:travelgrid/data/datasources/travel_expense_list.dart';
+import 'package:travelgrid/data/datasources/list/te_list_response.dart';
 import 'package:travelgrid/domain/usecases/ae_usecase.dart';
 import 'package:travelgrid/domain/usecases/ge_usecase.dart';
 

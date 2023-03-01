@@ -10,7 +10,7 @@ import 'package:travelgrid/common/utils/date_time_util.dart';
 import 'package:travelgrid/common/utils/show_alert.dart';
 import 'package:travelgrid/data/blocs/approval_expense/ae_bloc.dart';
 import 'package:travelgrid/data/blocs/general_expense/ge_bloc.dart';
-import 'package:travelgrid/data/datasources/general_expense_list.dart';
+import 'package:travelgrid/data/datasources/list/ge_list_response.dart';
 import 'package:travelgrid/presentation/components/bloc_map_event.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';
 import 'package:travelgrid/presentation/widgets/icon.dart';

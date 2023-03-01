@@ -1,5 +1,5 @@
 import 'package:travelgrid/data/datasources/ge_summary_response.dart';
-import 'package:travelgrid/data/datasources/general_expense_list.dart';
+import 'package:travelgrid/data/datasources/list/ge_list_response.dart';
 import 'package:travelgrid/data/datasources/login_response.dart';
 import 'package:travelgrid/data/models/success_model.dart';
 import 'package:travelgrid/domain/repo_abstract/api_abstract.dart';
