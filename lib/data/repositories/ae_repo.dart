@@ -1,4 +1,5 @@
 import 'package:travelgrid/data/datasources/list/ge_list_response.dart';
+import 'package:travelgrid/data/datasources/list/tr_list_response.dart';
 import 'package:travelgrid/data/datasources/te_approval_list.dart';
 import 'package:travelgrid/data/datasources/te_summary_response.dart';
 import 'package:travelgrid/data/datasources/list/te_list_response.dart';
@@ -13,6 +14,17 @@ class AeRepository extends AeAPIAbstract {
     required this.apiRemoteDatasource,
   });
 
+  @override
+  Future<TRListResponse> callTRList(path) async {
+
+    var response = await apiRemoteDatasource.getList(path);
+    if(response!=null) {
+      TRListResponse modelResponse = TRListResponse.fromJson(response);
+      return modelResponse;
+    }
+
+    return TRListResponse(status: false);
+  }
 
   @override
   Future<GEListResponse> callGEList(path) async {

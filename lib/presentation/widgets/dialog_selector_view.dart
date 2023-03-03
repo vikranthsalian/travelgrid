@@ -6,13 +6,15 @@ import 'package:travelgrid/presentation/screens/common/common_type_screen.dart';
 import 'package:travelgrid/presentation/screens/common/fare_class_screen.dart';
 import 'package:travelgrid/presentation/screens/common/misc_type_screen.dart';
 import 'package:travelgrid/presentation/screens/common/travel_mode_screen.dart';
+import 'package:travelgrid/presentation/screens/common/travel_purpose_screen.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
 
 class MetaDialogSelectorView extends StatefulWidget {
   Map mapData;
   String? text;
+  String? modeType;
   Function(Map)? onChange;
-  MetaDialogSelectorView({super.key, required this.mapData,this.text,this.onChange});
+  MetaDialogSelectorView({super.key, required this.mapData,this.text,this.onChange,this.modeType});
 
   @override
   State<StatefulWidget> createState() => _MetaDialogSelectorViewState();
@@ -79,7 +81,15 @@ class _MetaDialogSelectorViewState extends State<MetaDialogSelectorView> {
             });
       case "fare_class_view":
         return FareClassScreen(
-          mode: text['modeType'],
+          mode:widget.modeType!=null ?widget.modeType: text['modeType'],
+            onTap:(value){
+              setState(() {
+                widget.text= value['label'];
+                widget.onChange!(value);
+              });
+            });
+        case "travel_purpose_view":
+        return TravelPurposeScreen(
             onTap:(value){
               setState(() {
                 widget.text= value['label'];
@@ -112,6 +122,8 @@ class _MetaDialogSelectorViewState extends State<MetaDialogSelectorView> {
         return 0.5;
       case "travel_mode_view":
         return 0.5;
+      case "travel_purpose_view":
+        return 0.7;
       default:
         return 0.25;
     }

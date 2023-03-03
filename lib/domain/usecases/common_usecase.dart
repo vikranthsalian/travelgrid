@@ -6,6 +6,7 @@ import 'package:travelgrid/data/datasources/lat_long_distance_model.dart';
 import 'package:travelgrid/data/datasources/login_response.dart';
 import 'package:travelgrid/data/datasources/misc_type_list.dart';
 import 'package:travelgrid/data/datasources/travel_mode_list.dart';
+import 'package:travelgrid/data/datasources/travel_purpose_list.dart';
 import 'package:travelgrid/data/models/success_model.dart';
 import 'package:travelgrid/domain/repo_abstract/api_abstract.dart';
 
@@ -21,6 +22,8 @@ class CommonUseCase {
   Future<MetaTravelModeListResponse> getTravelModeList() async => apiAbstract.getTravelModeList();
 
   Future<MetaMiscTypeListResponse> getMiscTypeList() async => apiAbstract.getMiscTypeList();
+
+  Future<MetaTravelPurposeListResponse> getTravelPurposeList() async => apiAbstract.getTravelPurposeList();
 
   Future<MetaApproverListResponse> getApproverTypeList() async => apiAbstract.getApproverTypeList();
 

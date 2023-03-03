@@ -2,7 +2,7 @@ part of 'ae_bloc.dart';
 
 @immutable
 abstract class ApprovalExpenseState {
-  GEListResponse? responseTR ;
+  TRListResponse? responseTR ;
   TEApprovalList? responseTE ;
   GEListResponse? responseGE ;
   BlocEventState eventState;
@@ -15,7 +15,7 @@ class ApprovalExpenseInitialState extends ApprovalExpenseState {
 }
 
 class ApprovalExpenseTRLoadedState extends ApprovalExpenseState {
-  final GEListResponse? data;
+  final TRListResponse? data;
   ApprovalExpenseTRLoadedState({required this.data}) : super(responseTR: data, eventState: BlocEventState.LOADED);
 }
 

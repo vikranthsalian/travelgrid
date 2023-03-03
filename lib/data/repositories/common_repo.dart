@@ -8,6 +8,7 @@ import 'package:travelgrid/data/datasources/fare_class_list.dart';
 import 'package:travelgrid/data/datasources/misc_type_list.dart';
 import 'package:travelgrid/data/datasources/travel_mode_list.dart';
 import 'package:travelgrid/data/datasources/lat_long_distance_model.dart';
+import 'package:travelgrid/data/datasources/travel_purpose_list.dart';
 import 'package:travelgrid/data/models/success_model.dart';
 import 'package:travelgrid/data/remote/remote_datasource.dart';
 import 'package:travelgrid/domain/repo_abstract/api_abstract.dart';
@@ -141,6 +142,20 @@ class CommonRepository extends CommonAPIAbstract {
     }
 
     return MetaLatLongDistanceModel();
+  }
+
+  @override
+  Future<MetaTravelPurposeListResponse> getTravelPurposeList() async{
+    Map<String,dynamic> data= {};
+
+    var response = await apiRemoteDatasource.getCommonTypes("getPurposeOfTravel",data);
+
+    if(response!=null) {
+      MetaTravelPurposeListResponse modelResponse = MetaTravelPurposeListResponse.fromJson(response);
+      return modelResponse;
+    }
+
+    return MetaTravelPurposeListResponse(status: false);
   }
 
 }

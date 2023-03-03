@@ -1,6 +1,5 @@
 
 import 'package:kiwi/kiwi.dart';
-import 'package:travelgrid/common/http/http_client.dart';
 import 'package:travelgrid/data/blocs/accom/accom_type_bloc.dart';
 import 'package:travelgrid/data/blocs/approval_expense/ae_bloc.dart';
 import 'package:travelgrid/data/blocs/approver/approver_type_bloc.dart';
@@ -10,6 +9,7 @@ import 'package:travelgrid/data/blocs/general_expense/ge_bloc.dart';
 import 'package:travelgrid/data/blocs/misc/misc_type_bloc.dart';
 import 'package:travelgrid/data/blocs/travel/travel_mode_bloc.dart';
 import 'package:travelgrid/data/blocs/travel_expense/te_bloc.dart';
+import 'package:travelgrid/data/blocs/travel_purpose/travel_purpose_bloc.dart';
 import 'package:travelgrid/data/blocs/travel_request/tr_bloc.dart';
 import 'package:travelgrid/data/remote/remote_datasource.dart';
 import 'package:travelgrid/data/repositories/ae_repo.dart';
@@ -58,6 +58,7 @@ abstract class InjectorConfig {
   @Register.singleton(TravelModeBloc)
   @Register.singleton(ApproverTypeBloc)
   @Register.singleton(FareClassBloc)
+  @Register.singleton(TravelPurposeBloc)
   void _configureBlocs();
   //
   // ============ USECASES ============

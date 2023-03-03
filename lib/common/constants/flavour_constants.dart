@@ -30,9 +30,18 @@ class FlavourConstants {
   static  Map<String,dynamic> miscTypeData = FlavorConfig.instance.variables["misc_type_screen_data"];
   static  Map<String,dynamic> travelModeData = FlavorConfig.instance.variables["travel_mode_screen_data"];
   static  Map<String,dynamic> fareClassData = FlavorConfig.instance.variables["fare_class_screen_data"];
+  static  Map<String,dynamic> travelPurposeData = FlavorConfig.instance.variables["travel_purpose_screen_data"];
   static  Map<String,dynamic> uploadData = FlavorConfig.instance.variables["upload_screen_data"];
   static  Map<String,dynamic> yesNoData = FlavorConfig.instance.variables["dialog_yes_no_data"];
   static  Map<String,dynamic> expensePickerData = FlavorConfig.instance.variables["dialog_expense_picker_data"];
+
+
+  //Create TR Data
+  static  Map<String,dynamic> trCreateData = FlavorConfig.instance.variables["tr_create_data"];
+  static  Map<String,dynamic> trViewData = FlavorConfig.instance.variables["tr_view_data"];
+  static  Map<String,dynamic> trAddApproval = FlavorConfig.instance.variables["tr_approval_add_data"];
+  static  Map<String,dynamic> trAddProcessed = FlavorConfig.instance.variables["tr_processed_add_data"];
+  static  Map<String,dynamic> trAddDelivery = FlavorConfig.instance.variables["tr_delivery_add_data"];
 
   //Create GE Data
   static  Map<String,dynamic> geCreateData = FlavorConfig.instance.variables["ge_create_data"];

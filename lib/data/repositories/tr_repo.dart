@@ -1,5 +1,6 @@
 import 'package:travelgrid/data/datasources/ge_summary_response.dart';
 import 'package:travelgrid/data/datasources/list/tr_list_response.dart';
+import 'package:travelgrid/data/datasources/tr_summary_response.dart';
 import 'package:travelgrid/data/models/success_model.dart';
 import 'package:travelgrid/data/remote/remote_datasource.dart';
 import 'package:travelgrid/domain/repo_abstract/api_abstract.dart';
@@ -26,21 +27,21 @@ class TrRepository extends TrAPIAbstract {
 
 
   @override
-  Future<GESummaryResponse> getTR(id) async {
+  Future<TRSummaryResponse> getTR(id) async {
 
-    var response = await apiRemoteDatasource.getSummary("ge/geSummaryDetails",id);
+    var response = await apiRemoteDatasource.getTRSummary("getTRDetails",id);
     if(response!=null) {
-      GESummaryResponse modelResponse = GESummaryResponse.fromJson(response);
+      TRSummaryResponse modelResponse = TRSummaryResponse.fromJson(response);
       return modelResponse;
     }
 
-    return GESummaryResponse(status: false);
+    return TRSummaryResponse(status: false);
   }
 
   @override
   Future<SuccessModel> createTR(data,body) async {
 
-    var response = await apiRemoteDatasource.create("ge/submitMaTrneralExpense",data,body);
+    var response = await apiRemoteDatasource.create("submitMaTravelRequest",data,body);
 
     if(response!=null) {
       SuccessModel modelResponse = SuccessModel.fromJson(response);
@@ -59,7 +60,7 @@ class TrRepository extends TrAPIAbstract {
       "comments":comment
     };
 
-    var response = await apiRemoteDatasource.approve("/ge/geApproveAction",data);
+    var response = await apiRemoteDatasource.approve("approveAction",data);
 
     if(response!=null) {
       SuccessModel modelResponse = SuccessModel.fromJson(response);

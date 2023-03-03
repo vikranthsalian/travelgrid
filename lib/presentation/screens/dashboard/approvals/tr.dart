@@ -2,19 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_flavor/flutter_flavor.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:travelgrid/common/constants/flavour_constants.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
 import 'package:travelgrid/common/extensions/pretty.dart';
 import 'package:travelgrid/common/injector/injector.dart';
 import 'package:travelgrid/common/utils/date_time_util.dart';
 import 'package:travelgrid/common/utils/show_alert.dart';
 import 'package:travelgrid/data/blocs/approval_expense/ae_bloc.dart';
-import 'package:travelgrid/data/blocs/general_expense/ge_bloc.dart';
-import 'package:travelgrid/data/datasources/list/ge_list_response.dart';
 import 'package:travelgrid/presentation/components/bloc_map_event.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';
 import 'package:travelgrid/presentation/widgets/icon.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
+import 'package:travelgrid/data/datasources/list/tr_list_response.dart';
 
 class ApprovalTR extends StatefulWidget {
   String data;
@@ -77,7 +75,7 @@ class _ApprovalTRState extends State<ApprovalTR> {
             return Container(
                 child: BlocMapToEvent(state: state.eventState, message: state.message,
                     callback: (){
-                       mapData['listView']['recordsFound']['value'] = state.responseGE?.data?.length;
+                       mapData['listView']['recordsFound']['value'] = state.responseTR?.data?.length;
                     },
                     topComponent:Container(
                       color:ParseDataType().getHexToColor(mapData['backgroundColor']),
@@ -125,16 +123,17 @@ class _ApprovalTRState extends State<ApprovalTR> {
 
   Widget getListView(ApprovalExpenseState state){
 
-    List<Data>? list = state.responseGE?.data ?? [];
+    List<Data>? list = state.responseTR?.data ?? [];
 
     return  list.isNotEmpty ? ListView.separated(
       shrinkWrap: true,
       padding: EdgeInsets.zero,
       itemBuilder: (BuildContext context, int index) {
         Data item = list[index];
+        
 
         Map date = {
-          "text" : MetaDateTime().getDate(item.date.toString(),format: "dd MMM"),
+          "text" : MetaDateTime().getDate(item.startDate.toString(),format: "dd MMM"),
           "color" : "0xFF2854A1",
           "size": "20",
           "family": "bold",
@@ -142,31 +141,31 @@ class _ApprovalTRState extends State<ApprovalTR> {
         };
 
         Map week = {
-          "text" : MetaDateTime().getDate(item.date.toString(),format: "EEE").toUpperCase(),
+          "text" : MetaDateTime().getDate(item.startDate.toString(),format: "EEE").toUpperCase(),
           "color" : "0xFF2854A1",
           "size": "13",
           "family": "bold",
           "align" : "center-right"
         };
 
-        Map status = {
-          "text" : item.status.toString().toUpperCase(),
+        Map trip = {
+          "text" : item.tripPlan.toString().toUpperCase(),
           "color" : "0xFFFFFFFF",
-          "size": "8",
+          "size": "10",
           "family": "semiBold",
           "align" : "center"
         };
 
         Map recordLocator = {
-          "text" :"#"+ item.recordLocator.toString().toUpperCase(),
+          "text" :"#"+ item.tripNumber.toString().toUpperCase(),
           "color" : "0xFF2854A1",
           "size": "15",
           "family": "bold",
           "align" : "center-left"
         };
 
-        Map amount = {
-          "text" :"Amount : "+ item.totalAmount.toString().toUpperCase(),
+        Map subtitle = {
+          "text" :"#"+ item.tripNumber.toString().toUpperCase(),
           "color" : "0xFF000000",
           "size": "12",
           "family": "bold",
@@ -175,14 +174,6 @@ class _ApprovalTRState extends State<ApprovalTR> {
 
         Map view = {
           "text" :"View".toUpperCase(),
-          "color" : "0xFFFFFFFF",
-          "size": "12",
-          "family": "bold",
-          "align" : "center"
-        };
-
-        Map cancel = {
-          "text" :"Edit".toUpperCase(),
           "color" : "0xFFFFFFFF",
           "size": "12",
           "family": "bold",
@@ -213,7 +204,7 @@ class _ApprovalTRState extends State<ApprovalTR> {
                                 child: MetaTextView(mapData: date)
                             ),
                             Container(
-                              margin: EdgeInsets.only(right: 5.w),
+                                margin: EdgeInsets.only(right: 5.w),
                                 height:cardHt * 0.25,
                                 child: MetaTextView( mapData: week)
                             )
@@ -222,7 +213,7 @@ class _ApprovalTRState extends State<ApprovalTR> {
                       ),
                       Container(
                         height: cardHt * 0.27,
-                        child: MetaTextView( mapData: status),
+                        child: MetaTextView( mapData: trip),
                       ),
                     ],
                   ),
@@ -245,50 +236,68 @@ class _ApprovalTRState extends State<ApprovalTR> {
                           color: Color(0xFFFFFFFF),
                           child: Column(
                             children: [
+                              // Container(
+                              //   margin: EdgeInsets.symmetric(horizontal: 15.w),
+                              //   height: cardHt * 0.30,
+                              //   child: Row(
+                              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              //     children: [
+                              //       Container(
+                              //           child: MetaTextView(mapData: recordLocator,text: "IXE",)
+                              //       ),
+                              //       Container(
+                              //           child: MetaTextView(mapData: recordLocator,text:"BLR")
+                              //       ),
+                              //     ],
+                              //   ),
+                              // ),
                               Container(
-                                  margin: EdgeInsets.symmetric(horizontal: 5.w),
-                                  height: cardHt * 0.40,
-                                  child: MetaTextView(mapData: recordLocator)
+                                margin: EdgeInsets.symmetric(horizontal: 15.w),
+                                height: cardHt * 0.35,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Container(
+                                        child: MetaTextView(mapData: subtitle,text: item.origin)
+                                    ),
+                                    Container(
+                                        child: MetaTextView(mapData: subtitle,text:item.destination)
+                                    ),
+                                  ],
+                                ),
                               ),
                               Container(
                                   margin: EdgeInsets.symmetric(horizontal: 5.w),
-                                  height: cardHt * 0.25,
-                                  child: MetaTextView(mapData: amount)
+                                  height: cardHt * 0.3,
+                                  child: MetaTextView(mapData: recordLocator)
                               ),
                             ],
                           ),
                         ),
                         Container(
-                          margin: EdgeInsets.symmetric(horizontal: 5.w),
                           height: cardHt * 0.27,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                             MetaTextView( mapData: cancel),
-                             Container(
-                               margin: EdgeInsets.symmetric(horizontal: 5.w),
-                               child: MetaTextView(mapData: {
-                                 "text" :"|",
-                                 "color" : "0xFFFFFFFF",
-                                 "size": "12",
-                                 "family": "bold",
-                                 "align" : "center"
-                               }),
-                             ),
-                            InkWell(
-                              onTap: (){
-                                Navigator.of(context).pushNamed(mapData['bottomButtonFab']['onClick'],
-                                    arguments: {
-                                        "isEdit": false,
-                                        "title":
-                                            item.recordLocator.toString()
-                                                .toUpperCase()
-                                }).then((value) {
-                                  bloc!.add(GetApprovalExpenseTR());
-                                });
-                                },
-                                child: MetaTextView( mapData:  view ))
-                          ]),
+                          child:  Container(
+                            margin: EdgeInsets.symmetric(horizontal: 10.w),
+                            height: cardHt * 0.27,
+                            child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  InkWell(
+                                      onTap: (){
+                                        Navigator.of(context).pushNamed(mapData['onClick'],
+                                            arguments: {
+                                              "isEdit": false,
+                                              "isApproval":true,
+                                              "title":
+                                              item.tripNumber!.toString()
+                                                  .toUpperCase()
+                                            }).then((value) {
+                                          bloc!.add(GetApprovalExpenseTR());
+                                        });
+                                      },
+                                      child: MetaTextView( mapData:  view ))
+                                ]),
+                          ),
                         ),
                       ],
                     ),

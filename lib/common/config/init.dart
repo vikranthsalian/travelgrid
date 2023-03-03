@@ -12,6 +12,7 @@ import 'package:travelgrid/data/cubits/fare_class_cubit/fare_class_cubit.dart';
 import 'package:travelgrid/data/cubits/login_cubit/login_cubit.dart';
 import 'package:travelgrid/data/cubits/misc_type_cubit/misc_type_cubit.dart';
 import 'package:travelgrid/data/cubits/travel_mode_cubit/travel_mode_cubit.dart';
+import 'package:travelgrid/data/cubits/travel_purpose_cubit/travel_purpose_cubit.dart';
 import 'app_routes.dart';
 import 'package:flutter/services.dart';
 
@@ -69,35 +70,40 @@ class _InitRootState extends State<InitRoot> {
         BlocProvider(create: (context) => ApproverTypeCubit()),
         BlocProvider(create: (context) => CityCubit()),
         BlocProvider(create: (context) => FareClassCubit()),
+        BlocProvider(create: (context) => TravelPurposeCubit()),
       ],
       child:  BlocBuilder<AccomTypeCubit, AccomTypeState>(
           builder: (context, state) {
             return BlocBuilder<CityCubit, CityState>(
                 builder: (context, state) {
-                return BlocBuilder<FareClassCubit, FareClassState>(
-                  builder:  (context, state) {
-                    return BlocBuilder<MiscTypeCubit, MiscTypeState>(
-                        builder: (context, state) {
-                          return BlocBuilder<ApproverTypeCubit, ApproverTypeState>(
-                              builder: (context, state) {
-                            return BlocBuilder<TravelModeCubit, TravelModeState>(
-                                builder: (context, state) {
-                              return BlocBuilder<LoginCubit, LoginState>(
+                  return BlocBuilder<TravelPurposeCubit, TravelPurposeState>(
+                      builder:  (context, state) {
+                    return BlocBuilder<FareClassCubit, FareClassState>(
+                      builder:  (context, state) {
+                        return BlocBuilder<MiscTypeCubit, MiscTypeState>(
+                            builder: (context, state) {
+                              return BlocBuilder<ApproverTypeCubit, ApproverTypeState>(
                                   builder: (context, state) {
-                                  return MaterialApp(
-                                    useInheritedMediaQuery: true,
-                                    navigatorKey: appNavigatorKey,
-                                    builder: EasyLoading.init(),
-                                    debugShowCheckedModeBanner: false,
-                                    title: FlavourConstants.appName,
-                                    onGenerateRoute: AppRoutes().generateRoute,
-                                    themeMode: ThemeMode.system,
-                                    theme: GlobalTheme().globalTheme,
+                                return BlocBuilder<TravelModeCubit, TravelModeState>(
+                                    builder: (context, state) {
+                                  return BlocBuilder<LoginCubit, LoginState>(
+                                      builder: (context, state) {
+                                      return MaterialApp(
+                                        useInheritedMediaQuery: true,
+                                        navigatorKey: appNavigatorKey,
+                                        builder: EasyLoading.init(),
+                                        debugShowCheckedModeBanner: false,
+                                        title: FlavourConstants.appName,
+                                        onGenerateRoute: AppRoutes().generateRoute,
+                                        themeMode: ThemeMode.system,
+                                        theme: GlobalTheme().globalTheme,
+                                      );
+                                    }
                                   );
                                 }
-                              );
-                            }
           );
+                              }
+                            );
                           }
                         );
                       }

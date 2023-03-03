@@ -2,26 +2,25 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:travelgrid/common/constants/asset_constants.dart';
 import 'package:travelgrid/common/constants/flavour_constants.dart';
 import 'package:travelgrid/common/constants/route_constants.dart';
 import 'package:travelgrid/common/enum/dropdown_types.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
 import 'package:travelgrid/common/extensions/pretty.dart';
 import 'package:travelgrid/common/injector/injector.dart';
-import 'package:travelgrid/data/blocs/general_expense/ge_bloc.dart';
+import 'package:travelgrid/data/blocs/travel_request/tr_bloc.dart';
 import 'package:travelgrid/data/cubits/approver_type_cubit/approver_type_cubit.dart';
 import 'package:travelgrid/data/cubits/login_cubit/login_cubit.dart';
 import 'package:travelgrid/data/datasources/approver_list.dart' as app;
-import 'package:travelgrid/data/datasources/ge_summary_response.dart';
 import 'package:travelgrid/data/datasources/login_response.dart';
+import 'package:travelgrid/data/datasources/tr_summary_response.dart';
 import 'package:travelgrid/data/models/expense_model.dart';
 import 'package:travelgrid/data/models/ge/ge_accom_model.dart';
 import 'package:travelgrid/data/models/ge/ge_conveyance_model.dart';
 import 'package:travelgrid/data/models/ge/ge_misc_model.dart';
 import 'package:travelgrid/data/models/success_model.dart';
 import 'package:travelgrid/domain/usecases/ge_usecase.dart';
+import 'package:travelgrid/domain/usecases/tr_usecase.dart';
 import 'package:travelgrid/presentation/components/bloc_map_event.dart';
 import 'package:travelgrid/presentation/screens/dashboard/ge/add/add_accom.dart';
 import 'package:travelgrid/presentation/screens/dashboard/ge/add/add_misc.dart';
@@ -29,24 +28,23 @@ import 'package:travelgrid/presentation/screens/dashboard/ge/add/add_travel.dart
 import 'package:travelgrid/presentation/widgets/button.dart';
 import 'package:travelgrid/presentation/widgets/dialog_selector_view.dart';
 import 'package:travelgrid/presentation/widgets/icon.dart';
-import 'package:travelgrid/presentation/widgets/svg_view.dart';
 import 'package:travelgrid/presentation/widgets/switch.dart';
 import 'package:travelgrid/presentation/widgets/text_field.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
 import 'package:tuple/tuple.dart';
 
-class CreateGeneralExpense extends StatefulWidget {
+class TravelRequestSummary extends StatefulWidget {
   bool isEdit;
   String? title;
   bool isApproval;
   String? status;
-  CreateGeneralExpense({this.isEdit=true,this.title,this.isApproval=false,this.status});
+  TravelRequestSummary({this.isEdit=true,this.title,this.isApproval=false,this.status});
 
   @override
-  _CreateGeneralExpenseState createState() => _CreateGeneralExpenseState();
+  _TravelRequestSummaryState createState() => _TravelRequestSummaryState();
 }
 
-class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
+class _TravelRequestSummaryState extends State<TravelRequestSummary> {
   Map<String,dynamic> jsonData = {};
   Map<String,dynamic> submitMap = {};
   List details=[];
@@ -56,9 +54,18 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
   List<String> values=[];
 
   bool showRequesterDetails=false;
-  bool showSummaryItems=true;
-  bool showSummaryDetails=false;
+  bool cityPairDetails=true;
+  bool cashAdvanceDetails=false;
+  bool forexAdvanceDetails=false;
+  bool visaDetails=false;
+  bool insuranceDetails=false;
   bool showApproverDetails=false;
+  String tripType="";
+  List<MaCityPairs>? cityPairList=[];
+  List<MaCashAdvance>? cashAdvanceList=[];
+  List<MaForexAdvance>? forexAdvanceList=[];
+  List<MaTravelVisas>? visaList=[];
+  List<MaTravelInsurance>? insuranceList=[];
 
   String total="0.00";
   MetaLoginResponse loginResponse = MetaLoginResponse();
@@ -72,17 +79,18 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
 
 
 
-  GeneralExpenseBloc?  bloc;
+  TravelRequestBloc?  bloc;
   bool loaded =false;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    jsonData = FlavourConstants.geCreateData;
+    loaded=false;
+    jsonData = FlavourConstants.trViewData;
    // prettyPrint(jsonData);
 
      details = jsonData['requesterDetails']['data'];
-     expenseTypes = jsonData['expensesTypes'];
+
 
     loginResponse = context.read<LoginCubit>().getLoginResponse();
 
@@ -115,16 +123,10 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
       approver2 = Tuple2("DUMMY", "cm02");
     }
 
-
-    for(var item in jsonData['summaryDetails']['data']){
-      summaryDetails.add(Tuple2(item, "0"));
-    }
-
-
     if(!widget.isEdit){
-      bloc = Injector.resolve<GeneralExpenseBloc>()..add(GetGeneralExpenseSummaryEvent(recordLocator: widget.title!));
+      bloc = Injector.resolve<TravelRequestBloc>()..add(GetTravelRequestSummaryEvent(recordLocator: widget.title!));
     }else{
-      bloc = Injector.resolve<GeneralExpenseBloc>();
+      bloc = Injector.resolve<TravelRequestBloc>();
     }
 
   }
@@ -140,7 +142,7 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
         shape: CircularNotchedRectangle(),
         notchMargin: 5,
         elevation: 2.0,
-        child: widget.isEdit ? buildSubmitRow():buildViewRow(),
+        child:buildViewRow(),
       ),
       body: Container(
         color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
@@ -164,53 +166,8 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
                 ],
               ),
             ),
-            widget.isEdit ?
-            Container(
-              color: Colors.white,
-              height:70.h,
-              child: Container(
-                margin: EdgeInsets.symmetric(horizontal: 10.w),
-                child: Row(
-                  children: expenseTypes.map((e) {
-
-                    return Container(
-                      margin: EdgeInsets.symmetric(horizontal: 5.w),
-                      width: 60.w,
-                      height: 60.w,
-                      child: InkWell(
-                          onTap: () async{
-                            navigate(e,false,{},0);
-                          },
-                          child:Container(
-                            height: 50.h,
-                            decoration: BoxDecoration(
-                              color: ParseDataType().getHexToColor(jsonData['backgroundColor']),
-                              shape: BoxShape.circle,
-                            ),
-                            child: Stack(
-                              alignment: Alignment.center,
-                              children: [
-                                Container(
-                                  width: 25.w,
-                                  height: 25.w,
-                                  child: SvgPicture.asset(
-                                    AssetConstants.assetsBaseURLSVG +"/"+  e['svgIcon']['icon'],//e['svgIcon']['color']
-                                    color: ParseDataType().getHexToColor(e['svgIcon']['color']),
-                                    width: 25.w,
-                                    height: 25.w,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          )
-                      ),
-                    );
-                  }).toList(),
-                ),
-              ),
-            ):SizedBox(),
             Expanded(
-              child:  BlocBuilder<GeneralExpenseBloc, GeneralExpenseState>(
+              child:  BlocBuilder<TravelRequestBloc, TravelRequestState>(
                   bloc: bloc,
                   builder:(context, state) {
                     return Container(
@@ -230,48 +187,20 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
     );
   }
 
-  Widget buildView(GeneralExpenseState state){
-    if(state.responseSum!=null && !loaded) {
-      GESummaryResponse? response = state.responseSum;
-      for(int i=0;i<summaryDetails.length;i++){
-        Map map = summaryDetails[i].item1;
-        if(summaryDetails[i].item1['key']=="AE"){
-          summaryDetails[i]= Tuple2(map, response!.data![0].accommodationSelf.toString());
-        }
-        if(summaryDetails[i].item1['key']=="TE"){
-          summaryDetails[i]= Tuple2(map,  response!.data![0].conveyanceSelf.toString());
-        }
-        if(summaryDetails[i].item1['key']=="ME"){
-          summaryDetails[i]= Tuple2(map,  response!.data![0].miscellaneousSelf.toString());
-        }
-      }
-      total = response!.data![0].totalExpense.toString();
+  Widget buildView(TravelRequestState state){
 
-      for (var item in response.data![0].maGeConveyanceExpense!) {
-        summaryItems.add(
-            Tuple2(
-                ExpenseModel(id: item.id,
-                    type: GETypes.CONVEYANCE,
-                    amount: item.amount.toString()),
-                item.toJson()));
-      }
-      for (var item in response.data![0].maGeAccomodationExpense!) {
-        summaryItems.add(
-            Tuple2(
-                ExpenseModel(id: item.id,
-                    type: GETypes.ACCOMMODATION,
-                    amount: (item.amount!+item.tax!).toString()),
-                item.toJson()));
-      }
-      for (var item in response.data![0].maGeMiscellaneousExpense!) {
-        summaryItems.add(
-            Tuple2(
-                ExpenseModel(id: item.id,
-                    type: GETypes.MISCELLANEOUS,
-                    amount: item.amount.toString()),
-                item.toJson()));
-      }
-      loaded=true;
+    if(state.responseSum!=null && !loaded) {
+       TRSummaryResponse? response = state.responseSum;
+       tripType = response!.data?.tripType  ?? "Domestic";
+
+       cityPairList = response.data?.maCityPairs ?? [];
+       cashAdvanceList = response.data?.maCashAdvance ?? [];
+       forexAdvanceList = response.data?.maForexAdvance ?? [];
+       visaList = response.data?.maTravelVisas ?? [];
+       insuranceList = response.data?.maTravelInsurance ?? [];
+
+    loaded=true;
+
     }
 
 
@@ -280,10 +209,16 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
       child:SingleChildScrollView(
         child: Column(
           children: [
-            if(widget.isEdit)
             buildExpandableView(jsonData,"requesterDetails"),
-            buildExpandableView(jsonData,"summaryItems"),
-            buildExpandableView(jsonData,"summaryDetails"),
+            buildExpandableView(jsonData,"cityPairDetails"),
+            if(tripType=="Domestic")
+            buildExpandableView(jsonData,"cashAdvanceDetails"),
+            if(tripType=="Overseas")
+            buildExpandableView(jsonData,"forexAdvanceDetails"),
+            if(tripType=="Overseas")
+            buildExpandableView(jsonData,"visaDetails"),
+            if(tripType=="Overseas")
+            buildExpandableView(jsonData,"insuranceDetails"),
             buildExpandableView(jsonData,"approverDetails"),
           ],
         ),
@@ -313,7 +248,7 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
   Row buildViewRow() {
     bool isTBVisible=false;
     bool isAPVisible=false;
-    if(widget.status!.toLowerCase()=="approver 1"){
+    if(widget.status!.toLowerCase()== "approver 1"){
       isTBVisible=true;
     }
 
@@ -336,7 +271,7 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
         Expanded(
           child: MetaButton(mapData: jsonData['bottomButtonRight'],text: "Approve",
               onButtonPressed: ()async{
-             SuccessModel  model =  await Injector.resolve<GeUseCase>().approveGE(widget.title!,controller.text);
+             SuccessModel  model =  await Injector.resolve<TrUseCase>().approveTR(widget.title!,controller.text);
 
                 if(model.status==true){
                 Navigator.pop(context);
@@ -373,28 +308,67 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
                 });
               },),
           );
-        case "summaryItems":
+        case "cityPairDetails":
           return Container(
             alignment: Alignment.centerRight,
             child: MetaSwitch(mapData: map['showDetails'],
-              value: showSummaryItems,
+              value: cityPairDetails,
               onSwitchPressed: (value){
 
                 setState(() {
-                  showSummaryItems=value;
+                  cityPairDetails=value;
                 });
 
               },),
           );
-        case "summaryDetails":
+        case "cashAdvanceDetails":
           return Container(
             alignment: Alignment.centerRight,
             child: MetaSwitch(mapData: map['showDetails'],
-              value: showSummaryDetails,
+              value: cashAdvanceDetails,
               onSwitchPressed: (value){
 
                 setState(() {
-                  showSummaryDetails=value;
+                  cashAdvanceDetails=value;
+                });
+
+              },),
+          );
+        case "forexAdvanceDetails":
+          return Container(
+            alignment: Alignment.centerRight,
+            child: MetaSwitch(mapData: map['showDetails'],
+              value: forexAdvanceDetails,
+              onSwitchPressed: (value){
+
+                setState(() {
+                  forexAdvanceDetails=value;
+                });
+
+              },),
+          );
+        case "visaDetails":
+          return Container(
+            alignment: Alignment.centerRight,
+            child: MetaSwitch(mapData: map['showDetails'],
+              value: visaDetails,
+              onSwitchPressed: (value){
+
+                setState(() {
+                  visaDetails=value;
+                });
+
+              },),
+          );
+        case "insuranceDetails":
+          return Container(
+            alignment: Alignment.centerRight,
+            child: MetaSwitch(mapData: map['showDetails'],
+              value: insuranceDetails,
+              onSwitchPressed: (value){
+
+                setState(() {
+                  insuranceDetails=value;
                 });
 
               },),
@@ -423,10 +397,16 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
       switch(value){
         case "requesterDetails":
           return showRequesterDetails ? buildRequesterWidget(map):Container();
-        case "summaryItems":
-          return showSummaryItems ? buildSummaryItemWidget(map):Container();
-        case "summaryDetails":
-          return showSummaryDetails ? buildSummaryWidget(map):Container();
+        case "cityPairDetails":
+          return cityPairDetails ? buildCityPairWidget(map):Container();
+        case "cashAdvanceDetails":
+          return cashAdvanceDetails ? buildCashAdvanceWidget(map):Container();
+        case "forexAdvanceDetails":
+          return forexAdvanceDetails ? buildForexAdvanceWidget(map):Container();
+        case "visaDetails":
+          return visaDetails ? buildVisaWidget(map):Container();
+        case "insuranceDetails":
+          return insuranceDetails ? buildInsuranceWidget(map):Container();
         case "approverDetails":
           return showApproverDetails ? buildApproverWidget(map):Container();
         default:
@@ -444,7 +424,6 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
     );
   }
 
-
   Container buildHeaders(Map map, Container child) {
     return Container(
             height: 40.h,
@@ -461,59 +440,297 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
           );
   }
 
-  Container buildSummaryWidget(Map map) {
+  Container buildCityPairWidget(Map map) {
 
-
-    return Container(
-            padding: EdgeInsets.symmetric(horizontal: 20.w,vertical: 10.h),
-            color: Colors.white,
-            child: Column(
-              children: [
-                Container(
-                  child: Row(
-                    children: [
-                      Expanded(child: MetaTextView(mapData:   map['dataHeader']['label'])),
-                      Expanded(child: MetaTextView(mapData:  map['dataHeader']['value']))
-                    ],
-                  ),
-                ),
-                Divider(color: Color(0xff3D3D3D),),
-                Container(
+    return  Container(
+      padding: EdgeInsets.symmetric(horizontal: 5.w),
+      color: Colors.white,
+      child: cityPairList!.isNotEmpty ? Column(
+        children: [
+          ListView.builder(
+              physics: NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              padding: EdgeInsets.zero,
+              itemBuilder: (BuildContext context, int index) {
+                MaCityPairs item = cityPairList![index];
+                return Container(
+                  padding: EdgeInsets.symmetric(vertical: 1.h),
                   color: Colors.white,
-                  child: ListView.separated(
-                    physics: NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    padding: EdgeInsets.zero,
-                      itemBuilder: (BuildContext context, int index) {
+                  child: Card(
+                    color: Color(0xFF2854A1),
+                    elevation: 1,
+                    child: Column(
+                      children: [
+                        Container(
 
-                        return Container(
-                          padding: EdgeInsets.symmetric(vertical: 5.h),
-                          child: Row(
+                          padding: EdgeInsets.symmetric(horizontal: 10.w,vertical: 5.h),
+                          color:Colors.white,
+                          child:   Column(
                             children: [
-                              Expanded(child: MetaTextView(mapData: summaryDetails[index].item1['label'])),
-                              Expanded(child: MetaTextView(mapData: summaryDetails[index].item1['value'],text:summaryDetails[index].item2))
+                              if(item.price!=null)
+                              Container(
+                                child: MetaTextView(mapData:  map['price'],text: item.price.toString()),
+                                alignment: Alignment.centerRight,
+                              ),
+                              Container(
+                                child: Row(
+
+                                  children: [
+                                    Container(child:
+                                    Expanded(child: MetaTextView(mapData:  map['date'],text:item.startDate.toString()))),
+                                    Expanded(child: Container(
+                                        child: MetaTextView(mapData:  map['time'],text: item.startTime.toString())
+                                    )),
+                                  ],
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                ),
+                              ),
+                              Container(
+
+                                child: Row(
+                                  children: [
+                                    Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        if(item.leavingFrom!.cityCode!=null)
+                                        MetaTextView(mapData:  map['code'],text: item.leavingFrom!.cityCode.toString()),
+                                        MetaTextView(mapData:  map['city'],text: item.leavingFrom!.name!.toUpperCase().toString())
+                                      ],
+                                    ),
+                                    Expanded(child: Container()),
+                                    Column(
+                                      crossAxisAlignment: CrossAxisAlignment.end,
+                                      children: [
+                                        if(item.goingTo!.cityCode!=null)
+                                        MetaTextView(mapData:  map['code'],text: item.goingTo!.cityCode.toString()),
+                                        MetaTextView(mapData:  map['city'],text: item.goingTo!.name!.toUpperCase().toString())
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ),
+
                             ],
                           ),
-                        );
-                      },
-                      separatorBuilder: (BuildContext context, int index) {
-                      return Container();
-                      },
-                      itemCount: summaryDetails.length
-                  ),
-                ),
-                Divider(color: Color(0xff3D3D3D),),
-                Container(
-                  child: Row(
+                        ),
+                        SizedBox(height: 3.h,),
+                        Container(
+                          padding: EdgeInsets.symmetric(horizontal: 10.w),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(child: MetaTextView(mapData:  map['byComp'],text: item.byCompany!.label!.toLowerCase().toString()=="yes"?"BY COMPANY":"")),
+                                Expanded(child: MetaTextView(mapData:  map['fare'],text: item.fareClass!.label!.toUpperCase().toString()))
+                              ]
+                          ),
+                        ),
+                        SizedBox(height: 3.h,),
+                      ],
+                    ),
+                  )
+
+                );
+              },
+              itemCount: cityPairList!.length
+          ),
+        ],
+      ):SizedBox(),
+    );
+
+  }
+
+  Container buildCashAdvanceWidget(Map map) {
+
+    return  Container(
+      padding: EdgeInsets.symmetric(horizontal: 10.w),
+      color: Colors.white,
+      child: cashAdvanceList!.isNotEmpty ? Column(
+        children: [
+          Row(
+            children: [
+              Container(
+                  width: 40.w,
+                  child: MetaTextView(mapData:  map['header'],text: "Sl.No.")),
+              Expanded(child: MetaTextView(mapData:  map['header'],text: "Currency",)),
+              Expanded(
+                  flex: 2,
+                  child: MetaTextView(mapData:  map['header'],text: "Requested Amount")),
+              Expanded(child: MetaTextView(mapData:  map['header'],text: "Status")),
+              //     Expanded(child: MetaTextView(mapData:  map['dAmount'])),
+            ],
+          ),
+          ListView.builder(
+              physics: NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              padding: EdgeInsets.zero,
+              itemBuilder: (BuildContext context, int index) {
+                MaCashAdvance item = cashAdvanceList![index];
+                return Container(
+                  padding: EdgeInsets.symmetric(vertical: 5.h),
+                  color: Colors.white,
+                  child:  Row(
                     children: [
-                      Expanded(child: MetaTextView(mapData:  map['dataFooter']['label'])),
-                      Expanded(child: MetaTextView(mapData:  map['dataFooter']['value'],text:total))
+                      Container(
+                          width: 40.w,
+                          child: MetaTextView(mapData:  map['item'],text: (index+1).toString())),
+                      Expanded(child: MetaTextView(mapData:  map['item'],text: "INR",)),
+                      Expanded(
+                          flex: 2,
+                          child: MetaTextView(mapData:  map['item'],text:item.totalCashAmount.toString(),)),
+                      Expanded(child: MetaTextView(mapData:  map['item'],text: item.currentStatus)),
+                      //     Expanded(child: MetaTextView(mapData:  map['dAmount'])),
                     ],
                   ),
-                ),
-              ],
-            ),
-          );
+                );
+              },
+              itemCount: cashAdvanceList!.length
+          ),
+        ],
+      ):SizedBox(),
+    );
+
+  }
+
+  Container buildForexAdvanceWidget(Map map) {
+
+    return  Container(
+      padding: EdgeInsets.symmetric(horizontal: 10.w),
+      color: Colors.white,
+      child: forexAdvanceList!.isNotEmpty ? Column(
+        children: [
+          Row(
+            children: [
+              Container(
+                  width: 10.w,
+                  child: MetaTextView(mapData:  map['header'],text: "#")),
+              Expanded(child: MetaTextView(mapData:  map['header'],text: "Currency",)),
+              Expanded(flex:2,child: MetaTextView(mapData:  map['header'],text: "Req Cash")),
+              Expanded(flex:2,child: MetaTextView(mapData:  map['header'],text: "Req Card")),
+              Expanded(flex:2,child: MetaTextView(mapData:  map['header'],text: "Total Forex(INR)")),
+              //     Expanded(child: MetaTextView(mapData:  map['dAmount'])),
+            ],
+          ),
+          ListView.builder(
+              physics: NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              padding: EdgeInsets.zero,
+              itemBuilder: (BuildContext context, int index) {
+
+                MaForexAdvance item = forexAdvanceList![index];
+
+                return Container(
+                  margin: EdgeInsets.symmetric(vertical: 5.h),
+                  color: Colors.white,
+                  child:  Row(
+                    children: [
+                      Container(
+                          width: 10.w,
+                          child: MetaTextView(mapData:  map['item'],text: (index+1).toString())),
+                      Expanded(child: MetaTextView(mapData:  map['item'],text: item.currency)),
+                      Expanded(flex:2,child: MetaTextView(mapData:  map['item'],text: item.cash.toString(),)),
+                      Expanded(flex:2,child: MetaTextView(mapData:  map['item'],text: item.card.toString(),)),
+                      Expanded(flex:2,child: MetaTextView(mapData:  map['item'],text: item.totalForexAmount.toString())),
+                    ],
+                  ),
+                );
+              },
+              itemCount: forexAdvanceList!.length
+          ),
+        ],
+      ):SizedBox(),
+    );
+
+  }
+
+  Container buildVisaWidget(Map map) {
+
+    return  Container(
+      padding: EdgeInsets.symmetric(horizontal: 10.w),
+      color: Colors.white,
+      child: visaList!.isNotEmpty ? Column(
+        children: [
+          Row(
+            children: [
+              Container(
+                  width: 10.w,
+                  child: MetaTextView(mapData:  map['header'],text: "#")),
+              Expanded(child: MetaTextView(mapData:  map['header'],text: "Service Type",)),
+              Expanded(
+                  child: MetaTextView(mapData:  map['header'],text: "Visa Requirement")),
+            ],
+          ),
+          ListView.builder(
+              physics: NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              padding: EdgeInsets.zero,
+              itemBuilder: (BuildContext context, int index) {
+                MaTravelVisas item = visaList![index];
+                return Container(
+                  padding: EdgeInsets.symmetric(vertical: 5.h),
+                  color: Colors.white,
+                  child:  Row(
+                    children: [
+                      Container(
+                          width: 10.w,
+                          child: MetaTextView(mapData:  map['item'],text: (index+1).toString())),
+                      Expanded(child: MetaTextView(mapData:  map['item'],text: "Visa")),
+                      Expanded(child: MetaTextView(mapData:  map['item'],text:item.visaRequirement,)),
+                    ],
+                  ),
+                );
+              },
+              itemCount: visaList!.length
+          ),
+        ],
+      ):SizedBox(),
+    );
+
+  }
+
+  Container buildInsuranceWidget(Map map) {
+
+    return  Container(
+      padding: EdgeInsets.symmetric(horizontal: 10.w),
+      color: Colors.white,
+      child: insuranceList!.isNotEmpty ? Column(
+        children: [
+          Row(
+            children: [
+              Container(
+                  width: 10.w,
+                  child: MetaTextView(mapData:  map['header'],text: "#")),
+              Expanded(child: MetaTextView(mapData:  map['header'],text: "Service Type",)),
+              Expanded(
+                  child: MetaTextView(mapData:  map['header'],text: "Insurance Requirement")),
+            ],
+          ),
+          ListView.builder(
+              physics: NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              padding: EdgeInsets.zero,
+              itemBuilder: (BuildContext context, int index) {
+                MaTravelInsurance item = insuranceList![index];
+                return Container(
+                  padding: EdgeInsets.symmetric(vertical: 6.h),
+                  color: Colors.white,
+                  child:  Row(
+                    children: [
+                      Container(
+                          width: 10.w,
+                          child: MetaTextView(mapData:  map['item'],text: (index+1).toString())),
+
+                      Expanded(child: MetaTextView(mapData:  map['item'],text: "Insurance")),
+                      Expanded(child: MetaTextView(mapData:  map['item'],text:item.insuranceRequirement)),
+                    ],
+                  ),
+                );
+              },
+              itemCount: insuranceList!.length
+          ),
+        ],
+      ):SizedBox(),
+    );
+
   }
 
   Container buildApproverWidget(Map map){
@@ -539,7 +756,7 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
                   child: Container(
                     child: MetaDialogSelectorView(
                         text: approver2!.item1,
-                        mapData: map['selectApprover1']
+                        mapData: map['selectApprover2']
                     ),
                   ),
                 ),
@@ -587,90 +804,6 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
     );
   }
 
-  Container buildSummaryItemWidget(Map map) {
-    List items =[];
-    items =  map['dataHeader'];
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 20.w,vertical: 10.h),
-      color: Colors.white,
-      child: Column(
-        children: [
-          Container(
-            child: Row(
-              children: items.map((e) {
-                return Expanded(
-                    flex: e['flex'],
-                    child: Container(
-                    margin: EdgeInsets.symmetric(horizontal: 0.w),
-                    child: MetaTextView(mapData: e)));
-              }).toList(),
-            )
-          ),
-          Divider(color: Color(0xff3D3D3D),),
-          Container(
-            color: Colors.white,
-            child: summaryItems.isNotEmpty ? ListView.builder(
-                physics: NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                padding: EdgeInsets.zero,
-                itemBuilder: (BuildContext context, int index) {
-
-                  GETypes? type = summaryItems[index].item1.type;
-                  String amount = summaryItems[index].item1.amount.toString();
-
-                  return Container(
-                    margin: EdgeInsets.symmetric(vertical: 2.h),
-                    child: Row(
-                      children: [
-                        Expanded(flex:2, child: MetaTextView(mapData: map['listView']['item'],text: configureExpenseTypes(type) )),
-                        Expanded(flex:1,child: MetaTextView(mapData: map['listView']['item'],text:amount)),
-                        widget.isEdit?
-                        Expanded(flex:1,child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            type != GETypes.CONVEYANCE?
-                            InkWell(
-                            onTap: (){
-                                  navigate({"onClick": type}, true,summaryItems[index].item2,index);
-                            },
-                            child: Container(
-                                width:25.w,
-                                height:25.w,
-                                child: MetaSVGView(mapData:  map['listView']['item']['items'][0]))):Container(
-                              width:25.w,
-                              height:25.w),
-                            SizedBox(width: 10.h,),
-
-                            InkWell(onTap: (){
-                              print("removing index:"+index.toString() );
-                              setState(() {
-                                summaryItems.removeAt(index);
-                                calculateSummary();
-                              });
-
-                            },
-                            child: Container(
-                                width:25.w,
-                                height:25.w,
-                                child: MetaSVGView(mapData:  map['listView']['item']['items'][1]))),
-                          ],
-                        )):
-                        Expanded(flex:1,child: SizedBox())
-                        ]),
-                  );
-                },
-                itemCount: summaryItems.length
-            ):Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                MetaTextView(mapData: map['listView']['emptyData']['title']),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 
   void calculateSummary() {
     double miscTotal=0;
@@ -847,21 +980,6 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
       Navigator.pop(context);
     }
 
-  }
-
-  String configureExpenseTypes(text){
-
-
-    switch(text){
-      case GETypes.ACCOMMODATION :
-        return "Accommodation";
-      case GETypes.CONVEYANCE :
-        return "Travel";
-      case GETypes.MISCELLANEOUS :
-        return "Miscellaneous";
-    }
-
-    return "";
   }
 
 }

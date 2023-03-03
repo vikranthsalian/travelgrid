@@ -11,6 +11,8 @@ import 'package:travelgrid/presentation/screens/dashboard/ge/add/add_misc.dart';
 import 'package:travelgrid/presentation/screens/dashboard/ge/add/add_travel.dart';
 import 'package:travelgrid/presentation/screens/dashboard/ge/create_ge.dart';
 import 'package:travelgrid/presentation/screens/dashboard/te/create_te.dart';
+import 'package:travelgrid/presentation/screens/dashboard/tr/create_tr.dart';
+import 'package:travelgrid/presentation/screens/dashboard/tr/summary_tr.dart';
 import 'package:travelgrid/presentation/screens/dashboard/tr/travel_request.dart';
 import 'package:travelgrid/presentation/screens/policy/policy_screen.dart';
 import 'package:travelgrid/presentation/screens/splash/splash_screen.dart';
@@ -45,6 +47,36 @@ class AppRoutes {
 
       case RouteConstants.generalExpensePath:
         return  GeneralExpense();
+
+      case RouteConstants.travelCreateRequestPath:
+
+
+        // if(args!=null){
+        //   args as Map<String, dynamic>;
+        //
+        //   final bool isEdit = args["isEdit"] ?? false;
+        //   final String title = args["title"]  ?? null;
+        //   final String status = args["status"]  ?? "";
+        //   final bool isApproval = args["isApproval"]  ?? false;
+        //   return  CreateTravelRequest(isEdit: isEdit,title: title,status: status,isApproval: isApproval);
+        // }
+        return CreateTravelRequest();
+
+
+      case RouteConstants.travelRequestViewPath:
+
+
+        if(args!=null){
+          args as Map<String, dynamic>;
+
+          final bool isEdit = args["isEdit"] ?? false;
+          final String title = args["title"]  ?? null;
+          final String status = args["status"]  ?? "";
+          final bool isApproval = args["isApproval"]  ?? false;
+          return  TravelRequestSummary(isEdit: isEdit,title: title,status: status,isApproval: isApproval);
+        }
+        return TravelRequestSummary();
+
 
       case RouteConstants.generalCreateExpensePath:
 

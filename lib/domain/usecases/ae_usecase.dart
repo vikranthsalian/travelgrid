@@ -1,4 +1,5 @@
 import 'package:travelgrid/data/datasources/list/ge_list_response.dart';
+import 'package:travelgrid/data/datasources/list/tr_list_response.dart';
 import 'package:travelgrid/data/datasources/te_approval_list.dart';
 import 'package:travelgrid/data/datasources/te_summary_response.dart';
 import 'package:travelgrid/data/datasources/list/te_list_response.dart';
@@ -9,6 +10,8 @@ class AeUseCase {
   final AeAPIAbstract apiAbstract;
 
   AeUseCase(this.apiAbstract);
+
+  Future<TRListResponse> callTRApi(api) async => apiAbstract.callTRList(api);
 
   Future<GEListResponse> callGEApi(api) async => apiAbstract.callGEList(api);
 

@@ -30,7 +30,7 @@ class _TravelRequestState extends State<TravelRequest> {
     // TODO: implement initState
     super.initState();
     jsonData = FlavourConstants.trData;
- //   prettyPrint(jsonData);
+
   }
 
 
@@ -313,10 +313,10 @@ class _TravelRequestState extends State<TravelRequest> {
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     Container(
-                                        child: MetaTextView(mapData: subtitle,text: "Mangalore")
+                                        child: MetaTextView(mapData: subtitle,text: item.origin)
                                     ),
                                     Container(
-                                        child: MetaTextView(mapData: subtitle,text:"Bangalore")
+                                        child: MetaTextView(mapData: subtitle,text:item.destination)
                                     ),
                                   ],
                                 ),

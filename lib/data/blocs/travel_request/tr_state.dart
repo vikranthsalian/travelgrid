@@ -3,7 +3,7 @@ part of 'tr_bloc.dart';
 @immutable
 abstract class TravelRequestState {
   TRListResponse? response ;
-  GESummaryResponse? responseSum ;
+  TRSummaryResponse? responseSum ;
   BlocEventState eventState;
   String message;
   SuccessModel? successModel;
@@ -20,7 +20,7 @@ class TravelRequestLoadedState extends TravelRequestState {
 }
 
 class TravelRequestSummaryLoadedState extends TravelRequestState {
-  final GESummaryResponse? data;
+  final TRSummaryResponse? data;
   TravelRequestSummaryLoadedState({required this.data}) : super(responseSum: data, eventState: BlocEventState.LOADED);
 }
 class ErrorState extends TravelRequestState{

@@ -4,6 +4,7 @@ import 'package:travelgrid/common/constants/event_types.dart';
 import 'package:travelgrid/common/injector/injector.dart';
 import 'package:travelgrid/data/datasources/ge_summary_response.dart';
 import 'package:travelgrid/data/datasources/list/tr_list_response.dart';
+import 'package:travelgrid/data/datasources/tr_summary_response.dart';
 import 'package:travelgrid/data/models/success_model.dart';
 import 'package:travelgrid/domain/usecases/tr_usecase.dart';
 
@@ -30,11 +31,11 @@ class TravelRequestBloc extends Bloc<TravelRequestEvent, TravelRequestState> {
     }
 
     if(event is GetTravelRequestSummaryEvent) {
-      GESummaryResponse? response = await Injector.resolve<TrUseCase>().getSummary(event.recordLocator);
+      TRSummaryResponse? response = await Injector.resolve<TrUseCase>().getSummary(event.recordLocator);
       if(response!=null && response.status == true){
         emit(TravelRequestSummaryLoadedState(data: response));
       }else{
-        emit(TravelRequestSummaryLoadedState(data: GESummaryResponse(data: [],message: response.message)));
+        emit(TravelRequestSummaryLoadedState(data: TRSummaryResponse(message: response.message)));
       }
 
     }

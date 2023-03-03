@@ -11,7 +11,9 @@ import 'package:travelgrid/data/datasources/te_approval_list.dart';
 import 'package:travelgrid/data/datasources/te_summary_response.dart';
 import 'package:travelgrid/data/datasources/list/tr_list_response.dart';
 import 'package:travelgrid/data/datasources/list/te_list_response.dart';
+import 'package:travelgrid/data/datasources/tr_summary_response.dart';
 import 'package:travelgrid/data/datasources/travel_mode_list.dart';
+import 'package:travelgrid/data/datasources/travel_purpose_list.dart';
 import 'package:travelgrid/data/models/success_model.dart';
 
 abstract class LoginAPIAbstract {
@@ -20,7 +22,7 @@ abstract class LoginAPIAbstract {
 
 abstract class TrAPIAbstract {
   Future<TRListResponse> callList();
-  Future<GESummaryResponse> getTR(id);
+  Future<TRSummaryResponse> getTR(id);
   Future<SuccessModel> createTR(data,body);
   Future<SuccessModel> approveTR(id,comment);
 }
@@ -41,6 +43,7 @@ abstract class TeAPIAbstract {
 }
 
 abstract class AeAPIAbstract {
+  Future<TRListResponse> callTRList(path);
   Future<GEListResponse> callGEList(path);
   Future<TEApprovalList> callTEList(path);
 }
@@ -56,6 +59,8 @@ abstract class CommonAPIAbstract {
   Future<MetaTravelModeListResponse> getTravelModeList();
 
   Future<MetaMiscTypeListResponse> getMiscTypeList();
+
+  Future<MetaTravelPurposeListResponse> getTravelPurposeList();
 
   Future<MetaApproverListResponse> getApproverTypeList();
 

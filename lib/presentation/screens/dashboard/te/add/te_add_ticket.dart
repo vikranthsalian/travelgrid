@@ -276,7 +276,7 @@ class _AddTeTicketExpenseState extends State<AddTeTicketExpense> {
                                           child: MetaTextFieldBlocView(mapData: jsonData['text_field_flight'],
                                               textFieldBloc: formBloc!.tfFlight,
                                               onChanged:(value){
-                                                formBloc!.tfAmount.updateValue(value);
+                                                formBloc!.tfFlight.updateValue(value);
                                               }),
                                         ),
                                         SizedBox(width: 30.w,),

@@ -4,6 +4,7 @@ import 'package:travelgrid/common/constants/event_types.dart';
 import 'package:travelgrid/common/injector/injector.dart';
 import 'package:travelgrid/data/datasources/ge_summary_response.dart';
 import 'package:travelgrid/data/datasources/list/ge_list_response.dart';
+import 'package:travelgrid/data/datasources/list/tr_list_response.dart';
 import 'package:travelgrid/data/datasources/te_approval_list.dart';
 import 'package:travelgrid/data/datasources/te_summary_response.dart';
 import 'package:travelgrid/data/datasources/list/te_list_response.dart';
@@ -23,11 +24,11 @@ class ApprovalExpenseBloc extends Bloc<ApprovalExpenseEvent, ApprovalExpenseStat
   void _init(ApprovalExpenseEvent event, Emitter<ApprovalExpenseState> emit) async {
     emit(ApprovalExpenseInitialState());
     if(event is GetApprovalExpenseTR) {
-      GEListResponse? response = await Injector.resolve<AeUseCase>().callGEApi("trlistpendingforapproval");
+      TRListResponse? response = await Injector.resolve<AeUseCase>().callTRApi("trlistpendingforapproval");
       if(response!=null && response.status==true){
         emit(ApprovalExpenseTRLoadedState(data: response));
       }else{
-        emit(ApprovalExpenseTRLoadedState(data: GEListResponse(data: [])));
+        emit(ApprovalExpenseTRLoadedState(data: TRListResponse(data: [])));
       }
 
     }

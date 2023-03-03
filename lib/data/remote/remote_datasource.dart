@@ -49,6 +49,27 @@ class APIRemoteDatasource{
 
   }
 
+  Future<dynamic> getTRSummary(pathUrl,id) async {
+    try {
+      final responseJson = await CustomDio().getWrapper().get(
+        pathUrl,
+        loadingMessage:"Loading Data...",
+        queryParameters:{
+          "token":appNavigatorKey.currentState!.context.read<LoginCubit>().getLoginToken(),
+          "tripID":id,
+        },
+      );
+      return responseJson.data;
+    } on DioError catch (e) {
+      print("DioError"+e.toString());
+      return MetaLoginResponse(status: false);
+
+    }catch(e){
+      print("CatchError"+e.toString());
+      return MetaLoginResponse(status: false);
+    }
+
+  }
   Future<dynamic> getSummary(pathUrl,id) async {
     try {
       final responseJson = await CustomDio().getWrapper().get(
