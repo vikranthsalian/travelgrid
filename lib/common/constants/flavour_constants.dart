@@ -33,6 +33,7 @@ class FlavourConstants {
   static  Map<String,dynamic> travelPurposeData = FlavorConfig.instance.variables["travel_purpose_screen_data"];
   static  Map<String,dynamic> uploadData = FlavorConfig.instance.variables["upload_screen_data"];
   static  Map<String,dynamic> yesNoData = FlavorConfig.instance.variables["dialog_yes_no_data"];
+  static  Map<String,dynamic> cashData = FlavorConfig.instance.variables["dialog_cash_data"];
   static  Map<String,dynamic> expensePickerData = FlavorConfig.instance.variables["dialog_expense_picker_data"];
 
 

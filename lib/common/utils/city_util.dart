@@ -16,7 +16,7 @@ class CityUtil{
   CityUtil._();
 
 
-  static String? getCityNameFromID(id) {
+  static String? getCityNameFromID(id,{bool isCode=false}) {
 
     print("getCityNameFromID:==>");
     print(id);
@@ -26,17 +26,26 @@ class CityUtil{
 
    List<city.Data> list = appNavigatorKey.currentState!.context.read<CityCubit>().getCityResponse();
 
-   Iterable<city.Data> data= list.where((item) => (item.id.toString() == id.toString()));
+    if(isCode){
+      Iterable<city.Data> data= list.where((item) => (item.id.toString() == id.toString()));
+      return data.first.code;
+    }else{
+      Iterable<city.Data> data= list.where((item) => (item.id.toString() == id.toString()));
 
-   if(data.isEmpty){
-     return id;
-   }
+      if(data.isEmpty){
+        return id;
+      }
 
 
-   return data.first.name;
+      return data.first.name;
+    }
+
+
   }
 
-  static String? getFareNameFromID(id,mode) {
+  static String? getFareValueFromID(id,mode,{bool isValue=true}) {
+    print(id);
+    print(mode);
 
     if(id.toString().isEmpty){
       return null;
@@ -44,8 +53,21 @@ class CityUtil{
 
     List<fare.Data> list = appNavigatorKey.currentState!.context.read<FareClassCubit>().getFareClassResponse(mode);
 
-    Iterable<fare.Data> data = list.where((item) => (item.value.toString() == id.toString()));
-    return data.first.label;
+    if(isValue){
+      Iterable<fare.Data> data = list.where((item) => (item.value.toString() == id.toString()));
+      if(data.isNotEmpty){
+        return data.first.label;
+      }
+      return null;
+
+    }else{
+      Iterable<fare.Data> data = list.where((item) => (item.id.toString() == id.toString()));
+      if(data.isNotEmpty){
+        return data.first.label;
+      }
+      return null;
+    }
+
   }
 
   static String? getTraveModeFromID(id) {

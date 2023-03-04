@@ -25,7 +25,8 @@ class CreateTravelRequest extends StatefulWidget {
   String? title;
   bool isApproval;
   String? status;
-  CreateTravelRequest({this.isEdit=true,this.title,this.isApproval=false,this.status});
+  String? tripType;
+  CreateTravelRequest({this.isEdit=true,this.title,this.isApproval=false,this.status,this.tripType});
 
   @override
   _CreateTravelRequestState createState() => _CreateTravelRequestState();
@@ -111,10 +112,13 @@ class _CreateTravelRequestState extends State<CreateTravelRequest> {
        selected=1;
      });
     });
-    trProcessed = TrProcessed(onNext: (Map<String,dynamic> value){
-      submitMap['maTravelRequestCityPair']=[value['pair']];
-      submitMap['maCashAdvance']=value['cash'];
-      submitMap['segmentType']=value['segmentType'];
+    trProcessed = TrProcessed(
+      tripType: widget.tripType,
+      onNext: (Map<String,dynamic> value){
+        submitMap.addAll(value);
+      // submitMap['maTravelRequestCityPair']=[value['pair']];
+      // submitMap['maCashAdvance']=value['cash'];
+      // submitMap['segmentType']=value['segmentType'];
      setState(() {
        selected=2;
      });

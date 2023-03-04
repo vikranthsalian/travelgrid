@@ -90,6 +90,8 @@ class _LoginScreenState extends State<_Login> {
                        Injector.resolve<MiscTypeBloc>()..add(GetMiscTypeListEvent());
                        Injector.resolve<ApproverTypeBloc>()..add(GetApproverTypeListEvent());
                        Injector.resolve<FareClassBloc>()..add(GetAirFareClassListEvent());
+                       Injector.resolve<FareClassBloc>()..add(GetRailFareClassListEvent());
+                       Injector.resolve<FareClassBloc>()..add(GetRoadFareClassListEvent());
                        Injector.resolve<TravelPurposeBloc>()..add(GetTravelPurposeListEvent());
 
 

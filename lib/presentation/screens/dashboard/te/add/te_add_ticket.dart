@@ -258,7 +258,7 @@ class _AddTeTicketExpenseState extends State<AddTeTicketExpense> {
                                         Expanded(
                                           child: Container(
                                             child: MetaDialogSelectorView(mapData: jsonData['selectFare'],
-                                              text :CityUtil.getFareNameFromID(
+                                              text :CityUtil.getFareValueFromID(
                                                   formBloc!.fareClass.value,
                                                   formBloc!.travelMode.value),
                                               onChange:(value){

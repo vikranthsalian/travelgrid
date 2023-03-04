@@ -11,6 +11,7 @@ import 'package:travelgrid/presentation/screens/dashboard/ge/add/add_misc.dart';
 import 'package:travelgrid/presentation/screens/dashboard/ge/add/add_travel.dart';
 import 'package:travelgrid/presentation/screens/dashboard/ge/create_ge.dart';
 import 'package:travelgrid/presentation/screens/dashboard/te/create_te.dart';
+import 'package:travelgrid/presentation/screens/dashboard/tr/add/add_itinery.dart';
 import 'package:travelgrid/presentation/screens/dashboard/tr/create_tr.dart';
 import 'package:travelgrid/presentation/screens/dashboard/tr/summary_tr.dart';
 import 'package:travelgrid/presentation/screens/dashboard/tr/travel_request.dart';
@@ -50,17 +51,17 @@ class AppRoutes {
 
       case RouteConstants.travelCreateRequestPath:
 
+        args as Map<String, dynamic>;
+      //  if(args!=null){
 
-        // if(args!=null){
-        //   args as Map<String, dynamic>;
         //
         //   final bool isEdit = args["isEdit"] ?? false;
         //   final String title = args["title"]  ?? null;
         //   final String status = args["status"]  ?? "";
         //   final bool isApproval = args["isApproval"]  ?? false;
         //   return  CreateTravelRequest(isEdit: isEdit,title: title,status: status,isApproval: isApproval);
-        // }
-        return CreateTravelRequest();
+       //  }
+        return CreateTravelRequest(tripType: args['tripType']);
 
 
       case RouteConstants.travelRequestViewPath:
@@ -105,7 +106,6 @@ class AppRoutes {
           return  CreateTravelExpense(isEdit: isEdit,title: title,status:status,isApproval: isApproval);
         }
         return CreateTravelExpense();
-
 
       case RouteConstants.approvalExpensePath:
         return ApprovalExpense();

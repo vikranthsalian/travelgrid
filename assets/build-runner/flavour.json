@@ -292,6 +292,7 @@
       "family": "regular"
     }
   },
+
   "tr_screen_data" : {
     "backgroundColor" : "0xFF2854A1",
     "title":  {
@@ -597,8 +598,8 @@
     }
   },
   "ae_te_screen_data" : {
-    "backgroundColor" : "0xFF2854A1",
     "onClick": "/travelCreateExpense",
+    "backgroundColor" : "0xFF2854A1",
     "listView": {
       "recordsFound":  {
         "text" : "Records Found",
@@ -647,6 +648,7 @@
     }
   },
   "ae_ge_screen_data" : {
+    "onClick": "/generalCreateExpense",
     "backgroundColor" : "0xFF2854A1",
     "listView": {
       "recordsFound":  {
@@ -680,7 +682,6 @@
         }
       }
     },
-    "onClick": "/generalCreateExpense",
     "bottomButtonLeft": {
       "text" : "Sort",
       "color" : "0xFFFFFFFF",
@@ -1292,140 +1293,454 @@
     "prev": "0",
     "next": "1",
     "backgroundColor" : "0xFF2854A1",
-    "checkInDateTime": {
-      "showView": "date_time",
-      "dateView": {
+    "cityPairDetails": {
+      "backgroundColor" : "0xFF2854A1",
+      "title":  {
+        "text" : "Add Itinerary Details",
+        "color" : "0XFFFFFFFF",
+        "size": "18",
+        "family": "bold",
+        "align": "center-left"
+      },
+      "backBar": {
+        "icon": "back",
+        "size": 20.0,
+        "color": "0XFFFFFFFF",
+        "backgroundColor": "transparent",
+        "onPress": true,
+        "align": "center-left"
+      },
+      "label": {
+        "text" : "Itinerary Details",
+        "color" : "0XFFFFFFFF",
+        "size": "14",
+        "family": "bold",
+        "align": "center-left"
+      },
+      "add": {
+        "text" : "Add",
+        "color" : "0XFFFFFFFF",
+        "size": "15",
+        "family": "bold",
+        "align": "center-right",
+        "type": "cash"
+      },
+      "showDetails": {
+        "label": {
+          "text" : "Show",
+          "color" : "0XFFFFFFFF",
+          "size": "10",
+          "family": "bold",
+          "align": "center-right"
+        }
+      },
+      "checkInDateTime": {
+        "showView": "date_time",
+        "dateView": {
+          "label":  {
+            "text" : "Check-In Date*",
+            "color" : "0xFF2854A1",
+            "size": "14",
+            "family": "regular",
+            "align": "center-left"
+          },
+          "dateText":  {
+            "text" : "22",
+            "color" : "0xFF000000",
+            "size": "25",
+            "family": "bold",
+            "align": "center-left"
+          },
+          "monthYearText":  {
+            "text" : "January, 2024",
+            "color" : "0xFF000000",
+            "size": "12",
+            "family": "regular",
+            "align": "center-left"
+          },
+          "weekText":  {
+            "text" : "Monday",
+            "color" : "0xFFAEAEAE",
+            "size": "10",
+            "family": "regular",
+            "align": "center-left"
+          }
+        },
+        "timeView": {
+          "label":  {
+            "text" : "Check-In Time*",
+            "color" : "0xFF2854A1",
+            "size": "14",
+            "family": "regular",
+            "align": "center-left"
+          },
+          "timeText":  {
+            "text" : "12:23",
+            "color" : "0xFF000000",
+            "size": "25",
+            "family": "bold",
+            "align": "center-left"
+          }
+        }
+      },
+      "selectOrigin": {
+        "showView": true,
         "label":  {
-          "text" : "Check-In Date*",
+          "text" : "Origin*",
           "color" : "0xFF2854A1",
           "size": "14",
           "family": "regular",
           "align": "center-left"
         },
-        "dateText":  {
-          "text" : "22",
-          "color" : "0xFF000000",
-          "size": "25",
+        "dataText":  {
+          "text" : "Choose Origin",
+          "color" : "0xFFAEAEAE",
+          "size": "15",
+          "family": "regular",
+          "align": "center-left"
+        }
+      },
+      "selectDestination": {
+        "showView": true,
+        "label":  {
+          "text" : "Destination*",
+          "color" : "0xFF2854A1",
+          "size": "14",
+          "family": "regular",
+          "align": "center-left"
+        },
+        "dataText":  {
+          "text" : "Choose Destination",
+          "color" : "0xFFAEAEAE",
+          "size": "15",
+          "family": "regular",
+          "align": "center-left"
+        }
+      },
+      "selectMode": {
+        "showView": true,
+        "key":"common_type_view",
+        "label":  {
+          "text" : "Travel Mode*",
+          "color" : "0xFF2854A1",
+          "size": "14",
+          "family": "regular",
+          "align": "center-left"
+        },
+        "dataText":  {
+          "text" : "Choose Travel Mode",
+          "color" : "0xFFAEAEAE",
+          "size": "15",
+          "family": "regular",
+          "align": "center-left"
+        },
+        "title":{
+          "text" : "Select Travel Mode",
+          "color" : "0xFF2854A1",
+          "size": "15",
+          "family": "bold",
+          "align": "center"
+        },
+        "listView": {
+          "data": [
+            {
+              "text" : "Air",
+              "color" : "0xFF000000",
+              "size": "12",
+              "family": "regular",
+              "align": "center-left",
+              "id": "A"
+            },
+            {
+              "text" : "Road",
+              "color" : "0xFF000000",
+              "size": "12",
+              "family": "regular",
+              "align": "center-left",
+              "id": "B"
+            },
+            {
+              "text" : "Rail",
+              "color" : "0xFF000000",
+              "size": "12",
+              "family": "regular",
+              "align": "center-left",
+              "id": "R"
+            }
+          ],
+          "emptyData": {
+            "image_view":   {
+              "image" : "logo_banner.png",
+              "align": "center",
+              "wd": 250.0
+            },
+            "title":  {
+              "text" : "No Data Found!!!",
+              "color" : "0XFF3D3D3D",
+              "size": "16",
+              "family": "regular"
+            },
+            "bottomButtonRefresh": {
+              "text" : "Refresh",
+              "height": 35.0,
+              "color" : "0xFFFFFFFF",
+              "borderRadius": 30.0,
+              "backgroundColor" : "0xFF2854A1",
+              "size": "15",
+              "family": "regular"
+            }
+          }
+        },
+        "bottomButtonCentre": {
+          "text" : "Cancel",
+          "color" : "0xFFFFFFFF",
+          "backgroundColor" : "0xFF2854A1",
+          "size": "18",
+          "family": "regular"
+        }
+      },
+      "selectFare": {
+        "showView": true,
+        "key": "fare_class_view",
+        "label":  {
+          "text" : "Fare Class*",
+          "color" : "0xFF2854A1",
+          "size": "14",
+          "family": "regular",
+          "align": "center-left"
+        },
+        "dataText":  {
+          "text" : "Choose Fare Class",
+          "color" : "0xFFAEAEAE",
+          "size": "15",
+          "family": "regular",
+          "align": "center-left"
+        }
+      },
+      "byCompanySwitch":  {
+        "label":  {
+          "text" : "By Company",
+          "color" : "0xFF2854A1",
+          "size": "14",
+          "family": "bold",
+          "align": "center-left"
+        }
+      },
+      "text_field_pnr":  {
+        "name": "PNR",
+        "apiKey": "pnr",
+        "type": "text_field_view",
+        "inputType": "text",
+        "isPassword": false,
+        "backgroundColor": "0XFFFFFFFF",
+        "borderColor": "0XFFAEAEAE",
+        "text" : {
+          "text" : "",
+          "color" : "0xFF2854A1",
+          "size": "14",
+          "family": "regular"
+        },
+        "labelText" : {
+          "text" : "PNR*",
+          "color" : "0xFF2854A1",
+          "size": "14",
+          "family": "regular",
+          "align" : "center-left"
+        },
+        "hintText" : {
+          "text" : "Enter PNR",
+          "color" : "0xFF2854A1",
+          "size": "14",
+          "family": "regular"
+        },
+        "errorText" : {
+          "text" : "",
+          "color" : "0xFFFF0000",
+          "size": "14",
+          "family": "regular"
+        },
+        "validators" : [
+          {
+            "type" : "empty"
+          }
+        ]
+      },
+      "text_field_amount":  {
+        "name": "Amount",
+        "apiKey": "amount",
+        "type": "text_field_view",
+        "inputType": "number",
+        "isPassword": false,
+        "backgroundColor": "0XFFFFFFFF",
+        "borderColor": "0XFFAEAEAE",
+        "text" : {
+          "text" : "",
+          "color" : "0xFF2854A1",
+          "size": "14",
+          "family": "regular"
+        },
+        "labelText" : {
+          "text" : "Amount*",
+          "color" : "0xFF2854A1",
+          "size": "14",
+          "family": "regular",
+          "align" : "center-left"
+        },
+        "hintText" : {
+          "text" : "Enter Amount",
+          "color" : "0xFF2854A1",
+          "size": "14",
+          "family": "regular"
+        },
+        "errorText" : {
+          "text" : "",
+          "color" : "0xFFFF0000",
+          "size": "14",
+          "family": "regular"
+        },
+        "validators" : [
+          {
+            "type" : "empty"
+          }
+        ]
+      },
+      "text_field_ticket":  {
+        "name": "Ticket",
+        "apiKey": "ticket",
+        "type": "text_field_view",
+        "inputType": "text",
+        "isPassword": false,
+        "backgroundColor": "0XFFFFFFFF",
+        "borderColor": "0XFFAEAEAE",
+        "text" : {
+          "text" : "",
+          "color" : "0xFF2854A1",
+          "size": "14",
+          "family": "regular"
+        },
+        "labelText" : {
+          "text" : "Ticket",
+          "color" : "0xFF2854A1",
+          "size": "14",
+          "family": "regular",
+          "align" : "center-left"
+        },
+        "hintText" : {
+          "text" : "Enter Ticket",
+          "color" : "0xFF2854A1",
+          "size": "14",
+          "family": "regular"
+        },
+        "errorText" : {
+          "text" : "",
+          "color" : "0xFFFF0000",
+          "size": "14",
+          "family": "regular"
+        },
+        "validators" : [
+          {
+            "type" : "empty"
+          }
+        ]
+      },
+      "header": {
+        "text" : "",
+        "color" : "0xFF000000",
+        "size": "12",
+        "family": "bold",
+        "align": "center"
+      },
+      "item": {
+        "text" : "",
+        "color" : "0xFFCCCCCC",
+        "size": "11",
+        "family": "bold",
+        "align": "center"
+      },
+      "cityPair": {
+        "label": {
+          "text" : "Itinerary Details",
+          "color" : "0XFFFFFFFF",
+          "size": "14",
           "family": "bold",
           "align": "center-left"
         },
-        "monthYearText":  {
-          "text" : "January, 2024",
-          "color" : "0xFF000000",
+        "showDetails": {
+          "label": {
+            "text" : "Show",
+            "color" : "0XFFFFFFFF",
+            "size": "10",
+            "family": "bold",
+            "align": "center-right"
+          }
+        },
+        "date": {
+          "text" : "",
+          "color" : "0xFFCCCCCC",
           "size": "12",
           "family": "regular",
           "align": "center-left"
         },
-        "weekText":  {
-          "text" : "Monday",
-          "color" : "0xFFAEAEAE",
-          "size": "10",
+        "time": {
+          "text" : "",
+          "color" : "0xFFCCCCCC",
+          "size": "12",
           "family": "regular",
-          "align": "center-left"
-        }
-      },
-      "timeView": {
-        "label":  {
-          "text" : "Check-In Time*",
-          "color" : "0xFF2854A1",
-          "size": "14",
-          "family": "regular",
-          "align": "center-left"
+          "align": "center-right"
         },
-        "timeText":  {
-          "text" : "12:23",
-          "color" : "0xFF000000",
-          "size": "25",
+        "code": {
+          "text" : "",
+          "color" : "0xFF2854A1",
+          "size": "18",
           "family": "bold",
           "align": "center-left"
+        },
+        "city": {
+          "text" : "",
+          "color" : "0xFFCCCCCC",
+          "size": "12",
+          "family": "bold",
+          "align": "center-left"
+        },
+        "price": {
+          "text" : "",
+          "color" : "0xFF003C00",
+          "size": "11",
+          "family": "bold",
+          "align": "center-right"
+        },
+        "byComp": {
+          "text" : "",
+          "color" : "0xFFFFFFFF",
+          "size": "13",
+          "family": "bold",
+          "align": "center-left"
+        },
+        "fare": {
+          "text" : "",
+          "color" : "0xFFFFFFFF",
+          "size": "13",
+          "family": "bold",
+          "align": "center-right"
+        },
+        "edit": {
+          "icon": "edit.svg",
+          "color" : "0xFFFFFFFF"
+        },
+        "delete": {
+          "icon": "delete.svg",
+          "color" : "0xFFFFFFFF"
         }
-      }
-    },
-    "selectOrigin": {
-      "showView": true,
-      "label":  {
-        "text" : "Origin*",
-        "color" : "0xFF2854A1",
-        "size": "14",
-        "family": "regular",
-        "align": "center-left"
-      },
-      "dataText":  {
-        "text" : "Choose Origin",
-        "color" : "0xFFAEAEAE",
-        "size": "15",
-        "family": "regular",
-        "align": "center-left"
-      }
-    },
-    "selectDestination": {
-      "showView": true,
-      "label":  {
-        "text" : "Destination*",
-        "color" : "0xFF2854A1",
-        "size": "14",
-        "family": "regular",
-        "align": "center-left"
-      },
-      "dataText":  {
-        "text" : "Choose Destination",
-        "color" : "0xFFAEAEAE",
-        "size": "15",
-        "family": "regular",
-        "align": "center-left"
-      }
-    },
-    "selectMode": {
-      "showView": true,
-      "key":"common_type_view",
-      "label":  {
-        "text" : "Travel Mode*",
-        "color" : "0xFF2854A1",
-        "size": "14",
-        "family": "regular",
-        "align": "center-left"
-      },
-      "dataText":  {
-        "text" : "Choose Travel Mode",
-        "color" : "0xFFAEAEAE",
-        "size": "15",
-        "family": "regular",
-        "align": "center-left"
-      },
-      "title":{
-        "text" : "Select Travel Mode",
-        "color" : "0xFF2854A1",
-        "size": "15",
-        "family": "bold",
-        "align": "center"
       },
       "listView": {
-        "data": [
-          {
-            "text" : "Air",
-            "color" : "0xFF000000",
-            "size": "12",
-            "family": "regular",
-            "align": "center-left",
-            "id": "A"
-          },
-          {
-            "text" : "Road",
-            "color" : "0xFF000000",
-            "size": "12",
-            "family": "regular",
-            "align": "center-left",
-            "id": "B"
-          },
-          {
-            "text" : "Rail",
-            "color" : "0xFF000000",
-            "size": "12",
-            "family": "regular",
-            "align": "center-left",
-            "id": "R"
-          }
-        ],
+        "recordsFound":  {
+          "text" : "Records Found",
+          "value" : "0",
+          "color" : "0XFFFFFFFF",
+          "size": "12",
+          "family": "regular",
+          "align": "center-right"
+        },
         "emptyData": {
           "image_view":   {
             "image" : "logo_banner.png",
@@ -1433,7 +1748,7 @@
             "wd": 250.0
           },
           "title":  {
-            "text" : "No Data Found!!!",
+            "text" : "No Data Added!!!",
             "color" : "0XFF3D3D3D",
             "size": "16",
             "family": "regular"
@@ -1449,196 +1764,864 @@
           }
         }
       },
-      "bottomButtonCentre": {
+      "bottomButtonLeft": {
         "text" : "Cancel",
+        "color" : "0xFFFFFFFF",
+        "backgroundColor" : "0xFF2854A1",
+        "size": "18",
+        "family": "regular"
+      },
+      "bottomButtonRight": {
+        "text" : "Save",
         "color" : "0xFFFFFFFF",
         "backgroundColor" : "0xFF2854A1",
         "size": "18",
         "family": "regular"
       }
     },
-    "selectFare": {
-      "showView": true,
-      "key": "fare_class_view",
-      "label":  {
-        "text" : "Fare Class*",
-        "color" : "0xFF2854A1",
-        "size": "14",
-        "family": "regular",
-        "align": "center-left"
-      },
-      "dataText":  {
-        "text" : "Choose Fare Class",
-        "color" : "0xFFAEAEAE",
-        "size": "15",
-        "family": "regular",
-        "align": "center-left"
-      }
-    },
-    "byCompanySwitch":  {
-      "label":  {
-        "text" : "By Company",
-        "color" : "0xFF2854A1",
+    "cashAdvanceDetails": {
+      "label": {
+        "text" : "Cash Advance Details",
+        "color" : "0XFFFFFFFF",
         "size": "14",
         "family": "bold",
         "align": "center-left"
+      },
+      "add": {
+        "text" : "Add",
+        "color" : "0XFFFFFFFF",
+        "size": "15",
+        "family": "bold",
+        "align": "center-right",
+        "type": "cash"
+      },
+      "showDetails": {
+        "label": {
+          "text" : "Show",
+          "color" : "0XFFFFFFFF",
+          "size": "10",
+          "family": "bold",
+          "align": "center-right"
+        }
+      },
+      "header": {
+        "text" : "",
+        "color" : "0xFF000000",
+        "size": "12",
+        "family": "bold",
+        "align": "center"
+      },
+      "item": {
+        "text" : "",
+        "color" : "0xFFCCCCCC",
+        "size": "11",
+        "family": "bold",
+        "align": "center"
+      },
+      "listView": {
+        "recordsFound":  {
+          "text" : "Records Found",
+          "value" : "0",
+          "color" : "0XFFFFFFFF",
+          "size": "12",
+          "family": "regular",
+          "align": "center-right"
+        },
+        "emptyData": {
+          "image_view":   {
+            "image" : "logo_banner.png",
+            "align": "center",
+            "wd": 250.0
+          },
+          "title":  {
+            "text" : "No Data Added!!!",
+            "color" : "0XFF3D3D3D",
+            "size": "16",
+            "family": "regular"
+          },
+          "bottomButtonRefresh": {
+            "text" : "Refresh",
+            "height": 35.0,
+            "color" : "0xFFFFFFFF",
+            "borderRadius": 30.0,
+            "backgroundColor" : "0xFF2854A1",
+            "size": "15",
+            "family": "regular"
+          }
+        }
       }
     },
-    "text_field_flight":  {
-      "name": "Flight",
-      "apiKey": "flight",
-      "type": "text_field_view",
-      "inputType": "text",
-      "isPassword": false,
-      "backgroundColor": "0XFFFFFFFF",
-      "borderColor": "0XFFAEAEAE",
-      "text" : {
-        "text" : "",
-        "color" : "0xFF2854A1",
+    "forexAdvanceDetails": {
+      "label": {
+        "text" : "Forex Advance Details",
+        "color" : "0XFFFFFFFF",
         "size": "14",
-        "family": "regular"
+        "family": "bold",
+        "align": "center-left"
       },
-      "labelText" : {
-        "text" : "Flight*",
-        "color" : "0xFF2854A1",
-        "size": "14",
-        "family": "regular",
-        "align" : "center-left"
+      "add": {
+        "text" : "Add",
+        "color" : "0XFFFFFFFF",
+        "size": "15",
+        "family": "bold",
+        "align": "center-right",
+        "type": "cash"
       },
-      "hintText" : {
-        "text" : "Enter Flight",
-        "color" : "0xFF2854A1",
-        "size": "14",
-        "family": "regular"
-      },
-      "errorText" : {
-        "text" : "",
-        "color" : "0xFFFF0000",
-        "size": "14",
-        "family": "regular"
-      },
-      "validators" : [
-        {
-          "type" : "empty"
+      "showDetails": {
+        "label": {
+          "text" : "Show",
+          "color" : "0XFFFFFFFF",
+          "size": "10",
+          "family": "bold",
+          "align": "center-right"
         }
-      ]
+      },
+      "header": {
+        "text" : "",
+        "color" : "0xFF000000",
+        "size": "12",
+        "family": "bold",
+        "align": "center"
+      },
+      "item": {
+        "text" : "",
+        "color" : "0xFFCCCCCC",
+        "size": "11",
+        "family": "bold",
+        "align": "center"
+      },
+      "listView": {
+        "recordsFound":  {
+          "text" : "Records Found",
+          "value" : "0",
+          "color" : "0XFFFFFFFF",
+          "size": "12",
+          "family": "regular",
+          "align": "center-right"
+        },
+        "emptyData": {
+          "image_view":   {
+            "image" : "logo_banner.png",
+            "align": "center",
+            "wd": 250.0
+          },
+          "title":  {
+            "text" : "No Data Added!!!",
+            "color" : "0XFF3D3D3D",
+            "size": "16",
+            "family": "regular"
+          },
+          "bottomButtonRefresh": {
+            "text" : "Refresh",
+            "height": 35.0,
+            "color" : "0xFFFFFFFF",
+            "borderRadius": 30.0,
+            "backgroundColor" : "0xFF2854A1",
+            "size": "15",
+            "family": "regular"
+          }
+        }
+      },
+      "details": {
+        "backgroundColor" : "0xFF2854A1",
+        "title":  {
+          "text" : "Add Forex Details",
+          "color" : "0XFFFFFFFF",
+          "size": "18",
+          "family": "bold",
+          "align": "center-left"
+        },
+        "backBar": {
+          "icon": "back",
+          "size": 20.0,
+          "color": "0XFFFFFFFF",
+          "backgroundColor": "transparent",
+          "onPress": true,
+          "align": "center-left"
+        },
+        "text_field_cash":  {
+          "name": "cash",
+          "apiKey": "card",
+          "type": "text_field_view",
+          "inputType": "text",
+          "isPassword": false,
+          "backgroundColor": "0XFFFFFFFF",
+          "borderColor": "0XFFAEAEAE",
+          "text" : {
+            "text" : "",
+            "color" : "0xFF2854A1",
+            "size": "14",
+            "family": "regular"
+          },
+          "labelText" : {
+            "text" : "Cash*",
+            "color" : "0xFF2854A1",
+            "size": "14",
+            "family": "regular",
+            "align" : "center-left"
+          },
+          "hintText" : {
+            "text" : "Enter Cash",
+            "color" : "0xFF2854A1",
+            "size": "14",
+            "family": "regular"
+          },
+          "errorText" : {
+            "text" : "",
+            "color" : "0xFFFF0000",
+            "size": "14",
+            "family": "regular"
+          },
+          "validators" : [
+            {
+              "type" : "empty"
+            }
+          ]
+        },
+        "text_field_card":  {
+          "name": "card",
+          "apiKey": "card",
+          "type": "text_field_view",
+          "inputType": "number",
+          "isPassword": false,
+          "backgroundColor": "0XFFFFFFFF",
+          "borderColor": "0XFFAEAEAE",
+          "text" : {
+            "text" : "",
+            "color" : "0xFF2854A1",
+            "size": "14",
+            "family": "regular"
+          },
+          "labelText" : {
+            "text" : "Card*",
+            "color" : "0xFF2854A1",
+            "size": "14",
+            "family": "regular",
+            "align" : "center-left"
+          },
+          "hintText" : {
+            "text" : "Enter Card",
+            "color" : "0xFF2854A1",
+            "size": "14",
+            "family": "regular"
+          },
+          "errorText" : {
+            "text" : "",
+            "color" : "0xFFFF0000",
+            "size": "14",
+            "family": "regular"
+          },
+          "validators" : [
+            {
+              "type" : "empty"
+            }
+          ]
+        },
+        "text_field_forex":  {
+          "name": "forex",
+          "apiKey": "forex",
+          "type": "text_field_view",
+          "inputType": "number",
+          "isPassword": false,
+          "backgroundColor": "0XFFFFFFFF",
+          "borderColor": "0XFFAEAEAE",
+          "text" : {
+            "text" : "",
+            "color" : "0xFF2854A1",
+            "size": "14",
+            "family": "regular"
+          },
+          "labelText" : {
+            "text" : "Forex Card#*",
+            "color" : "0xFF2854A1",
+            "size": "14",
+            "family": "regular",
+            "align" : "center-left"
+          },
+          "hintText" : {
+            "text" : "Enter Forex Card",
+            "color" : "0xFF2854A1",
+            "size": "14",
+            "family": "regular"
+          },
+          "errorText" : {
+            "text" : "",
+            "color" : "0xFFFF0000",
+            "size": "14",
+            "family": "regular"
+          },
+          "validators" : [
+            {
+              "type" : "empty"
+            }
+          ]
+        },
+        "selectCurrency": {
+          "showView": true,
+          "key":"currency_type_view",
+          "label":  {
+            "text" : "Required Currency*",
+            "color" : "0xFF2854A1",
+            "size": "14",
+            "family": "regular",
+            "align": "center-left"
+          },
+          "dataText":  {
+            "text" : "Choose Currency",
+            "color" : "0xFFAEAEAE",
+            "size": "15",
+            "family": "regular",
+            "align": "center-left"
+          },
+          "title":{
+            "text" : "Select Currency",
+            "color" : "0xFF2854A1",
+            "size": "15",
+            "family": "bold",
+            "align": "center"
+          },
+          "listView": {
+            "data": [
+              {
+                "text" : "Single",
+                "color" : "0xFF000000",
+                "size": "12",
+                "family": "regular",
+                "align": "center-left",
+                "id": "183"
+              },
+              {
+                "text" : "Multiple",
+                "color" : "0xFF000000",
+                "size": "12",
+                "family": "regular",
+                "align": "center-left",
+                "id": "184"
+              }
+            ],
+            "emptyData": {
+              "image_view":   {
+                "image" : "logo_banner.png",
+                "align": "center",
+                "wd": 250.0
+              },
+              "title":  {
+                "text" : "No Data Found!!!",
+                "color" : "0XFF3D3D3D",
+                "size": "16",
+                "family": "regular"
+              },
+              "bottomButtonRefresh": {
+                "text" : "Refresh",
+                "height": 35.0,
+                "color" : "0xFFFFFFFF",
+                "borderRadius": 30.0,
+                "backgroundColor" : "0xFF2854A1",
+                "size": "15",
+                "family": "regular"
+              }
+            }
+          },
+          "bottomButtonCentre": {
+            "text" : "Cancel",
+            "color" : "0xFFFFFFFF",
+            "backgroundColor" : "0xFF2854A1",
+            "size": "18",
+            "family": "regular"
+          }
+        },
+        "text_field_comment":  {
+          "name": "comment",
+          "apiKey": "comment",
+          "type": "text_field_view",
+          "inputType": "text",
+          "isPassword": false,
+          "backgroundColor": "0XFFFFFFFF",
+          "borderColor": "0XFFAEAEAE",
+          "text" : {
+            "text" : "",
+            "color" : "0xFF2854A1",
+            "size": "14",
+            "family": "regular"
+          },
+          "labelText" : {
+            "text" : "Comment*",
+            "color" : "0xFF2854A1",
+            "size": "14",
+            "family": "regular",
+            "align" : "center-left"
+          },
+          "hintText" : {
+            "text" : "Enter Comment",
+            "color" : "0xFF2854A1",
+            "size": "14",
+            "family": "regular"
+          },
+          "errorText" : {
+            "text" : "",
+            "color" : "0xFFFF0000",
+            "size": "14",
+            "family": "regular"
+          },
+          "validators" : [
+            {
+              "type" : "empty"
+            }
+          ]
+        },
+        "bottomButtonLeft": {
+          "text" : "Cancel",
+          "color" : "0xFFFFFFFF",
+          "backgroundColor" : "0xFF2854A1",
+          "size": "18",
+          "family": "regular"
+        },
+        "bottomButtonRight": {
+          "text" : "Save",
+          "color" : "0xFFFFFFFF",
+          "backgroundColor" : "0xFF2854A1",
+          "size": "18",
+          "family": "regular"
+        }
+      }
     },
-    "text_field_pnr":  {
-      "name": "PNR",
-      "apiKey": "pnr",
-      "type": "text_field_view",
-      "inputType": "text",
-      "isPassword": false,
-      "backgroundColor": "0XFFFFFFFF",
-      "borderColor": "0XFFAEAEAE",
-      "text" : {
-        "text" : "",
-        "color" : "0xFF2854A1",
+    "visaDetails": {
+      "label": {
+        "text" : "Visa Details",
+        "color" : "0XFFFFFFFF",
         "size": "14",
-        "family": "regular"
+        "family": "bold",
+        "align": "center-left"
       },
-      "labelText" : {
-        "text" : "PNR*",
-        "color" : "0xFF2854A1",
-        "size": "14",
-        "family": "regular",
-        "align" : "center-left"
+      "add": {
+        "text" : "Add",
+        "color" : "0XFFFFFFFF",
+        "size": "15",
+        "family": "bold",
+        "align": "center-right",
+        "type": "cash"
       },
-      "hintText" : {
-        "text" : "Enter PNR",
-        "color" : "0xFF2854A1",
-        "size": "14",
-        "family": "regular"
-      },
-      "errorText" : {
-        "text" : "",
-        "color" : "0xFFFF0000",
-        "size": "14",
-        "family": "regular"
-      },
-      "validators" : [
-        {
-          "type" : "empty"
+      "showDetails": {
+        "label": {
+          "text" : "Show",
+          "color" : "0XFFFFFFFF",
+          "size": "10",
+          "family": "bold",
+          "align": "center-right"
         }
-      ]
+      },
+      "header": {
+        "text" : "",
+        "color" : "0xFF000000",
+        "size": "12",
+        "family": "bold",
+        "align": "center"
+      },
+      "item": {
+        "text" : "",
+        "color" : "0xFFCCCCCC",
+        "size": "11",
+        "family": "bold",
+        "align": "center"
+      },
+      "listView": {
+        "recordsFound":  {
+          "text" : "Records Found",
+          "value" : "0",
+          "color" : "0XFFFFFFFF",
+          "size": "12",
+          "family": "regular",
+          "align": "center-right"
+        },
+        "emptyData": {
+          "image_view":   {
+            "image" : "logo_banner.png",
+            "align": "center",
+            "wd": 250.0
+          },
+          "title":  {
+            "text" : "No Data Added!!!",
+            "color" : "0XFF3D3D3D",
+            "size": "16",
+            "family": "regular"
+          },
+          "bottomButtonRefresh": {
+            "text" : "Refresh",
+            "height": 35.0,
+            "color" : "0xFFFFFFFF",
+            "borderRadius": 30.0,
+            "backgroundColor" : "0xFF2854A1",
+            "size": "15",
+            "family": "regular"
+          }
+        }
+      },
+      "details": {
+        "backgroundColor" : "0xFF2854A1",
+        "title":  {
+          "text" : "Add Visa Details",
+          "color" : "0XFFFFFFFF",
+          "size": "18",
+          "family": "bold",
+          "align": "center-left"
+        },
+        "backBar": {
+          "icon": "back",
+          "size": 20.0,
+          "color": "0XFFFFFFFF",
+          "backgroundColor": "transparent",
+          "onPress": true,
+          "align": "center-left"
+        },
+        "text_field_country":  {
+          "name": "PNR",
+          "apiKey": "pnr",
+          "type": "text_field_view",
+          "inputType": "text",
+          "isPassword": false,
+          "backgroundColor": "0XFFFFFFFF",
+          "borderColor": "0XFFAEAEAE",
+          "text" : {
+            "text" : "",
+            "color" : "0xFF2854A1",
+            "size": "14",
+            "family": "regular"
+          },
+          "labelText" : {
+            "text" : "Visiting Country*",
+            "color" : "0xFF2854A1",
+            "size": "14",
+            "family": "regular",
+            "align" : "center-left"
+          },
+          "hintText" : {
+            "text" : "Enter Visiting Country",
+            "color" : "0xFF2854A1",
+            "size": "14",
+            "family": "regular"
+          },
+          "errorText" : {
+            "text" : "",
+            "color" : "0xFFFF0000",
+            "size": "14",
+            "family": "regular"
+          },
+          "validators" : [
+            {
+              "type" : "empty"
+            }
+          ]
+        },
+        "text_field_days":  {
+          "name": "days",
+          "apiKey": "days",
+          "type": "text_field_view",
+          "inputType": "number",
+          "isPassword": false,
+          "backgroundColor": "0XFFFFFFFF",
+          "borderColor": "0XFFAEAEAE",
+          "text" : {
+            "text" : "",
+            "color" : "0xFF2854A1",
+            "size": "14",
+            "family": "regular"
+          },
+          "labelText" : {
+            "text" : "Duration(in days)*",
+            "color" : "0xFF2854A1",
+            "size": "14",
+            "family": "regular",
+            "align" : "center-left"
+          },
+          "hintText" : {
+            "text" : "Enter Duration",
+            "color" : "0xFF2854A1",
+            "size": "14",
+            "family": "regular"
+          },
+          "errorText" : {
+            "text" : "",
+            "color" : "0xFFFF0000",
+            "size": "14",
+            "family": "regular"
+          },
+          "validators" : [
+            {
+              "type" : "empty"
+            }
+          ]
+        },
+        "selectEntries": {
+          "showView": true,
+          "key":"common_type_view",
+          "label":  {
+            "text" : "Type Of Entries*",
+            "color" : "0xFF2854A1",
+            "size": "14",
+            "family": "regular",
+            "align": "center-left"
+          },
+          "dataText":  {
+            "text" : "Choose Type Of Entries",
+            "color" : "0xFFAEAEAE",
+            "size": "15",
+            "family": "regular",
+            "align": "center-left"
+          },
+          "title":{
+            "text" : "Select Type Of Entries",
+            "color" : "0xFF2854A1",
+            "size": "15",
+            "family": "bold",
+            "align": "center"
+          },
+          "listView": {
+            "data": [
+              {
+                "text" : "Single",
+                "color" : "0xFF000000",
+                "size": "12",
+                "family": "regular",
+                "align": "center-left",
+                "id": "183"
+              },
+              {
+                "text" : "Multiple",
+                "color" : "0xFF000000",
+                "size": "12",
+                "family": "regular",
+                "align": "center-left",
+                "id": "184"
+              }
+            ],
+            "emptyData": {
+              "image_view":   {
+                "image" : "logo_banner.png",
+                "align": "center",
+                "wd": 250.0
+              },
+              "title":  {
+                "text" : "No Data Found!!!",
+                "color" : "0XFF3D3D3D",
+                "size": "16",
+                "family": "regular"
+              },
+              "bottomButtonRefresh": {
+                "text" : "Refresh",
+                "height": 35.0,
+                "color" : "0xFFFFFFFF",
+                "borderRadius": 30.0,
+                "backgroundColor" : "0xFF2854A1",
+                "size": "15",
+                "family": "regular"
+              }
+            }
+          },
+          "bottomButtonCentre": {
+            "text" : "Cancel",
+            "color" : "0xFFFFFFFF",
+            "backgroundColor" : "0xFF2854A1",
+            "size": "18",
+            "family": "regular"
+          }
+        },
+        "bottomButtonLeft": {
+          "text" : "Cancel",
+          "color" : "0xFFFFFFFF",
+          "backgroundColor" : "0xFF2854A1",
+          "size": "18",
+          "family": "regular"
+        },
+        "bottomButtonRight": {
+          "text" : "Save",
+          "color" : "0xFFFFFFFF",
+          "backgroundColor" : "0xFF2854A1",
+          "size": "18",
+          "family": "regular"
+        }
+      }
     },
-    "text_field_amount":  {
-      "name": "Amount",
-      "apiKey": "amount",
-      "type": "text_field_view",
-      "inputType": "number",
-      "isPassword": false,
-      "backgroundColor": "0XFFFFFFFF",
-      "borderColor": "0XFFAEAEAE",
-      "text" : {
-        "text" : "",
-        "color" : "0xFF2854A1",
+    "insuranceDetails": {
+      "label": {
+        "text" : "Visa Details",
+        "color" : "0XFFFFFFFF",
         "size": "14",
-        "family": "regular"
+        "family": "bold",
+        "align": "center-left"
       },
-      "labelText" : {
-        "text" : "Amount*",
-        "color" : "0xFF2854A1",
-        "size": "14",
-        "family": "regular",
-        "align" : "center-left"
+      "add": {
+        "text" : "Add",
+        "color" : "0XFFFFFFFF",
+        "size": "15",
+        "family": "bold",
+        "align": "center-right",
+        "type": "cash"
       },
-      "hintText" : {
-        "text" : "Enter Amount",
-        "color" : "0xFF2854A1",
-        "size": "14",
-        "family": "regular"
-      },
-      "errorText" : {
-        "text" : "",
-        "color" : "0xFFFF0000",
-        "size": "14",
-        "family": "regular"
-      },
-      "validators" : [
-        {
-          "type" : "empty"
+      "showDetails": {
+        "label": {
+          "text" : "Show",
+          "color" : "0XFFFFFFFF",
+          "size": "10",
+          "family": "bold",
+          "align": "center-right"
         }
-      ]
-    },
-    "text_field_ticket":  {
-      "name": "Ticket",
-      "apiKey": "ticket",
-      "type": "text_field_view",
-      "inputType": "text",
-      "isPassword": false,
-      "backgroundColor": "0XFFFFFFFF",
-      "borderColor": "0XFFAEAEAE",
-      "text" : {
+      },
+      "header": {
         "text" : "",
-        "color" : "0xFF2854A1",
-        "size": "14",
-        "family": "regular"
+        "color" : "0xFF000000",
+        "size": "12",
+        "family": "bold",
+        "align": "center"
       },
-      "labelText" : {
-        "text" : "Ticket",
-        "color" : "0xFF2854A1",
-        "size": "14",
-        "family": "regular",
-        "align" : "center-left"
-      },
-      "hintText" : {
-        "text" : "Enter Ticket",
-        "color" : "0xFF2854A1",
-        "size": "14",
-        "family": "regular"
-      },
-      "errorText" : {
+      "item": {
         "text" : "",
-        "color" : "0xFFFF0000",
-        "size": "14",
-        "family": "regular"
+        "color" : "0xFFCCCCCC",
+        "size": "11",
+        "family": "bold",
+        "align": "center"
       },
-      "validators" : [
-        {
-          "type" : "empty"
+      "listView": {
+        "recordsFound":  {
+          "text" : "Records Found",
+          "value" : "0",
+          "color" : "0XFFFFFFFF",
+          "size": "12",
+          "family": "regular",
+          "align": "center-right"
+        },
+        "emptyData": {
+          "image_view":   {
+            "image" : "logo_banner.png",
+            "align": "center",
+            "wd": 250.0
+          },
+          "title":  {
+            "text" : "No Data Added!!!",
+            "color" : "0XFF3D3D3D",
+            "size": "16",
+            "family": "regular"
+          },
+          "bottomButtonRefresh": {
+            "text" : "Refresh",
+            "height": 35.0,
+            "color" : "0xFFFFFFFF",
+            "borderRadius": 30.0,
+            "backgroundColor" : "0xFF2854A1",
+            "size": "15",
+            "family": "regular"
+          }
         }
-      ]
+      },
+      "details": {
+        "backgroundColor" : "0xFF2854A1",
+        "title":  {
+          "text" : "Add Insurance Details",
+          "color" : "0XFFFFFFFF",
+          "size": "18",
+          "family": "bold",
+          "align": "center-left"
+        },
+        "backBar": {
+          "icon": "back",
+          "size": 20.0,
+          "color": "0XFFFFFFFF",
+          "backgroundColor": "transparent",
+          "onPress": true,
+          "align": "center-left"
+        },
+        "text_field_country":  {
+          "name": "country",
+          "apiKey": "country",
+          "type": "text_field_view",
+          "inputType": "text",
+          "isPassword": false,
+          "backgroundColor": "0XFFFFFFFF",
+          "borderColor": "0XFFAEAEAE",
+          "text" : {
+            "text" : "",
+            "color" : "0xFF2854A1",
+            "size": "14",
+            "family": "regular"
+          },
+          "labelText" : {
+            "text" : "Visiting Country*",
+            "color" : "0xFF2854A1",
+            "size": "14",
+            "family": "regular",
+            "align" : "center-left"
+          },
+          "hintText" : {
+            "text" : "Enter Visiting Country",
+            "color" : "0xFF2854A1",
+            "size": "14",
+            "family": "regular"
+          },
+          "errorText" : {
+            "text" : "",
+            "color" : "0xFFFF0000",
+            "size": "14",
+            "family": "regular"
+          },
+          "validators" : [
+            {
+              "type" : "empty"
+            }
+          ]
+        },
+        "text_field_days":  {
+          "name": "days",
+          "apiKey": "days",
+          "type": "text_field_view",
+          "inputType": "number",
+          "isPassword": false,
+          "backgroundColor": "0XFFFFFFFF",
+          "borderColor": "0XFFAEAEAE",
+          "text" : {
+            "text" : "",
+            "color" : "0xFF2854A1",
+            "size": "14",
+            "family": "regular"
+          },
+          "labelText" : {
+            "text" : "Duration(in days)*",
+            "color" : "0xFF2854A1",
+            "size": "14",
+            "family": "regular",
+            "align" : "center-left"
+          },
+          "hintText" : {
+            "text" : "Enter Duration",
+            "color" : "0xFF2854A1",
+            "size": "14",
+            "family": "regular"
+          },
+          "errorText" : {
+            "text" : "",
+            "color" : "0xFFFF0000",
+            "size": "14",
+            "family": "regular"
+          },
+          "validators" : [
+            {
+              "type" : "empty"
+            }
+          ]
+        },
+        "bottomButtonLeft": {
+          "text" : "Cancel",
+          "color" : "0xFFFFFFFF",
+          "backgroundColor" : "0xFF2854A1",
+          "size": "18",
+          "family": "regular"
+        },
+        "bottomButtonRight": {
+          "text" : "Save",
+          "color" : "0xFFFFFFFF",
+          "backgroundColor" : "0xFF2854A1",
+          "size": "18",
+          "family": "regular"
+        }
+      }
     }
   },
   "tr_delivery_add_data": {
@@ -6772,6 +7755,62 @@
           "size": "12",
           "family": "regular",
           "align": "center-left"
+        }
+      ]
+    },
+    "bottomButtonCentre": {
+      "text" : "Cancel",
+      "color" : "0xFFFFFFFF",
+      "backgroundColor" : "0xFF2854A1",
+      "size": "18",
+      "family": "regular"
+    }
+  },
+  "dialog_cash_data" : {
+    "backgroundColor" : "0xFF2854A1",
+    "title":  {
+      "text" : "Cash Advance",
+      "color" : "0XFF000000",
+      "size": "14",
+      "family": "bold",
+      "align": "center"
+    },
+    "text_field_amount":  {
+      "name": "Amount",
+      "apiKey": "amount",
+      "type": "text_field_view",
+      "inputType": "number",
+      "isPassword": false,
+      "backgroundColor": "0XFFFFFFFF",
+      "borderColor": "0XFFAEAEAE",
+      "text" : {
+        "text" : "",
+        "color" : "0xFF2854A1",
+        "size": "14",
+        "family": "regular"
+      },
+      "labelText" : {
+        "text" : "Cash Advance*",
+        "color" : "0xFF2854A1",
+        "size": "14",
+        "family": "regular",
+        "align" : "center-left"
+      },
+      "hintText" : {
+        "text" : "Enter Cash Advance",
+        "color" : "0xFF2854A1",
+        "size": "14",
+        "family": "regular"
+      },
+      "errorText" : {
+        "text" : "",
+        "color" : "0xFFFF0000",
+        "size": "14",
+        "family": "regular"
+      },
+      "validators" : [
+        {
+          "type" : "empty"
         }
       ]
     },

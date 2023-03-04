@@ -49,7 +49,7 @@ class _TravelRequestState extends State<TravelRequest> {
         child:MetaIcon(mapData:jsonData['bottomButtonFab'],onButtonPressed: ()async{
           if(jsonData['bottomButtonFab']['onClick'].isNotEmpty){
 
-           Navigator.of(context).pushNamed(jsonData['bottomButtonFab']['onClick']).then((value) {
+           Navigator.of(context).pushNamed(jsonData['bottomButtonFab']['onClick'],arguments: {'tripType':"D"}).then((value) {
              bloc!.add(GetTravelRequestListEvent());
            });
           }

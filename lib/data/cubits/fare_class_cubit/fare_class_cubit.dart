@@ -9,21 +9,28 @@ part 'fare_class_state.dart';
 
 class FareClassCubit extends Cubit<FareClassState> {
   FareClassCubit() : super(FareClassIn(airResponse: [],railResponse: [],roadResponse: []));
+  List<Data> air=[];
+  List<Data> road=[];
+  List<Data> rail=[];
 
   setAirFareClassResponse(List<Data> response) {
     if(state is FareClassIn) {
+      air=response;
       emit(FareClassIn( airResponse: response));
     }
   }
 
   setRoadFareClassResponse(List<Data> response) {
+
     if(state is FareClassIn) {
+      road=response;
       emit(FareClassIn( roadResponse: response));
     }
   }
 
   setRailFareClassResponse(List<Data> response) {
     if(state is FareClassIn) {
+      rail=response;
       emit(FareClassIn(railResponse: response));
     }
   }
@@ -34,13 +41,13 @@ class FareClassCubit extends Cubit<FareClassState> {
       final current = state as FareClassIn;
 
       if(mode=="A"){
-        return current.airResponse!;
+        return air ?? [];
       }
       if(mode=="R"){
-        return current.roadResponse!;
+        return rail ??[];
       }
       if(mode=="B"){
-        return current.railResponse!;
+        return road ??[];
       }
 
       return [];
