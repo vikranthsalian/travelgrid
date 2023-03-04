@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:travelgrid/common/extensions/pretty.dart';
 import 'package:travelgrid/presentation/screens/common/cities_screen.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
 
-import '../../data/datasources/cities_list.dart';
 
 class MetaSearchSelectorView extends StatefulWidget {
 

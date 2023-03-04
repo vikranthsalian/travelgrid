@@ -7,7 +7,6 @@ class HttpClient {
   static final HttpClient _instance = HttpClient.internal();
   HttpClient.internal();
   factory HttpClient() => _instance;
-  final JsonDecoder _jsonDecoder = const JsonDecoder();
   String baseUrl = FlavourConstants.apiHost;
 
   Future<dynamic> postQuery(String url,String body,ogContent, [ bool useToken = true, String? languageCode ]) async {

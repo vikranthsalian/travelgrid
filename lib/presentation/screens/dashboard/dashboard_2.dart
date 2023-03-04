@@ -1,4 +1,3 @@
-import 'package:chips_choice/chips_choice.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -6,7 +5,6 @@ import 'package:travelgrid/common/config/navigator_key.dart';
 import 'package:travelgrid/common/constants/flavour_constants.dart';
 import 'package:travelgrid/common/constants/route_constants.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
-import 'package:travelgrid/common/extensions/pretty.dart';
 import 'package:travelgrid/common/utils/show_alert.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';
 import 'package:travelgrid/presentation/widgets/icon.dart';

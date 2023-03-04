@@ -3,14 +3,10 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:travelgrid/common/constants/flavour_constants.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
 import 'package:travelgrid/common/utils/city_util.dart';
 import 'package:travelgrid/data/datasources/tr_summary_response.dart';
 import 'package:travelgrid/data/models/tr/tr_city_pair_model.dart';
-import 'package:travelgrid/presentation/components/dialog_cash.dart';
-import 'package:travelgrid/presentation/screens/dashboard/tr/bloc/tr_itinerary%20_form_bloc.dart';
-import 'package:travelgrid/presentation/screens/dashboard/tr/bloc/tr_processed_form_bloc.dart';
 import 'package:travelgrid/presentation/screens/dashboard/tr/bloc/tr_round_itinerary%20_form_bloc.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';
 import 'package:travelgrid/presentation/widgets/date_time_view.dart';
@@ -20,7 +16,6 @@ import 'package:travelgrid/presentation/widgets/search_selector_view.dart';
 import 'package:travelgrid/presentation/widgets/switch.dart';
 import 'package:travelgrid/presentation/widgets/text_field.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
-import 'package:travelgrid/presentation/widgets/toggle_button.dart';
 
 class AddRoundItinerary  extends StatelessWidget {
   Map<String,dynamic> jsonData = {};

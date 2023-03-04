@@ -2,15 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
-import 'package:travelgrid/common/config/navigator_key.dart';
-import 'package:travelgrid/common/injector/injector.dart';
-import 'package:travelgrid/common/utils/date_time_util.dart';
 import 'package:travelgrid/common/utils/validators.dart';
-import 'package:travelgrid/data/cubits/login_cubit/login_cubit.dart';
-import 'package:travelgrid/data/datasources/login_response.dart';
 import 'package:travelgrid/data/models/ge/ge_conveyance_model.dart';
-import 'package:travelgrid/domain/usecases/login_usecase.dart';
-import 'dart:math';
 class TravelFormBloc extends FormBloc<String, String> {
 
   final selectModeID = SelectFieldBloc<String, dynamic>();

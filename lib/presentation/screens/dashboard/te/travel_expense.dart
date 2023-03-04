@@ -3,7 +3,6 @@ import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:travelgrid/common/constants/flavour_constants.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
-import 'package:travelgrid/common/extensions/pretty.dart';
 import 'package:travelgrid/common/injector/injector.dart';
 import 'package:travelgrid/common/utils/date_time_util.dart';
 import 'package:travelgrid/data/blocs/travel_expense/te_bloc.dart';

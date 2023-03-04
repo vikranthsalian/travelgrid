@@ -6,7 +6,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:travelgrid/common/constants/flavour_constants.dart';
 import 'package:travelgrid/common/constants/route_constants.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
-import 'package:travelgrid/common/extensions/pretty.dart';
 import 'package:travelgrid/common/injector/injector.dart';
 import 'package:travelgrid/common/utils/show_alert.dart';
 import 'package:travelgrid/data/blocs/accom/accom_type_bloc.dart';

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
 import 'package:travelgrid/common/utils/city_util.dart';
-import 'package:travelgrid/data/datasources/tr_summary_response.dart';
 import 'package:travelgrid/data/models/tr/tr_city_pair_model.dart';
 import 'package:travelgrid/presentation/screens/dashboard/tr/add/add_itinery.dart';
 import 'package:travelgrid/presentation/screens/dashboard/tr/add/add_round_itinery.dart';
