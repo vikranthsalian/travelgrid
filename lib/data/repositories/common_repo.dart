@@ -4,6 +4,7 @@ import 'package:travelgrid/data/cubits/login_cubit/login_cubit.dart';
 import 'package:travelgrid/data/datasources/accom_type_list.dart';
 import 'package:travelgrid/data/datasources/approver_list.dart';
 import 'package:travelgrid/data/datasources/cities_list.dart';
+import 'package:travelgrid/data/datasources/currency_list.dart';
 import 'package:travelgrid/data/datasources/fare_class_list.dart';
 import 'package:travelgrid/data/datasources/misc_type_list.dart';
 import 'package:travelgrid/data/datasources/travel_mode_list.dart';
@@ -30,7 +31,7 @@ class CommonRepository extends CommonAPIAbstract {
       "countryCode":countryCode,
     };
 
-    var response = await apiRemoteDatasource.getAllCities("getCities",data);
+    var response = await apiRemoteDatasource.getCommonTypes("getCities",data);
 
     if(response!=null) {
       MetaCityListResponse modelResponse = MetaCityListResponse.fromJson(response);
@@ -39,6 +40,23 @@ class CommonRepository extends CommonAPIAbstract {
 
       return MetaCityListResponse(status: false);
   }
+
+  @override
+  Future<MetaCityListResponse> getCountriesList() async{
+    Map<String,dynamic> data= {
+      "q":""
+    };
+
+    var response = await apiRemoteDatasource.getCommonTypes("getCountries",data);
+
+    if(response!=null) {
+      MetaCityListResponse modelResponse = MetaCityListResponse.fromJson(response);
+      return modelResponse;
+    }
+
+    return MetaCityListResponse(status: false);
+  }
+
 
   @override
   Future<MetaAccomTypeListResponse> getAccomTypesList() async {
@@ -157,5 +175,38 @@ class CommonRepository extends CommonAPIAbstract {
 
     return MetaTravelPurposeListResponse(status: false);
   }
+
+  @override
+  Future<MetaCurrencyListResponse> getCurrencyList()async{
+    Map<String,dynamic> data= {};
+
+    var response = await apiRemoteDatasource.getCommonTypes("getCurrencies",data);
+
+    if(response!=null) {
+      MetaCurrencyListResponse modelResponse = MetaCurrencyListResponse.fromJson(response);
+      return modelResponse;
+    }
+
+    return MetaCurrencyListResponse(status: false);
+  }
+
+  @override
+  Future<SuccessModel> getExchangeRate(currency, date) async{
+    // TODO: implement getExchangeRate
+    Map<String,dynamic> data= {
+      'currency':currency,
+      'calender':date
+    };
+
+    var response = await apiRemoteDatasource.getCommonTypes("getMaExchangeRate",data);
+
+    if(response!=null) {
+      SuccessModel modelResponse = SuccessModel.fromJson(response);
+      return modelResponse;
+    }
+
+    return SuccessModel(status: false);
+  }
+
 
 }

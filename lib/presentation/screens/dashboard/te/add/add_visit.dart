@@ -19,7 +19,8 @@ class AddVisitDetails extends StatefulWidget {
   Function(ExpenseVisitDetails)? onAdd;
   bool isEdit;
   GEMiscModel? miscModel;
-  AddVisitDetails({this.onAdd,this.isEdit=false,this.miscModel});
+  String? tripType;
+  AddVisitDetails(this.tripType,{this.onAdd,this.isEdit=false,this.miscModel});
   @override
   _AddVisitDetailsState createState() => _AddVisitDetailsState();
 }
@@ -180,7 +181,9 @@ class _AddVisitDetailsState extends State<AddVisitDetails> {
                                   ),
 
                                   Container(
-                                    child: MetaSearchSelectorView(mapData: jsonData['selectCity'],
+                                    child: MetaSearchSelectorView(
+                                      widget.tripType,
+                                      mapData: jsonData['selectCity'],
                                       text: getInitialText(formBloc!.cityName.value),
                                       onChange:(value){
                                         formBloc!.cityName.updateValue(value.name);

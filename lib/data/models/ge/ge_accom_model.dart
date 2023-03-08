@@ -9,8 +9,8 @@ class GEAccomModel {
   String? hotelName;
   int? accomodationType;
   String? accomodationTypeName;
-  int? amount;
-  int? tax;
+  double? amount;
+  double? tax;
   String? description;
   bool? withBill;
   String? voucherPath;
@@ -46,8 +46,8 @@ class GEAccomModel {
     hotelName = json['hotelName'];
     accomodationType = json['accomodationType'];
     accomodationTypeName = json['accomodationTypeName'];
-    amount = json['amount'];
-    tax = json['tax'];
+    amount = double.parse(json['amount'].toString());
+    tax =  double.parse(json['tax'].toString());
     description = json['description'];
     withBill = json['withBill'] =="true" ? true:false;
     voucherPath = json['voucherPath'];
@@ -108,8 +108,8 @@ class GEAccomModel {
       hotelName: map['hotelName'] as String,
       accomodationType: map['accomodationType'] as int,
       accomodationTypeName: map['accomodationTypeName'] as String,
-      amount: map['amount'] as int,
-      tax: map['tax'] as int,
+      amount: map['amount'] as double,
+      tax: map['tax'] as double,
       description: map['description'] as String,
       withBill: map['withBill'] as bool,
       voucherPath: map['voucherPath'] as String,

@@ -132,7 +132,6 @@ class _CreateBuildItineraryState extends State<BuildItinerary> {
               padding: EdgeInsets.zero,
               itemBuilder: (BuildContext context, int index) {
                 TRCityPairModel item = list[index];
-
                 return oneWayView(item,map);
               },
               itemCount: list.length

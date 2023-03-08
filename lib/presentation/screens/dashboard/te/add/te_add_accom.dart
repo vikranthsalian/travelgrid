@@ -28,7 +28,8 @@ class AddTeAccommodationExpense extends StatefulWidget {
   Function(Map)? onAdd;
   bool isEdit;
   TEAccomModel? accomModel;
-  AddTeAccommodationExpense({this.onAdd,this.isEdit=false,this.accomModel});
+  String? tripType;
+  AddTeAccommodationExpense(this.tripType,{this.onAdd,this.isEdit=false,this.accomModel});
   @override
   _AddTeAccommodationExpenseState createState() => _AddTeAccommodationExpenseState();
 }
@@ -221,7 +222,9 @@ class _AddTeAccommodationExpenseState extends State<AddTeAccommodationExpense> {
                                       children: [
                                         Expanded(
                                           child: Container(
-                                            child: MetaSearchSelectorView(mapData: jsonData['selectCity'],
+                                            child: MetaSearchSelectorView(
+                                              widget.tripType,
+                                              mapData: jsonData['selectCity'],
                                               text: getInitialText(formBloc!.cityName.value),
                                               onChange:(value){
                                                 formBloc!.cityName.updateValue(value.name);

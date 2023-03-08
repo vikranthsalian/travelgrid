@@ -8,8 +8,9 @@ class MetaSearchSelectorView extends StatefulWidget {
 
   Map mapData;
   String? text;
+  String? tripType;
   Function? onChange;
-  MetaSearchSelectorView({super.key, required this.mapData,this.text,this.onChange});
+  MetaSearchSelectorView(this.tripType,{super.key, required this.mapData,this.text,this.onChange});
 
   @override
   State<StatefulWidget> createState() => _MetaSearchSelectorViewState();
@@ -27,6 +28,7 @@ class _MetaSearchSelectorViewState extends State<MetaSearchSelectorView> {
           InkWell(
             onTap: (){
               Navigator.of(context).push(MaterialPageRoute(builder: (context) => CityScreen(
+                tripType: widget.tripType,
                 onTap: (data){
                   Navigator.pop(context);
                   setState(() {

@@ -6,7 +6,7 @@ class GEMiscModel {
   int? city;
   String? cityName;
   int? unitType;
-  int? amount;
+  double? amount;
   String? voucherNumber;
   String? description;
   String? voucherPath;
@@ -89,7 +89,7 @@ class GEMiscModel {
       city: map['city'] as int,
       cityName: map['cityName'] as String,
       unitType: map['unitType'] ?? 0,
-      amount: map['amount'] as int,
+      amount: map['amount'] as double,
       voucherNumber: map['voucherNumber'] as String,
       description: map['description'] as String,
       voucherPath: map['voucherPath'] as String,

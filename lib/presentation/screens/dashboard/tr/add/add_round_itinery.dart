@@ -130,7 +130,9 @@ class AddRoundItinerary  extends StatelessWidget {
                                             children: [
                                               Expanded(
                                                 child: Container(
-                                                  child: MetaSearchSelectorView(mapData: jsonData['selectOrigin'],
+                                                  child: MetaSearchSelectorView(
+                                                    tripType,
+                                                    mapData: jsonData['selectOrigin'],
                                                     text: CityUtil.getCityNameFromID(formBloc!.origin.value),
                                                     onChange:(value){
                                                       print(value);
@@ -143,7 +145,9 @@ class AddRoundItinerary  extends StatelessWidget {
                                               ),
                                               Expanded(
                                                 child: Container(
-                                                  child: MetaSearchSelectorView(mapData: jsonData['selectDestination'],
+                                                  child: MetaSearchSelectorView(
+                                                    tripType,
+                                                    mapData: jsonData['selectDestination'],
                                                     text: CityUtil.getCityNameFromID(formBloc!.destination.value),
                                                     onChange:(value){
                                                       formBloc!.destination.updateValue(value.id.toString());

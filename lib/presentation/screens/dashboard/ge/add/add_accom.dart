@@ -28,7 +28,8 @@ class CreateAccommodationExpense extends StatefulWidget {
   Function(Map)? onAdd;
   bool isEdit;
   GEAccomModel? accomModel;
-  CreateAccommodationExpense({this.onAdd,this.isEdit=false,this.accomModel});
+  String? tripType;
+  CreateAccommodationExpense(this.tripType,{this.onAdd,this.isEdit=false,this.accomModel});
   @override
   _CreateAccommodationExpenseState createState() => _CreateAccommodationExpenseState();
 }
@@ -178,7 +179,7 @@ class _CreateAccommodationExpenseState extends State<CreateAccommodationExpense>
                             widget.onAdd!(
                                 {
                                   "data": jsonDecode(state.successResponse.toString()),
-                                  "item" : ExpenseModel(type: GETypes.ACCOMMODATION,amount: modelResponse.amount.toString())
+                                  "item" : ExpenseModel(type: GETypes.ACCOMMODATION,amount: (modelResponse.amount!+modelResponse.tax!).toString())
                                 }
                             );
                             Navigator.pop(context);
@@ -221,7 +222,8 @@ class _CreateAccommodationExpenseState extends State<CreateAccommodationExpense>
                                       children: [
                                         Expanded(
                                           child: Container(
-                                            child: MetaSearchSelectorView(mapData: jsonData['selectCity'],
+                                            child: MetaSearchSelectorView(widget.tripType,
+                                              mapData: jsonData['selectCity'],
                                               text: getInitialText(formBloc!.cityName.value),
                                               onChange:(value){
                                                 formBloc!.cityName.updateValue(value.name);
@@ -333,6 +335,7 @@ class _CreateAccommodationExpenseState extends State<CreateAccommodationExpense>
       ),
     );
   }
+
   getInitialText(String text) {
 
     if(text.isNotEmpty){

@@ -1,6 +1,7 @@
 import 'package:travelgrid/data/datasources/accom_type_list.dart';
 import 'package:travelgrid/data/datasources/approver_list.dart';
 import 'package:travelgrid/data/datasources/cities_list.dart';
+import 'package:travelgrid/data/datasources/currency_list.dart';
 import 'package:travelgrid/data/datasources/fare_class_list.dart';
 import 'package:travelgrid/data/datasources/lat_long_distance_model.dart';
 import 'package:travelgrid/data/datasources/misc_type_list.dart';
@@ -14,7 +15,13 @@ class CommonUseCase {
   CommonUseCase(this.apiAbstract);
   Future<MetaCityListResponse> getCities(countryCode,tripType) async => apiAbstract.getCities(countryCode,tripType);
 
+  Future<MetaCityListResponse> getCountriesList() async => apiAbstract.getCountriesList();
+
   Future<MetaAccomTypeListResponse> getAccomTypesList() async => apiAbstract.getAccomTypesList();
+
+  Future<MetaCurrencyListResponse> getCurrencyList() async => apiAbstract.getCurrencyList();
+
+  Future<SuccessModel> getExchangeRate(currency,date) async => apiAbstract.getExchangeRate(currency,date);
 
   Future<MetaFareClassListResponse> getFareClassList(mode) async => apiAbstract.getFareClassList(mode);
 

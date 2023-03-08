@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:travelgrid/presentation/components/dialog_type.dart';
 import 'package:travelgrid/presentation/screens/common/accom_type_screen.dart';
 import 'package:travelgrid/presentation/screens/common/common_type_screen.dart';
+import 'package:travelgrid/presentation/screens/common/currency_screen.dart';
 import 'package:travelgrid/presentation/screens/common/fare_class_screen.dart';
 import 'package:travelgrid/presentation/screens/common/misc_type_screen.dart';
 import 'package:travelgrid/presentation/screens/common/travel_mode_screen.dart';
@@ -79,6 +80,14 @@ class _MetaDialogSelectorViewState extends State<MetaDialogSelectorView> {
                 widget.onChange!(value);
               });
             });
+        case "currency_type_view":
+        return CurrencyScreen(
+            onTap:(value){
+              setState(() {
+                widget.text= value['label'];
+                widget.onChange!(value);
+              });
+            });
       case "fare_class_view":
         return FareClassScreen(
           mode:widget.modeType!=null ?widget.modeType: text['modeType'],
@@ -123,6 +132,8 @@ class _MetaDialogSelectorViewState extends State<MetaDialogSelectorView> {
       case "travel_mode_view":
         return 0.5;
       case "travel_purpose_view":
+        return 0.7;
+      case "currency_type_view":
         return 0.7;
       default:
         return 0.25;

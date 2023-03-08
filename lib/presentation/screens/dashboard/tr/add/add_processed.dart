@@ -5,9 +5,16 @@ import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:travelgrid/common/constants/flavour_constants.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
+import 'package:travelgrid/common/utils/city_util.dart';
 import 'package:travelgrid/data/datasources/tr_summary_response.dart';
 import 'package:travelgrid/data/models/tr/tr_city_pair_model.dart';
+import 'package:travelgrid/data/models/tr/tr_forex_model.dart';
+import 'package:travelgrid/data/models/tr/tr_insurance_model.dart';
+import 'package:travelgrid/data/models/tr/tr_visa_model.dart';
 import 'package:travelgrid/presentation/components/dialog_cash.dart';
+import 'package:travelgrid/presentation/screens/dashboard/tr/add/add_forex.dart';
+import 'package:travelgrid/presentation/screens/dashboard/tr/add/add_insurance.dart';
+import 'package:travelgrid/presentation/screens/dashboard/tr/add/add_visa.dart';
 import 'package:travelgrid/presentation/screens/dashboard/tr/add/build_itenerary.dart';
 import 'package:travelgrid/presentation/screens/dashboard/tr/bloc/tr_processed_form_bloc.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
@@ -32,6 +39,9 @@ class TrProcessed extends StatelessWidget {
   List<String> segment = ["O","R","M"];
   int selected = 0;
   List<TRCityPairModel> listCity=[];
+  List<TrForexAdvance> listForex=[];
+  List<TRTravelVisas> listVisa=[];
+  List<TRTravelInsurance> listInsurance=[];
   //BooleanFieldBloc? swCash=BooleanFieldBloc(initialValue: false);
   @override
   Widget build(BuildContext context) {
@@ -101,9 +111,13 @@ class TrProcessed extends StatelessWidget {
                               ),
                               SizedBox(height: 10.h,),
                               buildCityPairWidget(),
+                              if(tripType=="D")
                               buildExpandableView(jsonData,"cashAdvanceDetails",context),
+                              if(tripType=="O")
                               buildExpandableView(jsonData,"forexAdvanceDetails",context),
+                              if(tripType=="O")
                               buildExpandableView(jsonData,"visaDetails",context),
+                              if(tripType=="O")
                               buildExpandableView(jsonData,"insuranceDetails",context),
                             ]
                         ),
@@ -118,7 +132,7 @@ class TrProcessed extends StatelessWidget {
   }
 
   Container buildExpandableView(Map mapData,String key,ctx){
-    Map map= mapData[key];
+    Map<String,dynamic> map= mapData[key];
 
 
 
@@ -150,7 +164,7 @@ class TrProcessed extends StatelessWidget {
     );
   }
 
-  Container buildHeaders(Map map,ctx) {
+  Container buildHeaders(Map<String,dynamic> map,ctx) {
     return Container(
       height: 40.h,
       color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
@@ -165,16 +179,60 @@ class TrProcessed extends StatelessWidget {
                 margin: EdgeInsets.symmetric(horizontal: 20.w),
                 child: InkWell(
                   onTap: ()async{
-                    await showDialog(
-                    context: ctx,
-                    builder: (_) => DialogCash(onSubmit: (value){
 
-                      List<MaCashAdvance> list = [MaCashAdvance(totalCashAmount: int.parse(value),currentStatus: "",violation: "")];
-                      formBloc!.cashList.changeValue(list);
+                    if(map['add']['type']=="cash") {
+                      await showDialog(
+                          context: ctx,
+                          builder: (_) =>
+                              DialogCash(onSubmit: (value) {
+                                List<MaCashAdvance> list = [
+                                  MaCashAdvance(
+                                      totalCashAmount: int.parse(value),
+                                      currentStatus: "",
+                                      violation: "")
+                                ];
+                                formBloc!.cashList.changeValue(list);
+                              }));
+                    }
+
+                    if(map['add']['type']=="forex") {
+                      Navigator.of(ctx).push(MaterialPageRoute(builder: (context) =>
+                          AddForex(
+                            jsonData: map['details'],
+                            isEdit:false,
+                            onAdd: (TrForexAdvance data){
+                              listForex.add(data);
+                              formBloc!.forexList.clear();
+                              formBloc!.forexList.changeValue(listForex);
+                            },)));
+                    }
+
+                    if(map['add']['type']=="visa") {
+                      Navigator.of(ctx).push(MaterialPageRoute(builder: (context) =>
+                          AddVisa(
+                            jsonData: map['details'],
+                            isEdit:false,
+                            onAdd: (TRTravelVisas data){
+                              listVisa.add(data);
+                              formBloc!.visaList.clear();
+                              formBloc!.visaList.changeValue(listVisa);
+                            },)));
+                    }
+
+                    if(map['add']['type']=="insurance") {
+                      Navigator.of(ctx).push(MaterialPageRoute(builder: (context) =>
+                          AddInsurance(
+                            jsonData: map['details'],
+                            isEdit:false,
+                            onAdd: (TRTravelInsurance data){
+                              listInsurance.add(data);
+                              formBloc!.insuranceList.clear();
+                              formBloc!.insuranceList.changeValue(listInsurance);
+                            },)));
+                    }
 
 
 
-                    }));
                   },
                     child: MetaTextView(mapData: map['add'],text: "ADD",)
                 )),
@@ -280,55 +338,55 @@ class TrProcessed extends StatelessWidget {
   buildForexAdvanceWidget(Map map) {
 
     return BlocBuilder<SelectFieldBloc, SelectFieldBlocState>(
-        bloc: formBloc!.cashList,
+        bloc: formBloc!.forexList,
         builder: (context, state) {
 
-          List<MaCashAdvance>? list  = formBloc!.cashList.value!.toList();
+          List<TrForexAdvance>? list  = formBloc!.forexList.value!.toList();
           return  Container(
             padding: EdgeInsets.symmetric(horizontal: 10.w),
             color: Colors.white,
-            child: list.isNotEmpty ? Column(
-              children: [
-                Row(
-                  children: [
-                    Container(
-                        width: 40.w,
-                        child: MetaTextView(mapData:  map['header'],text: "#")),
-                    Expanded(child: MetaTextView(mapData:  map['header'],text: "Currency",)),
-                    Expanded(
-                        flex: 2,
-                        child: MetaTextView(mapData:  map['header'],text: "Requested Amount")),
-                    //  Expanded(child: MetaTextView(mapData:  map['header'],text: "Status")),
-
-                  ],
-                ),
-                ListView.builder(
-                    physics: NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    padding: EdgeInsets.zero,
-                    itemBuilder: (BuildContext context, int index) {
-                      MaCashAdvance item = list[index];
-                      return Container(
-                        padding: EdgeInsets.symmetric(vertical: 5.h),
-                        color: Colors.white,
-                        child:  Row(
+            child: list.isNotEmpty ? ListView.builder(
+                physics: NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                padding: EdgeInsets.zero,
+                itemBuilder: (BuildContext context, int index) {
+                  TrForexAdvance item = list[index];
+                  return Container(
+                    padding: EdgeInsets.symmetric(vertical: 5.h),
+                    color: Colors.white,
+                    child:  Column(
+                      children: [
+                        Container(
+                            width: 10.w,
+                            child: MetaTextView(mapData:  map['header'],text: "#")),
+                        Expanded(child: MetaTextView(mapData:  map['header'],text: "Currency",)),
+                        Expanded(child: MetaTextView(mapData:  map['header'],text: "Req Cash")),
+                        Expanded(child: MetaTextView(mapData:  map['header'],text: "Req Card")),
+                        Expanded(child: MetaTextView(mapData:  map['header'],text: "Total Forex(INR)")),
+                        Row(
                           children: [
                             Container(
-                                width: 40.w,
+                                width: 10.w,
                                 child: MetaTextView(mapData:  map['item'],text: (index+1).toString())),
-                            Expanded(child: MetaTextView(mapData:  map['item'],text: "INR",)),
-                            Expanded(
-                                flex: 2,
-                                child: MetaTextView(mapData:  map['item'],text:item.totalCashAmount.toString(),)),
-                            //  Expanded(child: MetaTextView(mapData:  map['item'],text: item.currentStatus)),
+                            Expanded(child: MetaTextView(mapData:  map['item'],text:  CityUtil.getCurrencyFromID(item.currency))),
+                            Expanded(child: MetaTextView(mapData:  map['item'],text: item.cash.toString(),)),
+                            Expanded(child: MetaTextView(mapData:  map['item'],text: item.card.toString(),)),
+                            Expanded(child: MetaTextView(mapData:  map['item'],text: item.totalForexAmount.toString())),
 
                           ],
                         ),
-                      );
-                    },
-                    itemCount: list.length
-                ),
-              ],
+                        Row(
+                            children: [
+                              Expanded(child: MetaTextView(mapData:  map['header'],text: "Exchange Rate")),
+                              Expanded(child: MetaTextView(mapData:  map['header'],text: "Comments")),
+                            ]),
+                        Expanded(child: MetaTextView(mapData:  map['header'],text: "1")),
+                        Expanded(child: MetaTextView(mapData:  map['header'],text: item.address)),
+                      ],
+                    ),
+                  );
+                },
+                itemCount: list.length
             ):Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -343,25 +401,25 @@ class TrProcessed extends StatelessWidget {
   buildVisaAdvanceWidget(Map map) {
 
     return BlocBuilder<SelectFieldBloc, SelectFieldBlocState>(
-        bloc: formBloc!.cashList,
+        bloc: formBloc!.visaList,
         builder: (context, state) {
 
-          List<MaCashAdvance>? list  = formBloc!.cashList.value!.toList();
+          List<TRTravelVisas>? list  = formBloc!.visaList.value!.toList();
           return  Container(
-            padding: EdgeInsets.symmetric(horizontal: 10.w),
+            padding: EdgeInsets.symmetric(horizontal: 10.w,vertical: 10.h),
             color: Colors.white,
             child: list.isNotEmpty ? Column(
               children: [
                 Row(
                   children: [
                     Container(
-                        width: 40.w,
+                        width: 10.w,
                         child: MetaTextView(mapData:  map['header'],text: "#")),
-                    Expanded(child: MetaTextView(mapData:  map['header'],text: "Currency",)),
                     Expanded(
-                        flex: 2,
-                        child: MetaTextView(mapData:  map['header'],text: "Requested Amount")),
-                    //  Expanded(child: MetaTextView(mapData:  map['header'],text: "Status")),
+                        child: MetaTextView(mapData:  map['header'],text: "Visiting Country")),
+                    Expanded(
+                        child: MetaTextView(mapData:  map['header'],text: "Duration(Days)")),
+                    Expanded(child: MetaTextView(mapData:  map['header'],text: "Service Type",)),
 
                   ],
                 ),
@@ -370,21 +428,18 @@ class TrProcessed extends StatelessWidget {
                     shrinkWrap: true,
                     padding: EdgeInsets.zero,
                     itemBuilder: (BuildContext context, int index) {
-                      MaCashAdvance item = list[index];
+                      TRTravelVisas item = list[index];
                       return Container(
                         padding: EdgeInsets.symmetric(vertical: 5.h),
                         color: Colors.white,
                         child:  Row(
                           children: [
                             Container(
-                                width: 40.w,
+                                width: 10.w,
                                 child: MetaTextView(mapData:  map['item'],text: (index+1).toString())),
-                            Expanded(child: MetaTextView(mapData:  map['item'],text: "INR",)),
-                            Expanded(
-                                flex: 2,
-                                child: MetaTextView(mapData:  map['item'],text:item.totalCashAmount.toString(),)),
-                            //  Expanded(child: MetaTextView(mapData:  map['item'],text: item.currentStatus)),
-
+                            Expanded(child: MetaTextView(mapData:  map['item'],text: item.visitingCountry)),
+                            Expanded(child: MetaTextView(mapData:  map['item'],text:item.durationOfStay.toString())),
+                            Expanded(child: MetaTextView(mapData:  map['item'],text:"VISA")),
                           ],
                         ),
                       );
@@ -406,25 +461,25 @@ class TrProcessed extends StatelessWidget {
   buildInsuranceAdvanceWidget(Map map) {
 
     return BlocBuilder<SelectFieldBloc, SelectFieldBlocState>(
-        bloc: formBloc!.cashList,
+        bloc: formBloc!.insuranceList,
         builder: (context, state) {
 
-          List<MaCashAdvance>? list  = formBloc!.cashList.value!.toList();
+          List<TRTravelInsurance>? list  = formBloc!.insuranceList.value!.toList();
           return  Container(
-            padding: EdgeInsets.symmetric(horizontal: 10.w),
+            padding: EdgeInsets.symmetric(horizontal: 10.w,vertical: 10.h),
             color: Colors.white,
             child: list.isNotEmpty ? Column(
               children: [
                 Row(
                   children: [
                     Container(
-                        width: 40.w,
+                        width: 10.w,
                         child: MetaTextView(mapData:  map['header'],text: "#")),
-                    Expanded(child: MetaTextView(mapData:  map['header'],text: "Currency",)),
                     Expanded(
-                        flex: 2,
-                        child: MetaTextView(mapData:  map['header'],text: "Requested Amount")),
-                    //  Expanded(child: MetaTextView(mapData:  map['header'],text: "Status")),
+                        child: MetaTextView(mapData:  map['header'],text: "Visiting Country")),
+                    Expanded(
+                        child: MetaTextView(mapData:  map['header'],text: "Duration(Days)")),
+                    Expanded(child: MetaTextView(mapData:  map['header'],text: "Service Type",)),
 
                   ],
                 ),
@@ -433,21 +488,18 @@ class TrProcessed extends StatelessWidget {
                     shrinkWrap: true,
                     padding: EdgeInsets.zero,
                     itemBuilder: (BuildContext context, int index) {
-                      MaCashAdvance item = list[index];
+                      TRTravelInsurance item = list[index];
                       return Container(
                         padding: EdgeInsets.symmetric(vertical: 5.h),
                         color: Colors.white,
                         child:  Row(
                           children: [
                             Container(
-                                width: 40.w,
+                                width: 10.w,
                                 child: MetaTextView(mapData:  map['item'],text: (index+1).toString())),
-                            Expanded(child: MetaTextView(mapData:  map['item'],text: "INR",)),
-                            Expanded(
-                                flex: 2,
-                                child: MetaTextView(mapData:  map['item'],text:item.totalCashAmount.toString(),)),
-                            //  Expanded(child: MetaTextView(mapData:  map['item'],text: item.currentStatus)),
-
+                            Expanded(child: MetaTextView(mapData:  map['item'],text: item.visitingCountry)),
+                            Expanded(child: MetaTextView(mapData:  map['item'],text:item.durationOfStay.toString())),
+                            Expanded(child: MetaTextView(mapData:  map['item'],text:"VISA")),
                           ],
                         ),
                       );

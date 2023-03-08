@@ -29,7 +29,8 @@ class AddTeTicketExpense extends StatefulWidget {
   Function(Map)? onAdd;
   bool isEdit;
   TETicketModel? teTicketModel;
-  AddTeTicketExpense({this.onAdd,this.isEdit=false,this.teTicketModel});
+  String? tripType;
+  AddTeTicketExpense(this.tripType,{this.onAdd,this.isEdit=false,this.teTicketModel});
   @override
   _AddTeTicketExpenseState createState() => _AddTeTicketExpenseState();
 }
@@ -211,7 +212,9 @@ class _AddTeTicketExpenseState extends State<AddTeTicketExpense> {
                                       children: [
                                         Expanded(
                                           child: Container(
-                                            child: MetaSearchSelectorView(mapData: jsonData['selectOrigin'],
+                                            child: MetaSearchSelectorView(
+                                              widget.tripType,
+                                              mapData: jsonData['selectOrigin'],
                                               text: CityUtil.getCityNameFromID(formBloc!.origin.value),
                                               onChange:(value){
                                               print(value);
@@ -222,7 +225,9 @@ class _AddTeTicketExpenseState extends State<AddTeTicketExpense> {
                                         ),
                                         Expanded(
                                           child: Container(
-                                            child: MetaSearchSelectorView(mapData: jsonData['selectDestination'],
+                                            child: MetaSearchSelectorView(
+                                              widget.tripType,
+                                              mapData: jsonData['selectDestination'],
                                               text: CityUtil.getCityNameFromID(formBloc!.destination.value),
                                               onChange:(value){
                                                 formBloc!.destination.updateValue(value.id.toString());

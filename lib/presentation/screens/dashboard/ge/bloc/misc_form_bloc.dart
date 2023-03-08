@@ -78,14 +78,14 @@ class MiscFormBloc extends FormBloc<String, String> {
       if(miscID.value == "212")
       "unitType":int.parse(unitTypeID.value),
     //  "unitName":unitTypeName.value,
-      "amount": int.parse(tfAmount.value),
+      "amount": tfAmount.valueToDouble,
       "voucherNumber": tfVoucher.value,
       "description": tfDescription.value,
 
       "voucherPath": voucherPath.value,
       "voucherFile": null,
 
-      "voilationMessage": "Exception due to manual creation of Miscellaneous",
+      "voilationMessage": "",
     };
      emitSuccess(successResponse: jsonEncode(saveMiscData));
 

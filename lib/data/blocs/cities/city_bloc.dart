@@ -23,15 +23,14 @@ class CityBloc extends Bloc<CityEvent, CityState> {
     emit(CityInitialState());
     if(event is GetCityListEvent) {
       MetaCityListResponse? response = await Injector.resolve<CommonUseCase>().getCities("IN","D");
-
       appNavigatorKey.currentState!.context.read<CityCubit>().setCityResponse(response.data! ?? []);
-
-
     }
 
-    if(event is SearchCityListEvent) {
-    emit(CityLoadedState(data: MetaCityListResponse(data: event.list,message: "") ));
+    if(event is GetCountryListEvent) {
+      MetaCityListResponse? response = await Injector.resolve<CommonUseCase>().getCities("","I");
+      appNavigatorKey.currentState!.context.read<CityCubit>().setCountryResponse(response.data! ?? []);
     }
+
 
 
   }

@@ -15,7 +15,8 @@ import 'package:travelgrid/presentation/widgets/text_view.dart';
 
 class CityScreen extends StatefulWidget {
   Function(Data)? onTap;
-  CityScreen({this.onTap});
+  String? tripType;
+  CityScreen({this.onTap,this.tripType});
 
   @override
   _CityScreenState createState() => _CityScreenState();
@@ -36,8 +37,19 @@ class _CityScreenState extends State<CityScreen> {
     super.initState();
     jsonData = FlavourConstants.cityData;
 
-    list = appNavigatorKey.currentState!.context.read<CityCubit>().getCityResponse();
-    dataList=list;
+    print("widget.tripType");
+    print(widget.tripType);
+    if(widget.tripType=="D"){
+
+      list = appNavigatorKey.currentState!.context.read<CityCubit>().getCityResponse();
+      dataList=list;
+
+    }else{
+
+      list = appNavigatorKey.currentState!.context.read<CityCubit>().getCountryResponse();
+      dataList=list;
+
+    }
 
   }
 

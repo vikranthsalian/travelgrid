@@ -162,6 +162,13 @@ class _GeneralExpenseState extends State<GeneralExpense> {
       itemBuilder: (BuildContext context, int index) {
         Data item = list[index];
 
+
+        bool isVisible=false;
+        if(item.status!.toLowerCase()=="create" || item.status!.toLowerCase()=="take back"){
+          isVisible=true;
+        }
+
+
         Map date = {
           "text" : MetaDateTime().getDate(item.date.toString(),format: "dd MMM"),
           "color" : "0xFF2854A1",
@@ -293,7 +300,22 @@ class _GeneralExpenseState extends State<GeneralExpense> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
-                             MetaTextView( mapData: cancel),
+                             InkWell(
+                               onTap: (){
+                                 Navigator.of(context).pushNamed(jsonData['bottomButtonFab']['onClick'],
+                                     arguments: {
+                                       "isEdit": true,
+                                       "isApproval":false,
+                                       "title": item.recordLocator.toString().toUpperCase()
+                                     }).then((value) {
+                                   bloc!.add(GetGeneralExpenseListEvent());
+                                 });
+                               },
+                               child: Visibility(
+                                 visible: isVisible,
+                                   child: MetaTextView( mapData: cancel,text:"Edit")
+                               ),
+                             ),
                              Container(
                                margin: EdgeInsets.symmetric(horizontal: 5.w),
                                child: MetaTextView(mapData: {
@@ -310,7 +332,6 @@ class _GeneralExpenseState extends State<GeneralExpense> {
                                     arguments: {
                                         "isEdit": false,
                                         "isApproval":false,
-                                        "status" :item.status,
                                         "title":
                                             item.recordLocator.toString()
                                                 .toUpperCase()

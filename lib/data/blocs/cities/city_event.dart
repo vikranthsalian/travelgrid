@@ -7,7 +7,6 @@ class GetCityListEvent extends CityEvent {
   GetCityListEvent();
 }
 
-class SearchCityListEvent extends CityEvent {
-  final List<Data>? list;
-  SearchCityListEvent({required this.list});
+class GetCountryListEvent extends CityEvent {
+  GetCountryListEvent();
 }

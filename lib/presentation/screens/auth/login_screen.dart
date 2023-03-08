@@ -11,6 +11,7 @@ import 'package:travelgrid/common/utils/show_alert.dart';
 import 'package:travelgrid/data/blocs/accom/accom_type_bloc.dart';
 import 'package:travelgrid/data/blocs/approver/approver_type_bloc.dart';
 import 'package:travelgrid/data/blocs/cities/city_bloc.dart';
+import 'package:travelgrid/data/blocs/currency/currency_bloc.dart';
 import 'package:travelgrid/data/blocs/fare_class/fare_class_bloc.dart';
 import 'package:travelgrid/data/blocs/misc/misc_type_bloc.dart';
 import 'package:travelgrid/data/blocs/travel/travel_mode_bloc.dart';
@@ -83,7 +84,7 @@ class _LoginScreenState extends State<_Login> {
                        MetaAlert.showSuccessAlert(
                          message: "Login Success"
                        );
-                       Injector.resolve<CityBloc>()..add(GetCityListEvent());
+
                        Injector.resolve<AccomTypeBloc>()..add(GetAccomTypeListEvent());
                        Injector.resolve<TravelModeBloc>()..add(GetTravelModeListEvent());
                        Injector.resolve<MiscTypeBloc>()..add(GetMiscTypeListEvent());
@@ -92,6 +93,9 @@ class _LoginScreenState extends State<_Login> {
                        Injector.resolve<FareClassBloc>()..add(GetRailFareClassListEvent());
                        Injector.resolve<FareClassBloc>()..add(GetRoadFareClassListEvent());
                        Injector.resolve<TravelPurposeBloc>()..add(GetTravelPurposeListEvent());
+                       Injector.resolve<CurrencyBloc>()..add(GetCurrencyListEvent());
+                       Injector.resolve<CityBloc>()..add(GetCityListEvent());
+                       Injector.resolve<CityBloc>()..add(GetCountryListEvent());
 
 
                        Navigator.of(context).pushNamed(RouteConstants.dashboardPath);

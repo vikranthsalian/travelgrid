@@ -85,9 +85,8 @@ class AppRoutes {
 
           final bool isEdit = args["isEdit"] ?? false;
           final String title = args["title"]  ?? null;
-          final String status = args["status"]  ?? "";
           final bool isApproval = args["isApproval"]  ?? false;
-          return  CreateGeneralExpense(isEdit: isEdit,title: title,status: status,isApproval: isApproval);
+          return  CreateGeneralExpense(isEdit: isEdit,title: title,isApproval: isApproval);
         }
         return CreateGeneralExpense();
 
@@ -114,15 +113,15 @@ class AppRoutes {
       case RouteConstants.pdfPath:
         return PDFComponent(path: args.toString());
 
-      case RouteConstants.createAccommodationExpensePath:
-        return CreateAccommodationExpense();
+      // case RouteConstants.createAccommodationExpensePath:
+      //   return CreateAccommodationExpense();
 
       case RouteConstants.createTravelExpensePath:
         return CreateConveyanceExpense();
-
-      case RouteConstants.createMiscExpensePath:
-        return CreateMiscExpense(onAdd: (data){
-        });
+      //
+      // case RouteConstants.createMiscExpensePath:
+      //   return CreateMiscExpense(onAdd: (data){
+      //   });
 
       default:
         return SplashScreen();

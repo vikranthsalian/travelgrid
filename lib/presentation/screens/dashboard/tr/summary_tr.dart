@@ -165,7 +165,7 @@ class _TravelRequestSummaryState extends State<TravelRequestSummary> {
                     return Container(
                         child: BlocMapToEvent(state: state.eventState, message: state.message,
                             callback: (){
-                              loaded=false;
+
                             },
                             child:buildView(state)
                         )
@@ -180,7 +180,7 @@ class _TravelRequestSummaryState extends State<TravelRequestSummary> {
   }
 
   Widget buildView(TravelRequestState state){
-
+    loaded=false;
     if(state.responseSum!=null && !loaded) {
        TRSummaryResponse? response = state.responseSum;
        tripType = response!.data?.tripType  ?? "Domestic";

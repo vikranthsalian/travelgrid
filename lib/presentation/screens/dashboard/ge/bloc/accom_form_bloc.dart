@@ -100,33 +100,35 @@ class AccomFormBloc extends FormBloc<String, String> {
     int differenceInYears = (dur.inDays);
 
     print(differenceInYears);
+  try {
+  Map<String, dynamic> saveAccomMap = {
+    "checkInDate": checkInDate.value,
+    "checkInTime": checkInTime.value,
 
-    Map<String,dynamic> saveAccomMap = {
-      "checkInDate": checkInDate.value,
-      "checkInTime": checkInTime.value,
+    "checkOutDate": checkOutDate.value,
+    "checkOutTime": checkOutTime.value,
 
-      "checkOutDate": checkOutDate.value,
-      "checkOutTime": checkOutTime.value,
+    "noOfDays": dur.inDays,
+    "city": int.parse(cityID.value),
+    "cityName": cityName.value,
+    "hotelName": selectAccomID.value == "250" ? tfHotelName.value : "",
 
-      "noOfDays":dur.inDays,
-      "city": int.parse(cityID.value),
-      "cityName": cityName.value,
-      "hotelName": selectAccomID.value == "250" ? tfHotelName.value :"",
+    "accomodationType": int.parse(selectAccomID.value.toString()),
+    "accomodationTypeName": accomName.value,
 
-      "accomodationType": int.parse(selectAccomID.value.toString()),
-      "accomodationTypeName": accomName.value,
+    "amount": tfAmount.valueToDouble,
+    "tax": tfTax.value.isEmpty ? 0.0 : tfTax.valueToDouble,
+    "description": tfDescription.value,
+    "withBill": swWithBill.value,
 
-      "amount": int.parse(tfAmount.value),
-      "tax": int.parse(tfTax.value.isEmpty ? "0.0" : tfTax.value),
-      "description": tfDescription.value,
-      "withBill":swWithBill.value,
+    "voucherPath": voucherPath.value,
 
-      "voucherPath": voucherPath.value,
-
-      "voucherNumber":swWithBill.value ? tfVoucher.value : ""
-    };
-    emitSuccess(successResponse: jsonEncode(saveAccomMap));
-
+    "voucherNumber": swWithBill.value ? tfVoucher.value : ""
+  };
+  emitSuccess(successResponse: jsonEncode(saveAccomMap));
+  }catch(e){
+    print(e);
+  }
   }
 
 }

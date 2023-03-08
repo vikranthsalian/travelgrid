@@ -184,7 +184,7 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
                     return Container(
                         child: BlocMapToEvent(state: state.eventState, message: state.message,
                             callback: (){
-                            loaded=false;
+                          //  loaded=false;
                             },
                             child:buildView(state)
                         )
@@ -199,7 +199,9 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
   }
 
   Widget buildView(state){
-
+    loaded=false;
+    visitItems.clear();
+    commentList.clear();
      if(state.responseSum!=null && !loaded) {
        TESummaryResponse? response = state.responseSum!;
 
@@ -210,7 +212,6 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
        submitMap['startTime']= response.data!.startTime;;
        submitMap['endDate']= response.data!.endDate;;
        submitMap['endTime']= response.data!.endTime;;
-
 
       summary.bookedTicketCost = response.data!.maExpenseSummary?.bookedTicketCost ?? 0.00;
       summary.advanceByCard = response.data!.maExpenseSummary?.advanceByCard ?? 0.00;
@@ -713,6 +714,7 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
                 onButtonPressed: ()async{
                   Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
                       AddVisitDetails(
+                        "D",
                         isEdit:false,
                         onAdd: (value){
 
@@ -960,6 +962,7 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
 
       Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
           AddTeAccommodationExpense(
+            "D",
             isEdit:isEdit,
             accomModel:model,
             onAdd: (values){
@@ -1007,6 +1010,7 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
 
       Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
           AddTeTicketExpense(
+            "D",
             isEdit:isEdit,
             teTicketModel:model,
             onAdd: (values){

@@ -8,6 +8,7 @@ import 'package:travelgrid/common/utils/date_time_util.dart';
 import 'package:travelgrid/data/blocs/travel_request/tr_bloc.dart';
 import 'package:travelgrid/data/datasources/list/tr_list_response.dart';
 import 'package:travelgrid/presentation/components/bloc_map_event.dart';
+import 'package:travelgrid/presentation/components/dialog_trip_type.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';
 import 'package:travelgrid/presentation/widgets/icon.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
@@ -49,9 +50,18 @@ class _TravelRequestState extends State<TravelRequest> {
         child:MetaIcon(mapData:jsonData['bottomButtonFab'],onButtonPressed: ()async{
           if(jsonData['bottomButtonFab']['onClick'].isNotEmpty){
 
-           Navigator.of(context).pushNamed(jsonData['bottomButtonFab']['onClick'],arguments: {'tripType':"D"}).then((value) {
-             bloc!.add(GetTravelRequestListEvent());
-           });
+            await showDialog(
+                context: context,
+                builder: (_) => DialogTripType(
+                    title: "Select Trip Type",
+                    onPressed: (value){
+
+                        Navigator.of(context).pushNamed(jsonData['bottomButtonFab']['onClick'],arguments: {'tripType':value}).then((value) {
+                          bloc!.add(GetTravelRequestListEvent());
+                        });
+
+                    }));
+
           }
         },),
         backgroundColor: ParseDataType().getHexToColor(jsonData['backgroundColor']),

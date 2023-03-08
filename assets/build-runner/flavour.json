@@ -1865,7 +1865,7 @@
         "size": "15",
         "family": "bold",
         "align": "center-right",
-        "type": "cash"
+        "type": "forex"
       },
       "showDetails": {
         "label": {
@@ -2072,62 +2072,6 @@
             "size": "15",
             "family": "regular",
             "align": "center-left"
-          },
-          "title":{
-            "text" : "Select Currency",
-            "color" : "0xFF2854A1",
-            "size": "15",
-            "family": "bold",
-            "align": "center"
-          },
-          "listView": {
-            "data": [
-              {
-                "text" : "Single",
-                "color" : "0xFF000000",
-                "size": "12",
-                "family": "regular",
-                "align": "center-left",
-                "id": "183"
-              },
-              {
-                "text" : "Multiple",
-                "color" : "0xFF000000",
-                "size": "12",
-                "family": "regular",
-                "align": "center-left",
-                "id": "184"
-              }
-            ],
-            "emptyData": {
-              "image_view":   {
-                "image" : "logo_banner.png",
-                "align": "center",
-                "wd": 250.0
-              },
-              "title":  {
-                "text" : "No Data Found!!!",
-                "color" : "0XFF3D3D3D",
-                "size": "16",
-                "family": "regular"
-              },
-              "bottomButtonRefresh": {
-                "text" : "Refresh",
-                "height": 35.0,
-                "color" : "0xFFFFFFFF",
-                "borderRadius": 30.0,
-                "backgroundColor" : "0xFF2854A1",
-                "size": "15",
-                "family": "regular"
-              }
-            }
-          },
-          "bottomButtonCentre": {
-            "text" : "Cancel",
-            "color" : "0xFFFFFFFF",
-            "backgroundColor" : "0xFF2854A1",
-            "size": "18",
-            "family": "regular"
           }
         },
         "text_field_comment":  {
@@ -2163,11 +2107,7 @@
             "size": "14",
             "family": "regular"
           },
-          "validators" : [
-            {
-              "type" : "empty"
-            }
-          ]
+          "validators" : []
         },
         "bottomButtonLeft": {
           "text" : "Cancel",
@@ -2199,7 +2139,7 @@
         "size": "15",
         "family": "bold",
         "align": "center-right",
-        "type": "cash"
+        "type": "visa"
       },
       "showDetails": {
         "label": {
@@ -2443,7 +2383,7 @@
     },
     "insuranceDetails": {
       "label": {
-        "text" : "Visa Details",
+        "text" : "Insurance Details",
         "color" : "0XFFFFFFFF",
         "size": "14",
         "family": "bold",
@@ -2455,7 +2395,7 @@
         "size": "15",
         "family": "bold",
         "align": "center-right",
-        "type": "cash"
+        "type": "insurance"
       },
       "showDetails": {
         "label": {
@@ -3169,6 +3109,12 @@
       "backgroundColor" : "0xFF2854A1",
       "size": "18",
       "family": "regular"
+    },
+    "bottomButtonFab": {
+      "icon": "add",
+      "size": 20.0,
+      "color": "0XFFFFFFFF",
+      "onPress": true
     },
     "bottomButtonRight": {
       "text" : "Submit",
@@ -7651,6 +7597,46 @@
       "family": "regular"
     }
   },
+  "currency_screen_data" : {
+    "backgroundColor" : "0xFF2854A1",
+    "title":  {
+      "text" : "Select Currency",
+      "color" : "0XFF000000",
+      "size": "18",
+      "family": "bold",
+      "align": "center"
+    },
+    "listView": {
+      "recordsFound":  {
+        "text" : "Records Found",
+        "value" : "0",
+        "color" : "0XFF000000",
+        "size": "12",
+        "family": "regular",
+        "align": "center-right"
+      },
+      "emptyData": {
+        "image_view":   {
+          "image" : "logo_banner.png",
+          "align": "center",
+          "wd": 250.0
+        },
+        "title":  {
+          "text" : "No Data Found!!!",
+          "color" : "0XFF3D3D3D",
+          "size": "16",
+          "family": "regular"
+        }
+      }
+    },
+    "bottomButtonCentre": {
+      "text" : "Cancel",
+      "color" : "0xFFFFFFFF",
+      "backgroundColor" : "0xFF2854A1",
+      "size": "18",
+      "family": "regular"
+    }
+  },
   "fare_class_screen_data" : {
     "backgroundColor" : "0xFF2854A1",
     "title":  {
@@ -7843,6 +7829,37 @@
       "color" : "0xFFFFFFFF",
       "backgroundColor" : "0xFF2854A1",
       "size": "12",
+      "family": "regular"
+    }
+  },
+  "dialog_trip_type_data" : {
+    "backgroundColor" : "0xFF2854A1",
+    "title":  {
+      "text" : "Select Trip Type",
+      "color" : "0XFF000000",
+      "size": "14",
+      "family": "bold",
+      "align": "center"
+    },
+    "buttonYes": {
+      "text" : "Domestic",
+      "color" : "0xFFFFFFFF",
+      "backgroundColor" : "0xFF2854A1",
+      "size": "12",
+      "family": "regular"
+    },
+    "buttonNo": {
+      "text" : "Overseas",
+      "color" : "0xFFFFFFFF",
+      "backgroundColor" : "0xFF2854A1",
+      "size": "12",
+      "family": "regular"
+    },
+    "bottomButtonCentre": {
+      "text" : "Cancel",
+      "color" : "0xFFFFFFFF",
+      "backgroundColor" : "0xFF2854A1",
+      "size": "18",
       "family": "regular"
     }
   },

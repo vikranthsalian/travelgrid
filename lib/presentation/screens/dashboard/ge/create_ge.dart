@@ -2,14 +2,13 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:travelgrid/common/constants/asset_constants.dart';
 import 'package:travelgrid/common/constants/flavour_constants.dart';
 import 'package:travelgrid/common/constants/route_constants.dart';
 import 'package:travelgrid/common/enum/dropdown_types.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
 import 'package:travelgrid/common/extensions/pretty.dart';
 import 'package:travelgrid/common/injector/injector.dart';
+import 'package:travelgrid/common/utils/show_alert.dart';
 import 'package:travelgrid/data/blocs/general_expense/ge_bloc.dart';
 import 'package:travelgrid/data/cubits/approver_type_cubit/approver_type_cubit.dart';
 import 'package:travelgrid/data/cubits/login_cubit/login_cubit.dart';
@@ -23,6 +22,8 @@ import 'package:travelgrid/data/models/ge/ge_misc_model.dart';
 import 'package:travelgrid/data/models/success_model.dart';
 import 'package:travelgrid/domain/usecases/ge_usecase.dart';
 import 'package:travelgrid/presentation/components/bloc_map_event.dart';
+import 'package:travelgrid/presentation/components/switch_component.dart';
+import 'package:travelgrid/presentation/dialog_expense_picker.dart';
 import 'package:travelgrid/presentation/screens/dashboard/ge/add/add_accom.dart';
 import 'package:travelgrid/presentation/screens/dashboard/ge/add/add_misc.dart';
 import 'package:travelgrid/presentation/screens/dashboard/ge/add/add_travel.dart';
@@ -30,23 +31,166 @@ import 'package:travelgrid/presentation/widgets/button.dart';
 import 'package:travelgrid/presentation/widgets/dialog_selector_view.dart';
 import 'package:travelgrid/presentation/widgets/icon.dart';
 import 'package:travelgrid/presentation/widgets/svg_view.dart';
-import 'package:travelgrid/presentation/widgets/switch.dart';
 import 'package:travelgrid/presentation/widgets/text_field.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
 import 'package:tuple/tuple.dart';
 
-class CreateGeneralExpense extends StatefulWidget {
+
+TextEditingController controller =TextEditingController();
+
+class CreateGeneralExpense extends StatelessWidget {
   bool isEdit;
   String? title;
   bool isApproval;
-  String? status;
-  CreateGeneralExpense({this.isEdit=true,this.title,this.isApproval=false,this.status});
+  CreateGeneralExpense({this.isEdit=true,this.title,this.isApproval=false});
+  GeneralExpenseBloc?  bloc;
+  Map? jsonData;
+  @override
+  Widget build(BuildContext context) {
+    jsonData = FlavourConstants.geCreateData;
+
+
+    if(title!=null) {
+      bloc = Injector.resolve<GeneralExpenseBloc>()
+        ..add(GetGeneralExpenseSummaryEvent(recordLocator: title!));
+    }else{
+      bloc = Injector.resolve<GeneralExpenseBloc>();
+    }
+
+
+   return  Scaffold(
+      backgroundColor: Colors.white,
+      bottomNavigationBar: isApproval?buildApprovalRow(title, context):SizedBox(),
+      body: Container(
+        color:ParseDataType().getHexToColor(jsonData!['backgroundColor']),
+        child: Column(
+          children: [
+            SizedBox(height:40.h),
+            Container(
+              height: 40.h,
+              alignment: Alignment.center,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  MetaIcon(mapData:jsonData!['backBar'],
+                      onButtonPressed: (){
+                        Navigator.pop(context);
+                      }),
+                  Container(
+                    child:MetaTextView(mapData: jsonData!['title'],text:title),
+                  ),
+                ],
+              ),
+            ),
+            // widget.isEdit ?
+            // Container(
+            //   color: Colors.white,
+            //   height:70.h,
+            //   child: Container(
+            //     margin: EdgeInsets.symmetric(horizontal: 10.w),
+            //     child: Row(
+            //       children: expenseTypes.map((e) {
+            //
+            //         return Container(
+            //           margin: EdgeInsets.symmetric(horizontal: 5.w),
+            //           width: 60.w,
+            //           height: 60.w,
+            //           child: InkWell(
+            //               onTap: () async{
+            //                 navigate(e,false,{},0);
+            //               },
+            //               child:Container(
+            //                 height: 50.h,
+            //                 decoration: BoxDecoration(
+            //                   color: ParseDataType().getHexToColor(jsonData['backgroundColor']),
+            //                   shape: BoxShape.circle,
+            //                 ),
+            //                 child: Stack(
+            //                   alignment: Alignment.center,
+            //                   children: [
+            //                     Container(
+            //                       width: 25.w,
+            //                       height: 25.w,
+            //                       child: SvgPicture.asset(
+            //                         AssetConstants.assetsBaseURLSVG +"/"+  e['svgIcon']['icon'],//e['svgIcon']['color']
+            //                         color: ParseDataType().getHexToColor(e['svgIcon']['color']),
+            //                         width: 25.w,
+            //                         height: 25.w,
+            //                       ),
+            //                     ),
+            //                   ],
+            //                 ),
+            //               )
+            //           ),
+            //         );
+            //       }).toList(),
+            //     ),
+            //   ),
+            // ):SizedBox(),
+
+            Expanded(
+                child:  BlocBuilder<GeneralExpenseBloc, GeneralExpenseState>(
+                    bloc: bloc,
+                    builder:(context, state) {
+                      return Container(
+                        color: Colors.white,
+                          child: BlocMapToEvent(state: state.eventState, message: state.message,
+                              callback: (){
+
+                              },
+                              child:CreateGeneralExpenseBody(state,isEdit,isApproval)
+                          )
+                      );
+                    }
+                )
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+
+  Row buildApprovalRow(title,ctx) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        Expanded(
+          child: MetaButton(mapData: jsonData!['bottomButtonLeft'],text: "Cancel",
+              onButtonPressed: (){
+
+              }
+          ),
+        ),
+        Expanded(
+          child: MetaButton(mapData: jsonData!['bottomButtonRight'],text: "Approve",
+              onButtonPressed: ()async{
+                SuccessModel  model =  await Injector.resolve<GeUseCase>().approveGE(title,controller.text);
+
+                if(model.status==true){
+                  Navigator.pop(ctx);
+                }
+              }
+          ),
+        )
+      ],
+    );
+  }
+
+}
+
+class CreateGeneralExpenseBody extends StatefulWidget {
+  GeneralExpenseState state;
+  bool isEdit;
+  bool isApproval;
+  CreateGeneralExpenseBody(this.state,this.isEdit,this.isApproval);
 
   @override
   _CreateGeneralExpenseState createState() => _CreateGeneralExpenseState();
 }
 
-class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
+class _CreateGeneralExpenseState extends State<CreateGeneralExpenseBody> {
   Map<String,dynamic> jsonData = {};
   Map<String,dynamic> submitMap = {};
   List details=[];
@@ -62,21 +206,16 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
 
   String total="0.00";
   MetaLoginResponse loginResponse = MetaLoginResponse();
-
+  bool loaded=false;
+  bool isCalculated=false;
   Tuple2<String,String>? approver1;
   Tuple2<String,String>? approver2;
   String description="";
-  TextEditingController controller =TextEditingController();
-
-
-
 
 
   GeneralExpenseBloc?  bloc;
-  bool loaded =false;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     jsonData = FlavourConstants.geCreateData;
    // prettyPrint(jsonData);
@@ -110,6 +249,8 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
       submitMap['employeeName']= loginResponse.data!.fullName;
       submitMap['selfApprovals']= false;
       submitMap['violated']= false;
+
+
     }catch(ex){
       approver1 = Tuple2("DUMMY", "cm01");
       approver2 = Tuple2("DUMMY", "cm02");
@@ -120,13 +261,6 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
       summaryDetails.add(Tuple2(item, "0"));
     }
 
-
-    if(!widget.isEdit){
-      bloc = Injector.resolve<GeneralExpenseBloc>()..add(GetGeneralExpenseSummaryEvent(recordLocator: widget.title!));
-    }else{
-      bloc = Injector.resolve<GeneralExpenseBloc>();
-    }
-
   }
 
 
@@ -134,99 +268,31 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.transparent,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton:  widget.isEdit ?  FloatingActionButton(
+          child:MetaIcon(mapData:jsonData['bottomButtonFab'],onButtonPressed: ()async{
+
+            await showDialog(
+                context: context,
+                builder: (_) => DialogExpensePicker(
+                  mapData: expenseTypes,
+                  onSelected: (e){
+                    navigate(e,false,{},0);
+                  },
+                ));
+
+          },),
+          backgroundColor: ParseDataType().getHexToColor(jsonData['backgroundColor']),
+          onPressed: () {}):null,
       bottomNavigationBar: BottomAppBar(
         color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
         shape: CircularNotchedRectangle(),
         notchMargin: 5,
         elevation: 2.0,
-        child: widget.isEdit ? buildSubmitRow():buildViewRow(),
+        child:widget.isEdit ? buildSubmitRow():buildViewRow(widget.state),
       ),
-      body: Container(
-        color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
-        child: Column(
-          children: [
-            SizedBox(height:40.h),
-            Container(
-              height: 40.h,
-              alignment: Alignment.center,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  MetaIcon(mapData:jsonData['backBar'],
-                      onButtonPressed: (){
-                        Navigator.pop(context);
-                      }),
-                  Container(
-                    child:MetaTextView(mapData: jsonData['title'],text:widget.title),
-                  ),
-                ],
-              ),
-            ),
-            widget.isEdit ?
-            Container(
-              color: Colors.white,
-              height:70.h,
-              child: Container(
-                margin: EdgeInsets.symmetric(horizontal: 10.w),
-                child: Row(
-                  children: expenseTypes.map((e) {
-
-                    return Container(
-                      margin: EdgeInsets.symmetric(horizontal: 5.w),
-                      width: 60.w,
-                      height: 60.w,
-                      child: InkWell(
-                          onTap: () async{
-                            navigate(e,false,{},0);
-                          },
-                          child:Container(
-                            height: 50.h,
-                            decoration: BoxDecoration(
-                              color: ParseDataType().getHexToColor(jsonData['backgroundColor']),
-                              shape: BoxShape.circle,
-                            ),
-                            child: Stack(
-                              alignment: Alignment.center,
-                              children: [
-                                Container(
-                                  width: 25.w,
-                                  height: 25.w,
-                                  child: SvgPicture.asset(
-                                    AssetConstants.assetsBaseURLSVG +"/"+  e['svgIcon']['icon'],//e['svgIcon']['color']
-                                    color: ParseDataType().getHexToColor(e['svgIcon']['color']),
-                                    width: 25.w,
-                                    height: 25.w,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          )
-                      ),
-                    );
-                  }).toList(),
-                ),
-              ),
-            ):SizedBox(),
-            Expanded(
-              child:  BlocBuilder<GeneralExpenseBloc, GeneralExpenseState>(
-                  bloc: bloc,
-                  builder:(context, state) {
-                    return Container(
-                        child: BlocMapToEvent(state: state.eventState, message: state.message,
-                            callback: (){
-                              loaded=false;
-                            },
-                            child:buildView(state)
-                        )
-                    );
-                  }
-              )
-            ),
-          ],
-        ),
-      ),
+      body: buildView(widget.state),
     );
   }
 
@@ -263,7 +329,10 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
                     amount: (item.amount!+item.tax!).toString()),
                 item.toJson()));
       }
+      print('response.data![0].maGeMiscellaneousExpense!');
+
       for (var item in response.data![0].maGeMiscellaneousExpense!) {
+        print(item.toJson());
         summaryItems.add(
             Tuple2(
                 ExpenseModel(id: item.id,
@@ -271,6 +340,7 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
                     amount: item.amount.toString()),
                 item.toJson()));
       }
+
       loaded=true;
     }
 
@@ -280,11 +350,28 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
       child:SingleChildScrollView(
         child: Column(
           children: [
+
             if(widget.isEdit)
-            buildExpandableView(jsonData,"requesterDetails"),
-            buildExpandableView(jsonData,"summaryItems"),
-            buildExpandableView(jsonData,"summaryDetails"),
-            buildExpandableView(jsonData,"approverDetails"),
+              SwitchComponent(
+                  color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
+                  jsonData: jsonData['requesterDetails'],
+                  childWidget: buildRequesterWidget(jsonData['requesterDetails']),
+                  initialValue: showRequesterDetails),
+            SwitchComponent(
+                color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
+                jsonData: jsonData['summaryItems'],
+                childWidget: buildSummaryItemWidget(jsonData['summaryItems']),
+                initialValue: showSummaryItems),
+            SwitchComponent(
+                color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
+                jsonData: jsonData['summaryDetails'],
+                childWidget: buildSummaryWidget(jsonData['summaryDetails']),
+                initialValue: showSummaryDetails),
+            SwitchComponent(
+                color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
+                jsonData: jsonData['approverDetails'],
+                childWidget: buildApproverWidget(jsonData['approverDetails']),
+                initialValue: showApproverDetails),
           ],
         ),
       ),
@@ -292,173 +379,74 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
   }
 
   Row buildSubmitRow() {
+
     return Row(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           MetaButton(mapData: jsonData['bottomButtonLeft'],
               onButtonPressed: (){
-
+                if(summaryItems.isNotEmpty && isCalculated){
+                  submitGe("draft");
+                }else{
+                  MetaAlert.showErrorAlert(
+                      message: "Please add expenses"
+                  );
+                }
               }
           ),
           MetaButton(mapData: jsonData['bottomButtonRight'],
               onButtonPressed: (){
-                submitGe("submit");
+
+                if(summaryItems.isNotEmpty && isCalculated){
+                  submitGe("submit");
+                }else{
+                  MetaAlert.showErrorAlert(
+                      message: "Please add expenses"
+                  );
+                }
               }
           )
         ],
       );
   }
 
-  Row buildViewRow() {
-    bool isTBVisible=false;
-    bool isAPVisible=false;
-    if(widget.status!.toLowerCase()=="approver 1"){
-      isTBVisible=true;
-    }
+   buildViewRow(GeneralExpenseState state) {
+    if(state.responseSum!=null) {
+      String status = state.responseSum!.data![0].currentStatus!
+          .toLowerCase();
 
-    if(widget.isApproval){
-      isTBVisible=false;
-      isAPVisible=true;
-    }
+      print(status);
+      bool isTBVisible = false;
 
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        Expanded(
-          child: MetaButton(mapData: jsonData['bottomButtonLeft'],text: "Cancel",
-              onButtonPressed: (){
+      if (status.toLowerCase() == "approver 1") {
+        isTBVisible = true;
+      }
 
-              }
-          ),
-        ),
-        isAPVisible?
-        Expanded(
-          child: MetaButton(mapData: jsonData['bottomButtonRight'],text: "Approve",
-              onButtonPressed: ()async{
-             SuccessModel  model =  await Injector.resolve<GeUseCase>().approveGE(widget.title!,controller.text);
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Expanded(
+            child: MetaButton(
+                mapData: jsonData['bottomButtonLeft'], text: "Cancel",
+                onButtonPressed: () {
 
-                if(model.status==true){
-                Navigator.pop(context);
                 }
-              }
-          ),
-        ):SizedBox(width: 0,),
-        isTBVisible?
-        Expanded(
-          child: MetaButton(mapData: jsonData['bottomButtonRight'],text: "Take Back",
-              onButtonPressed: (){
-
-              }
-          ),
-        ):SizedBox(width: 0),
-      ],
-    );
-  }
-
-
-  Container buildExpandableView(Map mapData,String key){
-    Map map= mapData[key];
-
-    Container getSwitches(map,value){
-      switch(value){
-        case "requesterDetails":
-          return Container(
-            alignment: Alignment.centerLeft,
-            child: MetaSwitch(mapData: map['showDetails'],
-              value: showRequesterDetails,
-              onSwitchPressed: (value){
-                setState(() {
-                  showRequesterDetails=value;
-                });
-              },),
-          );
-        case "summaryItems":
-          return Container(
-            alignment: Alignment.centerRight,
-            child: MetaSwitch(mapData: map['showDetails'],
-              value: showSummaryItems,
-              onSwitchPressed: (value){
-
-                setState(() {
-                  showSummaryItems=value;
-                });
-
-              },),
-          );
-        case "summaryDetails":
-          return Container(
-            alignment: Alignment.centerRight,
-            child: MetaSwitch(mapData: map['showDetails'],
-              value: showSummaryDetails,
-              onSwitchPressed: (value){
-
-                setState(() {
-                  showSummaryDetails=value;
-                });
-
-              },),
-          );
-        case "approverDetails":
-          return Container(
-            alignment: Alignment.centerRight,
-            child: MetaSwitch(mapData: map['showDetails'],
-              value: showApproverDetails,
-              onSwitchPressed: (value){
-
-                setState(() {
-                  showApproverDetails=value;
-                });
-
-              },),
-          );
-        default:
-          return Container();
-
-      }
-
-    }
-
-    Container getViews(map,value){
-      switch(value){
-        case "requesterDetails":
-          return showRequesterDetails ? buildRequesterWidget(map):Container();
-        case "summaryItems":
-          return showSummaryItems ? buildSummaryItemWidget(map):Container();
-        case "summaryDetails":
-          return showSummaryDetails ? buildSummaryWidget(map):Container();
-        case "approverDetails":
-          return showApproverDetails ? buildApproverWidget(map):Container();
-        default:
-          return Container();
-      }
-
-    }
-    return Container(
-      child: Column(
-        children: [
-          buildHeaders(map, getSwitches(map,key)),
-          getViews(map,key)
-        ],
-      ),
-    );
-  }
-
-
-  Container buildHeaders(Map map, Container child) {
-    return Container(
-            height: 40.h,
-            color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
-            child: Row(
-
-              children: [
-                Container(
-                    margin: EdgeInsets.symmetric(horizontal: 20.w),
-                    child: MetaTextView(mapData: map['label'])),
-                Expanded(child: child)
-              ],
             ),
-          );
+          ),
+          isTBVisible ?
+          Expanded(
+            child: MetaButton(
+                mapData: jsonData['bottomButtonRight'], text: "Take Back",
+                onButtonPressed: () {
+
+                }
+            ),
+          ) : SizedBox(width: 0),
+        ],
+      );
+    }
+    return Container();
   }
 
   Container buildSummaryWidget(Map map) {
@@ -673,24 +661,34 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
   }
 
   void calculateSummary() {
+
+    isCalculated=true;
     double miscTotal=0;
     double accomTotal=0;
     double travelTotal=0;
     double dailyTotal=0;
+    print("summaryItems.length");
+    print(summaryItems.length);
+    List items1=[];
+    List items2=[];
+    List items3=[];
+
     for(var item in summaryItems){
 
       if(item.item1.type==GETypes.ACCOMMODATION){
-        accomTotal=accomTotal + double.parse(item.item1.amount.toString() ?? "0");
+        accomTotal=accomTotal + double.parse(item.item1.amount.toString() );
+        items1.add(item.item2);
       }
 
       if(item.item1.type==GETypes.CONVEYANCE){
-        travelTotal=travelTotal + double.parse(item.item1.amount.toString() ?? "0");
+        travelTotal=travelTotal + double.parse(item.item1.amount.toString());
+        items2.add(item.item2);
       }
 
       if(item.item1.type==GETypes.MISCELLANEOUS){
-        miscTotal=miscTotal + double.parse(item.item1.amount.toString() ?? "0");
+        miscTotal=miscTotal + double.parse(item.item1.amount.toString());
+        items3.add(item.item2);
       }
-
 
     }
     for(int i=0;i<summaryDetails.length;i++){
@@ -708,29 +706,9 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
         summaryDetails[i]= Tuple2(map, miscTotal.toString());
       }
 
-
     }
 
     total =( miscTotal+accomTotal+travelTotal+dailyTotal).toString();
-    List items1=[];
-    List items2=[];
-    List items3=[];
-    for(var item in summaryItems){
-
-      if(item.item1.type == GETypes.ACCOMMODATION){
-        items1.add(item.item2);
-      }
-
-      if(item.item1.type == GETypes.CONVEYANCE){
-        items2.add(item.item2);
-      }
-
-      if(item.item1.type == GETypes.MISCELLANEOUS){
-        items3.add(item.item2);
-      }
-
-
-    }
 
     submitMap['maGeAccomodationExpense']=items1;
     submitMap['maGeConveyanceExpense']=items2;
@@ -752,8 +730,10 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
   }
 
   void navigate(e,bool isEdit,Map<String,dynamic> data,int index) {
+    print(e);
+    print(GETypes.ACCOMMODATION.toString());
 
-    if(e['onClick'] == RouteConstants.createMiscExpensePath || e['onClick']  == GETypes.MISCELLANEOUS.toString()){
+    if(e['onClick'].toString()  == RouteConstants.createMiscExpensePath || e['onClick'].toString()   == GETypes.MISCELLANEOUS.toString()){
       print(GETypes.MISCELLANEOUS);
       print(data);
       GEMiscModel? model;
@@ -764,6 +744,7 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
 
       Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
           CreateMiscExpense(
+            "D",
             isEdit:isEdit,
             miscModel:model,
             onAdd: (values){
@@ -775,8 +756,8 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
             },)));
     }
 
-    if(e['onClick'] == RouteConstants.createAccommodationExpensePath  || e['onClick']  == GETypes.ACCOMMODATION.toString()){
-
+    if(e['onClick'].toString() == RouteConstants.createAccommodationExpensePath  || e['onClick'].toString()  == GETypes.ACCOMMODATION.toString()){
+      print(GETypes.MISCELLANEOUS);
       print(data);
       GEAccomModel? model;
       if(data.isNotEmpty){
@@ -785,19 +766,27 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
 
       Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
           CreateAccommodationExpense(
+            "D",
             isEdit:isEdit,
             accomModel:model,
             onAdd: (values){
+              print("isEdit");
+              print(isEdit);
               if(isEdit){
                 summaryItems.removeAt(index);
+                print("removed");
               }
+              setState(() {
+
+              });
+
               summaryItems.add(Tuple2(values['item'] as ExpenseModel, values['data']));
               calculateSummary();
 
           },)));
     }
 
-    if(e['onClick'] == RouteConstants.createTravelExpensePath || e['onClick']  == GETypes.CONVEYANCE.toString()){
+    if(e['onClick'].toString()  == RouteConstants.createTravelExpensePath || e['onClick'].toString()   == GETypes.CONVEYANCE.toString()){
 
 
       print(data);
@@ -823,20 +812,15 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpense> {
   }
 
   void submitGe(text) async{
-    submitMap['selfApprovals']= false;
-    submitMap['violated']= false;
-
     final String requestBody = json.encoder.convert(submitMap);
 
     Map<String, dynamic> valueMap = json.decode(requestBody);
 
    Map<String,dynamic> queryParams = {
-     //"approver1":"cm01",
      "approver1":approver1!.item2.toString().toLowerCase(),
      "approver2":approver2!.item2.toString().toLowerCase(),
-     //"approver2":"cm02",
      "action":text,
-     "comment":"daskdsakdkasdka",
+     "comment":controller.text,
    };
 
    prettyPrint(valueMap);

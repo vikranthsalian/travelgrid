@@ -2,7 +2,7 @@ class SuccessModel {
   bool? status;
   String? token;
   String? message;
-  String? data;
+  var data;
 
   SuccessModel({this.status, this.token, this.message, this.data});
 

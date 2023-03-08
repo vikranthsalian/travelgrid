@@ -1,6 +1,7 @@
 import 'package:travelgrid/data/datasources/accom_type_list.dart';
 import 'package:travelgrid/data/datasources/approver_list.dart';
 import 'package:travelgrid/data/datasources/cities_list.dart';
+import 'package:travelgrid/data/datasources/currency_list.dart';
 import 'package:travelgrid/data/datasources/fare_class_list.dart';
 import 'package:travelgrid/data/datasources/ge_summary_response.dart';
 import 'package:travelgrid/data/datasources/list/ge_list_response.dart';
@@ -52,7 +53,13 @@ abstract class AeAPIAbstract {
 abstract class CommonAPIAbstract {
   Future<MetaCityListResponse> getCities(countryCode,tripType);
 
+  Future<MetaCityListResponse> getCountriesList();
+
   Future<MetaAccomTypeListResponse> getAccomTypesList();
+
+  Future<MetaCurrencyListResponse> getCurrencyList();
+
+  Future<SuccessModel> getExchangeRate(currency,date);
 
   Future<MetaFareClassListResponse> getFareClassList(mode);
 

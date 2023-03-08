@@ -115,10 +115,12 @@ class _CreateTravelRequestState extends State<CreateTravelRequest> {
     trProcessed = TrProcessed(
       tripType: widget.tripType,
       onNext: (Map<String,dynamic> value){
+        if(widget.tripType=="D"){
+          value.remove("maForexAdvance");
+          value.remove("maTravelVisas");
+          value.remove("maTravelInsurance");
+        }
         submitMap.addAll(value);
-      // submitMap['maTravelRequestCityPair']=[value['pair']];
-      // submitMap['maCashAdvance']=value['cash'];
-      // submitMap['segmentType']=value['segmentType'];
      setState(() {
        selected=2;
      });

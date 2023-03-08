@@ -4,15 +4,18 @@ import 'dart:convert';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:travelgrid/data/datasources/tr_summary_response.dart';
 import 'package:travelgrid/data/models/tr/tr_city_pair_model.dart';
+import 'package:travelgrid/data/models/tr/tr_forex_model.dart';
+import 'package:travelgrid/data/models/tr/tr_insurance_model.dart';
+import 'package:travelgrid/data/models/tr/tr_visa_model.dart';
 
 class ProcessedTrFormBloc extends FormBloc<String, String> {
 
   final segmentType =  TextFieldBloc(validators: [emptyValidator]);
 
   final cashList =  SelectFieldBloc<List<MaCashAdvance>,dynamic>(initialValue: []);
-  final forexList =  SelectFieldBloc<List<MaForexAdvance>,dynamic>(initialValue: []);
-  final visaList =  SelectFieldBloc<List<MaTravelVisas>,dynamic>(initialValue: []);
-  final insuranceList =  SelectFieldBloc<List<MaTravelInsurance>,dynamic>(initialValue: []);
+  final forexList =  SelectFieldBloc<List<TrForexAdvance>,dynamic>(initialValue: []);
+  final visaList =  SelectFieldBloc<List<TRTravelVisas>,dynamic>(initialValue: []);
+  final insuranceList =  SelectFieldBloc<List<TRTravelInsurance>,dynamic>(initialValue: []);
   final cityList =  SelectFieldBloc<List<TRCityPairModel>,dynamic>(initialValue: []);
   final segmentTypeID =  SelectFieldBloc();
 
@@ -42,11 +45,10 @@ class ProcessedTrFormBloc extends FormBloc<String, String> {
   FutureOr<void> onSubmitting() async {
     try {
       Map<String, dynamic> save = {
-
         "maCashAdvance": cashList.value,
-        "MaForexAdvance": forexList.value,
-        "MaTravelVisas": visaList.value,
-        "MaTravelInsurance": insuranceList.value,
+        "maForexAdvance": forexList.value,
+        "maTravelVisas": visaList.value,
+        "maTravelInsurance": insuranceList.value,
         "segmentType": segmentType.value,
         "maTravelRequestCityPair": cityList.value
       };
