@@ -43,15 +43,6 @@ class TrApproval extends StatelessWidget {
                       onSuccess: (context, state) {
                         print(state.successResponse);
                         onNext!(jsonDecode(state.successResponse.toString()));
-                        // GEAccomModel modelResponse = GEAccomModel.fromJson(jsonDecode(state.successResponse.toString()));
-                        //
-                        // widget.onAdd!(
-                        //     {
-                        //       "data": jsonDecode(state.successResponse.toString()),
-                        //       "item" : ExpenseModel(type: GETypes.ACCOMMODATION,amount: modelResponse.amount.toString())
-                        //     }
-                        // );
-                        // Navigator.pop(context);
                       },
                       onFailure: (context, state) {
 

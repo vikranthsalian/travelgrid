@@ -5,7 +5,7 @@ import 'package:travelgrid/common/config/navigator_key.dart';
 import 'package:travelgrid/common/constants/event_types.dart';
 import 'package:travelgrid/common/injector/injector.dart';
 import 'package:travelgrid/data/cubits/accom_type_cubit/accom_type_cubit.dart';
-import 'package:travelgrid/data/datasources/accom_type_list.dart';
+import 'package:travelgrid/data/datasources/others/accom_type_list.dart';
 import 'package:travelgrid/domain/usecases/common_usecase.dart';
 import 'package:travelgrid/domain/usecases/ge_usecase.dart';
 
@@ -23,7 +23,7 @@ class AccomTypeBloc extends Bloc<AccomTypeEvent, AccomTypeState> {
     emit(AccomTypeInitialState());
     if(event is GetAccomTypeListEvent) {
       MetaAccomTypeListResponse? response = await Injector.resolve<CommonUseCase>().getAccomTypesList();
-      appNavigatorKey.currentState!.context.read<AccomTypeCubit>().setAccomTypeResponse(response.data! ?? []);
+      appNavigatorKey.currentState!.context.read<AccomTypeCubit>().setAccomTypeResponse(response.data!);
     }
 
 

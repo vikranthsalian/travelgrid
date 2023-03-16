@@ -39,7 +39,7 @@ class InsuranceFormBloc extends FormBloc<String, String> {
         "serviceType": 138,
         "visitingCountry": tfCountry.value,
         "durationOfStay": tfDays.valueToInt,
-        "visaRequirement": "Yes",
+        "insuranceRequirement": "Yes",
       };
 
       emitSuccess(successResponse: jsonEncode(save));

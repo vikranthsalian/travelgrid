@@ -1,15 +1,16 @@
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:travelgrid/common/config/navigator_key.dart';
 import 'package:travelgrid/data/cubits/login_cubit/login_cubit.dart';
-import 'package:travelgrid/data/datasources/accom_type_list.dart';
-import 'package:travelgrid/data/datasources/approver_list.dart';
-import 'package:travelgrid/data/datasources/cities_list.dart';
-import 'package:travelgrid/data/datasources/currency_list.dart';
-import 'package:travelgrid/data/datasources/fare_class_list.dart';
-import 'package:travelgrid/data/datasources/misc_type_list.dart';
-import 'package:travelgrid/data/datasources/travel_mode_list.dart';
-import 'package:travelgrid/data/datasources/lat_long_distance_model.dart';
-import 'package:travelgrid/data/datasources/travel_purpose_list.dart';
+import 'package:travelgrid/data/datasources/others/accom_type_list.dart';
+import 'package:travelgrid/data/datasources/list/approver_list.dart';
+import 'package:travelgrid/data/datasources/others/cities_list.dart';
+import 'package:travelgrid/data/datasources/others/countries_list.dart';
+import 'package:travelgrid/data/datasources/others/currency_list.dart';
+import 'package:travelgrid/data/datasources/others/fare_class_list.dart';
+import 'package:travelgrid/data/datasources/others/misc_type_list.dart';
+import 'package:travelgrid/data/datasources/others/travel_mode_list.dart';
+import 'package:travelgrid/data/datasources/others/lat_long_distance_model.dart';
+import 'package:travelgrid/data/datasources/others/travel_purpose_list.dart';
 import 'package:travelgrid/data/models/success_model.dart';
 import 'package:travelgrid/data/remote/remote_datasource.dart';
 import 'package:travelgrid/domain/repo_abstract/api_abstract.dart';
@@ -42,7 +43,7 @@ class CommonRepository extends CommonAPIAbstract {
   }
 
   @override
-  Future<MetaCityListResponse> getCountriesList() async{
+  Future<MetaCountryListResponse> getCountriesList() async{
     Map<String,dynamic> data= {
       "q":""
     };
@@ -50,11 +51,11 @@ class CommonRepository extends CommonAPIAbstract {
     var response = await apiRemoteDatasource.getCommonTypes("getCountries",data);
 
     if(response!=null) {
-      MetaCityListResponse modelResponse = MetaCityListResponse.fromJson(response);
+      MetaCountryListResponse modelResponse = MetaCountryListResponse.fromJson(response);
       return modelResponse;
     }
 
-    return MetaCityListResponse(status: false);
+    return MetaCountryListResponse(status: false);
   }
 
 
@@ -192,10 +193,9 @@ class CommonRepository extends CommonAPIAbstract {
 
   @override
   Future<SuccessModel> getExchangeRate(currency, date) async{
-    // TODO: implement getExchangeRate
     Map<String,dynamic> data= {
       'currency':currency,
-      'calender':date
+      'calendar':date
     };
 
     var response = await apiRemoteDatasource.getCommonTypes("getMaExchangeRate",data);

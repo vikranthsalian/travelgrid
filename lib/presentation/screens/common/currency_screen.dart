@@ -7,7 +7,7 @@ import 'package:travelgrid/data/cubits/curreny_cubit/currency_cubit.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
 
-import '../../../data/datasources/currency_list.dart';
+import '../../../data/datasources/others/currency_list.dart';
 
 class CurrencyScreen extends StatelessWidget {
   Function? onTap;

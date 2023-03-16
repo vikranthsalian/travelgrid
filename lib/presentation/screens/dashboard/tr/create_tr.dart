@@ -18,7 +18,7 @@ import 'package:travelgrid/presentation/widgets/button.dart';
 import 'package:travelgrid/presentation/widgets/icon.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
 import 'package:tuple/tuple.dart';
-import 'package:travelgrid/data/datasources/approver_list.dart' as app;
+import 'package:travelgrid/data/datasources/list/approver_list.dart' as app;
 
 class CreateTravelRequest extends StatefulWidget {
   bool isEdit;
@@ -95,7 +95,7 @@ class _CreateTravelRequestState extends State<CreateTravelRequest> {
 
       submitMap['emergencyContactNo']= loginResponse.data!.currentContact!.telephoneNo ?? "";
       submitMap['mobileNumber']= loginResponse.data!.currentContact!.mobile ?? "";
-      submitMap['tripType']= "D";
+      submitMap['tripType']= widget.tripType;
       submitMap['maTravelerDetails']= [];
       submitMap['maForexAdvance']= [];
       submitMap['maTravelVisas']= [];

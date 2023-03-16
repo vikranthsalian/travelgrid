@@ -84,7 +84,7 @@ class TravelFormBloc extends FormBloc<String, String> {
   FutureOr<void> onSubmitting() async {
     print("dasdkak");
 
-    String amount =  double.parse(tfAmount.value ?? "0").toStringAsFixed(2);
+    String amount =  double.parse(tfAmount.value).toStringAsFixed(2);
 
     try {
       Map<String, dynamic> saveConvMap = {

@@ -44,6 +44,7 @@ class VisaFormBloc extends FormBloc<String, String> {
         "durationOfStay": tfDays.valueToInt,
         "visaRequirement": "Yes",
         "numberOfEntries": entriesID.valueToInt,
+        "visaType": "Business",
       };
 
       emitSuccess(successResponse: jsonEncode(save));

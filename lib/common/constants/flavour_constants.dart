@@ -24,6 +24,7 @@ class FlavourConstants {
   static  Map<String,dynamic> policyData = FlavorConfig.instance.variables["policy_screen_data"];
   static  Map<String,dynamic> pdfData = FlavorConfig.instance.variables["pdf_screen_data"];
   static  Map<String,dynamic> cityData = FlavorConfig.instance.variables["city_screen_data"];
+  static  Map<String,dynamic> countryData = FlavorConfig.instance.variables["country_screen_data"];
 
   //Dialogs
   static  Map<String,dynamic> accomTypeData = FlavorConfig.instance.variables["accom_type_screen_data"];
@@ -37,6 +38,11 @@ class FlavourConstants {
   static  Map<String,dynamic> tripTypeData = FlavorConfig.instance.variables["dialog_trip_type_data"];
   static  Map<String,dynamic> cashData = FlavorConfig.instance.variables["dialog_cash_data"];
   static  Map<String,dynamic> expensePickerData = FlavorConfig.instance.variables["dialog_expense_picker_data"];
+
+
+  //bottomsheet
+  static  Map<String,dynamic> sortData = FlavorConfig.instance.variables["bottomsheet_sort_data"];
+  static  Map<String,dynamic> filterData = FlavorConfig.instance.variables["bottomsheet_filter_data"];
 
 
   //Create TR Data

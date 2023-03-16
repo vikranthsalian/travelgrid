@@ -4,7 +4,9 @@ part of 'ge_bloc.dart';
 abstract class GeneralExpenseEvent {}
 
 class GetGeneralExpenseListEvent extends GeneralExpenseEvent {
-  GetGeneralExpenseListEvent();
+  final int sortID;
+  final String filterString;
+  GetGeneralExpenseListEvent(this.sortID,this.filterString);
 }
 
 class GetGeneralExpenseSummaryEvent extends GeneralExpenseEvent {

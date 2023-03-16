@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:tuple/tuple.dart';
 
-import '../../datasources/approver_list.dart';
+import '../../datasources/list/approver_list.dart';
 
 part 'approver_type_state.dart';
 

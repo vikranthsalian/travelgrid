@@ -5,7 +5,7 @@ import 'package:travelgrid/common/config/navigator_key.dart';
 import 'package:travelgrid/common/constants/event_types.dart';
 import 'package:travelgrid/common/injector/injector.dart';
 import 'package:travelgrid/data/cubits/curreny_cubit/currency_cubit.dart';
-import 'package:travelgrid/data/datasources/currency_list.dart';
+import 'package:travelgrid/data/datasources/others/currency_list.dart';
 import 'package:travelgrid/data/models/success_model.dart';
 import 'package:travelgrid/domain/usecases/common_usecase.dart';
 
@@ -23,7 +23,7 @@ class CurrencyBloc extends Bloc<CurrencyEvent, CurrencyState> {
     emit(CurrencyInitialState());
     if(event is GetCurrencyListEvent) {
       MetaCurrencyListResponse? response = await Injector.resolve<CommonUseCase>().getCurrencyList();
-      appNavigatorKey.currentState!.context.read<CurrencyCubit>().setCurrencyResponse(response.data! ?? []);
+      appNavigatorKey.currentState!.context.read<CurrencyCubit>().setCurrencyResponse(response.data!);
     }
 
     if(event is GetExchangeRateEvent) {

@@ -6,7 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:travelgrid/common/constants/flavour_constants.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
 import 'package:travelgrid/common/utils/show_alert.dart';
-import 'package:travelgrid/data/datasources/te_summary_response.dart';
+import 'package:travelgrid/data/datasources/summary/te_summary_response.dart';
 import 'package:travelgrid/data/models/ge/ge_misc_model.dart';
 import 'package:travelgrid/presentation/screens/dashboard/te/bloc/visit_form_bloc.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';

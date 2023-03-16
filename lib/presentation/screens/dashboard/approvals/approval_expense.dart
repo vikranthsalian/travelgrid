@@ -25,14 +25,6 @@ class _ApprovalExpenseState extends State<ApprovalExpense> {
     super.initState();
     jsonData = FlavourConstants.aeData;
     tabs = jsonData['tabs'];
-    // if(tabs.isNotEmpty){
-    //   for(var item in tabs){
-    //
-    //     tabs.add( Tab(text: item['text']));
-    //
-    //   }
-    // }
-    //prettyPrint(jsonData);
   }
 
 
@@ -71,7 +63,7 @@ class _ApprovalExpenseState extends State<ApprovalExpense> {
                       indicatorColor: Colors.white,
                       tabs: tabs.map((e) {
                       return Tab(text: e['text']);
-                    }).toList(),),
+                    }).toList())
                   ),
 
                 ],

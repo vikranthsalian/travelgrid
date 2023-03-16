@@ -1,4 +1,4 @@
-import 'package:travelgrid/data/datasources/ge_summary_response.dart';
+import 'package:travelgrid/data/datasources/summary/ge_summary_response.dart';
 import 'package:travelgrid/data/datasources/list/ge_list_response.dart';
 import 'package:travelgrid/data/datasources/login_response.dart';
 import 'package:travelgrid/data/models/success_model.dart';

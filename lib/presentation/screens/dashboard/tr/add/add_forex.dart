@@ -4,10 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
-import 'package:travelgrid/common/injector/injector.dart';
 import 'package:travelgrid/common/utils/city_util.dart';
 import 'package:travelgrid/data/blocs/currency/currency_bloc.dart';
-import 'package:travelgrid/data/models/success_model.dart';
 import 'package:travelgrid/data/models/tr/tr_forex_model.dart';
 import 'package:travelgrid/presentation/screens/dashboard/tr/bloc/tr_forex%20_form_bloc.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';
@@ -140,25 +138,32 @@ class AddForex  extends StatelessWidget {
                                         SizedBox(height: 10.h,),
                                         Container(
                                           child: MetaDialogSelectorView(mapData: jsonData['selectCurrency'],
-                                            text :CityUtil.getEntriesFromID(formBloc!.currencyID.value),
-                                            onChange:(value){
+                                            text :CityUtil.getCurrencyFromID(formBloc!.currencyID.value),
+                                            onChange:(value)async{
                                               print(value);
                                               formBloc!.currencyID.updateValue(value['id'].toString());
 
-                                              currencyBloc = Injector.resolve<CurrencyBloc>()..add(
-                                                  GetExchangeRateEvent(currency:value['label'],date: dateText));
+
+                                              rate=85;
+                                              // SuccessModel? response = await Injector.resolve<CommonUseCase>().getExchangeRate(value['label'],dateText);
+                                              // rate = response.data;
+                                              //
+                                              // currencyBloc = Injector.resolve<CurrencyBloc>()..add(
+                                              //     GetExchangeRateEvent(currency:value['label'],date: dateText));
+
+                                              formBloc!.tfRate.updateValue(rate.toString());
                                             },),
                                         ),
-                                        BlocBuilder<CurrencyBloc, CurrencyState>(
-                                            bloc: currencyBloc,
-                                            builder: (context, state) {
-
-                                              SuccessModel? model = state.rate;
-                                              rate = model!.data;
-
-                                              return  SizedBox();
-                                            }
-                                        ),
+                                        // BlocBuilder<CurrencyBloc, CurrencyState>(
+                                        //     bloc: currencyBloc,
+                                        //     builder: (context, state) {
+                                        //
+                                        //       SuccessModel? model = state.rate;
+                                        //       rate = model!.data;
+                                        //
+                                        //       return  SizedBox();
+                                        //     }
+                                        // ),
 
 
                                         MetaTextFieldBlocView(mapData: jsonData['text_field_comment'],

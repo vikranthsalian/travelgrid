@@ -5,7 +5,7 @@ import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
 import 'package:travelgrid/common/utils/city_util.dart';
-import 'package:travelgrid/data/datasources/tr_summary_response.dart';
+import 'package:travelgrid/data/datasources/summary/tr_summary_response.dart';
 import 'package:travelgrid/data/models/tr/tr_city_pair_model.dart';
 import 'package:travelgrid/presentation/screens/dashboard/tr/bloc/tr_round_itinerary%20_form_bloc.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:travelgrid/presentation/screens/common/cities_screen.dart';
+import 'package:travelgrid/presentation/screens/common/countries_screen.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
 
 
@@ -27,21 +28,37 @@ class _MetaSearchSelectorViewState extends State<MetaSearchSelectorView> {
           MetaTextView(mapData: widget.mapData['label']),
           InkWell(
             onTap: (){
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) => CityScreen(
-                tripType: widget.tripType,
-                onTap: (data){
-                  Navigator.pop(context);
-                  setState(() {
-                    widget.text = data.name;
-                    widget.onChange!(data);
-                  });
-                },
-              )));
+
+              if(widget.tripType=="D"){
+
+
+                getCity("IN");
+
+              }else{
+
+                getCity("");
+              }
+
+
             },
               child: MetaTextView(mapData: widget.mapData['dataText'],text: widget.text)),
         ],
         )
     );
+  }
+
+  void getCity(String countryCode) {
+
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => CityScreen(
+      code: countryCode,
+      onTap: (data){
+        Navigator.pop(context);
+        setState(() {
+          widget.text = data.name;
+          widget.onChange!(data);
+        });
+      },
+    )));
   }
 
 }

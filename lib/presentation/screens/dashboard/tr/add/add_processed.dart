@@ -6,7 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:travelgrid/common/constants/flavour_constants.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
 import 'package:travelgrid/common/utils/city_util.dart';
-import 'package:travelgrid/data/datasources/tr_summary_response.dart';
+import 'package:travelgrid/data/datasources/summary/tr_summary_response.dart';
 import 'package:travelgrid/data/models/tr/tr_city_pair_model.dart';
 import 'package:travelgrid/data/models/tr/tr_forex_model.dart';
 import 'package:travelgrid/data/models/tr/tr_insurance_model.dart';
@@ -343,7 +343,7 @@ class TrProcessed extends StatelessWidget {
 
           List<TrForexAdvance>? list  = formBloc!.forexList.value!.toList();
           return  Container(
-            padding: EdgeInsets.symmetric(horizontal: 10.w),
+            padding: EdgeInsets.symmetric(horizontal: 10.w,vertical: 10.h),
             color: Colors.white,
             child: list.isNotEmpty ? ListView.builder(
                 physics: NeverScrollableScrollPhysics(),
@@ -357,31 +357,54 @@ class TrProcessed extends StatelessWidget {
                     child:  Column(
                       children: [
                         Container(
-                            width: 10.w,
-                            child: MetaTextView(mapData:  map['header'],text: "#")),
-                        Expanded(child: MetaTextView(mapData:  map['header'],text: "Currency",)),
-                        Expanded(child: MetaTextView(mapData:  map['header'],text: "Req Cash")),
-                        Expanded(child: MetaTextView(mapData:  map['header'],text: "Req Card")),
-                        Expanded(child: MetaTextView(mapData:  map['header'],text: "Total Forex(INR)")),
-                        Row(
-                          children: [
-                            Container(
-                                width: 10.w,
-                                child: MetaTextView(mapData:  map['item'],text: (index+1).toString())),
-                            Expanded(child: MetaTextView(mapData:  map['item'],text:  CityUtil.getCurrencyFromID(item.currency))),
-                            Expanded(child: MetaTextView(mapData:  map['item'],text: item.cash.toString(),)),
-                            Expanded(child: MetaTextView(mapData:  map['item'],text: item.card.toString(),)),
-                            Expanded(child: MetaTextView(mapData:  map['item'],text: item.totalForexAmount.toString())),
-
-                          ],
-                        ),
-                        Row(
+                          height: 20.h,
+                          child: Row(
                             children: [
-                              Expanded(child: MetaTextView(mapData:  map['header'],text: "Exchange Rate")),
-                              Expanded(child: MetaTextView(mapData:  map['header'],text: "Comments")),
-                            ]),
-                        Expanded(child: MetaTextView(mapData:  map['header'],text: "1")),
-                        Expanded(child: MetaTextView(mapData:  map['header'],text: item.address)),
+                                  Container(
+                                  width: 10.w,
+                                  child: MetaTextView(mapData:  map['header'],text: "#")),
+                              Expanded(child: MetaTextView(mapData:  map['header'],text: "Currency",)),
+                              Expanded(child: MetaTextView(mapData:  map['header'],text: "Req Cash")),
+                              Expanded(child: MetaTextView(mapData:  map['header'],text: "Req Card")),
+
+                                ],
+                          ),
+                        ),
+
+                        Container(
+                          height: 20.h,
+                          child: Row(
+                            children: [
+                              Container(
+                                  width: 10.w,
+                                  child: MetaTextView(mapData:  map['item'],text: (index+1).toString())),
+                              Expanded(child: MetaTextView(mapData:  map['item'],text:  CityUtil.getCurrencyFromID(item.currency))),
+                              Expanded(child: MetaTextView(mapData:  map['item'],text: item.cash.toString(),)),
+                              Expanded(child: MetaTextView(mapData:  map['item'],text: item.card.toString(),)),
+
+
+                            ],
+                          ),
+                        ),
+                        Container(
+                          height: 20.h,
+                          child: Row(
+                              children: [
+                                Expanded(child: MetaTextView(mapData:  map['header'],text: "Ex. Rate")),
+                                Expanded(child: MetaTextView(mapData:  map['header'],text: "Comments")),
+                                Expanded(child: MetaTextView(mapData:  map['header'],text: "Total Forex(INR)")),
+                              ]),
+                        ),
+                        Container(
+                          height: 20.h,
+                          child: Row(
+                              children: [
+                                Expanded(child: MetaTextView(mapData:  map['item'],text: ((item.totalForexAmount)!/(item.cash!+item.card!)).toString())),
+                                Expanded(child: MetaTextView(mapData:  map['item'],text: item.address)),
+                                Expanded(child: MetaTextView(mapData:  map['item'],text: item.totalForexAmount.toString())),
+                              ]),
+                        ),
+
                       ],
                     ),
                   );
@@ -420,31 +443,33 @@ class TrProcessed extends StatelessWidget {
                     Expanded(
                         child: MetaTextView(mapData:  map['header'],text: "Duration(Days)")),
                     Expanded(child: MetaTextView(mapData:  map['header'],text: "Service Type",)),
-
                   ],
                 ),
-                ListView.builder(
-                    physics: NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    padding: EdgeInsets.zero,
-                    itemBuilder: (BuildContext context, int index) {
-                      TRTravelVisas item = list[index];
-                      return Container(
-                        padding: EdgeInsets.symmetric(vertical: 5.h),
-                        color: Colors.white,
-                        child:  Row(
-                          children: [
-                            Container(
-                                width: 10.w,
-                                child: MetaTextView(mapData:  map['item'],text: (index+1).toString())),
-                            Expanded(child: MetaTextView(mapData:  map['item'],text: item.visitingCountry)),
-                            Expanded(child: MetaTextView(mapData:  map['item'],text:item.durationOfStay.toString())),
-                            Expanded(child: MetaTextView(mapData:  map['item'],text:"VISA")),
-                          ],
-                        ),
-                      );
-                    },
-                    itemCount: list.length
+                Container(
+                  height: 400,
+                  child: ListView.builder(
+                      physics: NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      padding: EdgeInsets.zero,
+                      itemBuilder: (BuildContext context, int index) {
+                        TRTravelVisas item = list[index];
+                        return Container(
+                          padding: EdgeInsets.symmetric(vertical: 5.h),
+                          color: Colors.white,
+                          child:  Row(
+                            children: [
+                              Container(
+                                  width: 10.w,
+                                  child: MetaTextView(mapData:  map['item'],text: (index+1).toString())),
+                              Expanded(child: MetaTextView(mapData:  map['item'],text: item.visitingCountry)),
+                              Expanded(child: MetaTextView(mapData:  map['item'],text:item.durationOfStay.toString())),
+                              Expanded(child: MetaTextView(mapData:  map['item'],text:"VISA")),
+                            ],
+                          ),
+                        );
+                      },
+                      itemCount: list.length
+                  ),
                 ),
               ],
             ):Column(

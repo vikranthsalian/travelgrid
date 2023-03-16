@@ -6,7 +6,7 @@ import 'package:travelgrid/common/constants/flavour_constants.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
 import 'package:travelgrid/data/blocs/cities/city_bloc.dart';
 import 'package:travelgrid/data/cubits/common/city_cubit/city_cubit.dart';
-import 'package:travelgrid/data/datasources/cities_list.dart';
+import 'package:travelgrid/data/datasources/others/cities_list.dart';
 import 'package:travelgrid/presentation/components/search_bar_component.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';
 import 'package:travelgrid/presentation/widgets/icon.dart';
@@ -15,8 +15,8 @@ import 'package:travelgrid/presentation/widgets/text_view.dart';
 
 class CityScreen extends StatefulWidget {
   Function(Data)? onTap;
-  String? tripType;
-  CityScreen({this.onTap,this.tripType});
+  String? code;
+  CityScreen({this.onTap,this.code="IN"});
 
   @override
   _CityScreenState createState() => _CityScreenState();
@@ -33,23 +33,15 @@ class _CityScreenState extends State<CityScreen> {
   List<Data> list = [];
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     jsonData = FlavourConstants.cityData;
+    list = appNavigatorKey.currentState!.context.read<CityCubit>().getCityResponse();
+      if(widget.code!="IN"){
+        List<Data>  overseasCities = appNavigatorKey.currentState!.context.read<CityCubit>().getCountryResponse();
+        list=overseasCities+list;
+      }
 
-    print("widget.tripType");
-    print(widget.tripType);
-    if(widget.tripType=="D"){
-
-      list = appNavigatorKey.currentState!.context.read<CityCubit>().getCityResponse();
-      dataList=list;
-
-    }else{
-
-      list = appNavigatorKey.currentState!.context.read<CityCubit>().getCountryResponse();
-      dataList=list;
-
-    }
+    dataList=list;
 
   }
 
@@ -57,145 +49,132 @@ class _CityScreenState extends State<CityScreen> {
   @override
   Widget build(BuildContext context) {
 
-    return Scaffold(
-      backgroundColor:ParseDataType().getHexToColor(jsonData['backgroundColor']),
-      body: Column(
-        children: [
-          SizedBox(height:40.h),
-          Container(
-            height: 40.h,
-            alignment: Alignment.center,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                MetaIcon(mapData:jsonData['backBar'],
-                    onButtonPressed: (){
-                      Navigator.pop(context);
-                    }),
-                Container(
-                  child:MetaTextView(mapData: jsonData['title']),
-                ),
-              ],
+      return Scaffold(
+        backgroundColor: ParseDataType().getHexToColor(
+            jsonData['backgroundColor']),
+        body: Column(
+          children: [
+            SizedBox(height: 40.h),
+            Container(
+              height: 40.h,
+              alignment: Alignment.center,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  MetaIcon(mapData: jsonData['backBar'],
+                      onButtonPressed: () {
+                        Navigator.pop(context);
+                      }),
+                  Container(
+                    child: MetaTextView(mapData: jsonData['title']),
+                  ),
+                ],
+              ),
             ),
-          ),
-          Container(
-            margin: EdgeInsets.symmetric(horizontal: 20.w),
-            padding: EdgeInsets.symmetric(vertical: 5.h),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8.r),
-                color: Color(0xFFFFFFFF),
-                border: Border.all(color: Colors.black12)),
-            child: SearchBarComponent(
-              barHeight: 40.h,
-              hintText: "Search.....",
-              searchController: _searchController,
-              onClear: (){
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 20.w),
+              padding: EdgeInsets.symmetric(vertical: 5.h),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8.r),
+                  color: Color(0xFFFFFFFF),
+                  border: Border.all(color: Colors.black12)),
+              child: SearchBarComponent(
+                barHeight: 40.h,
+                hintText: "Search.....",
+                searchController: _searchController,
+                onClear: () {
 
-              },
-              onSubmitted: (text) {
+                },
+                onSubmitted: (text) {
 
-              },
-              onChange: (text) {
-
-                search(text);
-
-              },
+                },
+                onChange: (text) {
+                  search(text);
+                },
+              ),
             ),
-          ),
-          SizedBox(height:10.h),
-          Container(
-            margin: EdgeInsets.symmetric(horizontal: 20.w),
-            child:MetaTextView(mapData: jsonData['listView']['recordsFound'],
-                text: list.length.toString()+" Records Found"),
-          ),
-          SizedBox(height:10.h),
-          Expanded(
-            child: Container(
-              color: Colors.white,
-                child: getListView()),
-          )
-        ],
-      ),
-    );
-  }
-
-  getList(){
-    List listWithVideo = list.where((element) => element.name!.toLowerCase() == 'a').toList();
-
-    return;
-  }
-
-
-  Widget getListView(){
-    // if(!loaded){
-    //   loaded = true;
-    // }
-
-
-
-    return  list.isNotEmpty ? ListView.separated(
-      shrinkWrap: true,
-      padding: EdgeInsets.zero,
-      itemBuilder: (BuildContext context, int index) {
-
-        Map city = {
-          "text" :"",
-          "color" : "0xFF000000",
-          "size": "15",
-          "family": "bold",
-          "align" : "center-left"
-        };
-
-        Map state = {
-          "text" :"",
-          "color" : "0xFFAEAEAE",
-          "size": "12",
-          "family": "bold",
-          "align" : "center-left"
-        };
-
-        return Container(
-          padding: EdgeInsets.symmetric(horizontal: 20.w),
-          child: ListTile(
-            leading: Container(
-                height: 30.w,
-                width: 30.w,
-                child: MetaSVGView(mapData:  jsonData['listView']['svgIcon'])
+            SizedBox(height: 10.h),
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 20.w),
+              child: MetaTextView(mapData: jsonData['listView']['recordsFound'],
+                  text: list.length.toString() + " Records Found"),
             ),
-            title: Container(
-                child: MetaTextView(mapData: city,
-                    text:(list[index].name.toString() +
-                        (list[index].code!="" ? " (${( list[index].code.toString())})" :""  ) ))
-            ),
-            trailing: const Icon(Icons.flight_outlined),
-            subtitle:  Container(
-                margin: EdgeInsets.only(right: 5.w),
-                child: MetaTextView( mapData:  state,text: list[index].state)
-            ),
-            onTap: () {
-                widget.onTap!(list[index]);
-            },
-          ),
-        );
+            SizedBox(height: 10.h),
+            Expanded(
+              child: Container(
+                  color: Colors.white,
+                  child: list.isNotEmpty ? ListView.separated(
+                    shrinkWrap: true,
+                    padding: EdgeInsets.zero,
+                    itemBuilder: (BuildContext context, int index) {
+                      Map city = {
+                        "text": "",
+                        "color": "0xFF000000",
+                        "size": "15",
+                        "family": "bold",
+                        "align": "center-left"
+                      };
 
+                      Map state = {
+                        "text": "",
+                        "color": "0xFFAEAEAE",
+                        "size": "12",
+                        "family": "bold",
+                        "align": "center-left"
+                      };
 
-      },
-      separatorBuilder: (BuildContext context, int index) {
-        return Divider(height: 3.h);
-      },
-      itemCount:list.length,
-    ):  Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        MetaTextView(mapData: jsonData['listView']['emptyData']['title']),
-        SizedBox(height: 10.h,),
-        MetaButton(mapData: jsonData['listView']['emptyData']['bottomButtonRefresh'],
-            onButtonPressed: (){
+                      return Container(
+                        padding: EdgeInsets.symmetric(horizontal: 20.w),
+                        child: ListTile(
+                          leading: Container(
+                              height: 30.w,
+                              width: 30.w,
+                              child: MetaSVGView(
+                                  mapData: jsonData['listView']['svgIcon'])
+                          ),
+                          title: Container(
+                              child: MetaTextView(mapData: city,
+                                  text: (list[index].name.toString() +
+                                      (list[index].code != ""
+                                          ? " (${(list[index].code
+                                          .toString())})"
+                                          : "")))
+                          ),
+                          trailing: const Icon(Icons.flight_outlined),
+                          subtitle: Container(
+                              margin: EdgeInsets.only(right: 5.w),
+                              child: MetaTextView(
+                                  mapData: state, text: list[index].state)
+                          ),
+                          onTap: () {
+                            widget.onTap!(list[index]);
+                          },
+                        ),
+                      );
+                    },
+                    separatorBuilder: (BuildContext context, int index) {
+                      return Divider(height: 3.h);
+                    },
+                    itemCount: list.length,
+                  ) : Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      MetaTextView(
+                          mapData: jsonData['listView']['emptyData']['title']),
+                      SizedBox(height: 10.h,),
+                      MetaButton(
+                          mapData: jsonData['listView']['emptyData']['bottomButtonRefresh'],
+                          onButtonPressed: () {
 
-            })
-      ],
-    );
+                          })
+                    ],
+                  )),
+            )
+          ],
+        ),
+      );
+
   }
 
   void search(String key) {

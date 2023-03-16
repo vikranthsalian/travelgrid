@@ -1,7 +1,6 @@
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:travelgrid/common/utils/show_alert.dart';
-import 'package:travelgrid/data/datasources/accom_type_list.dart';
 import 'package:tuple/tuple.dart';
 class LocationUtils{
 

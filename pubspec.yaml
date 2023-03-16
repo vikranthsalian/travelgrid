@@ -31,18 +31,15 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  http: ^0.13.5
   dio: ^4.0.6
   flutter_pretty_dio_logger: ^2.0.3
   flutter_form_bloc: ^0.30.1
   flutter_flavor: ^3.1.1
-  google_nav_bar: ^5.0.6
   line_icons: ^2.0.1
   font_awesome_flutter: ^10.3.0
   chips_choice: ^3.0.0
   flutter_launcher_icons: ^0.11.0
   flutter_staggered_grid_view: ^0.6.2
-  custom_navigation_bar: ^0.8.2
   shared_preferences: ^2.0.15
   flutter_easyloading: ^3.0.5
   tuple: ^2.0.1

@@ -5,12 +5,13 @@ import 'package:travelgrid/data/cubits/curreny_cubit/currency_cubit.dart';
 import 'package:travelgrid/data/cubits/fare_class_cubit/fare_class_cubit.dart';
 import 'package:travelgrid/data/cubits/misc_type_cubit/misc_type_cubit.dart';
 import 'package:travelgrid/data/cubits/travel_mode_cubit/travel_mode_cubit.dart';
-import 'package:travelgrid/data/datasources/cities_list.dart' as city;
-import 'package:travelgrid/data/datasources/currency_list.dart' as currency;
-import 'package:travelgrid/data/datasources/fare_class_list.dart' as fare;
-import 'package:travelgrid/data/datasources/misc_type_list.dart' as misc;
-import 'package:travelgrid/data/datasources/accom_type_list.dart' as accom;
-import 'package:travelgrid/data/datasources/travel_mode_list.dart' as mode;
+import 'package:travelgrid/data/datasources/others/cities_list.dart' as city;
+import 'package:travelgrid/data/datasources/others/currency_list.dart' as currency;
+import 'package:travelgrid/data/datasources/others/fare_class_list.dart' as fare;
+import 'package:travelgrid/data/datasources/others/misc_type_list.dart' as misc;
+import 'package:travelgrid/data/datasources/others/accom_type_list.dart' as accom;
+import 'package:travelgrid/data/datasources/others/travel_mode_list.dart' as mode;
+import 'package:travelgrid/data/datasources/others/currency_list.dart' as curr;
 
 import '../config/navigator_key.dart';
 
@@ -27,6 +28,8 @@ class CityUtil{
     }
 
    List<city.Data> list = appNavigatorKey.currentState!.context.read<CityCubit>().getCityResponse();
+   List<city.Data> list2 = appNavigatorKey.currentState!.context.read<CityCubit>().getCountryResponse();
+   list=list+list2;
 
     if(isCode){
       Iterable<city.Data> data= list.where((item) => (item.id.toString() == id.toString()));
@@ -113,6 +116,19 @@ class CityUtil{
     }else{
       return "Multiple";
     }
+
+  }
+
+  static String? getCurrenciesFromID(id) {
+
+    if(id.toString().isEmpty){
+      return null;
+    }
+
+    List<curr.Data> list = appNavigatorKey.currentState!.context.read<CurrencyCubit>().getCurrencyResponse();
+
+    Iterable<curr.Data> data= list.where((item) => (item.id.toString() == id.toString()));
+    return data.first.label;
 
   }
 

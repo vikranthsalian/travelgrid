@@ -3,13 +3,10 @@ import 'package:travelgrid/common/constants/route_constants.dart';
 import 'package:travelgrid/presentation/components/pdf_component.dart';
 import 'package:travelgrid/presentation/screens/auth/login_screen.dart';
 import 'package:travelgrid/presentation/screens/dashboard/approvals/approval_expense.dart';
-import 'package:travelgrid/presentation/screens/dashboard/dashboard_2.dart';
-import 'package:travelgrid/presentation/screens/dashboard/ge/add/add_accom.dart';
-import 'package:travelgrid/presentation/screens/dashboard/ge/add/add_misc.dart';
+import 'package:travelgrid/presentation/screens/dashboard/home.dart';
 import 'package:travelgrid/presentation/screens/dashboard/ge/add/add_travel.dart';
 import 'package:travelgrid/presentation/screens/dashboard/ge/create_ge.dart';
 import 'package:travelgrid/presentation/screens/dashboard/te/create_te.dart';
-import 'package:travelgrid/presentation/screens/dashboard/tr/add/add_itinery.dart';
 import 'package:travelgrid/presentation/screens/dashboard/tr/create_tr.dart';
 import 'package:travelgrid/presentation/screens/dashboard/tr/summary_tr.dart';
 import 'package:travelgrid/presentation/screens/dashboard/tr/travel_request.dart';
@@ -98,9 +95,8 @@ class AppRoutes {
 
           final bool isEdit = args["isEdit"] ?? false;
           final String title = args["title"]  ?? null;
-          final String status = args["status"]  ?? "";
           final bool isApproval = args["isApproval"]  ?? false;
-          return  CreateTravelExpense(isEdit: isEdit,title: title,status:status,isApproval: isApproval);
+          return  CreateTravelExpense(isEdit: isEdit,title: title,isApproval: isApproval);
         }
         return CreateTravelExpense();
 

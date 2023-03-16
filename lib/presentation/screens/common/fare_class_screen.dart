@@ -7,7 +7,7 @@ import 'package:travelgrid/data/cubits/fare_class_cubit/fare_class_cubit.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
 
-import '../../../data/datasources/fare_class_list.dart';
+import '../../../data/datasources/others/fare_class_list.dart';
 
 
 

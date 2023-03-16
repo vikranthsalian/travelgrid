@@ -1,12 +1,13 @@
-import 'package:travelgrid/data/datasources/accom_type_list.dart';
-import 'package:travelgrid/data/datasources/approver_list.dart';
-import 'package:travelgrid/data/datasources/cities_list.dart';
-import 'package:travelgrid/data/datasources/currency_list.dart';
-import 'package:travelgrid/data/datasources/fare_class_list.dart';
-import 'package:travelgrid/data/datasources/lat_long_distance_model.dart';
-import 'package:travelgrid/data/datasources/misc_type_list.dart';
-import 'package:travelgrid/data/datasources/travel_mode_list.dart';
-import 'package:travelgrid/data/datasources/travel_purpose_list.dart';
+import 'package:travelgrid/data/datasources/others/accom_type_list.dart';
+import 'package:travelgrid/data/datasources/list/approver_list.dart';
+import 'package:travelgrid/data/datasources/others/cities_list.dart';
+import 'package:travelgrid/data/datasources/others/countries_list.dart';
+import 'package:travelgrid/data/datasources/others/currency_list.dart';
+import 'package:travelgrid/data/datasources/others/fare_class_list.dart';
+import 'package:travelgrid/data/datasources/others/lat_long_distance_model.dart';
+import 'package:travelgrid/data/datasources/others/misc_type_list.dart';
+import 'package:travelgrid/data/datasources/others/travel_mode_list.dart';
+import 'package:travelgrid/data/datasources/others/travel_purpose_list.dart';
 import 'package:travelgrid/data/models/success_model.dart';
 import 'package:travelgrid/domain/repo_abstract/api_abstract.dart';
 
@@ -15,7 +16,7 @@ class CommonUseCase {
   CommonUseCase(this.apiAbstract);
   Future<MetaCityListResponse> getCities(countryCode,tripType) async => apiAbstract.getCities(countryCode,tripType);
 
-  Future<MetaCityListResponse> getCountriesList() async => apiAbstract.getCountriesList();
+  Future<MetaCountryListResponse> getCountriesList() async => apiAbstract.getCountriesList();
 
   Future<MetaAccomTypeListResponse> getAccomTypesList() async => apiAbstract.getAccomTypesList();
 

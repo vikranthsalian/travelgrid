@@ -9,7 +9,7 @@ import 'package:travelgrid/common/extensions/parse_data_type.dart';
 import 'package:travelgrid/common/injector/injector.dart';
 import 'package:travelgrid/common/utils/location.dart';
 import 'package:travelgrid/common/utils/show_alert.dart';
-import 'package:travelgrid/data/datasources/lat_long_distance_model.dart';
+import 'package:travelgrid/data/datasources/others/lat_long_distance_model.dart';
 import 'package:travelgrid/data/models/ge/ge_conveyance_model.dart';
 import 'package:travelgrid/data/models/location_model.dart';
 import 'package:travelgrid/domain/usecases/common_usecase.dart';

@@ -7,7 +7,7 @@ import 'package:travelgrid/data/cubits/travel_mode_cubit/travel_mode_cubit.dart'
 import 'package:travelgrid/presentation/widgets/button.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
 
-import '../../../data/datasources/travel_mode_list.dart';
+import '../../../data/datasources/others/travel_mode_list.dart';
 
 
 class TravelModeScreen extends StatelessWidget {

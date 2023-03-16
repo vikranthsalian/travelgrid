@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
-import 'package:travelgrid/data/datasources/tr_summary_response.dart';
+import 'package:travelgrid/data/datasources/summary/tr_summary_response.dart';
 import 'package:travelgrid/data/models/tr/tr_city_pair_model.dart';
 import 'package:travelgrid/data/models/tr/tr_forex_model.dart';
 import 'package:travelgrid/data/models/tr/tr_insurance_model.dart';
@@ -53,8 +53,11 @@ class ProcessedTrFormBloc extends FormBloc<String, String> {
         "maTravelRequestCityPair": cityList.value
       };
 
+      print(save);
+
       emitSuccess(successResponse: jsonEncode(save));
     }catch(e){
+      print("e");
       print(e);
     }
 

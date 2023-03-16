@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../../datasources/fare_class_list.dart';
+import '../../datasources/others/fare_class_list.dart';
 
 
 part 'fare_class_state.dart';
@@ -41,13 +41,13 @@ class FareClassCubit extends Cubit<FareClassState> {
       final current = state as FareClassIn;
 
       if(mode=="A"){
-        return air ?? [];
+        return air;
       }
       if(mode=="R"){
-        return rail ??[];
+        return rail;
       }
       if(mode=="B"){
-        return road ??[];
+        return road;
       }
 
       return [];

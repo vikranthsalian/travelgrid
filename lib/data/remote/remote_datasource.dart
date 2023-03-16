@@ -4,8 +4,8 @@ import 'package:travelgrid/common/config/navigator_key.dart';
 import 'package:travelgrid/common/dio/dio_client.dart';
 import 'package:travelgrid/common/utils/loader_hud.dart';
 import 'package:travelgrid/data/cubits/login_cubit/login_cubit.dart';
-import 'package:travelgrid/data/datasources/accom_type_list.dart';
-import 'package:travelgrid/data/datasources/cities_list.dart';
+import 'package:travelgrid/data/datasources/others/accom_type_list.dart';
+import 'package:travelgrid/data/datasources/others/cities_list.dart';
 import 'package:travelgrid/data/datasources/login_response.dart';
 
 class APIRemoteDatasource{
@@ -77,6 +77,9 @@ class APIRemoteDatasource{
         loadingMessage:"Loading Data...",
         queryParameters:{
           "token":appNavigatorKey.currentState!.context.read<LoginCubit>().getLoginToken(),
+          if(pathUrl=="te/getTEDetails")
+            "tripID":id
+          else
           "recordLocator":id,
         },
       );

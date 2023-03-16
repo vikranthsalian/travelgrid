@@ -6,7 +6,7 @@ import 'package:travelgrid/common/extensions/parse_data_type.dart';
 import 'package:travelgrid/common/injector/injector.dart';
 import 'package:travelgrid/common/utils/date_time_util.dart';
 import 'package:travelgrid/data/blocs/travel_expense/te_bloc.dart';
-import 'package:travelgrid/data/datasources/te_summary_response.dart' as ts;
+import 'package:travelgrid/data/datasources/summary/te_summary_response.dart' as ts;
 import 'package:travelgrid/presentation/components/bloc_map_event.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';
 import 'package:travelgrid/presentation/widgets/icon.dart';

@@ -1,5 +1,5 @@
 class TrForexAdvance {
-  int? totalForexAmount;
+  double? totalForexAmount;
   int? cash;
   int? card;
   int? currency;
@@ -17,4 +17,14 @@ class TrForexAdvance {
     address = json['address'];
     violationMessage = json['violationMessage'];
   }
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['totalForexAmount'] = this.totalForexAmount;
+    data['cash'] = this.cash;
+    data['currency'] = this.currency;
+    data['address'] = this.address;
+    data['violationMessage'] = this.violationMessage;
+    return data;
+  }
+
 }

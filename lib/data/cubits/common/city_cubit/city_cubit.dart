@@ -1,12 +1,12 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:travelgrid/data/datasources/cities_list.dart';
+import 'package:travelgrid/data/datasources/others/cities_list.dart';
 
 part 'city_state.dart';
 
 class CityCubit extends Cubit<CityState> {
-  CityCubit() : super(CityIn(response: []));
+  CityCubit() : super(CityIn(response: [],responseCountry: []));
   List<Data> city=[];
   List<Data> country=[];
   setCityResponse(List<Data> response) {
@@ -27,7 +27,7 @@ class CityCubit extends Cubit<CityState> {
 
 
   setCountryResponse(List<Data> response) {
-
+    print("setCountryResponse");
     if(state is CityIn) {
       print("country.length");
       print(country.length);
@@ -39,7 +39,7 @@ class CityCubit extends Cubit<CityState> {
     List<Data> response = [];
     if(state is CityIn) {
       final current = state as CityIn;
-      return city+country;
+      return country;
     }
     return response;
   }

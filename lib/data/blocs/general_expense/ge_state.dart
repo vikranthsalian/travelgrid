@@ -2,7 +2,7 @@ part of 'ge_bloc.dart';
 
 @immutable
 abstract class GeneralExpenseState {
-  GEListResponse? response ;
+  list.GEListResponse? response ;
   GESummaryResponse? responseSum ;
   BlocEventState eventState;
   String message;
@@ -15,7 +15,7 @@ class GeneralExpenseInitialState extends GeneralExpenseState {
 }
 
 class GeneralExpenseLoadedState extends GeneralExpenseState {
-  final GEListResponse? data;
+  final list.GEListResponse? data;
   GeneralExpenseLoadedState({required this.data}) : super(response: data, eventState: BlocEventState.LOADED);
 }
 

@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../../datasources/misc_type_list.dart';
+import '../../datasources/others/misc_type_list.dart';
 
 part 'misc_type_state.dart';
 

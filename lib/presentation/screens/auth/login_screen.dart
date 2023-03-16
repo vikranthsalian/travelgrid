@@ -94,7 +94,7 @@ class _LoginScreenState extends State<_Login> {
                        Injector.resolve<FareClassBloc>()..add(GetRoadFareClassListEvent());
                        Injector.resolve<TravelPurposeBloc>()..add(GetTravelPurposeListEvent());
                        Injector.resolve<CurrencyBloc>()..add(GetCurrencyListEvent());
-                       Injector.resolve<CityBloc>()..add(GetCityListEvent());
+                        Injector.resolve<CityBloc>()..add(GetCityListEvent());
                        Injector.resolve<CityBloc>()..add(GetCountryListEvent());
 
 

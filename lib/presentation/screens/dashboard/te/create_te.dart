@@ -12,9 +12,9 @@ import 'package:travelgrid/common/utils/city_util.dart';
 import 'package:travelgrid/data/blocs/travel_expense/te_bloc.dart';
 import 'package:travelgrid/data/cubits/approver_type_cubit/approver_type_cubit.dart';
 import 'package:travelgrid/data/cubits/login_cubit/login_cubit.dart';
-import 'package:travelgrid/data/datasources/approver_list.dart' as app;
+import 'package:travelgrid/data/datasources/list/approver_list.dart' as app;
 import 'package:travelgrid/data/datasources/login_response.dart';
-import 'package:travelgrid/data/datasources/te_summary_response.dart';
+import 'package:travelgrid/data/datasources/summary/te_summary_response.dart';
 import 'package:travelgrid/data/models/expense_model.dart';
 import 'package:travelgrid/data/models/success_model.dart';
 import 'package:travelgrid/data/models/te/te_accom_model.dart';
@@ -23,6 +23,7 @@ import 'package:travelgrid/data/models/te/te_misc_model.dart';
 import 'package:travelgrid/data/models/te/te_ticket_model.dart';
 import 'package:travelgrid/domain/usecases/te_usecase.dart';
 import 'package:travelgrid/presentation/components/bloc_map_event.dart';
+import 'package:travelgrid/presentation/components/switch_component.dart';
 import 'package:travelgrid/presentation/dialog_expense_picker.dart';
 import 'package:travelgrid/presentation/screens/dashboard/te/add/te_add_accom.dart';
 import 'package:travelgrid/presentation/screens/dashboard/te/add/te_add_conveyance.dart';
@@ -38,18 +39,111 @@ import 'package:travelgrid/presentation/widgets/text_field.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
 import 'package:tuple/tuple.dart';
 
-class CreateTravelExpense extends StatefulWidget {
-  bool isEdit;
-  bool isApproval;
-  String? title;
-  String? status;
-  CreateTravelExpense({this.isEdit=true,this.status,this.title,this.isApproval=false});
 
+
+TextEditingController controller = TextEditingController();
+class CreateTravelExpense extends StatelessWidget {
+  bool isEdit;
+  String? title;
+  bool isApproval;
+  CreateTravelExpense({this.isEdit=true,this.title,this.isApproval=false});
+  TravelExpenseBloc?  bloc;
+  Map? jsonData;
   @override
-  _CreateTravelExpenseState createState() => _CreateTravelExpenseState();
+  Widget build(BuildContext context) {
+    jsonData = FlavourConstants.teCreateData;
+
+    bloc = Injector.resolve<TravelExpenseBloc>()
+      ..add(GetTravelExpenseSummaryEvent(recordLocator: title!));
+
+    return  Scaffold(
+      backgroundColor: Colors.white,
+      bottomNavigationBar: isApproval?buildApprovalRow(title, context):SizedBox(),
+      body: Container(
+        color:ParseDataType().getHexToColor(jsonData!['backgroundColor']),
+        child: Column(
+          children: [
+            SizedBox(height:40.h),
+            Container(
+              height: 40.h,
+              alignment: Alignment.center,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  MetaIcon(mapData:jsonData!['backBar'],
+                      onButtonPressed: (){
+                        Navigator.pop(context);
+                      }),
+                  Container(
+                    child:MetaTextView(mapData: jsonData!['title'],text:title),
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+                child:  BlocBuilder<TravelExpenseBloc, TravelExpenseState>(
+                    bloc: bloc,
+                    builder:(context, state) {
+                      return Container(
+                          color: Colors.white,
+                          child: BlocMapToEvent(state: state.eventState, message: state.message,
+                              callback: (){
+
+                              },
+                              child:CreateTravelExpenseBody(state,isEdit,isApproval,title!)
+                          )
+                      );
+                    }
+                )
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+
+  Row buildApprovalRow(title,ctx) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        Expanded(
+          child: MetaButton(mapData: jsonData!['bottomButtonLeft'],text: "Cancel",
+              onButtonPressed: (){
+
+              }
+          ),
+        ),
+        Expanded(
+          child: MetaButton(mapData: jsonData!['bottomButtonRight'],text: "Approve",
+              onButtonPressed: ()async{
+                SuccessModel  model =  await Injector.resolve<TeUseCase>().approveGE(title!,controller.text);
+
+                if(model.status==true){
+                  Navigator.pop(ctx);
+                }
+              }
+          ),
+        )
+      ],
+    );
+  }
+
 }
 
-class _CreateTravelExpenseState extends State<CreateTravelExpense> {
+class CreateTravelExpenseBody extends StatefulWidget {
+  TravelExpenseState state;
+  bool isEdit;
+  bool isApproval;
+  String title;
+  CreateTravelExpenseBody(this.state,this.isEdit,this.isApproval,this.title);
+
+  @override
+  _CreateTravelExpenseBodyState createState() => _CreateTravelExpenseBodyState();
+}
+
+class _CreateTravelExpenseBodyState extends State<CreateTravelExpenseBody> {
   Map<String,dynamic> jsonData = {};
   Map<String,dynamic> submitMap = {};
   List details=[];
@@ -72,7 +166,6 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
 
   Tuple2<String,String>? approver1;
   Tuple2<String,String>? approver2;
-  TextEditingController controller = TextEditingController();
 
   TravelExpenseBloc?  bloc;
   bool loaded =false;
@@ -120,10 +213,6 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
       summaryDetails.add(Tuple3(item, "0","0"));
     }
 
-      bloc = Injector.resolve<TravelExpenseBloc>()
-        ..add(GetTravelExpenseSummaryEvent(recordLocator: widget.title!));
-
-
   }
 
 
@@ -153,55 +242,15 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
         shape: CircularNotchedRectangle(),
         notchMargin: 5,
         elevation: 2.0,
-        child: widget.isEdit ? buildSubmitRow():buildViewRow(),
+        child: widget.isEdit ? buildSubmitRow():buildViewRow(widget.state),
       ),
-      body: Container(
-        color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
-        child: Column(
-          children: [
-            SizedBox(height:40.h),
-            Container(
-              height: 40.h,
-              alignment: Alignment.center,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  MetaIcon(mapData:jsonData['backBar'],
-                      onButtonPressed: (){
-                        Navigator.pop(context);
-                      }),
-                  Container(
-                    child:MetaTextView(mapData: jsonData['title'],text:widget.title),
-                  ),
-                ],
-              ),
-            ),
-            Expanded(
-              child:BlocBuilder<TravelExpenseBloc, TravelExpenseState>(
-                  bloc: bloc,
-                  builder:(context, state) {
-                    return Container(
-                        child: BlocMapToEvent(state: state.eventState, message: state.message,
-                            callback: (){
-                          //  loaded=false;
-                            },
-                            child:buildView(state)
-                        )
-                    );
-                  }
-              )
-            ),
-          ],
-        ),
-      ),
+      body: buildView(widget.state),
     );
   }
 
+
   Widget buildView(state){
-    loaded=false;
-    visitItems.clear();
-    commentList.clear();
+
      if(state.responseSum!=null && !loaded) {
        TESummaryResponse? response = state.responseSum!;
 
@@ -257,12 +306,43 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
         child: Column(
           children: [
             if(widget.isEdit)
-            buildExpandableView(jsonData,"requesterDetails"),
-            buildExpandableView(jsonData,"visitItems"),
-            buildExpandableView(jsonData,"summaryItems"),
-            buildExpandableView(jsonData,"summaryDetails"),
-           widget.isEdit ? buildExpandableView(jsonData,"approverDetails"):SizedBox(),
-            widget.status!.toLowerCase()!="create"  ?  buildExpandableView(jsonData,"commentDetails"):SizedBox(),
+            SwitchComponent(
+                color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
+                jsonData: jsonData['requesterDetails'],
+                childWidget: buildRequesterWidget(jsonData['requesterDetails']),
+                initialValue: showRequesterDetails),
+           // buildExpandableView(jsonData,"requesterDetails"),
+         //   buildExpandableView(jsonData,"visitItems"),
+            SwitchComponent(
+                color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
+                jsonData: jsonData['visitItems'],
+                childWidget: buildVisitItemWidget(jsonData['visitItems']),
+                initialValue: showVisitDetails),
+         //   buildExpandableView(jsonData,"summaryItems"),
+            SwitchComponent(
+                color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
+                jsonData: jsonData['summaryItems'],
+                childWidget: buildSummaryItemWidget(jsonData['summaryItems']),
+                initialValue: showSummaryItems),
+          //  buildExpandableView(jsonData,"summaryDetails"),
+            SwitchComponent(
+                color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
+                jsonData: jsonData['summaryDetails'],
+                childWidget: buildSummaryWidget(jsonData['summaryDetails']),
+                initialValue: showSummaryDetails),
+            if(widget.isEdit)
+              SwitchComponent(
+                  color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
+                  jsonData: jsonData['approverDetails'],
+                  childWidget: buildApproverWidget(jsonData['approverDetails']),
+                  initialValue: showSummaryDetails),
+           // buildExpandableView(jsonData,"approverDetails"):SizedBox(),
+           // widget.status!.toLowerCase()!="create"  ?  buildExpandableView(jsonData,"commentDetails"):SizedBox(),
+            SwitchComponent(
+                color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
+                jsonData: jsonData['commentDetails'],
+                childWidget: buildCommentWidget(jsonData['commentDetails']),
+                initialValue: showCommentDetails)
           ],
         ),
       ),
@@ -289,52 +369,43 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
       );
   }
 
-  Row buildViewRow() {
-    bool isTBVisible=false;
-    bool isAPVisible=false;
-    if(widget.status!.toLowerCase()=="approver 1"){
-      isTBVisible=true;
-    }
+  buildViewRow(TravelExpenseState state) {
+    if(state.responseSum!=null) {
+      String status = state.responseSum!.data!.currentStatus!
+          .toLowerCase();
 
-    if(widget.isApproval){
-      isTBVisible=false;
-      isAPVisible=true;
-    }
+      print(status);
+      bool isTBVisible = false;
 
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        Expanded(
-          child: MetaButton(mapData: jsonData['bottomButtonLeft'],text: "Cancel",
-              onButtonPressed: (){
+      if (status.toLowerCase() == "approver 1") {
+        isTBVisible = true;
+      }
 
-              }
-          ),
-        ),
-        isAPVisible?
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
           Expanded(
-            child: MetaButton(mapData: jsonData['bottomButtonRight'],text: "Approve",
-                onButtonPressed: ()async{
-                  SuccessModel  model =  await Injector.resolve<TeUseCase>().approveGE(widget.title!,controller.text);
+            child: MetaButton(
+                mapData: jsonData['bottomButtonLeft'], text: "Cancel",
+                onButtonPressed: () {
 
-                  if(model.status==true){
-                    Navigator.pop(context);
-                  }
                 }
             ),
-          ):SizedBox(width: 0,),
-        isTBVisible?
-        Expanded(
-          child: MetaButton(mapData: jsonData['bottomButtonRight'],text: "Take Back",
-              onButtonPressed: (){
-
-              }
           ),
-        ):SizedBox(width: 0),
-      ],
-    );
-  }
+          isTBVisible ?
+          Expanded(
+            child: MetaButton(
+                mapData: jsonData['bottomButtonRight'], text: "Take Back",
+                onButtonPressed: () {
 
+                }
+            ),
+          ) : SizedBox(width: 0),
+        ],
+      );
+    }
+    return Container();
+  }
 
   Container buildExpandableView(Map mapData,String key){
     Map map= mapData[key];
@@ -1038,6 +1109,7 @@ class _CreateTravelExpenseState extends State<CreateTravelExpense> {
      "comment":controller.text,
    };
 
+   prettyPrint("submitTe");
    prettyPrint(valueMap);
 
     SuccessModel model =   await Injector.resolve<TeUseCase>().createTe(queryParams,valueMap);

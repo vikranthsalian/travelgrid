@@ -8,37 +8,30 @@ import 'package:travelgrid/common/utils/date_time_util.dart';
 import 'package:travelgrid/data/blocs/general_expense/ge_bloc.dart';
 import 'package:travelgrid/data/datasources/list/ge_list_response.dart';
 import 'package:travelgrid/presentation/components/bloc_map_event.dart';
+import 'package:travelgrid/presentation/components/filterby_component.dart';
+import 'package:travelgrid/presentation/components/sortby_component.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';
 import 'package:travelgrid/presentation/widgets/icon.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
 
-class GeneralExpense extends StatefulWidget {
-  @override
-  _GeneralExpenseState createState() => _GeneralExpenseState();
-}
 
-class _GeneralExpenseState extends State<GeneralExpense> {
+class GeneralExpense extends StatelessWidget {
   Map<String,dynamic> jsonData = {};
-  List items=[];
   double cardHt = 90.h;
   bool enableSearch = false;
   final TextEditingController _searchController = TextEditingController();
   bool loaded=false;
   GeneralExpenseBloc? bloc;
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    jsonData = FlavourConstants.geData;
- //   prettyPrint(jsonData);
-  }
-
-
+  int selected=0;
+  int filterSelected=0;
+  String sortedBy="Default";
+  List<String> filterOptions=["Default"];
   @override
   Widget build(BuildContext context) {
-
+    jsonData = FlavourConstants.geData;
    if(!loaded){
-     bloc = Injector.resolve<GeneralExpenseBloc>()..add(GetGeneralExpenseListEvent());
+     bloc = Injector.resolve<GeneralExpenseBloc>();
+     callBloc();
      loaded=true;
    }
 
@@ -50,7 +43,8 @@ class _GeneralExpenseState extends State<GeneralExpense> {
           if(jsonData['bottomButtonFab']['onClick'].isNotEmpty){
 
            Navigator.of(context).pushNamed(jsonData['bottomButtonFab']['onClick']).then((value) {
-             bloc!.add(GetGeneralExpenseListEvent());
+             callBloc();
+
            });
           }
         },),
@@ -67,12 +61,40 @@ class _GeneralExpenseState extends State<GeneralExpense> {
           children: <Widget>[
             MetaButton(mapData: jsonData['bottomButtonLeft'],
                 onButtonPressed: (){
+                  showModalBottomSheet(
+                    context: context,
+                    backgroundColor: Colors.transparent,
+                    builder: (context) =>
+                        SortComponent(
+                          type: "ge",
+                          selected: selected,
+                          onSelect:(int value,Map<String,dynamic> data) {
+                            selected=value;
+                            sortedBy=data['value'];
+                          print("Sort Selected: "+value.toString());
+                          Navigator.pop(context);
+                          callBloc();
 
+                        },),
+                  );
                 }
             ),
             MetaButton(mapData: jsonData['bottomButtonRight'],
                 onButtonPressed: (){
 
+                  showModalBottomSheet(
+                    context: context,
+                    backgroundColor: Colors.transparent,
+                    builder: (context) =>
+                        FilterComponent(
+                          tag: filterSelected,
+                          options: filterOptions,
+                          selected:(id){
+                            filterSelected=id;
+                            Navigator.pop(context);
+                            callBloc();
+                          }),
+                  );
                 }
             )
           ],
@@ -86,10 +108,15 @@ class _GeneralExpenseState extends State<GeneralExpense> {
                 child: BlocMapToEvent(state: state.eventState, message: state.message,
                     callback: (){
                        jsonData['listView']['recordsFound']['value'] = state.response?.data?.length;
+
+                       for(var item in state.response!.data!){
+                         filterOptions.add(item.status!);
+                       }
+                       filterOptions = filterOptions.toSet().toList();
                     },
                     topComponent:Container(
                       color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
-                      height: 110.h,
+                      height: 115.h,
                       child:  Column(
                         children: [
                           SizedBox(height:40.h),
@@ -132,12 +159,23 @@ class _GeneralExpenseState extends State<GeneralExpense> {
                           //     },
                           //   ),
                           // ),
-                          SizedBox(height:5.h),
                           Container(
                             margin: EdgeInsets.symmetric(horizontal: 20.w),
                             child:MetaTextView(mapData: jsonData['listView']['recordsFound']),
                           ),
-                          SizedBox(height:5.h),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                margin: EdgeInsets.symmetric(horizontal: 20.w),
+                                child:MetaTextView(mapData: jsonData['listView']['recordsFound'],text: "Sorted By : "+sortedBy),
+                              ),
+                              Container(
+                                margin: EdgeInsets.symmetric(horizontal: 20.w),
+                                child:MetaTextView(mapData: jsonData['listView']['recordsFound'],text: "Filtered By : "+filterOptions[filterSelected]),
+                              ),
+                            ],
+                          ),
                         ],
                       ),
                     ),
@@ -308,7 +346,7 @@ class _GeneralExpenseState extends State<GeneralExpense> {
                                        "isApproval":false,
                                        "title": item.recordLocator.toString().toUpperCase()
                                      }).then((value) {
-                                   bloc!.add(GetGeneralExpenseListEvent());
+                                   callBloc();
                                  });
                                },
                                child: Visibility(
@@ -336,7 +374,7 @@ class _GeneralExpenseState extends State<GeneralExpense> {
                                             item.recordLocator.toString()
                                                 .toUpperCase()
                                 }).then((value) {
-                                  bloc!.add(GetGeneralExpenseListEvent());
+                                  callBloc();
                                 });
                                 },
                                 child: MetaTextView( mapData:  view ))
@@ -366,6 +404,10 @@ class _GeneralExpenseState extends State<GeneralExpense> {
             })
       ],
     );
+  }
+
+  void callBloc() {
+    bloc!.add(GetGeneralExpenseListEvent(selected,filterOptions[filterSelected]));
   }
 
 }

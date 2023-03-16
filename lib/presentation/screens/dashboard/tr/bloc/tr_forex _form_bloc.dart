@@ -10,6 +10,7 @@ class ForexFormBloc extends FormBloc<String, String> {
   final tfCash = TextFieldBloc(validators: [emptyValidator]);
   final tfCard= TextFieldBloc(validators: [emptyValidator]);
   final tfForex= TextFieldBloc(validators: [emptyValidator]);
+  final tfRate= TextFieldBloc(validators: [emptyValidator]);
 
 
   final tfComment= TextFieldBloc();
@@ -43,12 +44,13 @@ class ForexFormBloc extends FormBloc<String, String> {
         "card": tfCard.valueToInt,
         "currency": currencyID.valueToInt,
         "violationMessage": "",
-        "totalForexAmount": tfCash.valueToInt! + tfCash.valueToInt!,
+        "totalForexAmount": (tfCash.valueToInt! + tfCard.valueToInt!)*tfRate.valueToDouble!,
         "address": tfComment.value,
       };
 
       emitSuccess(successResponse: jsonEncode(save));
     }catch(e){
+      print("e");
       print(e);
     }
 

@@ -4,9 +4,13 @@ part of 'city_bloc.dart';
 abstract class CityEvent {}
 
 class GetCityListEvent extends CityEvent {
-  GetCityListEvent();
+  String? tripType;
+  String? countryCode;
+  GetCityListEvent({this.tripType="D",this.countryCode="IN"});
 }
 
 class GetCountryListEvent extends CityEvent {
-  GetCountryListEvent();
+  String? tripType;
+  String? countryCode;
+  GetCountryListEvent({this.tripType="O",this.countryCode=""});
 }

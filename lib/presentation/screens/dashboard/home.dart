@@ -191,25 +191,6 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             )
-            // Container(
-            //   color: Colors.white,
-            //   child: ListView(
-            //     shrinkWrap: true,
-            //     padding: EdgeInsets.zero,
-            //     children: [
-            //       Row(
-            //         mainAxisAlignment: MainAxisAlignment.spaceAround,
-            //           children: [
-            //             MetaTextView(mapData: jsonData['upcoming_details']['title']),
-            //             MetaTextView(mapData: jsonData['upcoming_details']['button']),
-            //           ]
-            //       ),
-            //       _buildChoiceChips( jsonData['upcoming_details']['list_data']['chip_data']['chips'])
-            //     ],
-            //   ),
-            // )
-
-
           ]
         ),
       ),
@@ -224,61 +205,5 @@ class _HomePageState extends State<HomePage> {
     }
     return colors;
   }
-
-  Widget _buildChoiceChips(items) {
-
-    // int tag=4;
-    //
-    // return  ChipsChoice<int>.single(
-    //   value: tag,
-    //   onChanged: (val) => setState(() => tag = val),
-    //   choiceItems: C2Choice.listFrom<int, String>(
-    //     source: ["1","2","3","4"],
-    //     value: (i, v) => i,
-    //     label: (i, v) => v,
-    //     tooltip: (i, v) => v,
-    //   ),
-    //   choiceCheckmark: false,
-    //   choiceStyle: C2ChipStyle.filled(
-    //     selectedStyle: const C2ChipStyle(
-    //       checkmarkColor: Colors.blueAccent,
-    //       borderRadius: BorderRadius.all(
-    //         Radius.circular(25),
-    //       ),
-    //     ),
-    //   ),
-    // );
-    //
-
-
-    return Container(
-      height: 20,
-      alignment: Alignment.center,
-      child: ListView.builder(
-        itemCount: items.length,
-        scrollDirection: Axis.horizontal,
-        padding: EdgeInsets.zero,
-        shrinkWrap: true,
-        itemBuilder: (BuildContext context, int index) {
-          return ChoiceChip(
-            elevation: 0.0,
-
-            label: MetaTextView(mapData:items[index]),
-            selected: _choiceIndex == index,
-            selectedColor: Colors.red,
-            onSelected: (bool selected) {
-              setState(() {
-                _choiceIndex = selected ? index : 0;
-              });
-            },
-            backgroundColor:ParseDataType().getHexToColor(items[index]['backgroundColor']),
-            labelStyle:MetaStyle(mapData: items[index]).getStyle(),
-          );
-        },
-      ),
-    );
-  }
-
-
 
 }

@@ -1,20 +1,21 @@
-import 'package:travelgrid/data/datasources/accom_type_list.dart';
-import 'package:travelgrid/data/datasources/approver_list.dart';
-import 'package:travelgrid/data/datasources/cities_list.dart';
-import 'package:travelgrid/data/datasources/currency_list.dart';
-import 'package:travelgrid/data/datasources/fare_class_list.dart';
-import 'package:travelgrid/data/datasources/ge_summary_response.dart';
+import 'package:travelgrid/data/datasources/others/accom_type_list.dart';
+import 'package:travelgrid/data/datasources/list/approver_list.dart';
+import 'package:travelgrid/data/datasources/others/cities_list.dart';
+import 'package:travelgrid/data/datasources/others/countries_list.dart';
+import 'package:travelgrid/data/datasources/others/currency_list.dart';
+import 'package:travelgrid/data/datasources/others/fare_class_list.dart';
+import 'package:travelgrid/data/datasources/summary/ge_summary_response.dart';
 import 'package:travelgrid/data/datasources/list/ge_list_response.dart';
-import 'package:travelgrid/data/datasources/lat_long_distance_model.dart';
+import 'package:travelgrid/data/datasources/others/lat_long_distance_model.dart';
 import 'package:travelgrid/data/datasources/login_response.dart';
-import 'package:travelgrid/data/datasources/misc_type_list.dart';
-import 'package:travelgrid/data/datasources/te_approval_list.dart';
-import 'package:travelgrid/data/datasources/te_summary_response.dart';
+import 'package:travelgrid/data/datasources/others/misc_type_list.dart';
+import 'package:travelgrid/data/datasources/list/te_approval_list.dart';
+import 'package:travelgrid/data/datasources/summary/te_summary_response.dart';
 import 'package:travelgrid/data/datasources/list/tr_list_response.dart';
 import 'package:travelgrid/data/datasources/list/te_list_response.dart';
-import 'package:travelgrid/data/datasources/tr_summary_response.dart';
-import 'package:travelgrid/data/datasources/travel_mode_list.dart';
-import 'package:travelgrid/data/datasources/travel_purpose_list.dart';
+import 'package:travelgrid/data/datasources/summary/tr_summary_response.dart';
+import 'package:travelgrid/data/datasources/others/travel_mode_list.dart';
+import 'package:travelgrid/data/datasources/others/travel_purpose_list.dart';
 import 'package:travelgrid/data/models/success_model.dart';
 
 abstract class LoginAPIAbstract {
@@ -53,7 +54,7 @@ abstract class AeAPIAbstract {
 abstract class CommonAPIAbstract {
   Future<MetaCityListResponse> getCities(countryCode,tripType);
 
-  Future<MetaCityListResponse> getCountriesList();
+  Future<MetaCountryListResponse> getCountriesList();
 
   Future<MetaAccomTypeListResponse> getAccomTypesList();
 

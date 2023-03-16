@@ -4,13 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
-import 'package:travelgrid/common/utils/city_util.dart';
 import 'package:travelgrid/data/models/tr/tr_insurance_model.dart';
 import 'package:travelgrid/data/models/tr/tr_visa_model.dart';
 import 'package:travelgrid/presentation/screens/dashboard/tr/bloc/tr_insurance%20_form_bloc.dart';
-import 'package:travelgrid/presentation/screens/dashboard/tr/bloc/tr_visa%20_form_bloc.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';
-import 'package:travelgrid/presentation/widgets/dialog_selector_view.dart';
 import 'package:travelgrid/presentation/widgets/icon.dart';
 import 'package:travelgrid/presentation/widgets/text_field.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
@@ -97,7 +94,7 @@ class AddInsurance  extends StatelessWidget {
                               },
                               onSuccess: (context, state) {
                                 print(state.successResponse);
-                                TRTravelVisas modelResponse = TRTravelVisas.fromJson(jsonDecode(state.successResponse.toString()));
+                                TRTravelInsurance modelResponse = TRTravelInsurance.fromJson(jsonDecode(state.successResponse.toString()));
 
                                 onAdd!(modelResponse);
                                 Navigator.pop(context);
