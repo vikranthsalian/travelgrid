@@ -4,14 +4,20 @@ part of 'ae_bloc.dart';
 abstract class ApprovalExpenseEvent {}
 
 class GetApprovalExpenseTR extends ApprovalExpenseEvent {
-  GetApprovalExpenseTR();
+  final int sortID;
+  final String filterString;
+  GetApprovalExpenseTR(this.sortID,this.filterString);
 }
 
 class GetApprovalExpenseTE extends ApprovalExpenseEvent {
-  GetApprovalExpenseTE();
+  final int sortID;
+  final String filterString;
+  GetApprovalExpenseTE(this.sortID,this.filterString);
 }
 
 class GetApprovalExpenseGE extends ApprovalExpenseEvent {
-  GetApprovalExpenseGE();
+  final int sortID;
+  final String filterString;
+  GetApprovalExpenseGE(this.sortID,this.filterString);
 }
 

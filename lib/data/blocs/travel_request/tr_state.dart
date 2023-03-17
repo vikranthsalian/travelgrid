@@ -2,7 +2,7 @@ part of 'tr_bloc.dart';
 
 @immutable
 abstract class TravelRequestState {
-  TRListResponse? response ;
+  trlist.TRListResponse? response ;
   TRSummaryResponse? responseSum ;
   BlocEventState eventState;
   String message;
@@ -15,7 +15,7 @@ class TravelRequestInitialState extends TravelRequestState {
 }
 
 class TravelRequestLoadedState extends TravelRequestState {
-  final TRListResponse? data;
+  final trlist.TRListResponse? data;
   TravelRequestLoadedState({required this.data}) : super(response: data, eventState: BlocEventState.LOADED);
 }
 

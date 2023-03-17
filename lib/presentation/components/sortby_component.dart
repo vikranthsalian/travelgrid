@@ -47,41 +47,91 @@ class SortComponent extends StatelessWidget {
                     ],
               )
           ),
-          for (int i = 0; i <list.length; i++)
-            Container(
-              decoration:  BoxDecoration(
-                  color: Colors.white,
-                  border: Border(
-                    bottom: BorderSide(
-                      color: Colors.grey.shade200,
-                      width:0.5,
-                    ),
-                  )),
+          ListView.builder(
+              shrinkWrap: true,
+              padding: EdgeInsets.zero,
+              itemCount:list.length,
+              itemBuilder: (context,i){
 
-              child: InkWell(
-                onTap: (){
-                  selected =list[i]['id'];
-                  onSelect!(list[i]['id'],list[i]);
-                },
-                child: ListTile(
-                  leading: null,
-                  minLeadingWidth: 0,
-                  title:Container(
-                    child: MetaTextView(
-                      textAlign: TextAlign.start,
-                        mapData: jsonData!['header'],text: list[i]['value']),
-                  ),
-                  trailing: Radio(
-                    value: i,
-                    groupValue: selected,
-                    onChanged:(value) {
-                      selected = list[i]['id'];
-                      onSelect!(list[i]['id'],list[i]);
-                    },
-                  ),
-                ),
-              )
-            ),
+                if(type!="tr"){
+                  return  Container(
+                      decoration:  BoxDecoration(
+                          color: Colors.white,
+                          border: Border(
+                            bottom: BorderSide(
+                              color: Colors.grey.shade200,
+                              width:0.5,
+                            ),
+                          )),
+
+                      child: InkWell(
+                        onTap: (){
+                          selected =list[i]['id'];
+                          onSelect!(list[i]['id'],list[i]);
+                        },
+                        child: ListTile(
+                          leading: null,
+                          minLeadingWidth: 0,
+                          title:Container(
+                            child: MetaTextView(
+                                textAlign: TextAlign.start,
+                                mapData: jsonData!['header'],text: list[i]['value']),
+                          ),
+                          trailing: Radio(
+                            value: i,
+                            groupValue: selected,
+                            onChanged:(value) {
+                              selected = list[i]['id'];
+                              onSelect!(list[i]['id'],list[i]);
+                            },
+                          ),
+                        ),
+                      )
+                  );
+                }else if(list[i]['id']==1){
+                  return SizedBox();
+                }else if(list[i]['id']==2){
+                  return SizedBox();
+                }else{
+                  return  Container(
+                      decoration:  BoxDecoration(
+                          color: Colors.white,
+                          border: Border(
+                            bottom: BorderSide(
+                              color: Colors.grey.shade200,
+                              width:0.5,
+                            ),
+                          )),
+
+                      child: InkWell(
+                        onTap: (){
+                          selected =list[i]['id'];
+                          onSelect!(list[i]['id'],list[i]);
+                        },
+                        child: ListTile(
+                          leading: null,
+                          minLeadingWidth: 0,
+                          title:Container(
+                            child: MetaTextView(
+                                textAlign: TextAlign.start,
+                                mapData: jsonData!['header'],text: list[i]['value']),
+                          ),
+                          trailing: Radio(
+                            value: i,
+                            groupValue: selected,
+                            onChanged:(value) {
+                              selected = list[i]['id'];
+                              onSelect!(list[i]['id'],list[i]);
+                            },
+                          ),
+                        ),
+                      )
+                  );
+                }
+
+
+
+          })
         ],
       ),
     );

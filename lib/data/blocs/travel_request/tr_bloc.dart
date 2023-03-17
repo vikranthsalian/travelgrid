@@ -2,8 +2,9 @@ import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:travelgrid/common/constants/event_types.dart';
 import 'package:travelgrid/common/injector/injector.dart';
+import 'package:travelgrid/common/utils/sort_util.dart';
 import 'package:travelgrid/data/datasources/summary/ge_summary_response.dart';
-import 'package:travelgrid/data/datasources/list/tr_list_response.dart';
+import 'package:travelgrid/data/datasources/list/tr_list_response.dart' as trlist;
 import 'package:travelgrid/data/datasources/summary/tr_summary_response.dart';
 import 'package:travelgrid/data/models/success_model.dart';
 import 'package:travelgrid/domain/usecases/tr_usecase.dart';
@@ -21,11 +22,26 @@ class TravelRequestBloc extends Bloc<TravelRequestEvent, TravelRequestState> {
   void _init(TravelRequestEvent event, Emitter<TravelRequestState> emit) async {
     emit(TravelRequestInitialState());
     if(event is GetTravelRequestListEvent) {
-      TRListResponse? response = await Injector.resolve<TrUseCase>().callApi();
+      trlist.TRListResponse? response = await Injector.resolve<TrUseCase>().callApi();
       if(response!=null && response.status==true){
-        emit(TravelRequestLoadedState(data: response));
+        if(event.sortID!=0){
+          response.data = SortUtil().sort(event.sortID, response.data);
+        }
+
+        if(event.filterString!="Default"){
+          List<trlist.Data> items=[];
+          for(var item in response.data!){
+            if (item.currentStatus!.toLowerCase().contains(event.filterString.toLowerCase())) {
+              items.add(item);
+            }
+          }
+          response.data = items;
+          emit(TravelRequestLoadedState(data: response));
+        }else{
+          emit(TravelRequestLoadedState(data: response));
+        }
       }else{
-        emit(TravelRequestLoadedState(data: TRListResponse(data: [],message: response.message)));
+        emit(TravelRequestLoadedState(data: trlist.TRListResponse(data: [],message: response.message)));
       }
 
     }

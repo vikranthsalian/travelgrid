@@ -4,7 +4,10 @@ part of 'tr_bloc.dart';
 abstract class TravelRequestEvent {}
 
 class GetTravelRequestListEvent extends TravelRequestEvent {
-  GetTravelRequestListEvent();
+  final int sortID;
+  final String filterString;
+  GetTravelRequestListEvent(this.sortID,this.filterString);
+
 }
 
 class GetTravelRequestSummaryEvent extends TravelRequestEvent {

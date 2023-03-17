@@ -8,39 +8,31 @@ import 'package:travelgrid/common/utils/date_time_util.dart';
 import 'package:travelgrid/data/blocs/approval_expense/ae_bloc.dart';
 import 'package:travelgrid/data/datasources/summary/te_summary_response.dart' as ts;
 import 'package:travelgrid/presentation/components/bloc_map_event.dart';
+import 'package:travelgrid/presentation/components/filterby_component.dart';
+import 'package:travelgrid/presentation/components/sortby_component.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
 
-class ApprovalTE extends StatefulWidget {
+class ApprovalTE extends StatelessWidget {
   String data;
   ApprovalTE({required this.data});
-  @override
-  _ApprovalTEState createState() => _ApprovalTEState();
-}
-
-class _ApprovalTEState extends State<ApprovalTE> {
-  List items=[];
   double cardHt = 90.h;
-  bool enableSearch = false;
-  final TextEditingController _searchController = TextEditingController();
   bool loaded=false;
   ApprovalExpenseBloc? bloc;
   Map<String,dynamic> mapData={};
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    mapData = FlavorConfig.instance.variables[widget.data];
-  }
 
+  int selected=0;
+  int filterSelected=0;
+  String sortedBy="Default";
+  List<String> filterOptions=["Default"];
 
   @override
   Widget build(BuildContext context) {
+    mapData = FlavorConfig.instance.variables[data];
+    bloc = Injector.resolve<ApprovalExpenseBloc>();
+    callBloc();
 
-   if(!loaded){
-     bloc = Injector.resolve<ApprovalExpenseBloc>()..add(GetApprovalExpenseTE());
-     loaded=true;
-   }
+
 
     return Scaffold(
       bottomNavigationBar: BottomAppBar(
@@ -54,12 +46,39 @@ class _ApprovalTEState extends State<ApprovalTE> {
           children: <Widget>[
             MetaButton(mapData: mapData['bottomButtonLeft'],
                 onButtonPressed: (){
+                  showModalBottomSheet(
+                      context: context,
+                      backgroundColor: Colors.transparent,
+                      builder: (context) =>
+                          SortComponent(
+                              type: "tr",
+                              selected: selected,
+                              onSelect:(int value,Map<String,dynamic> data) {
+                                selected=value;
+                                sortedBy=data['value'];
+                                print("Sort Selected: "+value.toString());
+                                Navigator.pop(context);
+                                callBloc();
 
+                              })
+                  );
                 }
             ),
             MetaButton(mapData: mapData['bottomButtonRight'],
                 onButtonPressed: (){
-
+                  showModalBottomSheet(
+                    context: context,
+                    backgroundColor: Colors.transparent,
+                    builder: (context) =>
+                        FilterComponent(
+                            tag: filterSelected,
+                            options: filterOptions,
+                            selected:(id){
+                              filterSelected=id;
+                              Navigator.pop(context);
+                              callBloc();
+                            }),
+                  );
                 }
             )
           ],
@@ -73,43 +92,43 @@ class _ApprovalTEState extends State<ApprovalTE> {
                 child: BlocMapToEvent(state: state.eventState, message: state.message,
                     callback: (){
                        mapData['listView']['recordsFound']['value'] = state.responseTE?.data?.length;
+
+                       if(state.responseTE?.data==null)
+                         return ;
+                       for(var item in state.responseTE!.data!){
+                         filterOptions.add(item.currentStatus.toString());
+                       }
+                       filterOptions = filterOptions.toSet().toList();
                     },
                     topComponent:Container(
                       color:ParseDataType().getHexToColor(mapData['backgroundColor']),
                       child:  Column(
                         children: [
-                          // Container(
-                          //   margin: EdgeInsets.symmetric(horizontal: 20.w,vertical: 5.h),
-                          //   padding: EdgeInsets.symmetric(vertical: 5.h),
-                          //   decoration: BoxDecoration(
-                          //       borderRadius: BorderRadius.circular(8.r),
-                          //       color: Color(0xFFFFFFFF),
-                          //       border: Border.all(color: Colors.black12)),
-                          //   child: SearchBarComponent(
-                          //     barHeight: 40.h,
-                          //     hintText: "Search.....",
-                          //     searchController: _searchController,
-                          //     onClear: (){
-                          //
-                          //     },
-                          //     onSubmitted: (text) {
-                          //
-                          //     },
-                          //     onChange: (text) {
-                          //
-                          //     },
-                          //   ),
-                          // ),
                           SizedBox(height:5.h),
                           Container(
                             margin: EdgeInsets.symmetric(horizontal: 20.w),
                             child:MetaTextView(mapData: mapData['listView']['recordsFound']),
                           ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                margin: EdgeInsets.symmetric(horizontal: 20.w),
+                                child:MetaTextView(mapData: mapData['listView']['recordsFound'],text: "Sorted By : "+sortedBy),
+                              ),
+                              Container(
+                                margin: EdgeInsets.symmetric(horizontal: 20.w),
+                                child:MetaTextView(mapData: mapData['listView']['recordsFound'],text: "Filtered By : "+filterOptions[filterSelected]),
+                              ),
+                            ],
+                          ),
                           SizedBox(height:5.h),
                         ],
                       ),
                     ),
-                    child:getListView(state)
+                    child:RefreshIndicator(
+                        onRefresh: _pullRefresh,
+                        child: getListView(state))
                 )
             );
           }
@@ -265,7 +284,7 @@ class _ApprovalTEState extends State<ApprovalTE> {
                                             item.maTravelRequest!.tripNumber.toString()
                                                 .toUpperCase()
                                 }).then((value) {
-                                  bloc!.add(GetApprovalExpenseTE());
+                                 callBloc();
                                 });
                                 },
                                 child: MetaTextView( mapData:  view ))
@@ -291,10 +310,20 @@ class _ApprovalTEState extends State<ApprovalTE> {
         SizedBox(height: 10.h,),
         MetaButton(mapData: mapData['listView']['emptyData']['bottomButtonRefresh'],
             onButtonPressed: (){
-
+              callBloc();
             })
       ],
     );
   }
+
+
+  void callBloc() {
+    bloc!.add(GetApprovalExpenseTE(selected,filterOptions[filterSelected]));
+  }
+
+  Future<void> _pullRefresh() async {
+    callBloc();
+  }
+
 
 }

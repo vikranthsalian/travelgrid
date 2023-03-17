@@ -4,7 +4,9 @@ part of 'te_bloc.dart';
 abstract class TravelExpenseEvent {}
 
 class GetTravelExpenseListEvent extends TravelExpenseEvent {
-  GetTravelExpenseListEvent();
+  final int sortID;
+  final String filterString;
+  GetTravelExpenseListEvent(this.sortID,this.filterString);
 }
 
 class GetTravelExpenseSummaryEvent extends TravelExpenseEvent {

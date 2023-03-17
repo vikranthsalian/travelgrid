@@ -9,16 +9,13 @@ import 'package:travelgrid/data/blocs/travel_request/tr_bloc.dart';
 import 'package:travelgrid/data/datasources/list/tr_list_response.dart';
 import 'package:travelgrid/presentation/components/bloc_map_event.dart';
 import 'package:travelgrid/presentation/components/dialog_trip_type.dart';
+import 'package:travelgrid/presentation/components/filterby_component.dart';
+import 'package:travelgrid/presentation/components/sortby_component.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';
 import 'package:travelgrid/presentation/widgets/icon.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
 
-class TravelRequest extends StatefulWidget {
-  @override
-  _TravelRequestState createState() => _TravelRequestState();
-}
-
-class _TravelRequestState extends State<TravelRequest> {
+class TravelRequest extends StatelessWidget {
   Map<String,dynamic> jsonData = {};
   List items=[];
   double cardHt = 90.h;
@@ -26,22 +23,20 @@ class _TravelRequestState extends State<TravelRequest> {
   final TextEditingController _searchController = TextEditingController();
   bool loaded=false;
   TravelRequestBloc? bloc;
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    jsonData = FlavourConstants.trData;
 
-  }
+  int selected=0;
+  int filterSelected=0;
+  String sortedBy="Default";
+  List<String> filterOptions=["Default"];
 
 
   @override
   Widget build(BuildContext context) {
+    jsonData = FlavourConstants.trData;
 
-   if(!loaded){
-     bloc = Injector.resolve<TravelRequestBloc>()..add(GetTravelRequestListEvent());
-     loaded=true;
-   }
+     bloc = Injector.resolve<TravelRequestBloc>();
+     callBloc();
+
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -57,7 +52,7 @@ class _TravelRequestState extends State<TravelRequest> {
                     onPressed: (value){
 
                         Navigator.of(context).pushNamed(jsonData['bottomButtonFab']['onClick'],arguments: {'tripType':value}).then((value) {
-                          bloc!.add(GetTravelRequestListEvent());
+                          callBloc();
                         });
 
                     }));
@@ -77,12 +72,39 @@ class _TravelRequestState extends State<TravelRequest> {
           children: <Widget>[
             MetaButton(mapData: jsonData['bottomButtonLeft'],
                 onButtonPressed: (){
+                  showModalBottomSheet(
+                      context: context,
+                      backgroundColor: Colors.transparent,
+                      builder: (context) =>
+                          SortComponent(
+                              type: "tr",
+                              selected: selected,
+                              onSelect:(int value,Map<String,dynamic> data) {
+                                selected=value;
+                                sortedBy=data['value'];
+                                print("Sort Selected: "+value.toString());
+                                Navigator.pop(context);
+                                callBloc();
 
+                              })
+                  );
                 }
             ),
             MetaButton(mapData: jsonData['bottomButtonRight'],
                 onButtonPressed: (){
-
+                  showModalBottomSheet(
+                    context: context,
+                    backgroundColor: Colors.transparent,
+                    builder: (context) =>
+                        FilterComponent(
+                            tag: filterSelected,
+                            options: filterOptions,
+                            selected:(id){
+                              filterSelected=id;
+                              Navigator.pop(context);
+                              callBloc();
+                            }),
+                  );
                 }
             )
           ],
@@ -96,10 +118,18 @@ class _TravelRequestState extends State<TravelRequest> {
                 child: BlocMapToEvent(state: state.eventState, message: state.message,
                     callback: (){
                        jsonData['listView']['recordsFound']['value'] = state.response?.data?.length;
+
+                       for(var item in state.response!.data!){
+                         filterOptions.add(item.currentStatus.toString());
+                         filterOptions.add(item.tripPlan.toString());
+                         filterOptions.add(item.tripType.toString());
+                       }
+                       filterOptions = filterOptions.toSet().toList();
+
                     },
                     topComponent:Container(
                       color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
-                      height: 110.h,
+                      height: 120.h,
                       child:  Column(
                         children: [
                           SizedBox(height:40.h),
@@ -120,39 +150,29 @@ class _TravelRequestState extends State<TravelRequest> {
                               ],
                             ),
                           ),
-                          // Container(
-                          //   margin: EdgeInsets.symmetric(horizontal: 20.w,vertical: 5.h),
-                          //   padding: EdgeInsets.symmetric(vertical: 5.h),
-                          //   decoration: BoxDecoration(
-                          //       borderRadius: BorderRadius.circular(8.r),
-                          //       color: Color(0xFFFFFFFF),
-                          //       border: Border.all(color: Colors.black12)),
-                          //   child: SearchBarComponent(
-                          //     barHeight: 40.h,
-                          //     hintText: "Search.....",
-                          //     searchController: _searchController,
-                          //     onClear: (){
-                          //
-                          //     },
-                          //     onSubmitted: (text) {
-                          //
-                          //     },
-                          //     onChange: (text) {
-                          //
-                          //     },
-                          //   ),
-                          // ),
                           SizedBox(height:5.h),
                           Container(
                             margin: EdgeInsets.symmetric(horizontal: 20.w),
                             child:MetaTextView(mapData: jsonData['listView']['recordsFound']),
                           ),
-                          SizedBox(height:5.h),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                margin: EdgeInsets.symmetric(horizontal: 20.w),
+                                child:MetaTextView(mapData: jsonData['listView']['recordsFound'],text: "Sorted By : "+sortedBy),
+                              ),
+                              Container(
+                                margin: EdgeInsets.symmetric(horizontal: 20.w),
+                                child:MetaTextView(mapData: jsonData['listView']['recordsFound'],text: "Filtered By : "+filterOptions[filterSelected]),
+                              ),
+                            ],
+                          ),
                         ],
                       ),
                     ),
-                    child:Transform.translate(
-                        offset: Offset(0,0.h),
+                    child:RefreshIndicator(
+                        onRefresh: _pullRefresh,
                         child: getListView(state))
                 )
             );
@@ -169,6 +189,7 @@ class _TravelRequestState extends State<TravelRequest> {
     return  list.isNotEmpty ? ListView.separated(
       shrinkWrap: true,
       padding: EdgeInsets.zero,
+      itemCount:list.length,
       itemBuilder: (BuildContext context, int index) {
         Data item = list[index];
 
@@ -375,7 +396,7 @@ class _TravelRequestState extends State<TravelRequest> {
                                                 item.tripNumber.toString()
                                                     .toUpperCase()
                                               }).then((value) {
-                                            bloc!.add(GetTravelRequestListEvent());
+                                            callBloc();
                                           });
                                         },
                                         child: Container(
@@ -401,7 +422,7 @@ class _TravelRequestState extends State<TravelRequest> {
                                                 item.tripNumber.toString()
                                                     .toUpperCase()
                                               }).then((value) {
-                                            bloc!.add(GetTravelRequestListEvent());
+                                           callBloc();
                                           });
                                         },
                                         child: Container(
@@ -424,7 +445,6 @@ class _TravelRequestState extends State<TravelRequest> {
       separatorBuilder: (BuildContext context, int index) {
         return SizedBox(height: 3.h);
       },
-      itemCount:list.length,
     ):  Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -437,5 +457,14 @@ class _TravelRequestState extends State<TravelRequest> {
       ],
     );
   }
+
+  void callBloc() {
+    bloc!.add(GetTravelRequestListEvent(selected,filterOptions[filterSelected]));
+  }
+
+  Future<void> _pullRefresh() async {
+    callBloc();
+  }
+
 
 }

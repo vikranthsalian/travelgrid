@@ -95,6 +95,8 @@ class TravelExpense extends StatelessWidget {
                     callback: (){
                        jsonData['listView']['recordsFound']['value'] = state.response?.data?.length;
 
+                       if(state.response?.data==null)
+                       return ;
                        for(var item in state.response!.data!){
                          filterOptions.add(item.status!);
                        }
@@ -102,7 +104,7 @@ class TravelExpense extends StatelessWidget {
                     },
                     topComponent:Container(
                       color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
-                      height: 115.h,
+                      height: 120.h,
                       child:  Column(
                         children: [
                           SizedBox(height:40.h),
@@ -181,7 +183,7 @@ class TravelExpense extends StatelessWidget {
   }
 
   void callBloc() {
-    bloc = Injector.resolve<TravelExpenseBloc>()..add(GetTravelExpenseListEvent());
+    bloc = Injector.resolve<TravelExpenseBloc>()..add(GetTravelExpenseListEvent(selected,filterOptions[filterSelected]));
   }
 
   Widget getListView(TravelExpenseState state){
@@ -341,7 +343,7 @@ class TravelExpense extends StatelessWidget {
                                             "title": item.recordLocator.toString()
                                                 .toUpperCase()
                                           }).then((value) {
-                                        bloc!.add(GetTravelExpenseListEvent());
+                                       callBloc();
                                       });
                                     },
                                  child: Visibility(
@@ -369,7 +371,7 @@ class TravelExpense extends StatelessWidget {
                                             item.recordLocator.toString()
                                                 .toUpperCase()
                                 }).then((value) {
-                                  bloc!.add(GetTravelExpenseListEvent());
+                                 callBloc();
                                 });
                                 },
                                 child: MetaTextView( mapData:  view ))
@@ -395,7 +397,7 @@ class TravelExpense extends StatelessWidget {
         SizedBox(height: 10.h,),
         MetaButton(mapData: jsonData['listView']['emptyData']['bottomButtonRefresh'],
             onButtonPressed: (){
-
+            callBloc();
             })
       ],
     );

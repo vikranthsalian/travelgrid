@@ -2,7 +2,7 @@ part of 'te_bloc.dart';
 
 @immutable
 abstract class TravelExpenseState {
-  TEListResponse? response ;
+  list.TEListResponse? response ;
   TESummaryResponse? responseSum ;
   BlocEventState eventState;
   String message;
@@ -14,7 +14,7 @@ class TravelExpenseInitialState extends TravelExpenseState {
 }
 
 class TravelExpenseLoadedState extends TravelExpenseState {
-  final TEListResponse? data;
+  final list.TEListResponse? data;
   TravelExpenseLoadedState({required this.data}) : super(response: data, eventState: BlocEventState.LOADED);
 }
 

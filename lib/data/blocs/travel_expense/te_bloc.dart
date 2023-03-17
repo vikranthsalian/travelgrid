@@ -2,8 +2,9 @@ import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:travelgrid/common/constants/event_types.dart';
 import 'package:travelgrid/common/injector/injector.dart';
+import 'package:travelgrid/common/utils/sort_util.dart';
 import 'package:travelgrid/data/datasources/summary/te_summary_response.dart';
-import 'package:travelgrid/data/datasources/list/te_list_response.dart';
+import 'package:travelgrid/data/datasources/list/te_list_response.dart' as list;
 import 'package:travelgrid/domain/usecases/te_usecase.dart';
 
 part 'te_event.dart';
@@ -21,11 +22,31 @@ class TravelExpenseBloc extends Bloc<TravelExpenseEvent, TravelExpenseState> {
 
 
     if(event is GetTravelExpenseListEvent) {
-      TEListResponse? response = await Injector.resolve<TeUseCase>().callApi();
+      list.TEListResponse? response = await Injector.resolve<TeUseCase>().callApi();
       if(response!=null && response.status==true){
-        emit(TravelExpenseLoadedState(data: response));
+
+        if(event.sortID!=0){
+          response.data = SortUtil().sort(event.sortID, response.data);
+        }
+
+        if(event.filterString!="Default"){
+          List<list.Data> items=[];
+          for(var item in response.data!){
+            if (item.status!.toLowerCase().contains(event.filterString.toLowerCase())) {
+              items.add(item);
+            }
+          }
+          response.data = items;
+          emit(TravelExpenseLoadedState(data: response));
+        }else{
+          emit(TravelExpenseLoadedState(data: response));
+        }
+
+
+
+
       }else{
-        emit(TravelExpenseLoadedState(data: TEListResponse(data: [],message: response.message)));
+        emit(TravelExpenseLoadedState(data: list.TEListResponse(data: [],message: response.message)));
       }
 
     }

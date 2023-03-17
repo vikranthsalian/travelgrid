@@ -189,10 +189,6 @@ class GeneralExpense extends StatelessWidget {
     );
   }
 
-  Future<void> _pullRefresh() async {
-    callBloc();
-  }
-
 
   Widget getListView(GeneralExpenseState state){
 
@@ -412,6 +408,10 @@ class GeneralExpense extends StatelessWidget {
 
   void callBloc() {
     bloc!.add(GetGeneralExpenseListEvent(selected,filterOptions[filterSelected]));
+  }
+
+  Future<void> _pullRefresh() async {
+    callBloc();
   }
 
 }
