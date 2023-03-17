@@ -75,7 +75,7 @@ class GeneralExpense extends StatelessWidget {
                           Navigator.pop(context);
                           callBloc();
 
-                        },),
+                        })
                   );
                 }
             ),
@@ -179,14 +179,18 @@ class GeneralExpense extends StatelessWidget {
                         ],
                       ),
                     ),
-                    child:Transform.translate(
-                        offset: Offset(0,0.h),
+                    child:RefreshIndicator(
+                        onRefresh: _pullRefresh,
                         child: getListView(state))
                 )
             );
           }
       ),
     );
+  }
+
+  Future<void> _pullRefresh() async {
+    callBloc();
   }
 
 

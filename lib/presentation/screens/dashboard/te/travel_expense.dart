@@ -8,41 +8,32 @@ import 'package:travelgrid/common/utils/date_time_util.dart';
 import 'package:travelgrid/data/blocs/travel_expense/te_bloc.dart';
 import 'package:travelgrid/data/datasources/summary/te_summary_response.dart' as ts;
 import 'package:travelgrid/presentation/components/bloc_map_event.dart';
+import 'package:travelgrid/presentation/components/filterby_component.dart';
+import 'package:travelgrid/presentation/components/sortby_component.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';
 import 'package:travelgrid/presentation/widgets/icon.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
 
 import '../../../../data/datasources/list/te_list_response.dart';
 
-class TravelExpense extends StatefulWidget {
-  @override
-  _TravelExpenseState createState() => _TravelExpenseState();
-}
-
-class _TravelExpenseState extends State<TravelExpense> {
+class TravelExpense extends StatelessWidget {
   Map<String,dynamic> jsonData = {};
   List items=[];
   double cardHt = 90.h;
   bool enableSearch = false;
   final TextEditingController _searchController = TextEditingController();
-  bool loaded=false;
   TravelExpenseBloc? bloc;
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    jsonData = FlavourConstants.teData;
-    //prettyPrint(jsonData);
-  }
 
-
+  int selected=0;
+  int filterSelected=0;
+  String sortedBy="Default";
+  List<String> filterOptions=["Default"];
   @override
   Widget build(BuildContext context) {
+    jsonData = FlavourConstants.teData;
+    bloc = Injector.resolve<TravelExpenseBloc>();
+    callBloc();
 
-   if(!loaded){
-     bloc = Injector.resolve<TravelExpenseBloc>()..add(GetTravelExpenseListEvent());
-     loaded=true;
-   }
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -57,12 +48,39 @@ class _TravelExpenseState extends State<TravelExpense> {
           children: <Widget>[
             MetaButton(mapData: jsonData['bottomButtonLeft'],
                 onButtonPressed: (){
+                  showModalBottomSheet(
+                      context: context,
+                      backgroundColor: Colors.transparent,
+                      builder: (context) =>
+                          SortComponent(
+                              type: "ge",
+                              selected: selected,
+                              onSelect:(int value,Map<String,dynamic> data) {
+                                selected=value;
+                                sortedBy=data['value'];
+                                print("Sort Selected: "+value.toString());
+                                Navigator.pop(context);
+                                callBloc();
 
+                              })
+                  );
                 }
             ),
             MetaButton(mapData: jsonData['bottomButtonRight'],
                 onButtonPressed: (){
-
+                  showModalBottomSheet(
+                    context: context,
+                    backgroundColor: Colors.transparent,
+                    builder: (context) =>
+                        FilterComponent(
+                            tag: filterSelected,
+                            options: filterOptions,
+                            selected:(id){
+                              filterSelected=id;
+                              Navigator.pop(context);
+                              callBloc();
+                            }),
+                  );
                 }
             )
           ],
@@ -76,10 +94,15 @@ class _TravelExpenseState extends State<TravelExpense> {
                 child: BlocMapToEvent(state: state.eventState, message: state.message,
                     callback: (){
                        jsonData['listView']['recordsFound']['value'] = state.response?.data?.length;
+
+                       for(var item in state.response!.data!){
+                         filterOptions.add(item.status!);
+                       }
+                       filterOptions = filterOptions.toSet().toList();
                     },
                     topComponent:Container(
                       color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
-                      height: 110.h,
+                      height: 115.h,
                       child:  Column(
                         children: [
                           SizedBox(height:40.h),
@@ -127,12 +150,24 @@ class _TravelExpenseState extends State<TravelExpense> {
                             margin: EdgeInsets.symmetric(horizontal: 20.w),
                             child:MetaTextView(mapData: jsonData['listView']['recordsFound']),
                           ),
-                          SizedBox(height:5.h),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                margin: EdgeInsets.symmetric(horizontal: 20.w),
+                                child:MetaTextView(mapData: jsonData['listView']['recordsFound'],text: "Sorted By : "+sortedBy),
+                              ),
+                              Container(
+                                margin: EdgeInsets.symmetric(horizontal: 20.w),
+                                child:MetaTextView(mapData: jsonData['listView']['recordsFound'],text: "Filtered By : "+filterOptions[filterSelected]),
+                              ),
+                            ],
+                          ),
                         ],
                       ),
                     ),
-                    child:Transform.translate(
-                        offset: Offset(0,0.h),
+                    child:RefreshIndicator(
+                        onRefresh: _pullRefresh,
                         child: getListView(state))
                 )
             );
@@ -141,6 +176,13 @@ class _TravelExpenseState extends State<TravelExpense> {
     );
   }
 
+  Future<void> _pullRefresh() async {
+    callBloc();
+  }
+
+  void callBloc() {
+    bloc = Injector.resolve<TravelExpenseBloc>()..add(GetTravelExpenseListEvent());
+  }
 
   Widget getListView(TravelExpenseState state){
 
