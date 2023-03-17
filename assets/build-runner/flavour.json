@@ -3,8 +3,8 @@
   "sub_title": "NH",
   "app_short_title": "NH",
   "app_logo": "assets/apps/nh/images/app-logo.png",
-  "android_app_id": "com.app.travelgrid",
-  "ios_app_id": "com.app.travelgrid",
+  "android_app_id": "travelgrid.cm.nh",
+  "ios_app_id": "travelgrid.cm.nh",
   "base_url": "http://172.104.189.54:8080/tems/rest/ma/",
   "showNetworkLogs": true,
   "urls": {
