@@ -48,6 +48,7 @@ dependencies:
   flutter_svg: ^1.1.6
   kiwi: ^4.0.3
   syncfusion_flutter_pdfviewer: ^20.4.44
+  file_picker: ^5.2.6
   dotted_border: ^2.0.0+3
   geolocator: ^9.0.2
   geocoding: ^2.0.5

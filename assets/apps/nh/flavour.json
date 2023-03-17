@@ -3,8 +3,8 @@
   "sub_title": "NH",
   "app_short_title": "NH",
   "app_logo": "nh/images/app-logo.png",
-  "android_app_id": "travelgrid.cm.nh",
-  "ios_app_id": "travelgrid.cm.nh",
+  "android_app_id": "cm.travelgrid.nh",
+  "ios_app_id": "cm.travelgrid.nh",
   "base_url": "",
   "urls": {
     "prod_url" : "",

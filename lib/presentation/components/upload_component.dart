@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
@@ -114,30 +115,30 @@ class _UploadComponentState extends State<UploadComponent> {
   getUploaderView(){
     return InkWell(
       onTap:()async{
-        // await showDialog(
-        //     context: context,
-        //     builder: (_) => DialogUploadType(
-        //         mapData: widget.jsonData,
-        //         onSelected: (value)async{
-        //           if(value == "Gallery"){
-        //             FilePickerResult? result = await FilePicker.platform.pickFiles(allowMultiple: false);
-        //             if (result != null) {
-        //               file =   File(result.files.single.path.toString());
-        //
-        //               setState(() {
-        //
-        //               });
-        //             } else {
-        //               // User canceled the picker
-        //             }
-        //           }else{
-        //           MetaAlert.showErrorAlert(message: "Working on it.");
-        //         //  takePicture();
-        //           }
-        //
-        //
-        //         }
-        //     ));
+        await showDialog(
+            context: context,
+            builder: (_) => DialogUploadType(
+                mapData: widget.jsonData,
+                onSelected: (value)async{
+                  if(value == "Gallery"){
+                    FilePickerResult? result = await FilePicker.platform.pickFiles(allowMultiple: false);
+                    if (result != null) {
+                      file =   File(result.files.single.path.toString());
+
+                      setState(() {
+
+                      });
+                    } else {
+                      // User canceled the picker
+                    }
+                  }else{
+                  MetaAlert.showErrorAlert(message: "Working on it.");
+                //  takePicture();
+                  }
+
+
+                }
+            ));
       },
       child: Container(
         height: 55.h,

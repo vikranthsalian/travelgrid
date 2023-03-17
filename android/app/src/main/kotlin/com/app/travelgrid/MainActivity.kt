@@ -1,4 +1,4 @@
-package travelgrid.cm.nh
+package cm.travelgrid.nh
 
 import io.flutter.embedding.android.FlutterActivity
 
