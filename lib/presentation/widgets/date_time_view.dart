@@ -6,6 +6,7 @@ import 'package:travelgrid/common/constants/flavour_constants.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
 import 'package:travelgrid/common/utils/date_time_util.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
+
 class MetaDateTimeView extends StatefulWidget {
 
   Map mapData;
@@ -196,7 +197,10 @@ class _MetaDateTimeViewState extends State<MetaDateTimeView> {
 
         if (picked_s != null )
           setState(() {
-            time= picked_s.hour.toString() +":"+picked_s.minute.toString();
+
+            String hr= picked_s.hour.toString().length==1? "0"+picked_s.hour.toString():picked_s.hour.toString();
+            String mn= picked_s.minute.toString().length==1? "0"+picked_s.minute.toString():picked_s.minute.toString();
+            time= hr +":"+mn;
             if(widget.mapData['showView'] == "date_time"){
               widget.onChange!(
                   {
