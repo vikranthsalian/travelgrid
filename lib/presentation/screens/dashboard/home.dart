@@ -5,9 +5,14 @@ import 'package:travelgrid/common/config/navigator_key.dart';
 import 'package:travelgrid/common/constants/flavour_constants.dart';
 import 'package:travelgrid/common/constants/route_constants.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
+import 'package:travelgrid/common/injector/injector.dart';
 import 'package:travelgrid/common/utils/show_alert.dart';
+import 'package:travelgrid/data/models/success_model.dart';
+import 'package:travelgrid/domain/usecases/common_usecase.dart';
+import 'package:travelgrid/presentation/components/dialog_yes_no.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';
 import 'package:travelgrid/presentation/widgets/icon.dart';
+import 'package:travelgrid/presentation/widgets/svg_view.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
@@ -19,14 +24,11 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   Map<String,dynamic> jsonData = {};
   List items=[];
-  int _choiceIndex=0;
   String?  dateText;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     jsonData = FlavourConstants.homeData;
-    //prettyPrint(jsonData);
     for(var badges in jsonData['badges']){
       items.add(badges);
     }
@@ -40,161 +42,171 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        elevation: 0,
-        leadingWidth: 50.w,
-        backgroundColor: Colors.transparent,
-        automaticallyImplyLeading:jsonData['app_bar']['leading'] !=null ? true: false,
-        leading: MetaIcon(mapData:jsonData['app_bar']['leading'],onButtonPressed: (){
-
-        }) ,
-        title: Container(
-          height: 25.h,
-          child: MetaTextView(mapData: jsonData['app_bar']['title'],text: dateText.toString()),
-        ),
-        centerTitle: jsonData['app_bar']['isCenter'] ?? false,
-        actions: [
-          MetaIcon(mapData:jsonData['app_bar']['actions'][0],
-              onButtonPressed: (){
-
-          })
-        ],
-      ),
-      body: Center(
-        child: ListView(
-          padding: EdgeInsets.zero,
+      backgroundColor:ParseDataType().getHexToColor(jsonData['backgroundColor']),
+      body: Container(
+        child: Column(
           children: [
             Container(
-              margin: EdgeInsets.symmetric(vertical: 10.h,horizontal: 10.w),
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.all(Radius.circular(10.w))
-              ),
-              child:StaggeredGrid.count(
-                crossAxisCount: 4,
-                crossAxisSpacing: 5.w,
-                mainAxisSpacing: 5.h,
-                children: items.map((e) => StaggeredGridTile.count(
-                  crossAxisCellCount: e['cross'],
-                  mainAxisCellCount: e['main'],
-                  child: InkWell(
-                    onTap: (){
-
-                      if(e["onClick"].isNotEmpty){
-                        Navigator.of(appNavigatorKey.currentState!.context).pushNamed(e["onClick"]);
-                      }else{
-                        MetaAlert.showErrorAlert(
-                          message: "Yet to be configured",
-                        );
-                      }
-
-
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: getColor(e['cardColor']),
-                        ),
-                        borderRadius: BorderRadius.circular(0),
-                      ),
-                      child:Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.start,
+              color: Colors.white,
+              child: Container(
+                height: 125.h,
+                decoration: BoxDecoration(
+                  color: ParseDataType().getHexToColor(jsonData['backgroundColor']),
+                    borderRadius: BorderRadius.only(bottomLeft: Radius.circular(40.r))
+                ),
+                child: Column(
+                  children: [
+                    SizedBox(height:30.h),
+                    Container(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              MetaIcon(mapData: e['icon'],onButtonPressed: (){
-
-                              }),
-                              MetaTextView(mapData: e['count']),
-
-                            ],
+                          Expanded(
+                            child: ListTile(
+                              leading: Container(
+                                  height: 50.w,
+                                  width: 50.w,
+                                  child: MetaSVGView(mapData:  jsonData['svgIcon']),
+                              ) ,
+                              title: Container(
+                                child:MetaTextView(mapData: jsonData['label']),
+                              ),
+                              subtitle: Container(
+                                child:MetaTextView(mapData: jsonData['title'],text:"Siddharth Shukla",),
+                              ),
+                            ),
                           ),
-                          MetaTextView(mapData:e['label']),
+                          MetaIcon(mapData:jsonData['logout'],
+                              onButtonPressed: ()async{
+                            await showDialog(
+                            context: context,
+                            builder: (_) => DialogYesNo(
+                                title: "Do you want to logout?",
+                                onPressed: (value)async{
+                                  if(value == "YES"){
+                                    SuccessModel model =   await Injector.resolve<CommonUseCase>().logOut();
+                                    if(model.token == null){
+                                      Navigator.of(context)
+                                          .pushNamedAndRemoveUntil(RouteConstants.loginPath,
+                                              (Route<dynamic> route) => false);
+                                    }
+
+                                  }
+                                }));
+                              }),
                         ],
                       ),
                     ),
-                  ),
-                )).toList(),
+                    Container(
+                      margin: EdgeInsets.symmetric(horizontal: 10.w),
+                      child:MetaTextView(mapData: jsonData['date'],text: dateText),
+                    ),
+                  ],
+                ),
               ),
-              // child: GridView.count(
-              //     physics:  const NeverScrollableScrollPhysics(),
-              //     crossAxisCount: 2,
-              //     crossAxisSpacing: 10.w,
-              //     childAspectRatio:3/2,
-              //     shrinkWrap: true,
-              //     mainAxisSpacing: 10.h,
-              //     children: List.generate(items.length, (index) {
-              //       return InkWell(
-              //         onTap: (){
-              //
-              //         },
-              //         child: Container(
-              //           decoration: BoxDecoration(
-              //               gradient: LinearGradient(
-              //                 begin: Alignment.topLeft,
-              //                 end: Alignment.bottomRight,
-              //                 colors: getColor(items[index]['cardColor']),
-              //               ),
-              //             borderRadius: BorderRadius.circular(8),
-              //           ),
-              //           child:Column(
-              //             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              //             crossAxisAlignment: CrossAxisAlignment.start,
-              //             children: [
-              //               Row(
-              //                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              //                 crossAxisAlignment: CrossAxisAlignment.start,
-              //                 children: [
-              //                   MetaIcon(mapData: items[index]['icon'],onButtonPressed: (){
-              //
-              //                   }),
-              //                   MetaTextView(mapData: items[index]['count']),
-              //
-              //                 ],
-              //               ),
-              //               MetaTextView(mapData: items[index]['label']),
-              //             ],
-              //           ),
-              //         ),
-              //       );
-              //     })
-              // ),
             ),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 10.w),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Expanded(
-                    child: MetaButton(mapData: jsonData['policiesButton'],
-                        onButtonPressed: (){
-                          if(jsonData['policiesButton']["onClick"].isNotEmpty) {
-                            Navigator.of(appNavigatorKey.currentState!.context).pushNamed(jsonData['policiesButton']["onClick"]);
-                          }
-                        }
-                    ),
+            Expanded(
+              child: Container(
+              //  color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(topRight: Radius.circular(40.r))
                   ),
-                 SizedBox(width: 5.w,),
-                  Expanded(
-                    child: MetaButton(mapData: jsonData['walletButton'],
-                        onButtonPressed: (){
-                          Navigator.of(context).pushNamed(RouteConstants.dashboardPath);
-                        }
-                    ),
-                  )
-                ],
+
+                  child: ListView(
+                    shrinkWrap: true,
+                    padding: EdgeInsets.zero,
+                    children: [
+                      Container(
+                        padding: EdgeInsets.only(top: 10.h),
+                        margin: EdgeInsets.symmetric(vertical: 10.h,horizontal: 15.w),
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.all(Radius.circular(10.w))
+                        ),
+                        child:StaggeredGrid.count(
+                          crossAxisCount: 4,
+                          crossAxisSpacing: 10.w,
+                          mainAxisSpacing: 10.h,
+                          children: items.map((e) => StaggeredGridTile.count(
+                            crossAxisCellCount: e['cross'],
+                            mainAxisCellCount: e['main'],
+                            child: InkWell(
+                              onTap: (){
+
+                                if(e["onClick"].isNotEmpty){
+                                  Navigator.of(appNavigatorKey.currentState!.context).pushNamed(e["onClick"]);
+                                }else{
+                                  MetaAlert.showErrorAlert(
+                                    message: "Yet to be configured",
+                                  );
+                                }
+
+
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                    colors: getColor(e['cardColor']),
+                                  ),
+                                  borderRadius: BorderRadius.circular(12.r),
+                                ),
+                                child:Column(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                  Container(
+                                      height: 80.w,
+                                      width: 80.w,
+                                      child: MetaSVGView(mapData:  e['svgIcon']),
+                                    ),
+                                    MetaTextView(mapData:e['label']),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          )).toList(),
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.symmetric(horizontal: 10.w),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Expanded(
+                              child: MetaButton(mapData: jsonData['policiesButton'],
+                                  onButtonPressed: (){
+                                    if(jsonData['policiesButton']["onClick"].isNotEmpty) {
+                                      Navigator.of(appNavigatorKey.currentState!.context).pushNamed(jsonData['policiesButton']["onClick"]);
+                                    }
+                                  }
+                              ),
+                            ),
+                            SizedBox(width: 5.w,),
+                            Expanded(
+                              child: MetaButton(mapData: jsonData['walletButton'],
+                                  onButtonPressed: (){
+
+                                  }
+                              ),
+                            )
+                          ],
+                        ),
+                      )
+                    ],
+
+
+                  ),
+                ),
               ),
-            )
-          ]
+            ),
+          ],
         ),
       ),
-    //  bottomNavigationBar: _buildBottomNavigationBar(),
     );
   }
 

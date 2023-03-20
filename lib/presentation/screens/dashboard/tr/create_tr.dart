@@ -265,7 +265,6 @@ class _CreateTravelRequestState extends State<CreateTravelRequest> {
     };
 
     SuccessModel model =   await Injector.resolve<TrUseCase>().checkOverlapped(overlapParams);
-    print("i am here");
     print(model.toJson());
     if(model.message == null){
       submitTr();

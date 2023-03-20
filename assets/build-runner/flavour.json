@@ -141,30 +141,37 @@
     }
   },
   "home_screen_data" : {
-    "app_bar": {
-      "isCenter": true,
-      "title":  {
-        "text" : "Tuesday , 10 January",
-        "color" : "0XFF000000",
-        "size": "16",
-        "family": "bold"
-      },
-      "leading": {
-        "icon": "home",
-        "size": 20.0,
-        "color": "0XFF000000",
-        "backgroundColor": "0XFFFFFFFF",
-        "onPress": true
-      },
-      "actions": [
-        {
-          "icon": "home",
-          "size": 20.0,
-          "color": "0XFF000000",
-          "backgroundColor": "0XFFFFFFFF",
-          "onPress": true
-        }
-      ]
+    "backgroundColor" : "0xFF2854A1",
+    "logout": {
+      "icon": "logout",
+      "size": 20.0,
+      "color": "0XFFFFFFFF",
+      "backgroundColor": "0XFFFFFFFF",
+      "onPress": true
+    },
+    "svgIcon":{
+      "icon": "profile.svg"
+    },
+    "label":  {
+      "text" : "Hello,",
+      "color" : "0XFFFFFFFF",
+      "size": "14",
+      "family": "bold",
+      "align": "center-left"
+    },
+    "title":  {
+      "text" : "Hello,",
+      "color" : "0XFFFFFFFF",
+      "size": "24",
+      "family": "regular",
+      "align": "center-left"
+    },
+    "date":  {
+      "text" : "",
+      "color" : "0XFFFFFFFF",
+      "size": "14",
+      "family": "regular",
+      "align": "center-right"
     },
     "badges": [
       {
@@ -182,11 +189,9 @@
           "size": "16",
           "family": "bold"
         },
-        "icon":{
-          "icon": "home",
-          "size": 20.0,
-          "color": "0XFF000000",
-          "onPress": true
+        "svgIcon":{
+          "icon": "briefcase.svg",
+          "color" : "0XFFFFFFFF"
         },
         "cardColor": [
           "0XFF2193b0",
@@ -209,11 +214,9 @@
           "size": "16",
           "family": "bold"
         },
-        "icon":{
-          "icon": "home",
-          "size": 20.0,
-          "color": "0XFF000000",
-          "onPress": true
+        "svgIcon":{
+          "icon": "misc.svg",
+          "color" : "0XFFFFFFFF"
         },
         "cardColor": [
           "0XFF7b4397",
@@ -236,11 +239,9 @@
           "size": "16",
           "family": "bold"
         },
-        "icon":{
-          "icon": "home",
-          "size": 20.0,
-          "color": "0XFF000000",
-          "onPress": true
+        "svgIcon":{
+          "icon": "approve.svg",
+          "color" : "0XFFFFFFFF"
         },
         "cardColor": [
           "0XFF5C258D",
@@ -263,11 +264,9 @@
           "size": "16",
           "family": "bold"
         },
-        "icon":{
-          "icon": "home",
-          "size": 20.0,
-          "color": "0XFF000000",
-          "onPress": true
+        "svgIcon":{
+          "icon": "conv.svg",
+          "color" : "0XFFFFFFFF"
         },
         "cardColor": [
           "0XFFFF8008",

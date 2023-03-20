@@ -101,7 +101,7 @@ class _LoginScreenState extends State<_Login> {
                        Injector.resolve<EmployeeBloc>()..add(GetNonEmployeeListEvent());
 
 
-                       Navigator.of(context).pushNamed(RouteConstants.dashboardPath);
+                       Navigator.of(context).pushReplacementNamed(RouteConstants.dashboardPath);
                       },
                       onFailure: (context, state) {
 

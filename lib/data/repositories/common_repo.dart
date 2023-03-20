@@ -248,5 +248,18 @@ class CommonRepository extends CommonAPIAbstract {
     return SuccessModel(status: false);
   }
 
+  @override
+  Future<SuccessModel> logOut() async{
+    Map<String,dynamic> data= {};
+    var response = await apiRemoteDatasource.getCommonTypes("logout",data);
+
+    if(response!=null) {
+      SuccessModel modelResponse = SuccessModel.fromJson(response);
+      return modelResponse;
+    }
+
+    return SuccessModel(status: false);
+  }
+
 
 }

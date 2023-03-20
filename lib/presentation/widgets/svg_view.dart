@@ -12,7 +12,8 @@ class MetaSVGView extends StatelessWidget {
     return  Container(
         child: SvgPicture.asset(
           AssetConstants.assetsBaseURLSVG +"/"+ mapData['icon'],
-          color:  ParseDataType().getHexToColor(mapData['color']))
+        color:mapData['color']!=null ?  ParseDataType().getHexToColor(mapData['color']):null
+           )
     );
   }
 }

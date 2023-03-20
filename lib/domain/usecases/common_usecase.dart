@@ -22,6 +22,8 @@ class CommonUseCase {
 
   Future<MetaEmployeeListResponse> getEmployeesList() async => apiAbstract.getEmployeesList();
 
+  Future<SuccessModel> logOut() async => apiAbstract.logOut();
+
   Future<MetaNonEmployeeListResponse> getNonEmployeesList() async => apiAbstract.getNonEmployeesList();
 
   Future<MetaAccomTypeListResponse> getAccomTypesList() async => apiAbstract.getAccomTypesList();

@@ -70,8 +70,9 @@ class SplashScreenState extends State<SplashScreen> {
       //     Navigator.of(context).pushNamed(RouteConstants.dashBoardTabsPath, arguments: { "tab" : 0 });
       //   });
       // }else{
-        Timer( Duration(seconds: 3),(){
-          Navigator.of(context).pushNamed(RouteConstants.loginPath);
+        Timer(
+          Duration(seconds: 3),(){
+          Navigator.of(context).pushReplacementNamed(RouteConstants.dashboardPath);
         });
       // }
   }

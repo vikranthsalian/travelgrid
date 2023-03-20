@@ -61,6 +61,8 @@ abstract class CommonAPIAbstract {
 
   Future<MetaEmployeeListResponse> getEmployeesList();
 
+  Future<SuccessModel> logOut();
+
   Future<MetaNonEmployeeListResponse> getNonEmployeesList();
 
   Future<MetaCountryListResponse> getCountriesList();
