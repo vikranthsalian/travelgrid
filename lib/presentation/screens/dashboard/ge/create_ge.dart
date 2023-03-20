@@ -60,7 +60,7 @@ class CreateGeneralExpense extends StatelessWidget {
 
    return  Scaffold(
       backgroundColor: Colors.white,
-      bottomNavigationBar: isApproval?buildApprovalRow(title, context):SizedBox(),
+      bottomNavigationBar: isApproval ? buildApprovalRow(title, context):SizedBox(),
       body: Container(
         color:ParseDataType().getHexToColor(jsonData!['backgroundColor']),
         child: Column(
@@ -83,52 +83,6 @@ class CreateGeneralExpense extends StatelessWidget {
                 ],
               ),
             ),
-            // widget.isEdit ?
-            // Container(
-            //   color: Colors.white,
-            //   height:70.h,
-            //   child: Container(
-            //     margin: EdgeInsets.symmetric(horizontal: 10.w),
-            //     child: Row(
-            //       children: expenseTypes.map((e) {
-            //
-            //         return Container(
-            //           margin: EdgeInsets.symmetric(horizontal: 5.w),
-            //           width: 60.w,
-            //           height: 60.w,
-            //           child: InkWell(
-            //               onTap: () async{
-            //                 navigate(e,false,{},0);
-            //               },
-            //               child:Container(
-            //                 height: 50.h,
-            //                 decoration: BoxDecoration(
-            //                   color: ParseDataType().getHexToColor(jsonData['backgroundColor']),
-            //                   shape: BoxShape.circle,
-            //                 ),
-            //                 child: Stack(
-            //                   alignment: Alignment.center,
-            //                   children: [
-            //                     Container(
-            //                       width: 25.w,
-            //                       height: 25.w,
-            //                       child: SvgPicture.asset(
-            //                         AssetConstants.assetsBaseURLSVG +"/"+  e['svgIcon']['icon'],//e['svgIcon']['color']
-            //                         color: ParseDataType().getHexToColor(e['svgIcon']['color']),
-            //                         width: 25.w,
-            //                         height: 25.w,
-            //                       ),
-            //                     ),
-            //                   ],
-            //                 ),
-            //               )
-            //           ),
-            //         );
-            //       }).toList(),
-            //     ),
-            //   ),
-            // ):SizedBox(),
-
             Expanded(
                 child:  BlocBuilder<GeneralExpenseBloc, GeneralExpenseState>(
                     bloc: bloc,
@@ -139,7 +93,7 @@ class CreateGeneralExpense extends StatelessWidget {
                               callback: (){
 
                               },
-                              child:CreateGeneralExpenseBody(state,isEdit,isApproval)
+                              child:CreateGeneralExpenseBody(state,isEdit,isApproval,title??"")
                           )
                       );
                     }
@@ -154,12 +108,11 @@ class CreateGeneralExpense extends StatelessWidget {
 
   Row buildApprovalRow(title,ctx) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
         Expanded(
           child: MetaButton(mapData: jsonData!['bottomButtonLeft'],text: "Cancel",
               onButtonPressed: (){
-
+                  Navigator.pop(ctx);
               }
           ),
         ),
@@ -184,7 +137,8 @@ class CreateGeneralExpenseBody extends StatefulWidget {
   GeneralExpenseState state;
   bool isEdit;
   bool isApproval;
-  CreateGeneralExpenseBody(this.state,this.isEdit,this.isApproval);
+  String title;
+  CreateGeneralExpenseBody(this.state,this.isEdit,this.isApproval,this.title);
 
   @override
   _CreateGeneralExpenseState createState() => _CreateGeneralExpenseState();
@@ -384,22 +338,23 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpenseBody> {
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          MetaButton(mapData: jsonData['bottomButtonLeft'],
+          MetaButton(mapData: jsonData['bottomButtonLeft'],text: "Cancel",
               onButtonPressed: (){
-                if(summaryItems.isNotEmpty && isCalculated){
-                  submitGe("draft");
-                }else{
-                  MetaAlert.showErrorAlert(
-                      message: "Please add expenses"
-                  );
-                }
+                  Navigator.pop(context);
+                // if(summaryItems.isNotEmpty && isCalculated){
+                //   submitGe("draft");
+                // }else{
+                //   MetaAlert.showErrorAlert(
+                //       message: "Please add expenses"
+                //   );
+                // }
               }
           ),
           MetaButton(mapData: jsonData['bottomButtonRight'],
               onButtonPressed: (){
 
                 if(summaryItems.isNotEmpty && isCalculated){
-                  submitGe("submit");
+                  submit();
                 }else{
                   MetaAlert.showErrorAlert(
                       message: "Please add expenses"
@@ -424,25 +379,22 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpenseBody> {
       }
 
       return Row(
+        mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          Expanded(
-            child: MetaButton(
+          MetaButton(
                 mapData: jsonData['bottomButtonLeft'], text: "Cancel",
                 onButtonPressed: () {
-
+                          Navigator.pop(context);
                 }
             ),
-          ),
           isTBVisible ?
-          Expanded(
-            child: MetaButton(
+          MetaButton(
                 mapData: jsonData['bottomButtonRight'], text: "Take Back",
                 onButtonPressed: () {
-
+                  takeBack();
                 }
-            ),
-          ) : SizedBox(width: 0),
+            ) : SizedBox(width: 0),
         ],
       );
     }
@@ -811,7 +763,7 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpenseBody> {
 
   }
 
-  void submitGe(text) async{
+  void submit() async{
     final String requestBody = json.encoder.convert(submitMap);
 
     Map<String, dynamic> valueMap = json.decode(requestBody);
@@ -819,13 +771,34 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpenseBody> {
    Map<String,dynamic> queryParams = {
      "approver1":approver1!.item2.toString().toLowerCase(),
      "approver2":approver2!.item2.toString().toLowerCase(),
-     "action":text,
      "comment":controller.text,
+   //  if(widget.isEdit)
+     //"tripId":widget.title,
    };
+
+    if(widget.isEdit){
+      queryParams['action']="submit";
+    }else{
+      queryParams['action']="submit";
+    }
 
    prettyPrint(valueMap);
 
     SuccessModel model =   await Injector.resolve<GeUseCase>().createGE(queryParams,valueMap);
+
+    if(model.status==true){
+      Navigator.pop(context);
+    }
+
+  }
+
+  void takeBack() async{
+
+    Map<String,dynamic> queryParams = {
+      "comment":controller.text,
+      "tripId":widget.title,
+    };
+    SuccessModel model =   await Injector.resolve<GeUseCase>().takeBackGE(queryParams);
 
     if(model.status==true){
       Navigator.pop(context);

@@ -3,7 +3,9 @@ import 'package:travelgrid/data/datasources/list/approver_list.dart';
 import 'package:travelgrid/data/datasources/others/cities_list.dart';
 import 'package:travelgrid/data/datasources/others/countries_list.dart';
 import 'package:travelgrid/data/datasources/others/currency_list.dart';
+import 'package:travelgrid/data/datasources/others/employee_list.dart';
 import 'package:travelgrid/data/datasources/others/fare_class_list.dart';
+import 'package:travelgrid/data/datasources/others/non_employee_list.dart';
 import 'package:travelgrid/data/datasources/summary/ge_summary_response.dart';
 import 'package:travelgrid/data/datasources/list/ge_list_response.dart';
 import 'package:travelgrid/data/datasources/others/lat_long_distance_model.dart';
@@ -26,6 +28,7 @@ abstract class TrAPIAbstract {
   Future<TRListResponse> callList();
   Future<TRSummaryResponse> getTR(id);
   Future<SuccessModel> createTR(data,body);
+  Future<SuccessModel> checkOverlapped(data);
   Future<SuccessModel> approveTR(id,comment);
 }
 
@@ -34,6 +37,7 @@ abstract class GeAPIAbstract {
   Future<GEListResponse> callList();
   Future<GESummaryResponse> getGE(id);
   Future<SuccessModel> createGE(data,body);
+  Future<SuccessModel> takeBackGE(data);
   Future<SuccessModel> approveGE(id,comment);
 }
 
@@ -41,6 +45,7 @@ abstract class TeAPIAbstract {
   Future<TEListResponse> callList();
   Future<TESummaryResponse> getTE(id);
   Future<SuccessModel> createTE(data,body);
+  Future<SuccessModel> takeBackTE(data);
   Future<SuccessModel> approveTE(id,comment);
 }
 
@@ -53,6 +58,10 @@ abstract class AeAPIAbstract {
 
 abstract class CommonAPIAbstract {
   Future<MetaCityListResponse> getCities(countryCode,tripType);
+
+  Future<MetaEmployeeListResponse> getEmployeesList();
+
+  Future<MetaNonEmployeeListResponse> getNonEmployeesList();
 
   Future<MetaCountryListResponse> getCountriesList();
 

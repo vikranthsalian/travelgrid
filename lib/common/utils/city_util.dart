@@ -62,12 +62,15 @@ class CityUtil{
 
 
   static String? getFareValueFromID(id,mode,{bool isValue=true}) {
+    print("getFareValueFromID:==>");
     print(id);
     print(mode);
 
     if(id.toString().isEmpty){
       return null;
     }
+    print("isValue");
+    print(isValue);
 
     List<fare.Data> list = appNavigatorKey.currentState!.context.read<FareClassCubit>().getFareClassResponse(mode);
 

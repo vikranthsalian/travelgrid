@@ -122,7 +122,8 @@ class _CreateBuildItineraryState extends State<BuildItinerary> {
 
   getView(map,list) {
     return  Container(
-      padding: EdgeInsets.symmetric(horizontal: 5.w),
+      padding: EdgeInsets.symmetric(horizontal: 5.w,vertical: 10.h),
+
       color: Colors.white,
       child: list.isNotEmpty ? Column(
         children: [
@@ -132,7 +133,7 @@ class _CreateBuildItineraryState extends State<BuildItinerary> {
               padding: EdgeInsets.zero,
               itemBuilder: (BuildContext context, int index) {
                 TRCityPairModel item = list[index];
-                return oneWayView(item,map);
+                return oneWayView(item,map,index);
               },
               itemCount: list.length
           ),
@@ -146,7 +147,7 @@ class _CreateBuildItineraryState extends State<BuildItinerary> {
     );
   }
 
-  oneWayView(item,map){
+  oneWayView(item,map,int index){
     return Container(
         padding: EdgeInsets.symmetric(vertical: 1.h),
         color: Colors.white,
@@ -220,11 +221,67 @@ class _CreateBuildItineraryState extends State<BuildItinerary> {
                       InkWell(
                         onTap: (){
 
+                          if( widget.type=="R"){
+
+                            Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
+                                AddRoundItinerary(
+                                  cityPairs1: widget.list[0],
+                                  cityPairs2: widget.list[1],
+                                  tripType: widget.tripType,
+                                  jsonData: map,
+                                  isEdit:true,
+                                  onAdd: (TRCityPairModel data1,TRCityPairModel data2){
+                                    print("===========> "+widget.type.toString());
+
+                                      widget.onAdded!([data1,data2]);
+
+                                  },)));
+                          }else{
+
+
+
+
+
+                          Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
+                              AddItinerary(
+                                cityPairs: item,
+                                tripType: widget.tripType,
+                                jsonData: map,
+                                isEdit:true,
+                                onAdd: (TRCityPairModel data){
+                                  print("===========> "+widget.type.toString());
+                                  if(widget.type=="O"){
+                                    widget.onAdded!([data]);
+                                  }
+                                  if(widget.type=="M"){
+                                    widget.list[index]=data;
+                                    widget.onAdded!(widget.list);
+                                  }
+
+
+                                },)));
+                          }
                         },
                         child: Container(
                             height: 25.w,
                             width: 25.w,
                             child: MetaSVGView(mapData: map['cityPair']['edit'])
+                        ),
+                      ),
+                      if(index!=0)
+                      SizedBox(width: 20.w,),
+                      if(index!=0)
+                      InkWell(
+                        onTap: (){
+
+                          widget.list.removeAt(index);
+
+                          widget.onAdded!(widget.list);
+                        },
+                        child: Container(
+                            height: 25.w,
+                            width: 25.w,
+                            child: MetaSVGView(mapData: map['cityPair']['delete'])
                         ),
                       )
                     ]

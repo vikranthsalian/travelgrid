@@ -2,14 +2,20 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
+import 'package:travelgrid/common/utils/show_alert.dart';
+import 'package:travelgrid/data/models/tr/tr_traveller_details.dart';
 
 class ApprovalTrFormBloc extends FormBloc<String, String> {
 
   final swBillable = BooleanFieldBloc(initialValue: false);
   final requestType = TextFieldBloc(validators: [emptyValidator]);
+  final requestTypeID = SelectFieldBloc<String, dynamic>(initialValue: "");
   final purposeOfTravelID = SelectFieldBloc();
+  final travellerDetails = SelectFieldBloc<TRTravellerDetails,dynamic>(initialValue: null);
   final purposeOfTravel = TextFieldBloc(validators: [emptyValidator]);
   final purposeDetails = TextFieldBloc(validators: [emptyValidator]);
+
+  final employeeType = SelectFieldBloc<String, dynamic>(initialValue: "");
 
 
   static String? emptyValidator(dynamic value) {
@@ -20,7 +26,6 @@ class ApprovalTrFormBloc extends FormBloc<String, String> {
   }
 
   ApprovalTrFormBloc(Map<String, dynamic> data):super(autoValidate: true) {
-
 
     addFieldBlocs(fieldBlocs: [
       swBillable,
@@ -34,15 +39,27 @@ class ApprovalTrFormBloc extends FormBloc<String, String> {
 
   @override
   FutureOr<void> onSubmitting() async {
+
+
+    if(requestTypeID.value!="self"){
+      if(employeeType.value.toString().isEmpty){
+        MetaAlert.showErrorAlert(message: "Please Select Employee Type");
+        return;
+      }
+      if(travellerDetails.value == null){
+        MetaAlert.showErrorAlert(message: "Please Select Employee");
+        return;
+      }
+    }
+
     try {
-
-
 
       Map<String, dynamic> save = {
         "purposeOfTravel": purposeDetails.value,
         "tripBillable": swBillable.value ? 35 : 34,
         "purposeOfVisit": int.parse(purposeOfTravelID.value.toString()),
-        "requestType": requestType.value.toLowerCase(),
+        "requestType": requestTypeID.value,
+        "maTravelerDetails": [travellerDetails.value],
       };
 
       emitSuccess(successResponse: jsonEncode(save));

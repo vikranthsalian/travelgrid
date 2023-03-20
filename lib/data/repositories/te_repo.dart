@@ -51,6 +51,19 @@ class TeRepository extends TeAPIAbstract {
   }
 
   @override
+  Future<SuccessModel> takeBackTE(data) async {
+
+    var response = await apiRemoteDatasource.takeBack("te/takeBack",data);
+
+    if(response!=null) {
+      SuccessModel modelResponse = SuccessModel.fromJson(response);
+      return modelResponse;
+    }
+
+    return SuccessModel(status: false);
+  }
+
+  @override
   Future<SuccessModel> approveTE(id, comment) async{
 
     Map<String,dynamic> data= {

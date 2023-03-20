@@ -69,4 +69,16 @@ class TrRepository extends TrAPIAbstract {
     return SuccessModel(status: false);
   }
 
+  @override
+  Future<SuccessModel> checkOverlapped(data) async{
+    var response = await apiRemoteDatasource.getCommonTypes("getOverlappedTr",data);
+
+    if(response!=null) {
+      SuccessModel modelResponse = SuccessModel.fromJson(response);
+      return modelResponse;
+    }
+
+    return SuccessModel(status: false);
+  }
+
 }

@@ -109,6 +109,10 @@ class GeneralExpense extends StatelessWidget {
                     callback: (){
                        jsonData['listView']['recordsFound']['value'] = state.response?.data?.length;
 
+
+                       if(state.response?.data== null)
+                         return;
+
                        for(var item in state.response!.data!){
                          filterOptions.add(item.status!);
                        }

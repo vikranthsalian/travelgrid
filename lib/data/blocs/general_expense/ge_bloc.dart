@@ -2,7 +2,6 @@ import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:travelgrid/common/constants/event_types.dart';
 import 'package:travelgrid/common/injector/injector.dart';
-import 'package:travelgrid/common/utils/date_time_util.dart';
 import 'package:travelgrid/common/utils/sort_util.dart';
 import 'package:travelgrid/data/datasources/summary/ge_summary_response.dart';
 import 'package:travelgrid/data/datasources/list/ge_list_response.dart' as list;

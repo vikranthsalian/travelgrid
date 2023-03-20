@@ -384,23 +384,19 @@ class _CreateTravelExpenseBodyState extends State<CreateTravelExpenseBody> {
       return Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          Expanded(
-            child: MetaButton(
+          MetaButton(
                 mapData: jsonData['bottomButtonLeft'], text: "Cancel",
                 onButtonPressed: () {
-
+                  Navigator.pop(context);
                 }
             ),
-          ),
           isTBVisible ?
-          Expanded(
-            child: MetaButton(
+         MetaButton(
                 mapData: jsonData['bottomButtonRight'], text: "Take Back",
                 onButtonPressed: () {
-
+                  takeBack();
                 }
-            ),
-          ) : SizedBox(width: 0),
+            ): SizedBox(width: 0),
         ],
       );
     }
@@ -1113,6 +1109,20 @@ class _CreateTravelExpenseBodyState extends State<CreateTravelExpenseBody> {
    prettyPrint(valueMap);
 
     SuccessModel model =   await Injector.resolve<TeUseCase>().createTe(queryParams,valueMap);
+
+    if(model.status==true){
+      Navigator.pop(context);
+    }
+
+  }
+
+  void takeBack() async{
+
+    Map<String,dynamic> queryParams = {
+      "comment":"Take Back",
+      "recordLocator":widget.title,
+    };
+    SuccessModel model =   await await Injector.resolve<TeUseCase>().takeBackTE(queryParams);
 
     if(model.status==true){
       Navigator.pop(context);

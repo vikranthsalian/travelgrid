@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
-const Color customGold100 = Color(0xFFFFCC15);
+const Color customGold100 = Color(0xFF2854A1);
 const Color customGold200 = Color(0xFFF0DB19);
-const Color customGold300 = Color(0xFFD9A900);
 const Color textColor100 = Color(0xFF000000);
 const Color textColor50 = Color(0xFF3D3D3D);
 const Color textColor10 = Color(0xFF737171);

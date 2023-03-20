@@ -1166,7 +1166,7 @@
       "dataText":  {
         "text" : "Choose Request Type",
         "color" : "0xFFAEAEAE",
-        "size": "18",
+        "size": "14",
         "family": "regular",
         "align": "center-left"
       },
@@ -1185,14 +1185,14 @@
             "size": "12",
             "family": "regular",
             "align": "center-left",
-            "id": "288"
+            "id": "self"
           },{
             "text" : "On-Behalf",
             "color" : "0xFF000000",
             "size": "12",
             "family": "regular",
             "align": "center-left",
-            "id": "289"
+            "id": "onBehalf"
           }
         ],
         "emptyData": {
@@ -1226,6 +1226,128 @@
         "family": "regular"
       }
     },
+    "selectEmployeeType": {
+      "showView": true,
+      "key":"common_type_view",
+      "label":  {
+        "text" : "Employee Type*",
+        "color" : "0xFF2854A1",
+        "size": "14",
+        "family": "regular",
+        "align": "center-left"
+      },
+      "dataText":  {
+        "text" : "Choose Employee Type",
+        "color" : "0xFFAEAEAE",
+        "size": "14",
+        "family": "regular",
+        "align": "center-left"
+      },
+      "title":{
+        "text" : "Select Employee Type",
+        "color" : "0xFF2854A1",
+        "size": "18",
+        "family": "bold",
+        "align": "center"
+      },
+      "listView": {
+        "data": [
+          {
+            "text" : "Employee",
+            "color" : "0xFF000000",
+            "size": "12",
+            "family": "regular",
+            "align": "center-left",
+            "id": "Employee"
+          },{
+            "text" : "Non-Employee",
+            "color" : "0xFF000000",
+            "size": "12",
+            "family": "regular",
+            "align": "center-left",
+            "id": "Non Employee"
+          }
+        ],
+        "emptyData": {
+          "image_view":   {
+            "image" : "logo_banner.png",
+            "align": "center",
+            "wd": 250.0
+          },
+          "title":  {
+            "text" : "No Data Found!!!",
+            "color" : "0XFF3D3D3D",
+            "size": "16",
+            "family": "regular"
+          },
+          "bottomButtonRefresh": {
+            "text" : "Refresh",
+            "height": 35.0,
+            "color" : "0xFFFFFFFF",
+            "borderRadius": 30.0,
+            "backgroundColor" : "0xFF2854A1",
+            "size": "15",
+            "family": "regular"
+          }
+        }
+      },
+      "bottomButtonCentre": {
+        "text" : "Cancel",
+        "color" : "0xFFFFFFFF",
+        "backgroundColor" : "0xFF2854A1",
+        "size": "18",
+        "family": "regular"
+      }
+    },
+    "selectEmployeeCode":{
+      "showView": true,
+      "label":  {
+        "text" : "Employee*",
+        "color" : "0xFF2854A1",
+        "size": "14",
+        "family": "regular",
+        "align": "center-left"
+      },
+      "dataText":  {
+        "text" : "Choose Employee",
+        "color" : "0xFFAEAEAE",
+        "size": "14",
+        "family": "regular",
+        "align": "center-left"
+      }
+    },
+    "travellerDetails": {
+      "label": {
+        "text" : "Traveller Details",
+        "color" : "0XFFFFFFFF",
+        "size": "14",
+        "family": "bold",
+        "align": "center-left"
+      },
+      "showDetails": {
+        "label": {
+          "text" : "Show",
+          "color" : "0XFFFFFFFF",
+          "size": "10",
+          "family": "bold",
+          "align": "center-right"
+        }
+      },
+      "header": {
+        "text" : "",
+        "color" : "0xFF000000",
+        "size": "12",
+        "family": "bold",
+        "align": "center"
+      },
+      "item": {
+        "text" : "",
+        "color" : "0xFFCCCCCC",
+        "size": "11",
+        "family": "bold",
+        "align": "center"
+      }
+    },
     "selectTravelPurpose": {
       "showView": true,
       "key":"travel_purpose_view",
@@ -1239,11 +1361,12 @@
       "dataText":  {
         "text" : "Travel Purpose",
         "color" : "0xFFAEAEAE",
-        "size": "18",
+        "size": "14",
         "family": "regular",
         "align": "center-left"
       }
     },
+
     "billableSwitch":  {
       "label":  {
         "text" : "Billable",
@@ -1293,6 +1416,264 @@
     "prev": "0",
     "next": "1",
     "backgroundColor" : "0xFF2854A1",
+    "selectRequest": {
+      "showView": true,
+      "key":"common_type_view",
+      "label":  {
+        "text" : "Request Type*",
+        "color" : "0xFF2854A1",
+        "size": "14",
+        "family": "regular",
+        "align": "center-left"
+      },
+      "dataText":  {
+        "text" : "Choose Request Type",
+        "color" : "0xFFAEAEAE",
+        "size": "14",
+        "family": "regular",
+        "align": "center-left"
+      },
+      "title":{
+        "text" : "Select Request Type",
+        "color" : "0xFF2854A1",
+        "size": "18",
+        "family": "bold",
+        "align": "center"
+      },
+      "listView": {
+        "data": [
+          {
+            "text" : "Self",
+            "color" : "0xFF000000",
+            "size": "12",
+            "family": "regular",
+            "align": "center-left",
+            "id": "self"
+          },{
+            "text" : "On-Behalf",
+            "color" : "0xFF000000",
+            "size": "12",
+            "family": "regular",
+            "align": "center-left",
+            "id": "onBehalf"
+          }
+        ],
+        "emptyData": {
+          "image_view":   {
+            "image" : "logo_banner.png",
+            "align": "center",
+            "wd": 250.0
+          },
+          "title":  {
+            "text" : "No Data Found!!!",
+            "color" : "0XFF3D3D3D",
+            "size": "16",
+            "family": "regular"
+          },
+          "bottomButtonRefresh": {
+            "text" : "Refresh",
+            "height": 35.0,
+            "color" : "0xFFFFFFFF",
+            "borderRadius": 30.0,
+            "backgroundColor" : "0xFF2854A1",
+            "size": "15",
+            "family": "regular"
+          }
+        }
+      },
+      "bottomButtonCentre": {
+        "text" : "Cancel",
+        "color" : "0xFFFFFFFF",
+        "backgroundColor" : "0xFF2854A1",
+        "size": "18",
+        "family": "regular"
+      }
+    },
+    "selectEmployeeType": {
+      "showView": true,
+      "key":"common_type_view",
+      "label":  {
+        "text" : "Employee Type*",
+        "color" : "0xFF2854A1",
+        "size": "14",
+        "family": "regular",
+        "align": "center-left"
+      },
+      "dataText":  {
+        "text" : "Choose Employee Type",
+        "color" : "0xFFAEAEAE",
+        "size": "14",
+        "family": "regular",
+        "align": "center-left"
+      },
+      "title":{
+        "text" : "Select Employee Type",
+        "color" : "0xFF2854A1",
+        "size": "18",
+        "family": "bold",
+        "align": "center"
+      },
+      "listView": {
+        "data": [
+          {
+            "text" : "Employee",
+            "color" : "0xFF000000",
+            "size": "12",
+            "family": "regular",
+            "align": "center-left",
+            "id": "Employee"
+          },{
+            "text" : "Non-Employee",
+            "color" : "0xFF000000",
+            "size": "12",
+            "family": "regular",
+            "align": "center-left",
+            "id": "Non Employee"
+          }
+        ],
+        "emptyData": {
+          "image_view":   {
+            "image" : "logo_banner.png",
+            "align": "center",
+            "wd": 250.0
+          },
+          "title":  {
+            "text" : "No Data Found!!!",
+            "color" : "0XFF3D3D3D",
+            "size": "16",
+            "family": "regular"
+          },
+          "bottomButtonRefresh": {
+            "text" : "Refresh",
+            "height": 35.0,
+            "color" : "0xFFFFFFFF",
+            "borderRadius": 30.0,
+            "backgroundColor" : "0xFF2854A1",
+            "size": "15",
+            "family": "regular"
+          }
+        }
+      },
+      "bottomButtonCentre": {
+        "text" : "Cancel",
+        "color" : "0xFFFFFFFF",
+        "backgroundColor" : "0xFF2854A1",
+        "size": "18",
+        "family": "regular"
+      }
+    },
+    "selectEmployeeCode":{
+      "showView": true,
+      "label":  {
+        "text" : "Employee*",
+        "color" : "0xFF2854A1",
+        "size": "14",
+        "family": "regular",
+        "align": "center-left"
+      },
+      "dataText":  {
+        "text" : "Choose Employee",
+        "color" : "0xFFAEAEAE",
+        "size": "14",
+        "family": "regular",
+        "align": "center-left"
+      }
+    },
+    "travellerDetails": {
+      "label": {
+        "text" : "Traveller Details",
+        "color" : "0XFFFFFFFF",
+        "size": "14",
+        "family": "bold",
+        "align": "center-left"
+      },
+      "showDetails": {
+        "label": {
+          "text" : "Show",
+          "color" : "0XFFFFFFFF",
+          "size": "10",
+          "family": "bold",
+          "align": "center-right"
+        }
+      },
+      "header": {
+        "text" : "",
+        "color" : "0xFF000000",
+        "size": "12",
+        "family": "bold",
+        "align": "center"
+      },
+      "item": {
+        "text" : "",
+        "color" : "0xFFCCCCCC",
+        "size": "11",
+        "family": "bold",
+        "align": "center"
+      }
+    },
+    "selectTravelPurpose": {
+      "showView": true,
+      "key":"travel_purpose_view",
+      "label":  {
+        "text" : "Travel Purpose*",
+        "color" : "0xFF2854A1",
+        "size": "14",
+        "family": "regular",
+        "align": "center-left"
+      },
+      "dataText":  {
+        "text" : "Travel Purpose",
+        "color" : "0xFFAEAEAE",
+        "size": "14",
+        "family": "regular",
+        "align": "center-left"
+      }
+    },
+
+    "billableSwitch":  {
+      "label":  {
+        "text" : "Billable",
+        "color" : "0xFF2854A1",
+        "size": "14",
+        "family": "bold",
+        "align": "center-left"
+      }
+    },
+    "text_field_details":  {
+      "name": "details",
+      "apiKey": "details",
+      "type": "text_field_view",
+      "inputType": "text",
+      "isPassword": false,
+      "backgroundColor": "0XFFFFFFFF",
+      "borderColor": "0XFFAEAEAE",
+      "text" : {
+        "text" : "",
+        "color" : "0xFF2854A1",
+        "size": "14",
+        "family": "regular"
+      },
+      "labelText" : {
+        "text" : "Visit Purpose Details",
+        "color" : "0xFF2854A1",
+        "size": "14",
+        "family": "regular",
+        "align" : "center-left"
+      },
+      "hintText" : {
+        "text" : "Enter Details",
+        "color" : "0xFF2854A1",
+        "size": "14",
+        "family": "regular"
+      },
+      "errorText" : {
+        "text" : "",
+        "color" : "0xFFFF0000",
+        "size": "14",
+        "family": "regular"
+      },
+      "validators" : []
+    },
     "cityPairDetails": {
       "backgroundColor" : "0xFF2854A1",
       "title":  {
@@ -1729,7 +2110,7 @@
         },
         "delete": {
           "icon": "delete.svg",
-          "color" : "0xFFFFFFFF"
+          "color" : "0xFFFF0000"
         }
       },
       "listView": {
@@ -2561,6 +2942,123 @@
           "size": "18",
           "family": "regular"
         }
+      }
+    },
+    "text_field_appprover":  {
+      "name": "approver",
+      "apiKey": "approver",
+      "type": "text_field_view",
+      "inputType": "text",
+      "isPassword": false,
+      "backgroundColor": "0XFFFFFFFF",
+      "borderColor": "0XFFAEAEAE",
+      "text" : {
+        "text" : "",
+        "color" : "0xFF2854A1",
+        "size": "14",
+        "family": "regular"
+      },
+      "labelText" : {
+        "text" : "Notes to Approver",
+        "color" : "0xFF2854A1",
+        "size": "14",
+        "family": "regular",
+        "align" : "center-left"
+      },
+      "hintText" : {
+        "text" : "Enter notes",
+        "color" : "0xFF2854A1",
+        "size": "14",
+        "family": "regular"
+      },
+      "errorText" : {
+        "text" : "",
+        "color" : "0xFFFF0000",
+        "size": "14",
+        "family": "regular"
+      },
+      "validators" : []
+    },
+    "text_field_agent":  {
+      "name": "agent",
+      "apiKey": "agent",
+      "type": "text_field_view",
+      "inputType": "text",
+      "isPassword": false,
+      "backgroundColor": "0XFFFFFFFF",
+      "borderColor": "0XFFAEAEAE",
+      "text" : {
+        "text" : "",
+        "color" : "0xFF2854A1",
+        "size": "14",
+        "family": "regular"
+      },
+      "labelText" : {
+        "text" : "Note to Travel Desk",
+        "color" : "0xFF2854A1",
+        "size": "14",
+        "family": "regular",
+        "align" : "center-left"
+      },
+      "hintText" : {
+        "text" : "Enter note",
+        "color" : "0xFF2854A1",
+        "size": "14",
+        "family": "regular"
+      },
+      "errorText" : {
+        "text" : "",
+        "color" : "0xFFFF0000",
+        "size": "14",
+        "family": "regular"
+      },
+      "validators" : []
+    },
+    "uploadButton":  {
+      "backgroundColor" : "0xFF2854A1",
+      "onClick": "/uploadDoc",
+      "title":  {
+        "text" : "Browse for Documents/Images here",
+        "color" : "0XFF000000",
+        "size": "12",
+        "family": "bold",
+        "align": "center"
+      },
+      "subtitle":  {
+        "text" : "PNG,JPEG,JPG,PDF",
+        "color" : "0XFFAEAEAE",
+        "size": "10",
+        "family": "regular",
+        "align": "center"
+      },
+      "svgIcon":{
+        "icon": "upload.svg",
+        "color" : "0xFF2854A1"
+      },
+      "listView": {
+        "data": [
+          {
+            "text" : "Camera",
+            "color" : "0XFF000000",
+            "size": "12",
+            "family": "regular",
+            "align": "center-left"
+          },
+          {
+            "text" : "Gallery",
+            "color" : "0XFF000000",
+            "size": "12",
+            "family": "regular",
+            "align": "center-left"
+          }
+        ]
+      },
+      "bottomButtonCentre": {
+        "text" : "Cancel",
+        "color" : "0xFFFFFFFF",
+        "backgroundColor" : "0xFF2854A1",
+        "size": "18",
+        "family": "regular"
       }
     }
   },
@@ -7477,6 +7975,60 @@
       }
     }
   },
+  "employee_screen_data" : {
+    "backgroundColor" : "0xFF2854A1",
+    "title":  {
+      "text" : "Select Employee",
+      "color" : "0XFFFFFFFF",
+      "size": "18",
+      "family": "bold",
+      "align": "center-left"
+    },
+    "backBar": {
+      "icon": "back",
+      "size": 20.0,
+      "color": "0XFFFFFFFF",
+      "backgroundColor": "transparent",
+      "onPress": true,
+      "align": "center-left"
+    },
+    "listView": {
+      "svgIcon":{
+        "icon": "map.svg",
+        "color" : "0xFF2854A1"
+      },
+      "recordsFound":  {
+        "text" : "Records Found",
+        "value" : "0",
+        "color" : "0XFFFFFFFF",
+        "size": "12",
+        "family": "regular",
+        "align": "center-right"
+      },
+      "emptyData": {
+        "image_view":   {
+          "image" : "logo_banner.png",
+          "align": "center",
+          "wd": 250.0
+        },
+        "title":  {
+          "text" : "No Data Found!!!",
+          "color" : "0XFF3D3D3D",
+          "size": "16",
+          "family": "regular"
+        },
+        "bottomButtonRefresh": {
+          "text" : "Refresh",
+          "height": 35.0,
+          "color" : "0xFFFFFFFF",
+          "borderRadius": 30.0,
+          "backgroundColor" : "0xFF2854A1",
+          "size": "15",
+          "family": "regular"
+        }
+      }
+    }
+  },
   "city_screen_data" : {
     "backgroundColor" : "0xFF2854A1",
     "title":  {
@@ -7975,8 +8527,16 @@
       "family": "bold",
       "align": "center"
     },
+    "closeIcon": {
+      "icon": "close",
+      "size": 20.0,
+      "color": "0XFFFFFFFF",
+      "backgroundColor": "transparent",
+      "onPress": true,
+      "align": "center-left"
+    },
     "sortIcon": {
-      "icon": "filter",
+      "icon": "sort",
       "size": 20.0,
       "color": "0XFFFFFFFF",
       "backgroundColor": "transparent",
@@ -8033,6 +8593,14 @@
       "size": "18",
       "family": "bold",
       "align": "center"
+    },
+    "closeIcon": {
+      "icon": "close",
+      "size": 20.0,
+      "color": "0XFFFFFFFF",
+      "backgroundColor": "transparent",
+      "onPress": true,
+      "align": "center-left"
     },
     "filterIcon": {
       "icon": "filter",

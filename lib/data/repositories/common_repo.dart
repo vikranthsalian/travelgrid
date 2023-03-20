@@ -6,8 +6,10 @@ import 'package:travelgrid/data/datasources/list/approver_list.dart';
 import 'package:travelgrid/data/datasources/others/cities_list.dart';
 import 'package:travelgrid/data/datasources/others/countries_list.dart';
 import 'package:travelgrid/data/datasources/others/currency_list.dart';
+import 'package:travelgrid/data/datasources/others/employee_list.dart';
 import 'package:travelgrid/data/datasources/others/fare_class_list.dart';
 import 'package:travelgrid/data/datasources/others/misc_type_list.dart';
+import 'package:travelgrid/data/datasources/others/non_employee_list.dart';
 import 'package:travelgrid/data/datasources/others/travel_mode_list.dart';
 import 'package:travelgrid/data/datasources/others/lat_long_distance_model.dart';
 import 'package:travelgrid/data/datasources/others/travel_purpose_list.dart';
@@ -57,6 +59,44 @@ class CommonRepository extends CommonAPIAbstract {
 
     return MetaCountryListResponse(status: false);
   }
+
+  @override
+  Future<MetaEmployeeListResponse> getEmployeesList() async{
+    Map<String,dynamic> data= {
+      "employeeCode":"",
+      "employeeName":"",
+      "requestType":""
+
+    };
+
+    var response = await apiRemoteDatasource.getCommonTypes("onBehalfEmp",data);
+
+    if(response!=null) {
+      MetaEmployeeListResponse modelResponse = MetaEmployeeListResponse.fromJson(response);
+      return modelResponse;
+    }
+
+    return MetaEmployeeListResponse(status: false);
+  }
+
+  @override
+  Future<MetaNonEmployeeListResponse> getNonEmployeesList() async{
+    Map<String,dynamic> data= {
+      "nonEmployeeName":"vinoth",
+      "nonEmployeeContact":"",
+      "nonEmployeeEmail":""
+    };
+
+    var response = await apiRemoteDatasource.getCommonTypes("onBehalfNonEmp",data);
+
+    if(response!=null) {
+      MetaNonEmployeeListResponse modelResponse = MetaNonEmployeeListResponse.fromJson(response);
+      return modelResponse;
+    }
+
+    return MetaNonEmployeeListResponse(status: false);
+  }
+
 
 
   @override

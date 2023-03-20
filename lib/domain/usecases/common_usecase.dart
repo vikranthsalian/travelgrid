@@ -3,9 +3,11 @@ import 'package:travelgrid/data/datasources/list/approver_list.dart';
 import 'package:travelgrid/data/datasources/others/cities_list.dart';
 import 'package:travelgrid/data/datasources/others/countries_list.dart';
 import 'package:travelgrid/data/datasources/others/currency_list.dart';
+import 'package:travelgrid/data/datasources/others/employee_list.dart';
 import 'package:travelgrid/data/datasources/others/fare_class_list.dart';
 import 'package:travelgrid/data/datasources/others/lat_long_distance_model.dart';
 import 'package:travelgrid/data/datasources/others/misc_type_list.dart';
+import 'package:travelgrid/data/datasources/others/non_employee_list.dart';
 import 'package:travelgrid/data/datasources/others/travel_mode_list.dart';
 import 'package:travelgrid/data/datasources/others/travel_purpose_list.dart';
 import 'package:travelgrid/data/models/success_model.dart';
@@ -17,6 +19,10 @@ class CommonUseCase {
   Future<MetaCityListResponse> getCities(countryCode,tripType) async => apiAbstract.getCities(countryCode,tripType);
 
   Future<MetaCountryListResponse> getCountriesList() async => apiAbstract.getCountriesList();
+
+  Future<MetaEmployeeListResponse> getEmployeesList() async => apiAbstract.getEmployeesList();
+
+  Future<MetaNonEmployeeListResponse> getNonEmployeesList() async => apiAbstract.getNonEmployeesList();
 
   Future<MetaAccomTypeListResponse> getAccomTypesList() async => apiAbstract.getAccomTypesList();
 

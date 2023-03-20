@@ -12,6 +12,7 @@ import 'package:travelgrid/data/blocs/accom/accom_type_bloc.dart';
 import 'package:travelgrid/data/blocs/approver/approver_type_bloc.dart';
 import 'package:travelgrid/data/blocs/cities/city_bloc.dart';
 import 'package:travelgrid/data/blocs/currency/currency_bloc.dart';
+import 'package:travelgrid/data/blocs/employee/employee_bloc.dart';
 import 'package:travelgrid/data/blocs/fare_class/fare_class_bloc.dart';
 import 'package:travelgrid/data/blocs/misc/misc_type_bloc.dart';
 import 'package:travelgrid/data/blocs/travel/travel_mode_bloc.dart';
@@ -94,8 +95,10 @@ class _LoginScreenState extends State<_Login> {
                        Injector.resolve<FareClassBloc>()..add(GetRoadFareClassListEvent());
                        Injector.resolve<TravelPurposeBloc>()..add(GetTravelPurposeListEvent());
                        Injector.resolve<CurrencyBloc>()..add(GetCurrencyListEvent());
-                        Injector.resolve<CityBloc>()..add(GetCityListEvent());
+                       Injector.resolve<CityBloc>()..add(GetCityListEvent());
                        Injector.resolve<CityBloc>()..add(GetCountryListEvent());
+                       Injector.resolve<EmployeeBloc>()..add(GetEmployeeListEvent());
+                       Injector.resolve<EmployeeBloc>()..add(GetNonEmployeeListEvent());
 
 
                        Navigator.of(context).pushNamed(RouteConstants.dashboardPath);

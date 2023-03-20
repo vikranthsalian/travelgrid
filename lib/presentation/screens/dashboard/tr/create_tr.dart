@@ -4,15 +4,16 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:travelgrid/common/constants/flavour_constants.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
 import 'package:travelgrid/common/injector/injector.dart';
+import 'package:travelgrid/common/utils/show_alert.dart';
 import 'package:travelgrid/data/blocs/general_expense/ge_bloc.dart';
 import 'package:travelgrid/data/cubits/approver_type_cubit/approver_type_cubit.dart';
 import 'package:travelgrid/data/cubits/login_cubit/login_cubit.dart';
 import 'package:travelgrid/data/datasources/login_response.dart';
 import 'package:travelgrid/data/models/success_model.dart';
+import 'package:travelgrid/data/models/tr/tr_city_pair_model.dart';
 import 'package:travelgrid/domain/usecases/tr_usecase.dart';
 import 'package:travelgrid/presentation/components/dialog_yes_no.dart';
 import 'package:travelgrid/presentation/screens/dashboard/tr/add/add_approval.dart';
-import 'package:travelgrid/presentation/screens/dashboard/tr/add/add_delivery.dart';
 import 'package:travelgrid/presentation/screens/dashboard/tr/add/add_processed.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';
 import 'package:travelgrid/presentation/widgets/icon.dart';
@@ -46,9 +47,9 @@ class _CreateTravelRequestState extends State<CreateTravelRequest> {
   Tuple2<String,String>? approver1;
   Tuple2<String,String>? approver2;
 
-  TrApproval? trApproval;
+ // TrApproval? trApproval;
   TrProcessed? trProcessed;
-  TrDelivery? trDelivery;
+  //TrDelivery? trDelivery;
 
   GeneralExpenseBloc?  bloc;
   bool loaded =false;
@@ -105,13 +106,15 @@ class _CreateTravelRequestState extends State<CreateTravelRequest> {
     }catch(ex){
 
     }
-
-    trApproval = TrApproval(onNext: (value){
-      submitMap.addAll(value);
-     setState(() {
-       selected=1;
-     });
-    });
+    //
+    // trApproval = TrApproval(
+    //     submitData: submitMap,
+    //     onNext: (value){
+    //   submitMap.addAll(value);
+    //  setState(() {
+    //    selected=1;
+    //  });
+    // });
     trProcessed = TrProcessed(
       tripType: widget.tripType,
       onNext: (Map<String,dynamic> value){
@@ -121,16 +124,14 @@ class _CreateTravelRequestState extends State<CreateTravelRequest> {
           value.remove("maTravelInsurance");
         }
         submitMap.addAll(value);
-     setState(() {
-       selected=2;
-     });
+        checkCashAdvance();
     });
-    trDelivery = TrDelivery(onNext: (value){
-      submitMap.addAll(value);
-      submitTr();
-
-
-    });
+    // trDelivery = TrDelivery(onNext: (value){
+    //   submitMap.addAll(value);
+    //   submitTr();
+    //
+    //
+    // });
 
 
   }
@@ -153,7 +154,7 @@ class _CreateTravelRequestState extends State<CreateTravelRequest> {
             MetaButton(mapData: jsonData['bottomButtonLeft'],
                 onButtonPressed: () async {
 
-              if(selected==0){
+           //   if(selected==0){
                 await showDialog(
                 context: context,
                 builder: (_) => DialogYesNo(
@@ -166,32 +167,32 @@ class _CreateTravelRequestState extends State<CreateTravelRequest> {
 
 
                     }));
-              }else{
-                setState(() {
-                  selected= selected-1;
-
-                });
-              }
+              // }else{
+              //   setState(() {
+              //     selected= selected-1;
+              //
+              //   });
+              // }
 
 
 
                 }
             ),
 
-            MetaButton(mapData: jsonData['bottomButtonRight'],
+            MetaButton(mapData: jsonData['bottomButtonRight'],text: "Submit",
                 onButtonPressed: (){
 
-              if(selected == 0){
-                trApproval!.apprSubmit();
-              }
+              // if(selected == 0){
+              //   trApproval!.apprSubmit();
+              // }
 
-              if(selected == 1){
+            // if(selected == 1){
                 trProcessed!.procSubmit();
-              }
-
-              if(selected == 2){
-                trDelivery!.delSubmit();
-              }
+              //}
+              //
+              // if(selected == 2){
+              //   trDelivery!.delSubmit();
+              // }
 
                 }
             )
@@ -204,40 +205,23 @@ class _CreateTravelRequestState extends State<CreateTravelRequest> {
           children: [
             SizedBox(height:40.h),
             Container(
-              height: 40.h,
               alignment: Alignment.center,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  MetaIcon(mapData:jsonData['backBar'],
-                      onButtonPressed: (){
-                        Navigator.pop(context);
-                      }),
                   Container(
                     child:MetaTextView(mapData: jsonData['title'],text:widget.title),
+                    padding: EdgeInsets.symmetric(horizontal: 20.w),
                   ),
                 ],
               ),
             ),
-            // Container(
-            //   alignment: Alignment.center,
-            //   width: double.infinity,
-            //   child: MetaToggleButton(
-            //     onCheckPressed: (index){
-            //
-            //       setState(() {
-            //         selected = index;
-            //       });
-            //
-            //     },
-            //     steps: steps,items: items,enabledColor:ParseDataType().getHexToColor(jsonData['backgroundColor']) ,)
-            // ),
-            SizedBox(height: 10.h,),
+            SizedBox(height:5.h),
             Expanded(
               child: Container(
                 color: Colors.white,
-                child:  getBody(),
+                child: trProcessed,
               ),
             ),
 
@@ -248,14 +232,57 @@ class _CreateTravelRequestState extends State<CreateTravelRequest> {
   }
 
 
-  submitTr()async{
+  checkCashAdvance()async{
+    List cashList= submitMap['maCashAdvance']??[];
+
+    if(cashList.isEmpty){
+
+      await showDialog(
+      context: context,
+      builder: (_) => DialogYesNo(
+          title: "You have not added any cash advance, Do you want to continue?",
+          onPressed: (value){
+            if(value == "YES"){
+              checkOverlapped();
+            }
+          }));
+    }
+
+  }
+
+
+  checkOverlapped()async{
+
+    List cities= submitMap['maTravelRequestCityPair'];
+    print(cities);
+
+
+    Map<String,dynamic> overlapParams = {
+      "owner":loginResponse.data!.employeecode,
+      "recordLocator":"",
+      "startDate": cities.first['startDate'],
+      "endDate":cities.last['startDate'],
+    };
+
+    SuccessModel model =   await Injector.resolve<TrUseCase>().checkOverlapped(overlapParams);
+    print("i am here");
+    print(model.toJson());
+    if(model.message == null){
+      submitTr();
+    }
+
+  }
+
+  submitTr() async{
+
 
     print(submitMap);
+
 
     Map<String,dynamic> queryParams = {
       "approver1":approver1!.item2.toString().toLowerCase(),
       "approver2":approver2!.item2.toString().toLowerCase(),
-      "comment":"daskdsakdkasdka",
+      "comment":"submit",
     };
 
     SuccessModel model =   await Injector.resolve<TrUseCase>().createTR(queryParams,submitMap);
@@ -269,12 +296,12 @@ class _CreateTravelRequestState extends State<CreateTravelRequest> {
   getBody() {
     switch(selected){
 
+      // case 0:
+      //   return trApproval;
       case 0:
-        return trApproval;
-      case 1:
         return trProcessed;
-      case 2:
-        return trDelivery;
+      // case 2:
+      //   return trDelivery;
       default :
         return Container();
     }

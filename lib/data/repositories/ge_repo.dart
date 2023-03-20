@@ -52,6 +52,20 @@ class GeRepository extends GeAPIAbstract {
   }
 
   @override
+  Future<SuccessModel> takeBackGE(data) async {
+
+    var response = await apiRemoteDatasource.takeBack("ge/takeBack",data);
+
+    if(response!=null) {
+      SuccessModel modelResponse = SuccessModel.fromJson(response);
+      return modelResponse;
+    }
+
+    return SuccessModel(status: false);
+  }
+
+
+  @override
   Future<SuccessModel> approveGE(id, comment) async{
 
     Map<String,dynamic> data= {

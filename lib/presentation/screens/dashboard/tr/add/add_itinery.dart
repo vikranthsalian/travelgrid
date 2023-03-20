@@ -5,7 +5,6 @@ import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
 import 'package:travelgrid/common/utils/city_util.dart';
-import 'package:travelgrid/data/datasources/summary/tr_summary_response.dart';
 import 'package:travelgrid/data/models/tr/tr_city_pair_model.dart';
 import 'package:travelgrid/presentation/screens/dashboard/tr/bloc/tr_itinerary%20_form_bloc.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';
@@ -20,7 +19,7 @@ import 'package:travelgrid/presentation/widgets/text_view.dart';
 class AddItinerary  extends StatelessWidget {
   Map<String,dynamic> jsonData = {};
   Function? onAdd;
-  MaCityPairs? cityPairs;
+  TRCityPairModel? cityPairs;
   bool isEdit;
   String? tripType;
   AddItinerary({required this.jsonData,this.onAdd,this.cityPairs,this.isEdit=false,this.tripType});
@@ -96,6 +95,38 @@ class AddItinerary  extends StatelessWidget {
                           formBloc!.travelMode.updateValue("A");
                           formBloc!.travelModeID.updateValue("A");
                         }
+                        if(isEdit){
+
+                          print(cityPairs!.toJson());
+
+                          formBloc!.origin.updateValue(cityPairs!.leavingFrom!);
+                          formBloc!.destination.updateValue(cityPairs!.goingTo!);
+
+                          formBloc!.checkInDate.updateValue(cityPairs!.startDate!);
+                          formBloc!.checkInTime.updateValue(cityPairs!.startTime!);
+
+                          formBloc!.travelMode.updateValue(cityPairs!.travelMode!);
+                          formBloc!.travelModeID.updateValue(cityPairs!.travelMode!);
+
+
+                          if(cityPairs!.byCompany==42){
+                            formBloc!.swByCompany.updateValue(true);
+                            formBloc!.swByCompanyID.updateValue(true);
+                          }
+
+                            formBloc!.fareClass.updateValue(cityPairs!.fareClass.toString());
+
+
+
+                          if(cityPairs!.price!=null){
+                            formBloc!.tfAmount.updateValue(cityPairs!.price!.toString());
+                          }
+
+
+                          formBloc!.tfTicket.updateValue(cityPairs!.ticket!);
+                          formBloc!.tfPNR.updateValue(cityPairs!.pnr!);
+                        }
+
 
                         return Container(
                           child: FormBlocListener<ItineraryFormBloc, String, String>(
@@ -194,7 +225,9 @@ class AddItinerary  extends StatelessWidget {
                                                                 modeType: formBloc!.travelMode.value,
                                                                 text :CityUtil.getFareValueFromID(
                                                                     formBloc!.fareClass.value,
-                                                                    formBloc!.travelMode.value),
+                                                                    formBloc!.travelMode.value,
+                                                                  isValue: false
+                                                                ),
                                                                 onChange:(value){
                                                                   print(value);
                                                                   formBloc!.fareClass.updateValue(value['id'].toString());

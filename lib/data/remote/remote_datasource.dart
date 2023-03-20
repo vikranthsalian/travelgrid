@@ -116,6 +116,26 @@ class APIRemoteDatasource{
 
   }
 
+  Future<dynamic> takeBack(pathUrl,data) async {
+    data["token"]=appNavigatorKey.currentState!.context.read<LoginCubit>().getLoginToken();
+    try {
+      final responseJson = await CustomDio().getWrapper().post(
+        pathUrl,
+        loadingMessage:"Loading Data...",
+        queryParameters:data,
+      );
+      return responseJson.data;
+    } on DioError catch (e) {
+      print("DioError :====>"+e.toString());
+      return MetaLoginResponse(status: false);
+
+    }catch(e){
+      print("CatchError :====>"+e.toString());
+      return MetaLoginResponse(status: false);
+    }
+
+  }
+
   Future<dynamic> approve(pathUrl,data) async {
     data["token"]=appNavigatorKey.currentState!.context.read<LoginCubit>().getLoginToken();
     try {

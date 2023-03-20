@@ -1,9 +1,6 @@
-import 'dart:io';
-
 import 'package:chips_choice/chips_choice.dart';
 import 'package:flutter/material.dart';
-
-import 'package:dotted_border/dotted_border.dart';
+import 'package:travelgrid/common/constants/color_constants.dart';
 
 class ChoiceComponent extends StatefulWidget {
  // List<String> tags;
@@ -41,10 +38,15 @@ class _ChoiceComponentState extends State<ChoiceComponent> {
           tooltip: (i, v) => v,
         ),
         choiceStyle: C2ChipStyle.outlined(
-          borderWidth: 2,
+          color: Colors.grey.withOpacity(0.6),
+          borderWidth: 1,
+          backgroundColor: ColorConstants.primaryColor,
           selectedStyle: const C2ChipStyle(
-            borderColor: Colors.green,
-            foregroundColor: Colors.green,
+            // avatarBackgroundColor: ColorConstants.primaryColor,
+            // overlayColor: ColorConstants.primaryColor,
+             foregroundColor: ColorConstants.primaryColor,
+            // backgroundColor: ColorConstants.primaryColor,
+            borderColor: ColorConstants.primaryColor,
           ),
         ),
         wrapped: true,

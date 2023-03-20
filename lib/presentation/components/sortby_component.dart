@@ -37,13 +37,22 @@ class SortComponent extends StatelessWidget {
               color:ParseDataType().getHexToColor(jsonData!['backgroundColor']),
               padding: EdgeInsets.symmetric(horizontal: 10.h),
               child:  Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                    MetaTextView(mapData: jsonData!['title']),
                       MetaIcon(mapData:jsonData!['sortIcon'],
                       onButtonPressed: (){
                         Navigator.pop(context);
                       }),
+                  Expanded(
+                    child: Container(
+                      alignment: Alignment.centerRight,
+                      child: MetaIcon(mapData:jsonData!['closeIcon'],
+                          onButtonPressed: (){
+                            Navigator.pop(context);
+                          }),
+                    ),
+                  ),
                     ],
               )
           ),

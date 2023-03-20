@@ -17,9 +17,7 @@ class MetaIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    print(mapData);
     return IconButton(
-        color: Colors.redAccent,
         icon: FaIcon(
           iconMapping[mapData['icon']],
           color: ParseDataType().getHexToColor(mapData['color']),
@@ -38,11 +36,9 @@ Map<String, IconData> iconMapping = {
   'search_close' : Icons.search_off,
   'close' : FontAwesomeIcons.xmark,
   'back' : FontAwesomeIcons.chevronLeft,
-  'facebook' : FontAwesomeIcons.facebook,
   'add' : FontAwesomeIcons.circlePlus,
-  'twitter' : FontAwesomeIcons.twitter,
   'home' : FontAwesomeIcons.house,
-  'audiotrack' : Icons.audiotrack,
   'filter' : Icons.filter_list_outlined,
+  'sort' : Icons.sort,
 
 };

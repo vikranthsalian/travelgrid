@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
@@ -10,13 +11,20 @@ import 'package:travelgrid/data/datasources/summary/tr_summary_response.dart';
 import 'package:travelgrid/data/models/tr/tr_city_pair_model.dart';
 import 'package:travelgrid/data/models/tr/tr_forex_model.dart';
 import 'package:travelgrid/data/models/tr/tr_insurance_model.dart';
+import 'package:travelgrid/data/models/tr/tr_traveller_details.dart';
 import 'package:travelgrid/data/models/tr/tr_visa_model.dart';
 import 'package:travelgrid/presentation/components/dialog_cash.dart';
+import 'package:travelgrid/presentation/components/switch_component.dart';
+import 'package:travelgrid/presentation/components/upload_component.dart';
 import 'package:travelgrid/presentation/screens/dashboard/tr/add/add_forex.dart';
 import 'package:travelgrid/presentation/screens/dashboard/tr/add/add_insurance.dart';
 import 'package:travelgrid/presentation/screens/dashboard/tr/add/add_visa.dart';
 import 'package:travelgrid/presentation/screens/dashboard/tr/add/build_itenerary.dart';
 import 'package:travelgrid/presentation/screens/dashboard/tr/bloc/tr_processed_form_bloc.dart';
+import 'package:travelgrid/presentation/widgets/dialog_selector_view.dart';
+import 'package:travelgrid/presentation/widgets/search_selector_view.dart';
+import 'package:travelgrid/presentation/widgets/switch.dart';
+import 'package:travelgrid/presentation/widgets/text_field.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
 import 'package:travelgrid/presentation/widgets/toggle_button.dart';
 
@@ -34,6 +42,14 @@ class TrProcessed extends StatelessWidget {
     "family": "regular",
     "align" : "center"
   };
+
+  var supp ={
+    "text" : "Supporting Document/Notes",
+    "color" : "0XFFFFFFFF",
+    "size": "14",
+    "family": "bold",
+    "align": "center-left"
+  };
   final List<bool> steps = <bool>[true, false, false];
   List<Widget> items = [];
   List<String> segment = ["O","R","M"];
@@ -42,7 +58,9 @@ class TrProcessed extends StatelessWidget {
   List<TrForexAdvance> listForex=[];
   List<TRTravelVisas> listVisa=[];
   List<TRTravelInsurance> listInsurance=[];
-  //BooleanFieldBloc? swCash=BooleanFieldBloc(initialValue: false);
+
+  bool showTravellerItems=true;
+
   @override
   Widget build(BuildContext context) {
     jsonData = FlavourConstants.trAddProcessed;
@@ -52,6 +70,7 @@ class TrProcessed extends StatelessWidget {
       MetaTextView(mapData: map,text: 'Round'),
       MetaTextView(mapData: map,text: 'Multi'),
     ];
+
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -88,28 +107,156 @@ class TrProcessed extends StatelessWidget {
                             shrinkWrap: true,
                             children:[
                               Container(
-                                padding: EdgeInsets.only(bottom: 10.h),
-                                  decoration: BoxDecoration(
-                                    color: ParseDataType().getHexToColor(jsonData['backgroundColor']),
+                                padding: EdgeInsets.only(bottom: 10.h,top: 5.h),
+                                decoration: BoxDecoration(
+                                  color: ParseDataType().getHexToColor(jsonData['backgroundColor']),
                                   //  borderRadius:  BorderRadius.all(Radius.circular(30)),
-                                  ),
-                                  alignment: Alignment.center,
+                                ),
+                                alignment: Alignment.center,
 
-                                  child: Container(
-                                    height: 35.h,
-                                    child: MetaToggleButton(
-                                      type: 2,
-                                      border: 30,
-                                      onCheckPressed: (index){
-                                        selected = index;
-                                        formBloc!.segmentType.updateValue(segment[index]);
-                                        formBloc!.segmentTypeID.updateValue(segment[index].toString());
-                                        formBloc!.cityList.changeValue([]);
-                                      },
-                                      steps: steps,items: items,enabledColor:ParseDataType().getHexToColor(jsonData['backgroundColor']) ,),
-                                  ),
+                                child: Container(
+                                  height: 35.h,
+                                  child: MetaToggleButton(
+                                    type: 2,
+                                    border: 30,
+                                    onCheckPressed: (index){
+                                      selected = index;
+                                      formBloc!.segmentType.updateValue(segment[index]);
+                                      formBloc!.segmentTypeID.updateValue(segment[index].toString());
+                                      formBloc!.cityList.changeValue([]);
+                                    },
+                                    steps: steps,items: items,enabledColor:ParseDataType().getHexToColor(jsonData['backgroundColor']) ),
+                                ),
                               ),
-                              SizedBox(height: 10.h,),
+
+                              Container(
+                                margin: EdgeInsets.symmetric(horizontal: 10.w),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: Container(
+                                        child: MetaDialogSelectorView(mapData: jsonData['selectRequest'],
+                                          text :getInitialText(formBloc!.requestType.value),
+                                          onChange:(value){
+                                            print(value);
+
+                                            formBloc!.requestType.updateValue(value['text']);
+                                            formBloc!.requestTypeID.updateValue(value['id']);
+                                            if(formBloc!.requestTypeID.value == "self"){
+                                              formBloc!.travellerDetails.clear();
+                                              formBloc!.travellerDetails.updateValue(null);
+                                              formBloc!.employeeType.updateValue("");
+                                            }
+
+
+                                          },),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: BlocBuilder<SelectFieldBloc, SelectFieldBlocState>(
+                                          bloc: formBloc!.requestTypeID,
+                                          builder: (context, state) {
+                                            return Visibility(
+                                              visible: state.value == "onBehalf" ? true : false,
+                                              child:Container(
+                                                child: MetaDialogSelectorView(mapData: jsonData['selectEmployeeType'],
+                                                  text :getInitialText(formBloc!.employeeType.value!),
+                                                  onChange:(value){
+                                                    formBloc!.employeeType.updateValue(value['text']);
+                                                  },),
+                                              ),
+                                            );
+                                          }
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+
+                              Container(
+                                child: BlocBuilder<SelectFieldBloc, SelectFieldBlocState>(
+                                    bloc: formBloc!.employeeType,
+                                    builder: (context, state) {
+
+                                      return Visibility(
+                                        visible: (formBloc!.requestTypeID.value == "onBehalf") ? true : false,
+                                        child:  Column(
+                                          children: [
+                                            Container(
+                                              margin: EdgeInsets.symmetric(horizontal: 10.w),
+                                              child: MetaSearchSelectorView(
+                                                formBloc!.employeeType.value,
+                                                isCitySearch: false,
+                                                mapData: jsonData['selectEmployeeCode'],
+                                                text: getInitialText(formBloc!.travellerDetails.value?.name ?? ""),
+                                                onChange:(value){
+                                                  print(jsonEncode(value));
+
+
+
+                                                  formBloc!.travellerDetails.updateValue(value);
+                                                },),
+                                              alignment: Alignment.centerLeft,
+                                            ),
+
+                                            SwitchComponent(
+                                                color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
+                                                jsonData: jsonData['travellerDetails'],
+                                                childWidget: buildTravellerWidget(jsonData['travellerDetails']),
+                                                initialValue: showTravellerItems),
+                                          ],
+                                        ),
+                                      );
+                                    }
+                                ),
+                              ),
+
+
+                              Container(
+                                margin: EdgeInsets.symmetric(horizontal: 10.w),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: Container(
+
+                                        child: MetaSwitchBloc(
+                                            mapData:  jsonData['billableSwitch'],
+                                            bloc:  formBloc!.swBillable,
+                                            onSwitchPressed: (value){
+                                              formBloc!.swBillable.updateValue(value);
+                                            }),
+                                      ),
+
+                                    ),
+                                    Expanded(
+                                      
+                                      child: Container(
+                                        margin: EdgeInsets.symmetric(horizontal: 10.w),
+                                        child: MetaDialogSelectorView(mapData: jsonData['selectTravelPurpose'],
+                                          text :getInitialText(formBloc!.purposeOfTravel.value),
+                                          onChange:(value){
+                                            print(value);
+                                            formBloc!.purposeOfTravel.updateValue(value['label']);
+                                            formBloc!.purposeOfTravelID.updateValue(value['id'].toString());
+                                          },),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+
+                              Container(
+                                margin: EdgeInsets.symmetric(horizontal: 10.w),
+                                child: MetaTextFieldBlocView(mapData: jsonData['text_field_details'],
+                                    textFieldBloc: formBloc!.purposeDetails,
+                                    onChanged:(value){
+                                      formBloc!.purposeDetails.updateValue(value);
+                                    }),
+                              ),
+
+
+
+                              SizedBox(height: 2.h,),
                               buildCityPairWidget(),
                               if(tripType=="D")
                               buildExpandableView(jsonData,"cashAdvanceDetails",context),
@@ -119,6 +266,36 @@ class TrProcessed extends StatelessWidget {
                               buildExpandableView(jsonData,"visaDetails",context),
                               if(tripType=="O")
                               buildExpandableView(jsonData,"insuranceDetails",context),
+
+                              Container(
+                                height: 40.h,
+                                  padding: EdgeInsets.symmetric(horizontal: 20.w),
+                                  color: ParseDataType().getHexToColor(jsonData['backgroundColor']),
+                                  child: MetaTextView(mapData: supp,)),
+
+                              Container(
+
+                                margin: EdgeInsets.symmetric(horizontal: 10.w),
+                                child: MetaTextFieldBlocView(mapData: jsonData['text_field_appprover'],
+                                    textFieldBloc: formBloc!.noteAgent,
+                                    onChanged:(value){
+                                      formBloc!.noteAgent.updateValue(value);
+                                    }),
+                              ),
+                              Container(
+                                margin: EdgeInsets.symmetric(horizontal: 10.w),
+                                child: MetaTextFieldBlocView(mapData: jsonData['text_field_agent'],
+                                    textFieldBloc: formBloc!.noteApprover,
+                                    onChanged:(value){
+                                      formBloc!.noteApprover.updateValue(value);
+                                    }),
+                              ),
+                              SizedBox(height: 20.h,),
+                              UploadComponent(jsonData: jsonData['uploadButton'],
+                                  onSelected: (File dataFile){
+                                    formBloc!.voucherPath.updateValue(dataFile.path);
+                                  }),
+                              SizedBox(height: 20.h,),
                             ]
                         ),
                       )
@@ -133,8 +310,6 @@ class TrProcessed extends StatelessWidget {
 
   Container buildExpandableView(Map mapData,String key,ctx){
     Map<String,dynamic> map= mapData[key];
-
-
 
      getViews(map,value){
       switch(value){
@@ -154,6 +329,7 @@ class TrProcessed extends StatelessWidget {
       }
 
     }
+
     return Container(
       child: Column(
         children: [
@@ -169,7 +345,6 @@ class TrProcessed extends StatelessWidget {
       height: 40.h,
       color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
       child: Row(
-
         children: [
           Container(
               margin: EdgeInsets.symmetric(horizontal: 20.w),
@@ -280,7 +455,7 @@ class TrProcessed extends StatelessWidget {
 
           List<MaCashAdvance>? list  = formBloc!.cashList.value!.toList();
           return  Container(
-            padding: EdgeInsets.symmetric(horizontal: 10.w),
+            padding: EdgeInsets.symmetric(horizontal: 10.w,vertical: 10.h),
             color: Colors.white,
             child: list.isNotEmpty ? Column(
               children: [
@@ -536,6 +711,87 @@ class TrProcessed extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 MetaTextView(mapData: map['listView']['emptyData']['title']),
+              ],
+            ),
+          );
+        }
+    );
+  }
+
+  buildTravellerWidget(Map map) {
+
+    return BlocBuilder<SelectFieldBloc, SelectFieldBlocState>(
+        bloc: formBloc!.travellerDetails,
+        builder: (context, state) {
+
+          if(formBloc!.travellerDetails.value == null){
+            return Container(
+              padding: EdgeInsets.symmetric(horizontal: 10.w,vertical: 10.h),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  MetaTextView(mapData: map['item'],text: "No Data Found",),
+                ],
+              ),
+            );
+          }
+
+          TRTravellerDetails? details  = formBloc!.travellerDetails.value! ;
+          return  Container(
+            padding: EdgeInsets.symmetric(horizontal: 10.w,vertical: 10.h),
+            color: Colors.white,
+            child: Column(
+              children: [
+                Container(
+                  child: Row(
+                    children: [
+                      Expanded(child: Column(
+                        children: [
+                          MetaTextView(mapData:  map['header'],text: "Emp. Code",),
+                          MetaTextView(mapData:  map['item'],text: details.employeeCode!),
+                        ],
+                      )),
+                      Expanded(child: Column(
+                        children: [
+                          MetaTextView(mapData:  map['header'],text: "Emp. Name",),
+                          MetaTextView(mapData:  map['item'],text:details.employeeName),
+                        ],
+                      )),
+
+                    ],
+                  ),
+                ),
+
+                Container(
+                  child: Row(
+                    children: [
+                      Expanded(child: Column(
+                        children: [
+                          MetaTextView(mapData:  map['header'],text: "Gender",),
+                          MetaTextView(mapData:  map['item'],text: details.gender ?? ""),
+                        ],
+                      )),
+                      Expanded(child: Column(
+                        children: [
+                          MetaTextView(mapData:  map['header'],text: "Grade",),
+                          MetaTextView(mapData:  map['item'],text:details.organizationGrade ?? ""),
+                        ],
+                      )),
+                      Expanded(child: Column(
+                        children: [
+                          MetaTextView(mapData:  map['header'],text: "Location",),
+                          MetaTextView(mapData:  map['item'],text:details.location ?? ""),
+                        ],
+                      )),
+                    ],
+                  ),
+                ),
+                Column(
+                  children: [
+                    MetaTextView(mapData:  map['header'],text: "Email",),
+                    MetaTextView(mapData:  map['item'],text: details.email!),
+                  ],
+                ),
               ],
             ),
           );

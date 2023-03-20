@@ -5,6 +5,7 @@ import 'package:travelgrid/data/blocs/approval_expense/ae_bloc.dart';
 import 'package:travelgrid/data/blocs/approver/approver_type_bloc.dart';
 import 'package:travelgrid/data/blocs/cities/city_bloc.dart';
 import 'package:travelgrid/data/blocs/currency/currency_bloc.dart';
+import 'package:travelgrid/data/blocs/employee/employee_bloc.dart';
 import 'package:travelgrid/data/blocs/fare_class/fare_class_bloc.dart';
 import 'package:travelgrid/data/blocs/general_expense/ge_bloc.dart';
 import 'package:travelgrid/data/blocs/misc/misc_type_bloc.dart';
@@ -61,6 +62,7 @@ abstract class InjectorConfig {
   @Register.singleton(FareClassBloc)
   @Register.singleton(TravelPurposeBloc)
   @Register.singleton(CurrencyBloc)
+  @Register.singleton(EmployeeBloc)
   void _configureBlocs();
   //
   // ============ USECASES ============

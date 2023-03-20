@@ -20,8 +20,8 @@ import 'package:travelgrid/presentation/widgets/text_view.dart';
 class AddRoundItinerary  extends StatelessWidget {
   Map<String,dynamic> jsonData = {};
   Function? onAdd;
-  MaCityPairs? cityPairs1;
-  MaCityPairs? cityPairs2;
+  TRCityPairModel? cityPairs1;
+  TRCityPairModel? cityPairs2;
   bool isEdit;
   String? tripType;
   AddRoundItinerary({required this.jsonData,this.onAdd,this.cityPairs1,this.cityPairs2,this.isEdit=false,this.tripType});
@@ -98,6 +98,62 @@ class AddRoundItinerary  extends StatelessWidget {
                           formBloc!.travelMode.updateValue("A");
                           formBloc!.travelModeID.updateValue("A");
                         }
+
+                        if(isEdit){
+
+                          print(cityPairs1!.toJson());
+
+                          formBloc!.origin.updateValue(cityPairs1!.leavingFrom!);
+                          formBloc!.destination.updateValue(cityPairs1!.goingTo!);
+
+                          formBloc!.checkInDate.updateValue(cityPairs1!.startDate!);
+                          formBloc!.checkInTime.updateValue(cityPairs1!.startTime!);
+
+                          formBloc!.travelMode.updateValue(cityPairs1!.travelMode!);
+                          formBloc!.travelModeID.updateValue(cityPairs1!.travelMode!);
+
+
+                          if(cityPairs1!.byCompany == 42){
+                            formBloc!.swByCompany.updateValue(true);
+                            formBloc!.swByCompanyID.updateValue(true);
+                          }
+
+                          formBloc!.fareClass.updateValue(cityPairs1!.fareClass.toString());
+                          if(cityPairs1!.price!=null){
+                            formBloc!.tfAmount.updateValue(cityPairs1!.price!.toString());
+                          }
+                          formBloc!.tfTicket.updateValue(cityPairs1!.ticket!);
+                          formBloc!.tfPNR.updateValue(cityPairs1!.pnr!);
+
+
+
+
+
+
+
+                          formBloc!.origin2.updateValue(cityPairs2!.leavingFrom!);
+                          formBloc!.destination2.updateValue(cityPairs2!.goingTo!);
+
+                          formBloc!.checkInDate2.updateValue(cityPairs2!.startDate!);
+                          formBloc!.checkInTime2.updateValue(cityPairs2!.startTime!);
+
+                          formBloc!.travelMode2.updateValue(cityPairs2!.travelMode!);
+                          formBloc!.travelModeID2.updateValue(cityPairs2!.travelMode!);
+
+
+                          if(cityPairs2!.byCompany == 42){
+                            formBloc!.swByCompany2.updateValue(true);
+                            formBloc!.swByCompanyID2.updateValue(true);
+                          }
+
+                          formBloc!.fareClass2.updateValue(cityPairs2!.fareClass.toString());
+                          if(cityPairs2!.price!=null){
+                            formBloc!.tfAmount2.updateValue(cityPairs2!.price!.toString());
+                          }
+                          formBloc!.tfTicket2.updateValue(cityPairs2!.ticket!);
+                          formBloc!.tfPNR2.updateValue(cityPairs2!.pnr!);
+                        }
+                        
 
                         return Container(
                           child: FormBlocListener<RoundItineraryFormBloc, String, String>(
@@ -210,7 +266,9 @@ class AddRoundItinerary  extends StatelessWidget {
                                                                   modeType: formBloc!.travelMode.value,
                                                                   text :CityUtil.getFareValueFromID(
                                                                       formBloc!.fareClass.value,
-                                                                      formBloc!.travelMode.value),
+                                                                      formBloc!.travelMode.value,
+                                                                    isValue: false
+                                                                  ),
                                                                   onChange:(value){
                                                                     print(value);
                                                                     formBloc!.fareClass.updateValue(value['id'].toString());
@@ -402,7 +460,9 @@ class AddRoundItinerary  extends StatelessWidget {
                                                                   modeType: formBloc!.travelMode2.value,
                                                                   text :CityUtil.getFareValueFromID(
                                                                       formBloc!.fareClass2.value,
-                                                                      formBloc!.travelMode2.value),
+                                                                      formBloc!.travelMode2.value,
+                                                                      isValue: false
+                                                                  ),
                                                                   onChange:(value){
                                                                     print(value);
                                                                     formBloc!.fareClass2.updateValue(value['id'].toString());
