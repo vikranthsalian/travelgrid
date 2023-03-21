@@ -30,7 +30,7 @@ class AppRoutes {
         return SplashScreen();
 
       case RouteConstants.loginPath:
-        return const LoginScreen();
+        return LoginScreen();
 
       case RouteConstants.dashboardPath:
         return  HomePage();

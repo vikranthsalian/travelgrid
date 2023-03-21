@@ -26,37 +26,17 @@ import 'package:travelgrid/presentation/widgets/text_field.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return _Login();
-  }
-}
-
-class _Login extends StatefulWidget {
-
-
-  @override
-  State<StatefulWidget> createState() => _LoginScreenState();
-}
-
-class _LoginScreenState extends State<_Login> {
   Map<String,dynamic> loginJsonData = {};
 
   final double _sizedBoxHeight= 10.0.h;
 
   LoginFormBloc? formBloc ;
-  @override
-  void initState() {
-
-    super.initState();
-    loginJsonData = FlavourConstants.loginData;
-  //  prettyPrint(loginJsonData);
-  }
 
   @override
   Widget build(BuildContext context) {
+
+    loginJsonData = FlavourConstants.loginData;
+
 
       return BlocProvider(
         create: (context) => LoginFormBloc(loginJsonData),
@@ -64,8 +44,8 @@ class _LoginScreenState extends State<_Login> {
             builder: (context) {
 
               LoginFormBloc  formBloc =  BlocProvider.of<LoginFormBloc>(context);
-             formBloc.tfUsername.updateValue("cm01");
-              formBloc.tfPassword.updateValue("Test123#");
+              //formBloc.tfUsername.updateValue("cm05");
+           //   formBloc.tfPassword.updateValue("Test123#");
 
               return Scaffold(
                 backgroundColor: ParseDataType().getHexToColor(loginJsonData['backgroundColor']),
