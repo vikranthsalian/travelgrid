@@ -31,7 +31,11 @@ class TravelRequestBloc extends Bloc<TravelRequestEvent, TravelRequestState> {
         if(event.filterString!="Default"){
           List<trlist.Data> items=[];
           for(var item in response.data!){
-            if (item.currentStatus!.toLowerCase().contains(event.filterString.toLowerCase())) {
+            if (
+            item.currentStatus!.toLowerCase().contains(event.filterString.toLowerCase()) ||
+            item.tripType!.toLowerCase().contains(event.filterString.toLowerCase()) ||
+            item.tripPlan!.toLowerCase().contains(event.filterString.toLowerCase()
+            )) {
               items.add(item);
             }
           }

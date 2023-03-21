@@ -220,7 +220,15 @@ class TravelRequest extends StatelessWidget {
         Map recordLocator = {
           "text" :"#"+ item.tripNumber.toString().toUpperCase(),
           "color" : "0xFF2854A1",
-          "size": "25",
+          "size": "12",
+          "family": "bold",
+          "align" : "center-left"
+        };
+
+        Map code = {
+          "text" :"#"+ item.tripNumber.toString().toUpperCase(),
+          "color" : "0xFF2854A1",
+          "size": "20",
           "family": "bold",
           "align" : "center-left"
         };
@@ -236,7 +244,7 @@ class TravelRequest extends StatelessWidget {
         Map thirdTitle = {
           "text" :"#"+ item.tripNumber.toString().toUpperCase(),
           "color" : "0xFFCCCCCC",
-          "size": "10",
+          "size": "9",
           "family": "bold",
           "align" : "center-left"
         };
@@ -267,7 +275,7 @@ class TravelRequest extends StatelessWidget {
         };
 
         return Container(
-          padding: EdgeInsets.symmetric(horizontal: 15.w),
+          padding: EdgeInsets.symmetric(horizontal: 10.w),
           child: Row(
             children: [
               Card(
@@ -323,22 +331,29 @@ class TravelRequest extends StatelessWidget {
                           child: Column(
                             children: [
                               Container(
-                                margin: EdgeInsets.symmetric(horizontal: 15.w),
-                                height: cardHt * 0.30,
+                                margin: EdgeInsets.symmetric(horizontal: 10.w),
+                                height: cardHt * 0.14,
+                                child:Container(
+                                    child: MetaTextView(mapData: recordLocator)
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.symmetric(horizontal: 10.w),
+                                height: cardHt * 0.23,
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     Container(
-                                        child: MetaTextView(mapData: recordLocator,text: "IXE",)
+                                        child: MetaTextView(mapData: code,text: item.maCityPairs?.first.leavingFrom?.cityCode ?? "")
                                     ),
                                     Container(
-                                        child: MetaTextView(mapData: recordLocator,text:"BLR")
+                                        child: MetaTextView(mapData: code,text: item.maCityPairs?.last.goingTo?.cityCode ?? "")
                                     ),
                                   ],
                                 ),
                               ),
                               Container(
-                                margin: EdgeInsets.symmetric(horizontal: 15.w),
+                                margin: EdgeInsets.symmetric(horizontal: 10.w),
                                 height: cardHt * 0.15,
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -353,8 +368,8 @@ class TravelRequest extends StatelessWidget {
                                 ),
                               ),
                               Container(
-                                margin: EdgeInsets.symmetric(horizontal: 15.w),
-                                height: cardHt * 0.20,
+                                margin: EdgeInsets.symmetric(horizontal: 10.w),
+                                height: cardHt * 0.13,
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [

@@ -42,19 +42,20 @@ class Data {
   String? tripType;
   String? travelerName;
   String? tripPlan;
+  List<MaCityPairs>? maCityPairs;
 
-  Data(
-      {this.id,
-        this.tripNumber,
-        this.employeeName,
-        this.startDate,
-        this.endDate,
-        this.origin,
-        this.destination,
-        this.currentStatus,
-        this.tripType,
-        this.travelerName,
-        this.tripPlan});
+  Data({this.id,
+    this.tripNumber,
+    this.employeeName,
+    this.startDate,
+    this.endDate,
+    this.origin,
+    this.destination,
+    this.currentStatus,
+    this.tripType,
+    this.travelerName,
+    this.maCityPairs,
+    this.tripPlan});
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -68,6 +69,12 @@ class Data {
     tripType = json['tripType'];
     travelerName = json['travelerName'];
     tripPlan = json['tripPlan'];
+    if (json['maCityPairs'] != null) {
+      maCityPairs = <MaCityPairs>[];
+      json['maCityPairs'].forEach((v) {
+        maCityPairs!.add(new MaCityPairs.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -83,6 +90,71 @@ class Data {
     data['tripType'] = this.tripType;
     data['travelerName'] = this.travelerName;
     data['tripPlan'] = this.tripPlan;
+    if (this.maCityPairs != null) {
+      data['maCityPairs'] = this.maCityPairs!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+
+}
+
+  class MaCityPairs {
+  int? id;
+  LeavingFrom? leavingFrom;
+  LeavingFrom? goingTo;
+
+  MaCityPairs({this.id, this.leavingFrom, this.goingTo});
+
+  MaCityPairs.fromJson(Map<String, dynamic> json) {
+  id = json['id'];
+  leavingFrom = json['leavingFrom'] != null ? new LeavingFrom.fromJson(json['leavingFrom']) : null;
+  goingTo = json['goingTo'] != null ? new LeavingFrom.fromJson(json['goingTo']) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+  final Map<String, dynamic> data = new Map<String, dynamic>();
+  data['id'] = this.id;
+  if (this.leavingFrom != null) {
+  data['leavingFrom'] = this.leavingFrom!.toJson();
+  }
+  if (this.goingTo != null) {
+  data['goingTo'] = this.goingTo!.toJson();
+  }
+  return data;
+  }
+}
+class LeavingFrom {
+  int? id;
+  String? name;
+  String? locationName;
+  bool? enabled;
+  String? cityCode;
+  String? cityClass;
+ // State? state;
+
+  LeavingFrom({this.id, this.name, this.locationName, this.enabled, this.cityCode, this.cityClass});
+
+  LeavingFrom.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+    locationName = json['locationName'];
+    enabled = json['enabled'];
+    cityCode = json['cityCode'] ?? "";
+    cityClass = json['cityClass'];
+   // state = json['state'] != null ? new State.fromJson(json['state']) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['name'] = this.name;
+    data['locationName'] = this.locationName;
+    data['enabled'] = this.enabled;
+    data['cityCode'] = this.cityCode;
+    data['cityClass'] = this.cityClass;
+    // if (this.state != null) {
+    //   data['state'] = this.state!.toJson();
+    // }
     return data;
   }
 }
