@@ -7,6 +7,8 @@ import 'package:travelgrid/common/constants/route_constants.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
 import 'package:travelgrid/common/injector/injector.dart';
 import 'package:travelgrid/common/utils/show_alert.dart';
+import 'package:travelgrid/data/cubits/login_cubit/login_cubit.dart';
+import 'package:travelgrid/data/datasources/login_response.dart';
 import 'package:travelgrid/data/models/success_model.dart';
 import 'package:travelgrid/domain/usecases/common_usecase.dart';
 import 'package:travelgrid/presentation/components/dialog_yes_no.dart';
@@ -25,6 +27,7 @@ class _HomePageState extends State<HomePage> {
   Map<String,dynamic> jsonData = {};
   List items=[];
   String?  dateText;
+  String  fullname="";
   @override
   void initState() {
     super.initState();
@@ -33,6 +36,8 @@ class _HomePageState extends State<HomePage> {
       items.add(badges);
     }
 
+  MetaLoginResponse  loginResponse = context.read<LoginCubit>().getLoginResponse();
+    fullname=loginResponse.data!.fullName??"";
 
     dateText = DateFormat('dd MMM y, EEEE').format(DateTime.now());
   }
@@ -73,7 +78,7 @@ class _HomePageState extends State<HomePage> {
                                 child:MetaTextView(mapData: jsonData['label']),
                               ),
                               subtitle: Container(
-                                child:MetaTextView(mapData: jsonData['title'],text:"Siddharth Shukla",),
+                                child:MetaTextView(mapData: jsonData['title'],text:fullname),
                               ),
                             ),
                           ),

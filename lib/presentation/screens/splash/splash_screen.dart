@@ -72,7 +72,7 @@ class SplashScreenState extends State<SplashScreen> {
       // }else{
         Timer(
           Duration(seconds: 3),(){
-          Navigator.of(context).pushReplacementNamed(RouteConstants.dashboardPath);
+          Navigator.of(context).pushReplacementNamed(RouteConstants.loginPath);
         });
       // }
   }
