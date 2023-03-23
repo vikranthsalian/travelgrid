@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
@@ -177,15 +176,22 @@ class _CreateMiscExpenseState extends State<CreateMiscExpense> {
                           },
                           onSuccess: (context, state) {
                             print(state.successResponse);
-                           GEMiscModel modelResponse = GEMiscModel.fromJson(jsonDecode(state.successResponse.toString()));
 
-                            widget.onAdd!(
-                                {
-                                  "data": jsonDecode(state.successResponse.toString()),
-                                  "item" : ExpenseModel(type: GETypes.MISCELLANEOUS,amount: modelResponse.amount.toString())
-                                }
-                            );
-                            Navigator.pop(context);
+                            if(state.successResponse!=null) {
+                              GEMiscModel modelResponse = GEMiscModel.fromJson(
+                                  jsonDecode(state.successResponse.toString()));
+
+                              widget.onAdd!(
+                                  {
+                                    "data": jsonDecode(
+                                        state.successResponse.toString()),
+                                    "item": ExpenseModel(
+                                        type: GETypes.MISCELLANEOUS,
+                                        amount: modelResponse.amount.toString())
+                                  }
+                              );
+                              Navigator.pop(context);
+                            }
 
 
                           },
@@ -243,20 +249,22 @@ class _CreateMiscExpenseState extends State<CreateMiscExpense> {
                                               },),
                                           ),
                                         ),
-                                        BlocBuilder<SelectFieldBloc, SelectFieldBlocState>(
-                                            bloc: formBloc!.miscID,
-                                            builder: (context, state) {
-                                              return Visibility(
-                                                visible: state.value == "212" ? true : false,
-                                                child:MetaDialogSelectorView(mapData: jsonData['selectUnitType'],
-                                                  text :getInitialText(formBloc!.unitTypeName.value),
-                                                  onChange:(value){
-                                                    print(value);
-                                                    formBloc!.unitTypeName.updateValue(value['text']);
-                                                    formBloc!.unitTypeID.updateValue(value['id'].toString());
-                                                  },),
-                                              );
-                                            }
+                                        Expanded(
+                                          child: BlocBuilder<SelectFieldBloc, SelectFieldBlocState>(
+                                              bloc: formBloc!.miscID,
+                                              builder: (context, state) {
+                                                return Visibility(
+                                                  visible: state.value == "212" ? true : false,
+                                                  child:MetaDialogSelectorView(mapData: jsonData['selectUnitType'],
+                                                    text :getInitialText(formBloc!.unitTypeName.value),
+                                                    onChange:(value){
+                                                      print(value);
+                                                      formBloc!.unitTypeName.updateValue(value['text']);
+                                                      formBloc!.unitTypeID.updateValue(value['id'].toString());
+                                                    },),
+                                                );
+                                              }
+                                          ),
                                         ),
                                       ]),
 

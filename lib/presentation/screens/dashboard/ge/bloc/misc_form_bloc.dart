@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
+import 'package:travelgrid/common/utils/show_alert.dart';
 import 'package:travelgrid/common/utils/validators.dart';
 
 
@@ -67,6 +68,20 @@ class MiscFormBloc extends FormBloc<String, String> {
 
   @override
   FutureOr<void> onSubmitting() async {
+
+
+    if(unitTypeID.value == "288" && tfAmount.valueToDouble! < 200){
+      MetaAlert.showErrorAlert(message: "Eligible amount is 200");
+      emitSuccess(canSubmitAgain: true);
+      return;
+    }
+
+    if(unitTypeID.value == "289" && tfAmount.valueToDouble! < 400){
+      MetaAlert.showErrorAlert(message: "Eligible amount is 400");
+      emitSuccess(canSubmitAgain: true);
+      return;
+    }
+
 
     Map<String,dynamic> saveMiscData = {
       "miscellaneousTypeName": miscName.value,

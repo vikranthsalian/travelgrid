@@ -5113,7 +5113,7 @@
       "dataText":  {
         "text" : "Choose City",
         "color" : "0xFFAEAEAE",
-        "size": "18",
+        "size": "14",
         "family": "regular",
         "align": "center-left"
       }
@@ -5131,7 +5131,7 @@
       "dataText":  {
         "text" : "Choose Type",
         "color" : "0xFFAEAEAE",
-        "size": "18",
+        "size": "14",
         "family": "regular",
         "align": "center-left"
       }
@@ -5149,7 +5149,7 @@
       "dataText":  {
         "text" : "Choose Type",
         "color" : "0xFFAEAEAE",
-        "size": "18",
+        "size": "14",
         "family": "regular",
         "align": "center-left"
       },

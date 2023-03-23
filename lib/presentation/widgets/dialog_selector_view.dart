@@ -30,7 +30,7 @@ class _MetaDialogSelectorViewState extends State<MetaDialogSelectorView> {
         margin: EdgeInsets.symmetric(horizontal: 10.w,vertical: 5.h),
         child: Column(
         children: [
-          MetaTextView(mapData: widget.mapData['label']),
+          MetaTextView(mapData: widget.mapData['label'],textAlign: TextAlign.start,),
           InkWell(
             onTap: () async {
 
@@ -45,7 +45,7 @@ class _MetaDialogSelectorViewState extends State<MetaDialogSelectorView> {
 
 
             },
-              child: MetaTextView(mapData: widget.mapData['dataText'],text: widget.text,)),
+              child: MetaTextView(mapData: widget.mapData['dataText'],text: widget.text,textAlign: TextAlign.start,)),
         ],
         )
     );
