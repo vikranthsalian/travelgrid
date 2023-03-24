@@ -16,9 +16,12 @@ class ProcessedTrFormBloc extends FormBloc<String, String> {
   final swBillable = BooleanFieldBloc(initialValue: false);
   final requestType = TextFieldBloc(validators: [emptyValidator]);
   final requestTypeID = SelectFieldBloc<String, dynamic>(initialValue: "");
-  final purposeOfTravelID = SelectFieldBloc();
+
   final travellerDetails = SelectFieldBloc<TRTravellerDetails,dynamic>(initialValue: null);
+  final purposeOfTravelID = SelectFieldBloc();
   final purposeOfTravel = TextFieldBloc(validators: [emptyValidator]);
+
+
   final purposeDetails = TextFieldBloc(validators: [emptyValidator]);
 
   final employeeType = SelectFieldBloc<String, dynamic>(initialValue: "");

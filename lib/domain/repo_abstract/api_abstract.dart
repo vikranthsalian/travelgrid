@@ -28,6 +28,7 @@ abstract class TrAPIAbstract {
   Future<TRListResponse> callList();
   Future<TRSummaryResponse> getTR(id);
   Future<SuccessModel> createTR(data,body);
+  Future<SuccessModel> updateTR(data,body);
   Future<SuccessModel> checkOverlapped(data);
   Future<SuccessModel> approveTR(id,comment);
 }

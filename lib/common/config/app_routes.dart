@@ -47,16 +47,12 @@ class AppRoutes {
       case RouteConstants.travelCreateRequestPath:
 
         args as Map<String, dynamic>;
-      //  if(args!=null){
-
-        //
-        //   final bool isEdit = args["isEdit"] ?? false;
-        //   final String title = args["title"]  ?? null;
-        //   final String status = args["status"]  ?? "";
-        //   final bool isApproval = args["isApproval"]  ?? false;
-        //   return  CreateTravelRequest(isEdit: isEdit,title: title,status: status,isApproval: isApproval);
-       //  }
-        return CreateTravelRequest(tripType: args['tripType']);
+       if(args['isEdit']== true){
+          final bool isEdit = args["isEdit"] ?? false;
+          final String title = args["title"]  ?? null;
+          return  CreateTravelRequest(isEdit: isEdit,title: title,tripType: args['tripType'],);
+        }
+        return CreateTravelRequest(tripType: args['tripType'],isEdit:args['isEdit']);
 
 
       case RouteConstants.travelRequestViewPath:

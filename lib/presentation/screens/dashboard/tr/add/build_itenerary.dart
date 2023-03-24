@@ -198,7 +198,7 @@ class _CreateBuildItineraryState extends State<BuildItinerary> {
                             children: [
                               if(item.goingTo!=null)
                                 MetaTextView(mapData:  map['cityPair']['code'],text: CityUtil.getCityNameFromID( item.goingTo)),
-                              MetaTextView(mapData:  map['cityPair']['city'],text: CityUtil.getCityNameFromID( item.leavingFrom,isCode: true))
+                                MetaTextView(mapData:  map['cityPair']['city'],text: CityUtil.getCityNameFromID( item.goingTo,isCode: true))
                             ],
                           )
                         ],

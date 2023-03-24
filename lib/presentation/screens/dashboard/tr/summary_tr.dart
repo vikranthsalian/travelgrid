@@ -191,7 +191,7 @@ class _TravelRequestSummaryState extends State<TravelRequestSummary> {
        visaList = response.data?.maTravelVisas ?? [];
        insuranceList = response.data?.maTravelInsurance ?? [];
 
-    loaded=true;
+        loaded=true;
 
     }
 
@@ -806,10 +806,8 @@ class _TravelRequestSummaryState extends State<TravelRequestSummary> {
     Map<String, dynamic> valueMap = json.decode(requestBody);
 
    Map<String,dynamic> queryParams = {
-     //"approver1":"cm01",
      "approver1":approver1!.item2.toString().toLowerCase(),
      "approver2":approver2!.item2.toString().toLowerCase(),
-     //"approver2":"cm02",
      "action":text,
      "comment":"daskdsakdkasdka",
    };

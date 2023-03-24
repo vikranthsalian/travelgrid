@@ -6,7 +6,7 @@ class TRCityPairModel {
   int? byCompany;
   int? fareClass;
   String? travelMode;
-  int? price;
+  double? price;
   String? pnr;
   String? ticket;
 

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:travelgrid/common/constants/flavour_constants.dart';
+import 'package:travelgrid/common/extensions/capitalize.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
 import 'package:travelgrid/common/utils/city_util.dart';
 import 'package:travelgrid/data/datasources/summary/tr_summary_response.dart';
@@ -31,7 +32,9 @@ import 'package:travelgrid/presentation/widgets/toggle_button.dart';
 class TrProcessed extends StatelessWidget {
   Function? onNext;
   String? tripType;
-  TrProcessed({this.onNext,this.tripType});
+  TRSummaryResponse? summaryResponse;
+  bool? isEdit;
+  TrProcessed({this.onNext,this.tripType,this.summaryResponse,this.isEdit=false});
 
   Map<String,dynamic> jsonData = {};
   ProcessedTrFormBloc?  formBloc;
@@ -43,7 +46,7 @@ class TrProcessed extends StatelessWidget {
     "align" : "center"
   };
 
-  var supp ={
+  var supp = {
     "text" : "Supporting Document/Notes",
     "color" : "0XFFFFFFFF",
     "size": "14",
@@ -53,6 +56,7 @@ class TrProcessed extends StatelessWidget {
   final List<bool> steps = <bool>[true, false, false];
   List<Widget> items = [];
   List<String> segment = ["O","R","M"];
+  List<String> segLabel = ["one-way","R","M"];
   int selected = 0;
   List<TRCityPairModel> listCity=[];
   List<TrForexAdvance> listForex=[];
@@ -73,7 +77,6 @@ class TrProcessed extends StatelessWidget {
 
 
     return Scaffold(
-      backgroundColor: Colors.white,
       body: Container(
       //  margin: EdgeInsets.symmetric(vertical: 20.h),
         child: BlocProvider(
@@ -83,6 +86,67 @@ class TrProcessed extends StatelessWidget {
                 formBloc =  BlocProvider.of<ProcessedTrFormBloc>(context);
                 formBloc!.segmentType.updateValue(segment[0]);
                 formBloc!.segmentTypeID.updateValue(segment[0]);
+                
+                if(isEdit!){
+
+                  final idx = segLabel.indexWhere((element) => element == summaryResponse?.data?.segmentType.toString());
+                  print(summaryResponse?.data?.segmentType);
+                  formBloc!.segmentType.updateValue(segment[idx]);
+                  formBloc!.segmentTypeID.updateValue(segment[idx]);
+
+
+                  formBloc!.requestType.updateValue(summaryResponse?.data?.maRequesterDetails?.requestType.toString().capitalize() ?? "");
+                  formBloc!.requestTypeID.updateValue(summaryResponse?.data?.maRequesterDetails?.requestType.toString()??"");
+
+
+                  if(summaryResponse?.data?.maRequesterDetails?.requestType.toString()!="self") {
+                    formBloc!.employeeType.updateValue(
+                        summaryResponse?.data?.maTravelerDetails!.employeeType
+                            .toString() ?? "");
+
+                    TRTravellerDetails details = TRTravellerDetails(
+                        employeeCode: summaryResponse?.data?.maTravelerDetails!
+                            .employeeCode,
+                        employeeName: summaryResponse?.data?.maTravelerDetails!
+                            .employeeName,
+                        email: summaryResponse?.data?.maTravelerDetails!
+                            .email ?? "",
+                        employeeType: summaryResponse?.data?.maTravelerDetails!
+                            .employeeType,
+                        mobileNumber: summaryResponse?.data?.maTravelerDetails!
+                            .mobileNumber ?? "",
+                        emergencyContactNo: summaryResponse?.data
+                            ?.maTravelerDetails!.emergencyContactNo ?? ""
+                    );
+
+                    formBloc!.travellerDetails.updateValue(details);
+                  }
+
+                  formBloc!.purposeOfTravel.updateValue(summaryResponse?.data?.purposeOfVisit.toString()??"");
+                  formBloc!.purposeOfTravelID.updateValue(CityUtil.getIDFromTravelPurpose(summaryResponse?.data?.purposeOfVisit.toString()??""));
+
+                  formBloc!.purposeDetails.updateValue(summaryResponse?.data?.purposeOfTravel ?? "");
+
+                  if(summaryResponse?.data?.tripBillable.toString().toLowerCase()=="no"){
+                    formBloc!.swBillable.updateValue(false);
+                  }else{
+                    formBloc!.swBillable.updateValue(true);
+                  }
+
+                //  formBloc!.noteApprover.updateValue(summaryResponse?.data?. ?? "");
+                  //formBloc!.noteAgent.updateValue(summaryResponse?.data?. ?? "");
+
+                 // formBloc!.cityList.updateValue(summaryResponse?.data?.maCityPairs ?? "");
+
+
+                  setListData(summaryResponse!.data!);
+
+
+
+                }
+                
+                
+                
                 return Container(
 
                   child: FormBlocListener<ProcessedTrFormBloc, String, String>(
@@ -156,8 +220,9 @@ class TrProcessed extends StatelessWidget {
                                       child: BlocBuilder<SelectFieldBloc, SelectFieldBlocState>(
                                           bloc: formBloc!.requestTypeID,
                                           builder: (context, state) {
+                                            print(formBloc!.requestTypeID.value);
                                             return Visibility(
-                                              visible: state.value == "onBehalf" ? true : false,
+                                              visible: state.value.toString().toLowerCase() == "onBehalf".toLowerCase() ? true : false,
                                               child:Container(
                                                 child: MetaDialogSelectorView(mapData: jsonData['selectEmployeeType'],
                                                   text :getInitialText(formBloc!.employeeType.value!),
@@ -177,9 +242,10 @@ class TrProcessed extends StatelessWidget {
                                 child: BlocBuilder<SelectFieldBloc, SelectFieldBlocState>(
                                     bloc: formBloc!.employeeType,
                                     builder: (context, state) {
-
+                                      print("Pick Employee");
+                                      print(formBloc!.requestTypeID.value.toString());
                                       return Visibility(
-                                        visible: (formBloc!.requestTypeID.value == "onBehalf") ? true : false,
+                                        visible: (formBloc!.requestTypeID.value.toString().toLowerCase() == "onBehalf".toLowerCase()) ? true : false,
                                         child:  Column(
                                           children: [
                                             Container(
@@ -188,12 +254,9 @@ class TrProcessed extends StatelessWidget {
                                                 formBloc!.employeeType.value,
                                                 isCitySearch: false,
                                                 mapData: jsonData['selectEmployeeCode'],
-                                                text: getInitialText(formBloc!.travellerDetails.value?.name ?? ""),
+                                                text: getInitialText(formBloc!.travellerDetails.value?.employeeName ?? ""),
                                                 onChange:(value){
                                                   print(jsonEncode(value));
-
-
-
                                                   formBloc!.travellerDetails.updateValue(value);
                                                 },),
                                               alignment: Alignment.centerLeft,
@@ -810,6 +873,72 @@ class TrProcessed extends StatelessWidget {
       return text;
     }
     return null;
+  }
+
+  void setListData(Data data) {
+    List<TRCityPairModel> cityList=[];
+    for(var item in data.maCityPairs!){
+      Map<String,dynamic> data ={
+        "leavingFrom": item.leavingFrom!.id.toString(),
+        "goingTo":item.goingTo!.id.toString(),
+        "startDate": item.startDate!.replaceAll("/", "-"),
+        "startTime": item.startTime,
+        "byCompany":item.byCompany!.id,
+        "fareClass": item.fareClass!.id,
+        "travelMode": item.travelMode,
+        "price":item.price,
+        "pnr":item.pnr,
+        "ticket":item.ticketNo,
+      };
+      cityList.add(TRCityPairModel.fromJson(data));
+    }
+    formBloc!.cityList.updateValue(cityList);
+    formBloc!.cashList.updateValue(data.maCashAdvance);
+
+    List<TRTravelVisas> visaList=[];
+    for(var item in data.maTravelVisas!){
+      Map<String, dynamic> data = {
+        "serviceType": item.serviceType,
+        "visitingCountry": item.visitingCountry,
+        "durationOfStay": item.durationOfStay,
+        "visaRequirement": item.visaRequirement,
+        "numberOfEntries": item.numberOfEntries,
+        "visaType": item.visaType,
+      };
+      visaList.add(TRTravelVisas.fromJson(data));
+    }
+    formBloc!.visaList.updateValue(visaList);
+
+
+
+    List<TRTravelInsurance> insuranceList=[];
+    for(var item in data.maTravelInsurance!){
+      Map<String, dynamic> data = {
+        "serviceType": item.serviceType,
+        "visitingCountry": item.visitingCountry,
+        "durationOfStay": item.durationOfStay,
+        "insuranceRequirement": item.insuranceRequirement,
+      };
+      insuranceList.add(TRTravelInsurance.fromJson(data));
+    }
+    formBloc!.insuranceList.updateValue(insuranceList);
+
+
+    List<TrForexAdvance> forexList=[];
+    for(var item in data.maForexAdvance!){
+      Map<String, dynamic> data = {
+        "cash": item.cash,
+        "card": item.card,
+        "currency": item.currency,
+        "violationMessage": item.violationMessage,
+        "totalForexAmount": item.totalForexAmount,
+        "address": item.address,
+      };
+      insuranceList.add(TRTravelInsurance.fromJson(data));
+    }
+    formBloc!.forexList.updateValue(forexList);
+
+
   }
 
 }

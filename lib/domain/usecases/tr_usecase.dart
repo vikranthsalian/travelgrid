@@ -12,6 +12,8 @@ class TrUseCase {
 
   Future<SuccessModel> createTR(data,body) async => apiAbstract.createTR(data,body);
 
+  Future<SuccessModel> updateTR(data,body) async => apiAbstract.updateTR(data,body);
+
   Future<SuccessModel> checkOverlapped(data) async => apiAbstract.checkOverlapped(data);
 
   Future<SuccessModel> approveTR(id,comment) async => apiAbstract.approveTR(id,comment);

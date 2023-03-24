@@ -49,6 +49,18 @@ class TrRepository extends TrAPIAbstract {
 
     return SuccessModel(status: false);
   }
+  @override
+  Future<SuccessModel> updateTR(data,body) async {
+
+    var response = await apiRemoteDatasource.create("submitModifiedTravelRequest",data,body);
+
+    if(response!=null) {
+      SuccessModel modelResponse = SuccessModel.fromJson(response);
+      return modelResponse;
+    }
+
+    return SuccessModel(status: false);
+  }
 
   @override
   Future<SuccessModel> approveTR(id, comment) async{

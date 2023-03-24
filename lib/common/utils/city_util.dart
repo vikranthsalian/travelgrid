@@ -5,6 +5,7 @@ import 'package:travelgrid/data/cubits/curreny_cubit/currency_cubit.dart';
 import 'package:travelgrid/data/cubits/fare_class_cubit/fare_class_cubit.dart';
 import 'package:travelgrid/data/cubits/misc_type_cubit/misc_type_cubit.dart';
 import 'package:travelgrid/data/cubits/travel_mode_cubit/travel_mode_cubit.dart';
+import 'package:travelgrid/data/cubits/travel_purpose_cubit/travel_purpose_cubit.dart';
 import 'package:travelgrid/data/datasources/others/cities_list.dart' as city;
 import 'package:travelgrid/data/datasources/others/currency_list.dart' as currency;
 import 'package:travelgrid/data/datasources/others/fare_class_list.dart' as fare;
@@ -12,6 +13,7 @@ import 'package:travelgrid/data/datasources/others/misc_type_list.dart' as misc;
 import 'package:travelgrid/data/datasources/others/accom_type_list.dart' as accom;
 import 'package:travelgrid/data/datasources/others/travel_mode_list.dart' as mode;
 import 'package:travelgrid/data/datasources/others/currency_list.dart' as curr;
+import 'package:travelgrid/data/datasources/others/travel_purpose_list.dart' as tp;
 
 import '../config/navigator_key.dart';
 
@@ -42,6 +44,16 @@ class CityUtil{
       return data.first.name;
     }
 
+
+  }
+
+  static String? getIDFromTravelPurpose(text) {
+
+    print("getIDFromTravelPurpose:==>    "+text+">");
+
+    List<tp.Data> list = appNavigatorKey.currentState!.context.read<TravelPurposeCubit>().getTravelPurposeResponse();
+    Iterable<tp.Data> data= list.where((item) => (item.label.toString().trim() == text.toString().trim()));
+    return data.first.id.toString();
 
   }
 

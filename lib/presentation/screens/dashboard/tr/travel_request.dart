@@ -5,6 +5,7 @@ import 'package:travelgrid/common/constants/flavour_constants.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
 import 'package:travelgrid/common/injector/injector.dart';
 import 'package:travelgrid/common/utils/date_time_util.dart';
+import 'package:travelgrid/common/utils/show_alert.dart';
 import 'package:travelgrid/data/blocs/travel_request/tr_bloc.dart';
 import 'package:travelgrid/data/datasources/list/tr_list_response.dart';
 import 'package:travelgrid/presentation/components/bloc_map_event.dart';
@@ -51,7 +52,11 @@ class TravelRequest extends StatelessWidget {
                     title: "Select Trip Type",
                     onPressed: (value){
 
-                        Navigator.of(context).pushNamed(jsonData['bottomButtonFab']['onClick'],arguments: {'tripType':value}).then((value) {
+                        Navigator.of(context).pushNamed(jsonData['bottomButtonFab']['onClick'],
+                            arguments: {
+                          'tripType':value,
+                          'isEdit':false,
+                        }).then((value) {
                           callBloc();
                         });
 
@@ -118,6 +123,9 @@ class TravelRequest extends StatelessWidget {
                 child: BlocMapToEvent(state: state.eventState, message: state.message,
                     callback: (){
                        jsonData['listView']['recordsFound']['value'] = state.response?.data?.length;
+
+                       if(state.response?.data== null)
+                         return;
 
                        for(var item in state.response!.data!){
                          filterOptions.add(item.currentStatus.toString());
@@ -374,10 +382,10 @@ class TravelRequest extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     Container(
-                                        child: MetaTextView(mapData: thirdTitle,text: "10:00",)
+                                        child: MetaTextView(mapData: thirdTitle,text: item.startDate,)
                                     ),
                                     Container(
-                                        child: MetaTextView(mapData: thirdTitle,text:"16:45")
+                                        child: MetaTextView(mapData: thirdTitle,text:item.startDate)
                                     ),
                                   ],
                                 ),
@@ -391,33 +399,30 @@ class TravelRequest extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                              Expanded(
-                               flex: 3,
+                               flex: 4,
                                  child: Container(
                                    margin: EdgeInsets.symmetric(horizontal: 5.w),
                                    alignment: Alignment.centerLeft,
                                      child: MetaTextView( mapData: status))),
                               Expanded(
-                                flex: 2,
+                                flex: 3,
                                 child: Row(
                                   children: [
                                     InkWell(
                                         onTap: (){
+                                          MetaAlert.showErrorAlert(message:"Working on it");
                                           Navigator.of(context).pushNamed(jsonData['bottomButtonFab']['onClick'],
                                               arguments: {
-                                                "isEdit": false,
-                                                "isApproval":false,
-                                                "status" :item.currentStatus,
-                                                "title":
-                                                item.tripNumber.toString()
-                                                    .toUpperCase()
+                                                "isEdit": true,
+                                                "tripType":item.tripType=="Domestic"?"D":"O",
+                                                "title": item.tripNumber.toString().toUpperCase()
                                               }).then((value) {
-                                            callBloc();
                                           });
                                         },
                                         child: Container(
                                             child: MetaTextView( mapData:  edit ))),
                                     Container(
-                                      margin: EdgeInsets.symmetric(horizontal: 5.w),
+                                      margin: EdgeInsets.symmetric(horizontal: 10.w),
                                       child: MetaTextView(mapData: {
                                         "text" :"|",
                                         "color" : "0xFFFFFFFF",
@@ -428,16 +433,13 @@ class TravelRequest extends StatelessWidget {
                                     ),
                                     InkWell(
                                         onTap: (){
-                                          Navigator.of(context).pushNamed(jsonData['bottomButtonFab']['onClick'],
+                                          Navigator.of(context).pushNamed(jsonData['listView']['onClick'],
                                               arguments: {
                                                 "isEdit": false,
                                                 "isApproval":false,
-                                                "status" :item.currentStatus,
-                                                "title":
-                                                item.tripNumber.toString()
-                                                    .toUpperCase()
+                                                "title": item.tripNumber.toString().toUpperCase()
                                               }).then((value) {
-                                           callBloc();
+                                                callBloc();
                                           });
                                         },
                                         child: Container(
@@ -467,7 +469,7 @@ class TravelRequest extends StatelessWidget {
         SizedBox(height: 10.h,),
         MetaButton(mapData: jsonData['listView']['emptyData']['bottomButtonRefresh'],
             onButtonPressed: (){
-
+              callBloc();
             })
       ],
     );

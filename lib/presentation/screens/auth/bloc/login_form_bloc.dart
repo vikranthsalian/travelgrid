@@ -2,10 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
-import 'package:travelgrid/common/config/navigator_key.dart';
 import 'package:travelgrid/common/injector/injector.dart';
 import 'package:travelgrid/common/utils/validators.dart';
-import 'package:travelgrid/data/cubits/login_cubit/login_cubit.dart';
 import 'package:travelgrid/data/datasources/login_response.dart';
 import 'package:travelgrid/domain/usecases/login_usecase.dart';
 
@@ -43,7 +41,7 @@ class LoginFormBloc extends FormBloc<String, String> {
    if(response!=null && response.status==true){
      emitSuccess(successResponse: jsonEncode(response));
    }else{
-     emitFailure(failureResponse: jsonEncode(response));
+     emitSuccess(successResponse: jsonEncode(response),canSubmitAgain: true);
    }
 
   }

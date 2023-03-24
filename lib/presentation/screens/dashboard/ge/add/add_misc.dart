@@ -40,13 +40,18 @@ class _CreateMiscExpenseState extends State<CreateMiscExpense> {
   MiscFormBloc? formBloc;
   bool loaded=false;
   File? file;
+  Map errorMap={
+    "text" : '',
+    "color" : "0xFFFFFFFF",
+    "size": "10",
+    "family": "regular",
+    "align" : "center-left"
+  };
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     jsonData = FlavourConstants.miscCreateData;
-  //  prettyPrint(jsonData);
-
   }
 
 
@@ -207,19 +212,23 @@ class _CreateMiscExpenseState extends State<CreateMiscExpense> {
                                 children:[
                                   Row(
                                     children: [
-                                      Container(
-                                        child: MetaDateTimeView(mapData: jsonData['checkInDateTime'],
-                                            value: {"date": formBloc!.checkInDate.value},
-                                            onChange: (value){
-                                          formBloc!.checkInDate.updateValue(value['date'].toString());
-                                        }),
+                                      Expanded(
+                                        child: Container(
+                                          child: MetaDateTimeView(mapData: jsonData['checkInDateTime'],
+                                              value: {"date": formBloc!.checkInDate.value},
+                                              onChange: (value){
+                                            formBloc!.checkInDate.updateValue(value['date'].toString());
+                                          }),
+                                        ),
                                       ),
-                                      Container(
-                                        child: MetaDateTimeView(mapData: jsonData['checkOutDateTime'],
-                                            value: {"date": formBloc!.checkOutDate.value},
-                                            onChange: (value){
-                                          formBloc!.checkOutDate.updateValue(value['date'].toString());
-                                        }),
+                                      Expanded(
+                                        child: Container(
+                                          child: MetaDateTimeView(mapData: jsonData['checkOutDateTime'],
+                                              value: {"date": formBloc!.checkOutDate.value},
+                                              onChange: (value){
+                                            formBloc!.checkOutDate.updateValue(value['date'].toString());
+                                          }),
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -246,6 +255,28 @@ class _CreateMiscExpenseState extends State<CreateMiscExpense> {
                                                 print(value);
                                                 formBloc!.miscName.updateValue(value['label']);
                                                 formBloc!.miscID.updateValue(value['id'].toString());
+
+                                                if(formBloc!.miscID!="212"){
+                                                  formBloc!.showError.updateValue(false);
+                                                }else{
+
+                                                  print(" formBloc!.unitTypeID.value");
+                                                  print( formBloc!.unitTypeID.value);
+
+                                                  if( formBloc!.unitTypeID.value == "288" &&  formBloc!.tfAmount.valueToDouble! > 200){
+                                                    formBloc!.showError.updateValue(false);
+                                                    formBloc!.showError.updateValue(true);
+                                                  }
+
+                                                  if( formBloc!.unitTypeID.value == "289" &&  formBloc!.tfAmount.valueToDouble! > 400){
+
+                                                    formBloc!.showError.updateValue(false);
+                                                    formBloc!.showError.updateValue(true);
+                                                  }
+
+                                                }
+
+
                                               },),
                                           ),
                                         ),
@@ -261,6 +292,19 @@ class _CreateMiscExpenseState extends State<CreateMiscExpense> {
                                                       print(value);
                                                       formBloc!.unitTypeName.updateValue(value['text']);
                                                       formBloc!.unitTypeID.updateValue(value['id'].toString());
+
+                                                        if( formBloc!.unitTypeID.value == "288" &&  formBloc!.tfAmount.valueToDouble! > 200){
+                                                          formBloc!.showError.updateValue(false);
+                                                          formBloc!.showError.updateValue(true);
+                                                        }
+
+                                                        if( formBloc!.unitTypeID.value == "289" &&  formBloc!.tfAmount.valueToDouble! > 400){
+
+                                                          formBloc!.showError.updateValue(false);
+                                                          formBloc!.showError.updateValue(true);
+                                                        }
+
+
                                                     },),
                                                 );
                                               }
@@ -291,6 +335,29 @@ class _CreateMiscExpenseState extends State<CreateMiscExpense> {
                                       ),
 
                                     ],
+                                  ),
+                                  BlocBuilder<SelectFieldBloc, SelectFieldBlocState>(
+                                      bloc: formBloc!.showError,
+                                      builder: (context, state) {
+                                        print("formBloc!.unitTypeID.value");
+                                        print(formBloc!.unitTypeID.value);
+                                        String msg="";
+                                        if(formBloc!.unitTypeID.value=="288"){
+                                          msg="200";
+                                        }else if(formBloc!.unitTypeID.value=="289"){
+                                          msg="400";
+                                        }
+
+                                        return Visibility(
+                                          visible:state.value,
+                                          child:Container(
+                                            padding: EdgeInsets.symmetric(horizontal: 10.w),
+                                              height: 20.h,
+                                              color: Color(0xFFB71C1C),
+                                              child: MetaTextView(mapData: errorMap,text: "Eligible amount is "+msg)
+                                          ),
+                                        );
+                                      }
                                   ),
                                   MetaTextFieldBlocView(mapData: jsonData['text_field_desc'],
                                       textFieldBloc: formBloc!.tfDescription,

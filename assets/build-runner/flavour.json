@@ -310,6 +310,7 @@
       "align": "center-left"
     },
     "listView": {
+      "onClick": "/travelRequestView",
       "recordsFound":  {
         "text" : "Records Found",
         "value" : "0",
@@ -700,7 +701,7 @@
   "tr_create_data": {
     "backgroundColor" : "0xFF2854A1",
     "title":  {
-      "text" : "Create Travel Expense",
+      "text" : "Create Travel Request",
       "color" : "0XFFFFFFFF",
       "size": "18",
       "family": "bold",

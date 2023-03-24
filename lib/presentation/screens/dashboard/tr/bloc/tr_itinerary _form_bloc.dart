@@ -77,7 +77,7 @@ class ItineraryFormBloc extends FormBloc<String, String> {
       "byCompany":swByCompany.value ? 42 : 41,
       "fareClass": fareClass.valueToInt,
       "travelMode": travelMode.value,
-      "price":tfAmount.value == "nill" ? null: tfAmount.valueToInt,
+      "price":tfAmount.value == "nill" ? null: tfAmount.valueToDouble,
       "pnr": tfAmount.value == "nill" ? "":tfPNR.value,
       "ticket":tfAmount.value == "nill" ? "": tfTicket.value,
     };

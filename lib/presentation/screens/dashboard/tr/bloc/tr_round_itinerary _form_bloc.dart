@@ -126,7 +126,7 @@ class RoundItineraryFormBloc extends FormBloc<String, String> {
         "byCompany": swByCompany.value ? 42 : 41,
         "fareClass": fareClass.valueToInt,
         "travelMode": travelMode.value,
-        "price": tfAmount.value == "nill" ? 0 : tfAmount.valueToInt,
+        "price": tfAmount.value == "nill" ? 0 : tfAmount.valueToDouble,
         "pnr": tfPNR.value == "nill" ? "" : tfPNR.value,
         "ticket": tfTicket.value == "nill" ? "" : tfTicket.value,
       },

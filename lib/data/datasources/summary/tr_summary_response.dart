@@ -51,10 +51,8 @@ class Data {
   Null? comments;
   String? grade;
   MaRequesterDetails? maRequesterDetails;
- // Null? maTravelerDetails;
+  MaTravelerDetails? maTravelerDetails;
   List<MaCityPairs>? maCityPairs;
-  Null? maAccomodationPlanDetail;
-  Null? maTaxiPlanDetail;
   List<MaCashAdvance>? maCashAdvance;
   List<MaForexAdvance>? maForexAdvance;
   List<MaTravelVisas>? maTravelVisas;
@@ -62,8 +60,8 @@ class Data {
   List<TravelComments>? travelComments;
 
   Data({this.id, this.tripNumber, this.employeeName, this.mobileNumber, this.emergencyMobileNumber, this.startDate, this.endDate, this.purposeOfTravel, this.purposeOfVisit, this.origin, this.destination, this.currentStatus, this.tripType, this.tripBillable, this.approver1, this.approver2, this.approver3, this.segmentType, this.voilationMessage, this.travelerName, this.tripPlan, this.forexAdvance, this.comments, this.grade, this.maRequesterDetails,
-    //this.maTravelerDetails,
-    this.maCityPairs, this.maAccomodationPlanDetail, this.maTaxiPlanDetail, this.maCashAdvance, this.maForexAdvance, this.maTravelVisas, this.maTravelInsurance, this.travelComments});
+    this.maTravelerDetails,
+    this.maCityPairs, this.maCashAdvance, this.maForexAdvance, this.maTravelVisas, this.maTravelInsurance, this.travelComments});
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -91,13 +89,11 @@ class Data {
     comments = json['comments'];
     grade = json['grade'];
     maRequesterDetails = json['maRequesterDetails'] != null ? new MaRequesterDetails.fromJson(json['maRequesterDetails']) : null;
-  //  maTravelerDetails = json['maTravelerDetails'];
+    maTravelerDetails = json['maTravelerDetails'] != null ? new MaTravelerDetails.fromJson(json['maTravelerDetails']) : null;
     if (json['maCityPairs'] != null) {
       maCityPairs = <MaCityPairs>[];
       json['maCityPairs'].forEach((v) { maCityPairs!.add(new MaCityPairs.fromJson(v)); });
     }
-    maAccomodationPlanDetail = json['maAccomodationPlanDetail'];
-    maTaxiPlanDetail = json['maTaxiPlanDetail'];
     if (json['maCashAdvance'] != null) {
       maCashAdvance = <MaCashAdvance>[];
       json['maCashAdvance'].forEach((v) { maCashAdvance!.add(new MaCashAdvance.fromJson(v)); });
@@ -149,12 +145,10 @@ class Data {
     if (this.maRequesterDetails != null) {
       data['maRequesterDetails'] = this.maRequesterDetails!.toJson();
     }
-  //  data['maTravelerDetails'] = this.maTravelerDetails;
+    data['maTravelerDetails'] = this.maTravelerDetails;
     if (this.maCityPairs != null) {
       data['maCityPairs'] = this.maCityPairs!.map((v) => v.toJson()).toList();
     }
-    data['maAccomodationPlanDetail'] = this.maAccomodationPlanDetail;
-    data['maTaxiPlanDetail'] = this.maTaxiPlanDetail;
     if (this.maCashAdvance != null) {
       data['maCashAdvance'] = this.maCashAdvance!.map((v) => v.toJson()).toList();
     }
@@ -173,6 +167,88 @@ class Data {
     return data;
   }
 }
+class MaTravelerDetails {
+  String? employeeCode;
+  String? employeeName;
+  String? employeeType;
+  String? telephoneNumber;
+  String? emergencyContactNo;
+  String? mobileNumber;
+  String? email;
+  String? name;
+  String? gender;
+  String? costCenterName;
+  String? organizationGrade;
+  String? profitcenter;
+  String? costcenter;
+  String? divisionName;
+  String? deptName;
+  String? companyCode;
+  String? location;
+
+  MaTravelerDetails(
+      {this.employeeCode,
+        this.employeeName,
+        this.employeeType,
+        this.telephoneNumber,
+        this.emergencyContactNo,
+        this.mobileNumber,
+        this.email,
+        this.name,
+        this.gender,
+        this.costCenterName,
+        this.organizationGrade,
+        this.profitcenter,
+        this.costcenter,
+        this.divisionName,
+        this.deptName,
+        this.companyCode,
+        this.location});
+
+  MaTravelerDetails.fromJson(Map<String, dynamic> json) {
+    employeeCode = json['employeeCode'];
+    employeeName = json['employeeName'];
+    employeeType = json['employeeType'];
+    telephoneNumber = json['telephoneNumber'];
+    emergencyContactNo = json['emergencyContactNo'];
+    mobileNumber = json['mobileNumber'];
+    email = json['email'];
+    name = json['name'];
+    gender = json['gender'];
+    costCenterName = json['costCenterName'];
+    organizationGrade = json['organizationGrade'];
+    profitcenter = json['profitcenter'];
+    costcenter = json['costcenter'];
+    divisionName = json['divisionName'];
+    deptName = json['deptName'];
+    companyCode = json['companyCode'];
+    location = json['location'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['employeeCode'] = this.employeeCode;
+    data['employeeName'] = this.employeeName;
+    data['employeeType'] = this.employeeType;
+    data['telephoneNumber'] = this.telephoneNumber;
+    data['emergencyContactNo'] = this.emergencyContactNo;
+    data['mobileNumber'] = this.mobileNumber;
+    data['email'] = this.email;
+    data['name'] = this.name;
+    data['gender'] = this.gender;
+    data['costCenterName'] = this.costCenterName;
+    data['organizationGrade'] = this.organizationGrade;
+    data['profitcenter'] = this.profitcenter;
+    data['costcenter'] = this.costcenter;
+    data['divisionName'] = this.divisionName;
+    data['deptName'] = this.deptName;
+    data['companyCode'] = this.companyCode;
+    data['location'] = this.location;
+    return data;
+  }
+}
+
+
 
 class MaRequesterDetails {
   Null? id;

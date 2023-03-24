@@ -19,6 +19,7 @@ class MiscFormBloc extends FormBloc<String, String> {
 
   final tfVoucher = TextFieldBloc();
   final tfAmount = TextFieldBloc();
+  final showError = SelectFieldBloc<bool, dynamic>(initialValue: false);
   final tfDescription = TextFieldBloc();
   final voucherPath = TextFieldBloc();
 
@@ -58,29 +59,50 @@ class MiscFormBloc extends FormBloc<String, String> {
         if(current.value == "212") {
           if(current.value=="nill"){
             unitTypeID.updateValue("");
+
           }
 
         } else {
           unitTypeID.updateValue("nill");
+          unitTypeName.updateValue("");
         }
       });
+
+      tfAmount.onValueChanges(onData: (previous, current) async* {
+
+        if(unitTypeID.value == "288" && tfAmount.valueToDouble! > 200){
+          showError.updateValue(true);
+          return;
+        }
+
+        if(unitTypeID.value == "289" && tfAmount.valueToDouble! > 400){
+          showError.updateValue(true);
+          return;
+        }
+        showError.updateValue(false);
+      });
+
+      //
+      // unitTypeID.onValueChanges(onData: (previous, current) async* {
+      //
+      //   print(unitTypeID.onValueChanges);
+      //   print(unitTypeID.value);
+      //   if(unitTypeID.value == "288" && tfAmount.valueToDouble! > 200){
+      //     showError.updateValue(true);
+      //     return;
+      //   }
+      //
+      //   if(unitTypeID.value == "289" && tfAmount.valueToDouble! > 400){
+      //     showError.updateValue(true);
+      //     return;
+      //   }
+      //   showError.updateValue(false);
+      // });
   }
 
   @override
   FutureOr<void> onSubmitting() async {
 
-
-    if(unitTypeID.value == "288" && tfAmount.valueToDouble! < 200){
-      MetaAlert.showErrorAlert(message: "Eligible amount is 200");
-      emitSuccess(canSubmitAgain: true);
-      return;
-    }
-
-    if(unitTypeID.value == "289" && tfAmount.valueToDouble! < 400){
-      MetaAlert.showErrorAlert(message: "Eligible amount is 400");
-      emitSuccess(canSubmitAgain: true);
-      return;
-    }
 
 
     Map<String,dynamic> saveMiscData = {

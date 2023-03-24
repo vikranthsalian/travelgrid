@@ -7,6 +7,7 @@ extension StringExtension on String {
   }
 }
 
+
 extension NullableStringExtension on String? {
   String handleNullValue() {
     return this == null || this == ""

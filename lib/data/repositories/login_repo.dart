@@ -15,11 +15,13 @@ class LoginRepository extends LoginAPIAbstract {
 
     var response = await apiRemoteDatasource.loginRequest(input,"authenticate");
     if(response!=null) {
-      MetaLoginResponse modelResponse = MetaLoginResponse.fromJson(response);
-      return modelResponse;
+
+        MetaLoginResponse modelResponse = MetaLoginResponse.fromJson(response);
+        return modelResponse;
+
     }
 
-      return MetaLoginResponse(status: false);
+    return MetaLoginResponse(status: false);
   }
 
 

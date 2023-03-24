@@ -41,24 +41,24 @@ class Data {
   int? id;
   String? recordLocator;
   String? gender;
-  Null? maritalStatus;
-  Null? prefix;
+  String? maritalStatus;
+  String? prefix;
   String? given;
   String? family;
-  Null? suffix;
-  Null? nickName;
+  String? suffix;
+  String? nickName;
   String? fatherName;
-  Null? dateOfbirth;
-  Null? language;
-  Null? permanentContact;
+  String? dateOfbirth;
+  String? language;
+  String? permanentContact;
   CurrentContact? currentContact;
   Account? account;
   String? fullName;
   String? employeecode;
   int? employeeTypeId;
-  Null? externalId;
+  String? externalId;
   String? profitcenter;
-  Null? dateOfJoining;
+  String? dateOfJoining;
   Company? company;
   CostCenter? costCenter;
   Worklocation? worklocation;
@@ -68,19 +68,16 @@ class Data {
   String? deptName;
   String? divisionCode;
   String? divName;
-  Null? position;
-  Null? positionName;
-  Null? empVendorCode;
+  String? position;
+  String? positionName;
+  String? empVendorCode;
   String? jobtext;
-  Null? uniqueIdentificationNumber;
-  Null? airSeatPreference;
-  Null? mealPreference;
-  Null? visa;
-  Null? travelDocs;
-  Null? frequentFlyer;
-  Null? travelVendor;
+  String? uniqueIdentificationNumber;
+  String? airSeatPreference;
+  String? mealPreference;
+  String? visa;
 
-  Data({this.id, this.recordLocator, this.gender, this.maritalStatus, this.prefix, this.given, this.family, this.suffix, this.nickName, this.fatherName, this.dateOfbirth, this.language, this.permanentContact, this.currentContact, this.account, this.fullName, this.employeecode, this.employeeTypeId, this.externalId, this.profitcenter, this.dateOfJoining, this.company, this.costCenter, this.worklocation, this.grade, this.Subgrade, this.deptCode, this.deptName, this.divisionCode, this.divName, this.position, this.positionName, this.empVendorCode, this.jobtext, this.uniqueIdentificationNumber, this.airSeatPreference, this.mealPreference, this.visa, this.travelDocs, this.frequentFlyer, this.travelVendor});
+  Data({this.id, this.recordLocator, this.gender, this.maritalStatus, this.prefix, this.given, this.family, this.suffix, this.nickName, this.fatherName, this.dateOfbirth, this.language, this.permanentContact, this.currentContact, this.account, this.fullName, this.employeecode, this.employeeTypeId, this.externalId, this.profitcenter, this.dateOfJoining, this.company, this.costCenter, this.worklocation, this.grade, this.Subgrade, this.deptCode, this.deptName, this.divisionCode, this.divName, this.position, this.positionName, this.empVendorCode, this.jobtext, this.uniqueIdentificationNumber, this.airSeatPreference, this.mealPreference, this.visa});
 
 
   Data.fromJson(Map<String, dynamic> json) {
@@ -122,9 +119,6 @@ class Data {
     airSeatPreference = json['airSeatPreference'];
     mealPreference = json['mealPreference'];
     visa = json['visa'];
-    travelDocs = json['travelDocs'];
-    frequentFlyer = json['frequentFlyer'];
-    travelVendor = json['travelVendor'];
   }
 
   Map<String, dynamic> toJson() {
@@ -181,9 +175,6 @@ class Data {
     data['airSeatPreference'] = this.airSeatPreference;
     data['mealPreference'] = this.mealPreference;
     data['visa'] = this.visa;
-    data['travelDocs'] = this.travelDocs;
-    data['frequentFlyer'] = this.frequentFlyer;
-    data['travelVendor'] = this.travelVendor;
     return data;
   }
 }
@@ -195,7 +186,7 @@ class CurrentContact {
   String? addressLine2;
   Location? location;
   String? mobile;
-  Null? telephoneNo;
+  String? telephoneNo;
 
   CurrentContact({this.id, this.email, this.addressLine1, this.addressLine2, this.location, this.mobile, this.telephoneNo});
 
@@ -226,12 +217,12 @@ class CurrentContact {
 
 class Location {
   String? city;
-  Null? district;
+  String? district;
   String? stateprov;
   String? postalCode;
   String? countryName;
   String? countryCode;
-  Null? geolocation;
+  String? geolocation;
 
   Location({this.city, this.district, this.stateprov, this.postalCode, this.countryName, this.countryCode, this.geolocation});
 
@@ -269,16 +260,15 @@ class Account {
   int? failedLogins;
   String? lastfailedLoginOn;
   String? lastLoginOn;
-  Null? password;
-  Null? confirmPassword;
+  String? password;
+  String? confirmPassword;
   bool? reset;
-  Null? authorities;
   String? accessToken;
   String? accessTokenExpiryDate;
-  Null? deviceRegistrationId;
+  String? deviceRegistrationId;
   String? domain;
 
-  Account({this.id, this.loginId, this.active, this.locked, this.agreedTerms, this.expired, this.hidden, this.failedLogins, this.lastfailedLoginOn, this.lastLoginOn, this.password, this.confirmPassword, this.reset, this.authorities, this.accessToken, this.accessTokenExpiryDate, this.deviceRegistrationId, this.domain});
+  Account({this.id, this.loginId, this.active, this.locked, this.agreedTerms, this.expired, this.hidden, this.failedLogins, this.lastfailedLoginOn, this.lastLoginOn, this.password, this.confirmPassword, this.reset, this.accessToken, this.accessTokenExpiryDate, this.deviceRegistrationId, this.domain});
 
   Account.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -294,7 +284,6 @@ class Account {
     password = json['password'];
     confirmPassword = json['confirmPassword'];
     reset = json['reset'];
-    authorities = json['authorities'];
     accessToken = json['accessToken'];
     accessTokenExpiryDate = json['accessTokenExpiryDate'];
     deviceRegistrationId = json['deviceRegistrationId'];
@@ -316,7 +305,6 @@ class Account {
     data['password'] = this.password;
     data['confirmPassword'] = this.confirmPassword;
     data['reset'] = this.reset;
-    data['authorities'] = this.authorities;
     data['accessToken'] = this.accessToken;
     data['accessTokenExpiryDate'] = this.accessTokenExpiryDate;
     data['deviceRegistrationId'] = this.deviceRegistrationId;
@@ -359,12 +347,12 @@ class Enterprise {
   int? id;
   String? name;
   String? shortname;
-  Null? contact;
-  Null? email;
-  License? license;
+  String? contact;
+  String? email;
+  //License? license;
   String? domain;
 
-  Enterprise({this.id, this.name, this.shortname, this.contact, this.email, this.license, this.domain});
+  Enterprise({this.id, this.name, this.shortname, this.contact, this.email, this.domain});
 
   Enterprise.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -372,7 +360,7 @@ class Enterprise {
     shortname = json['shortname'];
     contact = json['contact'];
     email = json['email'];
-    license = json['license'] != null ? new License.fromJson(json['license']) : null;
+//    license = json['license'] != null ? new License.fromJson(json['license']) : null;
     domain = json['domain'];
   }
 
@@ -383,76 +371,14 @@ class Enterprise {
     data['shortname'] = this.shortname;
     data['contact'] = this.contact;
     data['email'] = this.email;
-    if (this.license != null) {
-      data['license'] = this.license!.toJson();
-    }
+    // if (this.license != null) {
+    //   data['license'] = this.license!.toJson();
+    // }
     data['domain'] = this.domain;
     return data;
   }
 }
 
-class License {
-  int? id;
-  bool? configured;
-  bool? agreedTerms;
-  String? domain;
-  String? domainOne;
-  String? domainTwo;
-  bool? valid;
-  Null? validupto;
-  Null? licenseType;
-  Null? client;
-  Null? shortName;
-  Null? agreementNo;
-  Null? agreementDate;
-  int? users;
-  Null? terms;
-  ContentsAsStream? contentsAsStream;
-
-  License({this.id, this.configured, this.agreedTerms, this.domain, this.domainOne, this.domainTwo, this.valid, this.validupto, this.licenseType, this.client, this.shortName, this.agreementNo, this.agreementDate, this.users, this.terms, this.contentsAsStream});
-
-  License.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    configured = json['configured'];
-    agreedTerms = json['agreedTerms'];
-    domain = json['domain'];
-    domainOne = json['domainOne'];
-    domainTwo = json['domainTwo'];
-    valid = json['valid'];
-    validupto = json['validupto'];
-    licenseType = json['licenseType'];
-    client = json['client'];
-    shortName = json['shortName'];
-    agreementNo = json['agreementNo'];
-    agreementDate = json['agreementDate'];
-    users = json['users'];
-    terms = json['terms'];
-    contentsAsStream = json['contentsAsStream'] != null ? new ContentsAsStream.fromJson(json['contentsAsStream']) : null;
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['configured'] = this.configured;
-    data['agreedTerms'] = this.agreedTerms;
-    data['domain'] = this.domain;
-    data['domainOne'] = this.domainOne;
-    data['domainTwo'] = this.domainTwo;
-    data['valid'] = this.valid;
-    data['validupto'] = this.validupto;
-    data['licenseType'] = this.licenseType;
-    data['client'] = this.client;
-    data['shortName'] = this.shortName;
-    data['agreementNo'] = this.agreementNo;
-    data['agreementDate'] = this.agreementDate;
-    data['users'] = this.users;
-    data['terms'] = this.terms;
-    if (this.contentsAsStream != null) {
-      data['contentsAsStream'] = this.contentsAsStream!.toJson();
-    }
-    return data;
-  }
-}
 
 class ContentsAsStream {
 
@@ -499,8 +425,8 @@ class Worklocation {
   int? id;
   String? locationCode;
   String? locationName;
-  Null? locale;
-  Null? timeZone;
+  String? locale;
+  String? timeZone;
   Enterprise? enterprise;
   bool? selected;
 
