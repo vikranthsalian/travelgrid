@@ -105,9 +105,9 @@ class TravelFormBloc extends FormBloc<String, String> {
         "maGeConveyanceCityPair": onCityPairAdded.value,
         "description": tfDescription.value,
         "voucherNumber": swWithBill.value ? tfVoucher.value : "",
-        "withBill": swWithBill.value,
-
-        "voucherPath": voucherPath.value,
+        // "withBill": false,
+        //
+        // "voucherPath": voucherPath.value,
 
         "voilationMessage": "Exception due to manual creation of Conveyance"
       };

@@ -10,6 +10,7 @@ import 'package:travelgrid/presentation/screens/dashboard/tr/bloc/tr_visa%20_for
 import 'package:travelgrid/presentation/widgets/button.dart';
 import 'package:travelgrid/presentation/widgets/dialog_selector_view.dart';
 import 'package:travelgrid/presentation/widgets/icon.dart';
+import 'package:travelgrid/presentation/widgets/search_selector_view.dart';
 import 'package:travelgrid/presentation/widgets/text_field.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
 
@@ -113,11 +114,14 @@ class AddVisa  extends StatelessWidget {
                                       shrinkWrap: true,
                                       physics: NeverScrollableScrollPhysics(),
                                       children:[
-                                        MetaTextFieldBlocView(mapData: jsonData['text_field_country'],
-                                            textFieldBloc: formBloc!.tfCountry,
-                                            onChanged:(value){
-                                              formBloc!.tfCountry.updateValue(value);
-                                            }),
+                                        MetaSearchSelectorView(
+                                          "O",
+                                          mapData: jsonData['selectCountry'],
+                                          text: CityUtil.getCityNameFromID(formBloc!.tfCountry.value),
+                                          onChange:(value){
+                                            print(value);
+                                            formBloc!.tfCountry.updateValue(value.name);
+                                          },),
                                         MetaTextFieldBlocView(mapData: jsonData['text_field_days'],
                                             textFieldBloc: formBloc!.tfDays,
                                             onChanged:(value){
@@ -125,15 +129,30 @@ class AddVisa  extends StatelessWidget {
                                             }),
 
                                         SizedBox(height: 10.h,),
-                                        Container(
-                                          child: MetaDialogSelectorView(mapData: jsonData['selectEntries'],
-                                            text :CityUtil.getEntriesFromID(formBloc!.entriesID.value),
-                                            onChange:(value){
-                                              print(value);
-                                             // formBloc!.entries.updateValue(value['text'].toString());
-                                              formBloc!.entriesID.updateValue(value['id'].toString());
-                                            },),
-                                        ),
+                                        Row(
+                                          children: [
+                                            Container(
+                                              child: MetaDialogSelectorView(mapData: jsonData['selectEntries'],
+                                                text :CityUtil.getEntriesFromID(formBloc!.entriesID.value),
+                                                onChange:(value){
+                                                  print(value);
+                                                  // formBloc!.entries.updateValue(value['text'].toString());
+                                                  formBloc!.entriesID.updateValue(value['id'].toString());
+                                                },),
+                                            ),
+                                            SizedBox(width: 10.w,),
+                                            Container(
+                                              child: MetaDialogSelectorView(mapData: jsonData['selectVisaType'],
+                                                text :CityUtil.getEntriesFromID(formBloc!.visaID.value),
+                                                onChange:(value){
+                                                  print(value);
+                                                  // formBloc!.entries.updateValue(value['text'].toString());
+                                                  formBloc!.visaID.updateValue(value['id'].toString());
+                                                },),
+                                            )
+                                          ],
+                                        )
+
 
                                       ]
                                   ),

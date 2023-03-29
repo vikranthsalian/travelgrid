@@ -40,12 +40,24 @@ class _CreateSwitchComponentState extends State<SwitchComponent> {
   Container buildHeaders(Map<String,dynamic> map) {
     return Container(
       height: 40.h,
-      color:  widget.color,
+
+        padding: EdgeInsets.symmetric(horizontal: 3.w,vertical: 3.h),
+        margin: EdgeInsets.symmetric(horizontal:10.w,vertical: 5.h),
+
+      decoration: BoxDecoration(
+        color:  Colors.white,
+        borderRadius: BorderRadius.all(Radius.circular(5.r)),
+        border: Border.all(
+          color:  widget.color,
+          width: 2.r,
+        ),
+
+      ),
       child: Row(
 
         children: [
           Container(
-              margin: EdgeInsets.symmetric(horizontal: 20.w),
+              margin: EdgeInsets.symmetric(horizontal: 10.w),
               child: MetaTextView(mapData: map['label'])),
            Expanded(child: Container(
             alignment: Alignment.centerLeft,

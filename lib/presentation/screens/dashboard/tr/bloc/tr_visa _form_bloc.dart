@@ -7,9 +7,10 @@ import 'package:travelgrid/common/utils/validators.dart';
 class VisaFormBloc extends FormBloc<String, String> {
 
   final entriesID =  TextFieldBloc(validators: [emptyValidator]);
+  final visaID =  TextFieldBloc(validators: [emptyValidator]);
 
   final tfDays = TextFieldBloc();
-  final tfCountry= TextFieldBloc();
+  final tfCountry= SelectFieldBloc<String,dynamic>(initialValue: "");
 
 
 
@@ -25,13 +26,13 @@ class VisaFormBloc extends FormBloc<String, String> {
 
       if(data.isNotEmpty){
         tfDays.addValidators(Validators().getValidators(data['text_field_days']));
-        tfCountry.addValidators(Validators().getValidators(data['text_field_country']));
       }
 
     addFieldBlocs(fieldBlocs: [
       tfDays,
       tfCountry,
-      entriesID
+      entriesID,
+      visaID
     ]);
   }
 
@@ -44,7 +45,7 @@ class VisaFormBloc extends FormBloc<String, String> {
         "durationOfStay": tfDays.valueToInt,
         "visaRequirement": "Yes",
         "numberOfEntries": entriesID.valueToInt,
-        "visaType": "Business",
+        "visaType": visaID.value,
       };
 
       emitSuccess(successResponse: jsonEncode(save));

@@ -22,7 +22,7 @@ class ItineraryFormBloc extends FormBloc<String, String> {
   final tfPNR= TextFieldBloc();
   final tfTicket= TextFieldBloc();
 
-
+  final showError = SelectFieldBloc<bool, dynamic>(initialValue: false);
 
   static String? emptyValidator(dynamic value) {
     if (value.isEmpty) {

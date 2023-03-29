@@ -7,7 +7,7 @@ import 'package:travelgrid/common/utils/validators.dart';
 class InsuranceFormBloc extends FormBloc<String, String> {
 
   final tfDays = TextFieldBloc();
-  final tfCountry= TextFieldBloc();
+  final tfCountry= SelectFieldBloc<String,dynamic>(initialValue: "");
 
 
 
@@ -23,7 +23,6 @@ class InsuranceFormBloc extends FormBloc<String, String> {
 
       if(data.isNotEmpty){
         tfDays.addValidators(Validators().getValidators(data['text_field_days']));
-        tfCountry.addValidators(Validators().getValidators(data['text_field_country']));
       }
 
     addFieldBlocs(fieldBlocs: [

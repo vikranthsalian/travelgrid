@@ -17,6 +17,7 @@ import 'package:travelgrid/data/models/success_model.dart';
 import 'package:travelgrid/domain/usecases/ge_usecase.dart';
 import 'package:travelgrid/domain/usecases/tr_usecase.dart';
 import 'package:travelgrid/presentation/components/bloc_map_event.dart';
+import 'package:travelgrid/presentation/components/switch_component.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';
 import 'package:travelgrid/presentation/widgets/dialog_selector_view.dart';
 import 'package:travelgrid/presentation/widgets/icon.dart';
@@ -201,41 +202,58 @@ class _TravelRequestSummaryState extends State<TravelRequestSummary> {
       child:SingleChildScrollView(
         child: Column(
           children: [
-            buildExpandableView(jsonData,"requesterDetails"),
-            buildExpandableView(jsonData,"cityPairDetails"),
+            SwitchComponent(
+                color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
+                jsonData: jsonData['requesterDetails'],
+                childWidget: buildRequesterWidget(jsonData['requesterDetails']),
+                initialValue: showRequesterDetails),
+          //  buildExpandableView(jsonData,"requesterDetails"),
+            SwitchComponent(
+                color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
+                jsonData: jsonData['cityPairDetails'],
+                childWidget: buildCityPairWidget(jsonData['cityPairDetails']),
+                initialValue: cityPairDetails),
+           // buildExpandableView(jsonData,"cityPairDetails"),
             if(tripType=="Domestic")
-            buildExpandableView(jsonData,"cashAdvanceDetails"),
+              SwitchComponent(
+                  color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
+                  jsonData: jsonData['cashAdvanceDetails'],
+                  childWidget: buildCashAdvanceWidget(jsonData['cashAdvanceDetails']),
+                  initialValue: cashAdvanceDetails),
+         //   buildExpandableView(jsonData,"cashAdvanceDetails"),
             if(tripType=="Overseas")
-            buildExpandableView(jsonData,"forexAdvanceDetails"),
+              SwitchComponent(
+                  color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
+                  jsonData: jsonData['forexAdvanceDetails'],
+                  childWidget: buildForexAdvanceWidget(jsonData['forexAdvanceDetails']),
+                  initialValue: forexAdvanceDetails),
+          //  buildExpandableView(jsonData,"forexAdvanceDetails"),
             if(tripType=="Overseas")
-            buildExpandableView(jsonData,"visaDetails"),
+              SwitchComponent(
+                  color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
+                  jsonData: jsonData['visaDetails'],
+                  childWidget: buildVisaWidget(jsonData['visaDetails']),
+                  initialValue: visaDetails),
+          //  buildExpandableView(jsonData,"visaDetails"),
             if(tripType=="Overseas")
-            buildExpandableView(jsonData,"insuranceDetails"),
-            buildExpandableView(jsonData,"approverDetails"),
+              SwitchComponent(
+                  color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
+                  jsonData: jsonData['insuranceDetails'],
+                  childWidget: buildInsuranceWidget(jsonData['insuranceDetails']),
+                  initialValue: insuranceDetails),
+          //  buildExpandableView(jsonData,"insuranceDetails"),
+            SwitchComponent(
+                color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
+                jsonData: jsonData['insuranceDetails'],
+                childWidget: buildApproverWidget(jsonData['approverDetails']),
+                initialValue: showApproverDetails),
+           // buildExpandableView(jsonData,"approverDetails"),
           ],
         ),
       ),
     );
   }
 
-  Row buildSubmitRow() {
-    return Row(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          MetaButton(mapData: jsonData['bottomButtonLeft'],
-              onButtonPressed: (){
-
-              }
-          ),
-          MetaButton(mapData: jsonData['bottomButtonRight'],
-              onButtonPressed: (){
-                submitGe("submit");
-              }
-          )
-        ],
-      );
-  }
 
   Row buildViewRow() {
     bool isTBVisible=false;

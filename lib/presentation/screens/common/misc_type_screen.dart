@@ -70,6 +70,7 @@ class MiscellaneousTypeScreen extends StatelessWidget {
               height: 35.h,
               alignment: Alignment.centerLeft,
               child: MetaTextView(mapData: item,
+                  textAlign: TextAlign.start,
                   text:((index+1).toString() + ". "+ list[index].label.toString()  ))
           ),
         );

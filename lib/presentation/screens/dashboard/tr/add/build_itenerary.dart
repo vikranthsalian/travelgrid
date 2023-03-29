@@ -46,12 +46,22 @@ class _CreateBuildItineraryState extends State<BuildItinerary> {
   Container buildHeaders(Map<String,dynamic> map) {
     return Container(
       height: 40.h,
-      color:ParseDataType().getHexToColor(map['backgroundColor']),
+      padding: EdgeInsets.symmetric(horizontal: 3.w,vertical: 3.h),
+      margin: EdgeInsets.symmetric(horizontal:10.w,vertical: 5.h),
+
+      decoration: BoxDecoration(
+        color:  Colors.white,
+        borderRadius: BorderRadius.all(Radius.circular(5.r)),
+        border: Border.all(
+          color:ParseDataType().getHexToColor(map['backgroundColor']),
+          width: 2.r,
+        ),
+      ),
       child: Row(
 
         children: [
           Container(
-              margin: EdgeInsets.symmetric(horizontal: 20.w),
+              margin: EdgeInsets.symmetric(horizontal: 10.w),
               child: MetaTextView(mapData: map['label'])),
           Expanded(child: Container(
             alignment: Alignment.centerRight,
@@ -274,7 +284,17 @@ class _CreateBuildItineraryState extends State<BuildItinerary> {
                       InkWell(
                         onTap: (){
 
-                          widget.list.removeAt(index);
+                          if(widget.type=="R"){
+
+
+                            widget.list.removeAt(0);
+                            widget.list.removeAt(0);
+                          }else{
+
+
+                            widget.list.removeAt(index);
+                          }
+
 
                           widget.onAdded!(widget.list);
                         },

@@ -136,7 +136,7 @@ class _MetaDialogSelectorViewState extends State<MetaDialogSelectorView> {
       case "currency_type_view":
         return 0.7;
       default:
-        return 0.25;
+        return 0.3;
     }
   }
 

@@ -48,8 +48,8 @@ class TrProcessed extends StatelessWidget {
 
   var supp = {
     "text" : "Supporting Document/Notes",
-    "color" : "0XFFFFFFFF",
-    "size": "14",
+    "color" : "0xFF2854A1",
+    "size": "16",
     "family": "bold",
     "align": "center-left"
   };
@@ -77,6 +77,7 @@ class TrProcessed extends StatelessWidget {
 
 
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Container(
       //  margin: EdgeInsets.symmetric(vertical: 20.h),
         child: BlocProvider(
@@ -332,9 +333,20 @@ class TrProcessed extends StatelessWidget {
 
                               Container(
                                 height: 40.h,
-                                  padding: EdgeInsets.symmetric(horizontal: 20.w),
-                                  color: ParseDataType().getHexToColor(jsonData['backgroundColor']),
-                                  child: MetaTextView(mapData: supp,)),
+                                  padding: EdgeInsets.symmetric(horizontal: 3.w,vertical: 3.h),
+                                  margin: EdgeInsets.symmetric(horizontal:10.w,vertical: 5.h),
+
+                                  decoration: BoxDecoration(
+                                    color:  Colors.white,
+                                    borderRadius: BorderRadius.all(Radius.circular(5.r)),
+                                    border: Border.all(
+                                      color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
+                                      width: 2.r,
+                                    ),
+                                  ),
+                                  child: Container(
+                                      margin: EdgeInsets.symmetric(horizontal: 10.w),
+                                      child: MetaTextView(mapData: supp,))),
 
                               Container(
 
@@ -406,11 +418,23 @@ class TrProcessed extends StatelessWidget {
   Container buildHeaders(Map<String,dynamic> map,ctx) {
     return Container(
       height: 40.h,
-      color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
+
+
+      padding: EdgeInsets.symmetric(horizontal: 3.w,vertical: 3.h),
+      margin: EdgeInsets.symmetric(horizontal:10.w,vertical: 5.h),
+
+      decoration: BoxDecoration(
+        color:  Colors.white,
+        borderRadius: BorderRadius.all(Radius.circular(5.r)),
+        border: Border.all(
+          color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
+          width: 2.r,
+        ),
+      ),
       child: Row(
         children: [
           Container(
-              margin: EdgeInsets.symmetric(horizontal: 20.w),
+              margin: EdgeInsets.symmetric(horizontal: 10.w),
               child: MetaTextView(mapData: map['label'])),
           Expanded(
             child: Container(
@@ -680,11 +704,10 @@ class TrProcessed extends StatelessWidget {
                         child: MetaTextView(mapData:  map['header'],text: "Visiting Country")),
                     Expanded(
                         child: MetaTextView(mapData:  map['header'],text: "Duration(Days)")),
-                    Expanded(child: MetaTextView(mapData:  map['header'],text: "Service Type",)),
+                    Expanded(child: MetaTextView(mapData:  map['header'],text: "Visa Type",)),
                   ],
                 ),
                 Container(
-                  height: 400,
                   child: ListView.builder(
                       physics: NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
@@ -701,7 +724,7 @@ class TrProcessed extends StatelessWidget {
                                   child: MetaTextView(mapData:  map['item'],text: (index+1).toString())),
                               Expanded(child: MetaTextView(mapData:  map['item'],text: item.visitingCountry)),
                               Expanded(child: MetaTextView(mapData:  map['item'],text:item.durationOfStay.toString())),
-                              Expanded(child: MetaTextView(mapData:  map['item'],text:"VISA")),
+                              Expanded(child: MetaTextView(mapData:  map['item'],text:item.visaType)),
                             ],
                           ),
                         );
@@ -898,11 +921,11 @@ class TrProcessed extends StatelessWidget {
     List<TRTravelVisas> visaList=[];
     for(var item in data.maTravelVisas!){
       Map<String, dynamic> data = {
-        "serviceType": item.serviceType,
+        "serviceType": item.serviceType ?? "VISA",
         "visitingCountry": item.visitingCountry,
         "durationOfStay": item.durationOfStay,
         "visaRequirement": item.visaRequirement,
-        "numberOfEntries": item.numberOfEntries,
+        "numberOfEntries": item.numberOfEntries=="Single"?183:184,
         "visaType": item.visaType,
       };
       visaList.add(TRTravelVisas.fromJson(data));
@@ -929,14 +952,17 @@ class TrProcessed extends StatelessWidget {
       Map<String, dynamic> data = {
         "cash": item.cash,
         "card": item.card,
-        "currency": item.currency,
+        "currency": CityUtil.getCurrenciesFromID(item.currency,isID: false) as int,
         "violationMessage": item.violationMessage,
-        "totalForexAmount": item.totalForexAmount,
+        "totalForexAmount": double.parse(item.totalForexAmount.toString()) ,
         "address": item.address,
       };
-      insuranceList.add(TRTravelInsurance.fromJson(data));
+      forexList.add(TrForexAdvance.fromJson(data));
     }
     formBloc!.forexList.updateValue(forexList);
+    print('formBloc!.forexList');
+    print(forexList);
+    print(formBloc!.forexList.value);
 
 
   }

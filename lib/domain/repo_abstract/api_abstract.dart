@@ -30,6 +30,7 @@ abstract class TrAPIAbstract {
   Future<SuccessModel> createTR(data,body);
   Future<SuccessModel> updateTR(data,body);
   Future<SuccessModel> checkOverlapped(data);
+  Future<SuccessModel> checkFireFareClassRule(data);
   Future<SuccessModel> approveTR(id,comment);
 }
 

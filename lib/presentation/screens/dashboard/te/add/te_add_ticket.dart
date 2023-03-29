@@ -236,15 +236,15 @@ class _AddTeTicketExpenseState extends State<AddTeTicketExpense> {
                                           ),
                                         ),
                                       ]),
-                                  Container(
-                                    child: MetaSwitchBloc(
-                                        mapData:  jsonData['byCompanySwitch'],
-                                        bloc:  formBloc!.swWithBill,
-                                        onSwitchPressed: (value){
-                                          formBloc!.selectWithBill.updateValue(value.toString());
-                                          formBloc!.swWithBill.updateValue(value);
-                                        }),
-                                  ),
+                                  // Container(
+                                  //   child: MetaSwitchBloc(
+                                  //       mapData:  jsonData['byCompanySwitch'],
+                                  //       bloc:  formBloc!.swWithBill,
+                                  //       onSwitchPressed: (value){
+                                  //         formBloc!.selectWithBill.updateValue(value.toString());
+                                  //         formBloc!.swWithBill.updateValue(value);
+                                  //       }),
+                                  // ),
                                   Row(
                                       children: [
                                         Expanded(

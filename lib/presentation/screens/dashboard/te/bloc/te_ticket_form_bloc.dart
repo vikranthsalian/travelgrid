@@ -81,7 +81,7 @@ class TicketTeFormBloc extends FormBloc<String, String> {
       "leavingFrom": origin.value,
       "goingTo": destination.value,
       "travelMode": travelMode.value,
-      "byCompany": swByCompany.value,
+      "byCompany": false,
       "fareClass": fareClass.value,
       "pnrNumber": tfPNR.value,
       "ticketNumber": tfTicket.value,

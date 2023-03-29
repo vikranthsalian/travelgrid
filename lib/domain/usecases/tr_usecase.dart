@@ -16,5 +16,7 @@ class TrUseCase {
 
   Future<SuccessModel> checkOverlapped(data) async => apiAbstract.checkOverlapped(data);
 
+  Future<SuccessModel> checkFireFareClassRule(data) async => apiAbstract.checkFireFareClassRule(data);
+
   Future<SuccessModel> approveTR(id,comment) async => apiAbstract.approveTR(id,comment);
 }

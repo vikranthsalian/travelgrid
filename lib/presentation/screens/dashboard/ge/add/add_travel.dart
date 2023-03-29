@@ -338,28 +338,28 @@ class _CreateConveyanceExpenseState extends State<CreateConveyanceExpense> {
                                             onChanged:(value){
                                               formBloc!.tfDescription.updateValue(value);
                                             }),
-                                        Container(
-                                          child: MetaSwitchBloc(
-                                              mapData:  jsonData['withBillCheckBox'],
-                                              bloc:  formBloc!.swWithBill,
-                                              onSwitchPressed: (value){
-
-                                                formBloc!.selectWithBill.updateValue(value.toString());
-                                                formBloc!.swWithBill.updateValue(value);
-                                              }),
-                                        ),
-                                        BlocBuilder<SelectFieldBloc, SelectFieldBlocState>(
-                                            bloc: formBloc!.selectWithBill,
-                                            builder: (context, state) {
-                                              return Visibility(
-                                                visible: state.value == "true" ? true : false,
-                                                child:UploadComponent(jsonData: jsonData['uploadButton'],
-                                                    onSelected: (dataFile){
-                                                      file=dataFile;
-                                                    }),
-                                              );
-                                            }
-                                        )
+                                        // Container(
+                                        //   child: MetaSwitchBloc(
+                                        //       mapData:  jsonData['withBillCheckBox'],
+                                        //       bloc:  formBloc!.swWithBill,
+                                        //       onSwitchPressed: (value){
+                                        //
+                                        //         formBloc!.selectWithBill.updateValue(value.toString());
+                                        //         formBloc!.swWithBill.updateValue(value);
+                                        //       }),
+                                        // ),
+                                        // BlocBuilder<SelectFieldBloc, SelectFieldBlocState>(
+                                        //     bloc: formBloc!.selectWithBill,
+                                        //     builder: (context, state) {
+                                        //       return Visibility(
+                                        //         visible: state.value == "true" ? true : false,
+                                        //         child:UploadComponent(jsonData: jsonData['uploadButton'],
+                                        //             onSelected: (dataFile){
+                                        //               file=dataFile;
+                                        //             }),
+                                        //       );
+                                        //     }
+                                        // )
 
                                       ]
                                   );

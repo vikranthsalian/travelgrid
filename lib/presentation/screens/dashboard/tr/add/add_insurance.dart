@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
+import 'package:travelgrid/common/utils/city_util.dart';
 import 'package:travelgrid/data/models/tr/tr_insurance_model.dart';
 import 'package:travelgrid/data/models/tr/tr_visa_model.dart';
 import 'package:travelgrid/presentation/screens/dashboard/tr/bloc/tr_insurance%20_form_bloc.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';
 import 'package:travelgrid/presentation/widgets/icon.dart';
+import 'package:travelgrid/presentation/widgets/search_selector_view.dart';
 import 'package:travelgrid/presentation/widgets/text_field.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
 
@@ -112,11 +114,14 @@ class AddInsurance  extends StatelessWidget {
                                       shrinkWrap: true,
                                       physics: NeverScrollableScrollPhysics(),
                                       children:[
-                                        MetaTextFieldBlocView(mapData: jsonData['text_field_country'],
-                                            textFieldBloc: formBloc!.tfCountry,
-                                            onChanged:(value){
-                                              formBloc!.tfCountry.updateValue(value);
-                                            }),
+                                        MetaSearchSelectorView(
+                                        "O",
+                                        mapData: jsonData['selectCountry'],
+                                        text: CityUtil.getCityNameFromID(formBloc!.tfCountry.value),
+                                        onChange:(value){
+                                          print(value);
+                                          formBloc!.tfCountry.updateValue(value.name);
+                                        },),
                                         MetaTextFieldBlocView(mapData: jsonData['text_field_days'],
                                             textFieldBloc: formBloc!.tfDays,
                                             onChanged:(value){

@@ -784,8 +784,8 @@
     "requesterDetails":  {
       "label": {
         "text" : "Requester Details",
-        "color" : "0XFFFFFFFF",
-        "size": "14",
+        "color" : "0xFF2854A1",
+        "size": "16",
         "family": "bold",
         "align": "center-left"
       },
@@ -818,8 +818,8 @@
     "cityPairDetails": {
       "label": {
         "text" : "Itinerary Details",
-        "color" : "0XFFFFFFFF",
-        "size": "14",
+        "color" : "0xFF2854A1",
+        "size": "16",
         "family": "bold",
         "align": "center-left"
       },
@@ -885,8 +885,8 @@
     "cashAdvanceDetails": {
       "label": {
         "text" : "Cash Advance Details",
-        "color" : "0XFFFFFFFF",
-        "size": "14",
+        "color" : "0xFF2854A1",
+        "size": "16",
         "family": "bold",
         "align": "center-left"
       },
@@ -917,8 +917,8 @@
     "forexAdvanceDetails": {
       "label": {
         "text" : "Forex Advance Details",
-        "color" : "0XFFFFFFFF",
-        "size": "14",
+        "color" : "0xFF2854A1",
+        "size": "16",
         "family": "bold",
         "align": "center-left"
       },
@@ -949,8 +949,8 @@
     "visaDetails": {
       "label": {
         "text" : "Visa Details",
-        "color" : "0XFFFFFFFF",
-        "size": "14",
+        "color" : "0xFF2854A1",
+        "size": "16",
         "family": "bold",
         "align": "center-left"
       },
@@ -981,8 +981,8 @@
     "insuranceDetails": {
       "label": {
         "text" : "Insurance Details",
-        "color" : "0XFFFFFFFF",
-        "size": "14",
+        "color" : "0xFF2854A1",
+        "size": "16",
         "family": "bold",
         "align": "center-left"
       },
@@ -1013,8 +1013,8 @@
     "approverDetails": {
       "label": {
         "text" : "Approver Details",
-        "color" : "0XFFFFFFFF",
-        "size": "14",
+        "color" : "0xFF2854A1",
+        "size": "16",
         "family": "bold",
         "align": "center-left"
       },
@@ -1582,8 +1582,8 @@
     "travellerDetails": {
       "label": {
         "text" : "Traveller Details",
-        "color" : "0XFFFFFFFF",
-        "size": "14",
+        "color" : "0xFF2854A1",
+        "size": "16",
         "family": "bold",
         "align": "center-left"
       },
@@ -1693,14 +1693,14 @@
       },
       "label": {
         "text" : "Itinerary Details",
-        "color" : "0XFFFFFFFF",
-        "size": "14",
+        "color" : "0xFF2854A1",
+        "size": "16",
         "family": "bold",
         "align": "center-left"
       },
       "add": {
         "text" : "Add",
-        "color" : "0XFFFFFFFF",
+        "color" : "0xFF2854A1",
         "size": "15",
         "family": "bold",
         "align": "center-right",
@@ -1709,7 +1709,7 @@
       "showDetails": {
         "label": {
           "text" : "Show",
-          "color" : "0XFFFFFFFF",
+          "color" : "0xFF2854A1",
           "size": "10",
           "family": "bold",
           "align": "center-right"
@@ -2163,14 +2163,14 @@
     "cashAdvanceDetails": {
       "label": {
         "text" : "Cash Advance Details",
-        "color" : "0XFFFFFFFF",
-        "size": "14",
+        "color" : "0xFF2854A1",
+        "size": "16",
         "family": "bold",
         "align": "center-left"
       },
       "add": {
         "text" : "Add",
-        "color" : "0XFFFFFFFF",
+        "color" : "0xFF2854A1",
         "size": "15",
         "family": "bold",
         "align": "center-right",
@@ -2235,14 +2235,14 @@
     "forexAdvanceDetails": {
       "label": {
         "text" : "Forex Advance Details",
-        "color" : "0XFFFFFFFF",
-        "size": "14",
+        "color" : "0xFF2854A1",
+        "size": "16",
         "family": "bold",
         "align": "center-left"
       },
       "add": {
         "text" : "Add",
-        "color" : "0XFFFFFFFF",
+        "color" : "0xFF2854A1",
         "size": "15",
         "family": "bold",
         "align": "center-right",
@@ -2324,7 +2324,7 @@
           "name": "cash",
           "apiKey": "card",
           "type": "text_field_view",
-          "inputType": "text",
+          "inputType": "number",
           "isPassword": false,
           "backgroundColor": "0XFFFFFFFF",
           "borderColor": "0XFFAEAEAE",
@@ -2509,14 +2509,14 @@
     "visaDetails": {
       "label": {
         "text" : "Visa Details",
-        "color" : "0XFFFFFFFF",
-        "size": "14",
+        "color" : "0xFF2854A1",
+        "size": "16",
         "family": "bold",
         "align": "center-left"
       },
       "add": {
         "text" : "Add",
-        "color" : "0XFFFFFFFF",
+        "color" : "0xFF2854A1",
         "size": "15",
         "family": "bold",
         "align": "center-right",
@@ -2594,44 +2594,22 @@
           "onPress": true,
           "align": "center-left"
         },
-        "text_field_country":  {
-          "name": "PNR",
-          "apiKey": "pnr",
-          "type": "text_field_view",
-          "inputType": "text",
-          "isPassword": false,
-          "backgroundColor": "0XFFFFFFFF",
-          "borderColor": "0XFFAEAEAE",
-          "text" : {
-            "text" : "",
-            "color" : "0xFF2854A1",
-            "size": "14",
-            "family": "regular"
-          },
-          "labelText" : {
-            "text" : "Visiting Country*",
+        "selectCountry": {
+          "showView": true,
+          "label":  {
+            "text" : "Country*",
             "color" : "0xFF2854A1",
             "size": "14",
             "family": "regular",
-            "align" : "center-left"
+            "align": "center-left"
           },
-          "hintText" : {
-            "text" : "Enter Visiting Country",
-            "color" : "0xFF2854A1",
-            "size": "14",
-            "family": "regular"
-          },
-          "errorText" : {
-            "text" : "",
-            "color" : "0xFFFF0000",
-            "size": "14",
-            "family": "regular"
-          },
-          "validators" : [
-            {
-              "type" : "empty"
-            }
-          ]
+          "dataText":  {
+            "text" : "Choose Country",
+            "color" : "0xFFAEAEAE",
+            "size": "15",
+            "family": "regular",
+            "align": "center-left"
+          }
         },
         "text_field_days":  {
           "name": "days",
@@ -2746,6 +2724,80 @@
             "family": "regular"
           }
         },
+        "selectVisaType": {
+          "showView": true,
+          "key":"common_type_view",
+          "label":  {
+            "text" : "Visa Type*",
+            "color" : "0xFF2854A1",
+            "size": "14",
+            "family": "regular",
+            "align": "center-left"
+          },
+          "dataText":  {
+            "text" : "Choose Visa Type",
+            "color" : "0xFFAEAEAE",
+            "size": "15",
+            "family": "regular",
+            "align": "center-left"
+          },
+          "title":{
+            "text" : "Select Visa Type",
+            "color" : "0xFF2854A1",
+            "size": "15",
+            "family": "bold",
+            "align": "center"
+          },
+          "listView": {
+            "data": [
+              {
+                "text" : "Business",
+                "color" : "0xFF000000",
+                "size": "12",
+                "family": "regular",
+                "align": "center-left",
+                "id": "Business"
+              },
+              {
+                "text" : "Work Permit",
+                "color" : "0xFF000000",
+                "size": "12",
+                "family": "regular",
+                "align": "center-left",
+                "id": "Work Permit"
+              }
+            ],
+            "emptyData": {
+              "image_view":   {
+                "image" : "logo_banner.png",
+                "align": "center",
+                "wd": 250.0
+              },
+              "title":  {
+                "text" : "No Data Found!!!",
+                "color" : "0XFF3D3D3D",
+                "size": "16",
+                "family": "regular"
+              },
+              "bottomButtonRefresh": {
+                "text" : "Refresh",
+                "height": 35.0,
+                "color" : "0xFFFFFFFF",
+                "borderRadius": 30.0,
+                "backgroundColor" : "0xFF2854A1",
+                "size": "15",
+                "family": "regular"
+              }
+            }
+          },
+          "bottomButtonCentre": {
+            "text" : "Cancel",
+            "color" : "0xFFFFFFFF",
+            "backgroundColor" : "0xFF2854A1",
+            "size": "18",
+            "family": "regular"
+          }
+        },
         "bottomButtonLeft": {
           "text" : "Cancel",
           "color" : "0xFFFFFFFF",
@@ -2765,14 +2817,14 @@
     "insuranceDetails": {
       "label": {
         "text" : "Insurance Details",
-        "color" : "0XFFFFFFFF",
-        "size": "14",
+        "color" : "0xFF2854A1",
+        "size": "16",
         "family": "bold",
         "align": "center-left"
       },
       "add": {
         "text" : "Add",
-        "color" : "0XFFFFFFFF",
+        "color" : "0xFF2854A1",
         "size": "15",
         "family": "bold",
         "align": "center-right",
@@ -2850,44 +2902,22 @@
           "onPress": true,
           "align": "center-left"
         },
-        "text_field_country":  {
-          "name": "country",
-          "apiKey": "country",
-          "type": "text_field_view",
-          "inputType": "text",
-          "isPassword": false,
-          "backgroundColor": "0XFFFFFFFF",
-          "borderColor": "0XFFAEAEAE",
-          "text" : {
-            "text" : "",
-            "color" : "0xFF2854A1",
-            "size": "14",
-            "family": "regular"
-          },
-          "labelText" : {
-            "text" : "Visiting Country*",
+        "selectCountry": {
+          "showView": true,
+          "label":  {
+            "text" : "Country*",
             "color" : "0xFF2854A1",
             "size": "14",
             "family": "regular",
-            "align" : "center-left"
+            "align": "center-left"
           },
-          "hintText" : {
-            "text" : "Enter Visiting Country",
-            "color" : "0xFF2854A1",
-            "size": "14",
-            "family": "regular"
-          },
-          "errorText" : {
-            "text" : "",
-            "color" : "0xFFFF0000",
-            "size": "14",
-            "family": "regular"
-          },
-          "validators" : [
-            {
-              "type" : "empty"
-            }
-          ]
+          "dataText":  {
+            "text" : "Choose Country",
+            "color" : "0xFFAEAEAE",
+            "size": "15",
+            "family": "regular",
+            "align": "center-left"
+          }
         },
         "text_field_days":  {
           "name": "days",
@@ -3205,8 +3235,8 @@
     "requesterDetails":  {
       "label": {
         "text" : "Requester Details",
-        "color" : "0XFFFFFFFF",
-        "size": "14",
+        "color" : "0xFF2854A1",
+        "size": "16",
         "family": "bold",
         "align": "center-left"
       },
@@ -3231,7 +3261,7 @@
       "gridValue": {
         "text" : "",
         "color" : "0XFFAEAEAE",
-        "size": "7",
+        "size": "10",
         "family": "regular",
         "align": "center-left"
       }
@@ -3283,8 +3313,8 @@
     "summaryItems": {
       "label": {
         "text" : "Expense Item Details",
-        "color" : "0XFFFFFFFF",
-        "size": "14",
+        "color" : "0xFF2854A1",
+        "size": "16",
         "family": "bold",
         "align": "center-left"
       },
@@ -3360,8 +3390,8 @@
     "summaryDetails": {
       "label": {
         "text" : "Expense Summary Details",
-        "color" : "0XFFFFFFFF",
-        "size": "14",
+        "color" : "0xFF2854A1",
+        "size": "16",
         "family": "bold",
         "align": "center-left"
       },
@@ -3480,8 +3510,8 @@
     "approverDetails": {
       "label": {
         "text" : "Approver Details",
-        "color" : "0XFFFFFFFF",
-        "size": "14",
+        "color" : "0xFF2854A1",
+        "size": "16",
         "family": "bold",
         "align": "center-left"
       },
@@ -5407,8 +5437,8 @@
     "requesterDetails":  {
       "label": {
         "text" : "Requester Details",
-        "color" : "0XFFFFFFFF",
-        "size": "14",
+        "color" : "0xFF2854A1",
+        "size": "16",
         "family": "bold",
         "align": "center-left"
       },
@@ -5441,8 +5471,8 @@
     "itineraryDetails":  {
       "label": {
         "text" : "Itinerary Details",
-        "color" : "0XFFFFFFFF",
-        "size": "14",
+        "color" : "0xFF2854A1",
+        "size": "16",
         "family": "bold",
         "align": "center-left"
       },
@@ -5475,8 +5505,8 @@
     "visitItems": {
       "label": {
         "text" : "Visit Item Details",
-        "color" : "0XFFFFFFFF",
-        "size": "14",
+        "color" : "0xFF2854A1",
+        "size": "16",
         "family": "bold",
         "align": "center-left"
       },
@@ -5626,8 +5656,8 @@
     "summaryItems": {
       "label": {
         "text" : "Expense Item Details",
-        "color" : "0XFFFFFFFF",
-        "size": "14",
+        "color" : "0xFF2854A1",
+        "size": "16",
         "family": "bold",
         "align": "center-left"
       },
@@ -5703,8 +5733,8 @@
     "summaryDetails": {
       "label": {
         "text" : "Expense Summary Details",
-        "color" : "0XFFFFFFFF",
-        "size": "14",
+        "color" : "0xFF2854A1",
+        "size": "16",
         "family": "bold",
         "align": "center-left"
       },
@@ -5752,16 +5782,16 @@
           },
           "value": {
             "text" : "0.00",
-            "color" : "0xFFAEAEAE",
+            "color" : "0xFF000000",
             "size": "12",
-            "family": "regular",
+            "family": "bold",
             "align": "center-right"
           },
           "value2": {
             "text" : "0.00",
-            "color" : "0xFFAEAEAE",
+            "color" : "0xFF000000",
             "size": "12",
-            "family": "regular",
+            "family": "bold",
             "align": "center-right"
           }
         },
@@ -5776,16 +5806,16 @@
           },
           "value": {
             "text" : "0.00",
-            "color" : "0xFFAEAEAE",
+            "color" : "0xFF000000",
             "size": "12",
-            "family": "regular",
+            "family": "bold",
             "align": "center-right"
           },
           "value2": {
             "text" : "0.00",
-            "color" : "0xFFAEAEAE",
+            "color" : "0xFF000000",
             "size": "12",
-            "family": "regular",
+            "family": "bold",
             "align": "center-right"
           }
         },
@@ -5800,16 +5830,16 @@
           },
           "value": {
             "text" : "0.00",
-            "color" : "0xFFAEAEAE",
+            "color" : "0xFF000000",
             "size": "12",
-            "family": "regular",
+            "family": "bold",
             "align": "center-right"
           },
           "value2": {
             "text" : "0.00",
-            "color" : "0xFFAEAEAE",
+            "color" : "0xFF000000",
             "size": "12",
-            "family": "regular",
+            "family": "bold",
             "align": "center-right"
           }
         },
@@ -5824,16 +5854,16 @@
           },
           "value": {
             "text" : "0.00",
-            "color" : "0xFFAEAEAE",
+            "color" : "0xFF000000",
             "size": "12",
-            "family": "regular",
+            "family": "bold",
             "align": "center-right"
           },
           "value2": {
             "text" : "0.00",
-            "color" : "0xFFAEAEAE",
+            "color" : "0xFF000000",
             "size": "12",
-            "family": "regular",
+            "family": "bold",
             "align": "center-right"
           }
         },
@@ -5848,16 +5878,16 @@
           },
           "value": {
             "text" : "0.00",
-            "color" : "0xFFAEAEAE",
+            "color" : "0xFF000000",
             "size": "12",
-            "family": "regular",
+            "family": "bold",
             "align": "center-right"
           },
           "value2": {
             "text" : "0.00",
-            "color" : "0xFFAEAEAE",
+            "color" : "0xFF000000",
             "size": "12",
-            "family": "regular",
+            "family": "bold",
             "align": "center-right"
           }
         },
@@ -5872,16 +5902,16 @@
           },
           "value": {
             "text" : "0.00",
-            "color" : "0xFFAEAEAE",
+            "color" : "0xFF000000",
             "size": "12",
-            "family": "regular",
+            "family": "bold",
             "align": "center-right"
           },
           "value2": {
             "text" : "0.00",
-            "color" : "0xFFAEAEAE",
+            "color" : "0xFF000000",
             "size": "12",
-            "family": "regular",
+            "family": "bold",
             "align": "center-right"
           }
         },
@@ -5896,16 +5926,16 @@
           },
           "value": {
             "text" : "0.00",
-            "color" : "0xFFAEAEAE",
+            "color" : "0xFF000000",
             "size": "12",
-            "family": "regular",
+            "family": "bold",
             "align": "center-right"
           },
           "value2": {
             "text" : "0.00",
-            "color" : "0xFFAEAEAE",
+            "color" : "0xFF000000",
             "size": "12",
-            "family": "regular",
+            "family": "bold",
             "align": "center-right"
           }
         }
@@ -5961,8 +5991,8 @@
     "approverDetails": {
       "label": {
         "text" : "Approver Details",
-        "color" : "0XFFFFFFFF",
-        "size": "14",
+        "color" : "0xFF2854A1",
+        "size": "16",
         "family": "bold",
         "align": "center-left"
       },
@@ -6085,8 +6115,8 @@
     "commentDetails": {
       "label": {
         "text" : "Comment Details",
-        "color" : "0XFFFFFFFF",
-        "size": "14",
+        "color" : "0xFF2854A1",
+        "size": "16",
         "family": "bold",
         "align": "center-left"
       },
@@ -8470,7 +8500,7 @@
     }
   },
   "dialog_expense_picker_data" : {
-    "backgroundColor" : "0xFF2854A1",
+    "backgroundColor" : "0xFFFFA500",
     "title":  {
       "text" : "Select Expense",
       "color" : "0XFF000000",

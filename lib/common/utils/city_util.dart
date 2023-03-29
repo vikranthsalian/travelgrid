@@ -134,16 +134,25 @@ class CityUtil{
 
   }
 
-  static String? getCurrenciesFromID(id) {
-
+  static  getCurrenciesFromID(id,{isID=true}) {
+    print("getCurrenciesFromID");
     if(id.toString().isEmpty){
       return null;
     }
 
     List<curr.Data> list = appNavigatorKey.currentState!.context.read<CurrencyCubit>().getCurrencyResponse();
 
-    Iterable<curr.Data> data= list.where((item) => (item.id.toString() == id.toString()));
-    return data.first.label;
+    if(isID){
+
+      Iterable<curr.Data> data= list.where((item) => (item.id.toString() == id.toString()));
+      return data.first.label;
+    }else{
+
+      Iterable<curr.Data> data= list.where((item) => (item.label.toString() == id.toString()));
+      print(data.first.id);
+      return data.first.id;
+    }
+
 
   }
 

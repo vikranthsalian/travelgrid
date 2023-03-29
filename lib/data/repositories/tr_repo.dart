@@ -93,4 +93,16 @@ class TrRepository extends TrAPIAbstract {
     return SuccessModel(status: false);
   }
 
+  @override
+  Future<SuccessModel> checkFireFareClassRule(data) async{
+    var response = await apiRemoteDatasource.getCommonTypes("maFireFareClassRule",data);
+
+    if(response!=null) {
+      SuccessModel modelResponse = SuccessModel.fromJson(response);
+      return modelResponse;
+    }
+
+    return SuccessModel(status: false);
+  }
+
 }

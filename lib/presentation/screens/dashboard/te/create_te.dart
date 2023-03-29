@@ -58,7 +58,7 @@ class CreateTravelExpense extends StatelessWidget {
 
     return  Scaffold(
       backgroundColor: Colors.white,
-      bottomNavigationBar: isApproval?buildApprovalRow(title, context):SizedBox(),
+      bottomNavigationBar: isApproval ? buildApprovalRow(title, context):SizedBox(),
       body: Container(
         color:ParseDataType().getHexToColor(jsonData!['backgroundColor']),
         child: Column(
@@ -242,7 +242,7 @@ class _CreateTravelExpenseBodyState extends State<CreateTravelExpenseBody> {
         shape: CircularNotchedRectangle(),
         notchMargin: 5,
         elevation: 2.0,
-        child: widget.isEdit ? buildSubmitRow():buildViewRow(widget.state),
+        child:!widget.isApproval ? ( widget.isEdit ? buildSubmitRow():buildViewRow(widget.state)):null,
       ),
       body: buildView(widget.state),
     );
@@ -568,7 +568,7 @@ class _CreateTravelExpenseBodyState extends State<CreateTravelExpenseBody> {
                           padding: EdgeInsets.symmetric(vertical: 5.h),
                           child: Row(
                             children: [
-                              Expanded(child: MetaTextView(mapData: summaryDetails[index].item1['label'])),
+                              Expanded(child: MetaTextView(mapData: summaryDetails[index].item1['label'],textAlign: TextAlign.start,)),
                               Expanded(child: MetaTextView(mapData: summaryDetails[index].item1['value'],text:summaryDetails[index].item2)),
                               Expanded(child: MetaTextView(mapData: summaryDetails[index].item1['value2'],text:summaryDetails[index].item3)),
                             ],

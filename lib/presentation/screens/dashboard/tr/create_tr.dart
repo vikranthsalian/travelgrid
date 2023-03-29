@@ -236,7 +236,7 @@ class CreateTravelRequestBody extends StatelessWidget {
       "approver1":approver1!.item2.toString().toLowerCase(),
       "approver2":approver2!.item2.toString().toLowerCase(),
       if(isEdit)...{
-       "id":"71",
+       "id":"1",
        "action":"modify",
       },
     };
@@ -289,8 +289,6 @@ class CreateTravelRequestBody extends StatelessWidget {
       submitMap['maForexAdvance']= [];
       submitMap['maTravelVisas']= [];
       submitMap['maTravelInsurance']= [];
-      submitMap['maAccomodationPlanDetail']= [];
-      submitMap['maTaxiPlanDetail']= [];
     }catch(ex){
 
     }
@@ -306,7 +304,11 @@ class CreateTravelRequestBody extends StatelessWidget {
             value.remove("maTravelInsurance");
           }
           submitMap.addAll(value);
-          checkCashAdvance();
+          if(tripType == "D") {
+            checkCashAdvance();
+          }else{
+            checkOverlapped();
+          }
         });
 
   }

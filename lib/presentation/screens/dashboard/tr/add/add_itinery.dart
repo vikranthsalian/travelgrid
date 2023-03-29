@@ -4,8 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
+import 'package:travelgrid/common/injector/injector.dart';
 import 'package:travelgrid/common/utils/city_util.dart';
+import 'package:travelgrid/data/cubits/login_cubit/login_cubit.dart';
+import 'package:travelgrid/data/datasources/login_response.dart';
+import 'package:travelgrid/data/models/success_model.dart';
 import 'package:travelgrid/data/models/tr/tr_city_pair_model.dart';
+import 'package:travelgrid/domain/usecases/tr_usecase.dart';
 import 'package:travelgrid/presentation/screens/dashboard/tr/bloc/tr_itinerary%20_form_bloc.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';
 import 'package:travelgrid/presentation/widgets/date_time_view.dart';
@@ -24,12 +29,19 @@ class AddItinerary  extends StatelessWidget {
   String? tripType;
   AddItinerary({required this.jsonData,this.onAdd,this.cityPairs,this.isEdit=false,this.tripType});
 
-
+  Map errorMap={
+    "text" : '',
+    "color" : "0xFFFFFFFF",
+    "size": "10",
+    "family": "regular",
+    "align" : "center-left"
+  };
+  String errorMsg="";
   ItineraryFormBloc?  formBloc;
-
+  MetaLoginResponse loginResponse = MetaLoginResponse();
   @override
   Widget build(BuildContext context) {
-
+    loginResponse = context.read<LoginCubit>().getLoginResponse();
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -228,15 +240,51 @@ class AddItinerary  extends StatelessWidget {
                                                                     formBloc!.travelMode.value,
                                                                   isValue: false
                                                                 ),
-                                                                onChange:(value){
+                                                                onChange:(value)async{
                                                                   print(value);
                                                                   formBloc!.fareClass.updateValue(value['id'].toString());
+
+                                                                  Map<String,dynamic> params = {
+                                                                    "tripTypeFC": tripType,
+                                                                    "gradeFC":loginResponse.data!.grade!.organizationGrade,
+                                                                    "travelModeFC":formBloc!.travelModeID.value,
+                                                                    "fareClassFC":value['value'],
+                                                                    "index":value['id'].toString(),
+                                                                  };
+
+                                                                  SuccessModel model =   await Injector.resolve<TrUseCase>().checkFireFareClassRule(params);
+
+                                                                  if(model.status! && model.message!=null){
+                                                                    print("seterror");
+                                                                    errorMsg = model.message.toString();
+                                                                    formBloc!.showError.updateValue(true);
+                                                                  }else{
+                                                                    errorMsg = "";
+                                                                    print("seterror false");
+                                                                    formBloc!.showError.updateValue(false);
+                                                                  }
+
+
                                                                 },),
                                                             );
                                                           }
                                                       ),
                                                     ),
                                                   ]),
+                                              BlocBuilder<SelectFieldBloc, SelectFieldBlocState>(
+                                                  bloc: formBloc!.showError,
+                                                  builder: (context, state) {
+                                                    return Visibility(
+                                                      visible:state.value,
+                                                      child:Container(
+                                                          padding: EdgeInsets.symmetric(horizontal: 10.w),
+                                                          height: 20.h,
+                                                          color: Color(0xFFB71C1C),
+                                                          child: MetaTextView(mapData: errorMap,text: errorMsg)
+                                                      ),
+                                                    );
+                                                  }
+                                              ),
 
                                               BlocBuilder<SelectFieldBloc, SelectFieldBlocState>(
                                                   bloc: formBloc!.travelModeID,

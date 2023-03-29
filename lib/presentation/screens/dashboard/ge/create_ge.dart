@@ -45,6 +45,9 @@ class CreateGeneralExpense extends StatelessWidget {
   CreateGeneralExpense({this.isEdit=true,this.title,this.isApproval=false});
   GeneralExpenseBloc?  bloc;
   Map? jsonData;
+   Color customSurfaceWhite = Color(0xFF2854A1);
+  Color primaryColor = Color(0XFF2854A1);
+
   @override
   Widget build(BuildContext context) {
     jsonData = FlavourConstants.geCreateData;
@@ -244,7 +247,7 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpenseBody> {
         shape: CircularNotchedRectangle(),
         notchMargin: 5,
         elevation: 2.0,
-        child:widget.isEdit ? buildSubmitRow():buildViewRow(widget.state),
+        child: !widget.isApproval ? (widget.isEdit ? buildSubmitRow():buildViewRow(widget.state)):null,
       ),
       body: buildView(widget.state),
     );
@@ -406,7 +409,17 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpenseBody> {
 
     return Container(
             padding: EdgeInsets.symmetric(horizontal: 20.w,vertical: 10.h),
-            color: Colors.white,
+            margin: EdgeInsets.symmetric(horizontal:10.w,vertical: 10.h),
+      color: Colors.white,
+            // decoration: BoxDecoration(
+            //     color: Colors.white,
+            //     borderRadius: BorderRadius.all(Radius.circular(5.r)),
+            //     border: Border.all(
+            //       color: ParseDataType().getHexToColor(jsonData['backgroundColor']),
+            //       width: 2.r,
+            //     ),
+            //
+            // ),
             child: Column(
               children: [
                 Container(
@@ -507,7 +520,7 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpenseBody> {
           shrinkWrap: true,
           gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount:2,
-              childAspectRatio: 7,
+              childAspectRatio: 5,
               mainAxisSpacing: 3.h
           ),
           itemBuilder: (BuildContext context, int index) {

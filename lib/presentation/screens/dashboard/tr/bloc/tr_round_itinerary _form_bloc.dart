@@ -21,6 +21,7 @@ class RoundItineraryFormBloc extends FormBloc<String, String> {
   final tfAmount = TextFieldBloc();
   final tfPNR= TextFieldBloc();
   final tfTicket= TextFieldBloc();
+  final showError = SelectFieldBloc<bool, dynamic>(initialValue: false);
 
 
 
@@ -41,7 +42,7 @@ class RoundItineraryFormBloc extends FormBloc<String, String> {
   final tfAmount2 = TextFieldBloc();
   final tfPNR2= TextFieldBloc();
   final tfTicket2= TextFieldBloc();
-
+  final showError2 = SelectFieldBloc<bool, dynamic>(initialValue: false);
 
 
   static String? emptyValidator(dynamic value) {
@@ -126,7 +127,7 @@ class RoundItineraryFormBloc extends FormBloc<String, String> {
         "byCompany": swByCompany.value ? 42 : 41,
         "fareClass": fareClass.valueToInt,
         "travelMode": travelMode.value,
-        "price": tfAmount.value == "nill" ? 0 : tfAmount.valueToDouble,
+        "price": tfAmount.value == "nill" ? 0.0 : tfAmount.valueToDouble,
         "pnr": tfPNR.value == "nill" ? "" : tfPNR.value,
         "ticket": tfTicket.value == "nill" ? "" : tfTicket.value,
       },
@@ -138,7 +139,7 @@ class RoundItineraryFormBloc extends FormBloc<String, String> {
         "byCompany": swByCompany2.value ? 42 : 41,
         "fareClass": fareClass2.valueToInt,
         "travelMode": travelMode2.value,
-        "price": tfAmount2.value == "nill" ? 0 : tfAmount2.valueToInt,
+        "price": tfAmount2.value == "nill" ? 0.0 : tfAmount2.valueToDouble,
         "pnr": tfPNR2.value == "nill" ? "" : tfPNR2.value,
         "ticket": tfTicket2.value == "nill" ? "" : tfTicket2.value,
       }
