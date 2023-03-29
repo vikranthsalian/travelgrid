@@ -36,8 +36,16 @@ class CityBloc extends Bloc<CityEvent, CityState> {
 
     if(event is GetCountryListEvent) {
 
-      MetaCityListResponse? response = await Injector.resolve<CommonUseCase>().getCities(event.countryCode,event.tripType);
+      MetaCountryListResponse? response = await Injector.resolve<CommonUseCase>().getCountriesList();
       appNavigatorKey.currentState!.context.read<CityCubit>().setCountryResponse(response.data!);
+
+    }
+
+
+    if(event is GetCountryListEvent) {
+
+      MetaCityListResponse? response = await Injector.resolve<CommonUseCase>().getCities(event.countryCode,event.tripType);
+      appNavigatorKey.currentState!.context.read<CityCubit>().setOverSeasCitiesResponse(response.data!);
     //  MetaCountryListResponse? response = await Injector.resolve<CommonUseCase>().getCountriesList();
 
     //  emit(CountryLoadedState(data: response));

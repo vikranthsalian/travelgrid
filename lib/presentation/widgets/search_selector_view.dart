@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:travelgrid/data/models/tr/tr_traveller_details.dart';
 import 'package:travelgrid/presentation/screens/common/cities_screen.dart';
+import 'package:travelgrid/presentation/screens/common/countries_screen.dart';
 import 'package:travelgrid/presentation/screens/common/employees_screen.dart';
 import 'package:travelgrid/presentation/screens/common/non_employees_screen.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
@@ -36,21 +37,38 @@ class _MetaSearchSelectorViewState extends State<MetaSearchSelectorView> {
                 String countryCode = "";
                 if (widget.type == "D") {
                   countryCode = "IN";
-                } else {
+                }else {
                   countryCode = "";
                 }
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) =>
-                        CityScreen(
-                          code: countryCode,
-                          onTap: (data) {
-                            Navigator.pop(context);
-                            setState(() {
-                              widget.text = data.name;
-                              widget.onChange!(data);
-                            });
-                          },
-                        )));
+
+                if(widget.type == "OO"){
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) =>
+                          CountriesScreen(
+                            onTap: (data) {
+                              Navigator.pop(context);
+                              setState(() {
+                                widget.text = data.countryName;
+                                widget.onChange!(data);
+                              });
+                            },
+                          )));
+                }else{
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) =>
+                          CityScreen(
+                            code: countryCode,
+                            onTap: (data) {
+                              Navigator.pop(context);
+                              setState(() {
+                                widget.text = data.name;
+                                widget.onChange!(data);
+                              });
+                            },
+                          )));
+                }
+
+
               }else{
 
 

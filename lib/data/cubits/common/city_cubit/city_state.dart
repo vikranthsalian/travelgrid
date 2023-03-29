@@ -6,5 +6,6 @@ abstract class CityState {}
 class CityIn extends CityState {
   final List<Data>? response;
   final List<Data>? responseCountry;
-  CityIn({this.response,this.responseCountry});
+  final List<cn.Data>? countryList;
+  CityIn({this.response,this.responseCountry,this.countryList});
 }

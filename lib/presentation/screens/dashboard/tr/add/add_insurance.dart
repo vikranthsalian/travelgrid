@@ -115,12 +115,12 @@ class AddInsurance  extends StatelessWidget {
                                       physics: NeverScrollableScrollPhysics(),
                                       children:[
                                         MetaSearchSelectorView(
-                                        "O",
+                                        "OO",
                                         mapData: jsonData['selectCountry'],
                                         text: CityUtil.getCityNameFromID(formBloc!.tfCountry.value),
                                         onChange:(value){
                                           print(value);
-                                          formBloc!.tfCountry.updateValue(value.name);
+                                          formBloc!.tfCountry.updateValue(value.countryName);
                                         },),
                                         MetaTextFieldBlocView(mapData: jsonData['text_field_days'],
                                             textFieldBloc: formBloc!.tfDays,

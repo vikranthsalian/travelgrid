@@ -30,7 +30,8 @@ class CityUtil{
     }
 
    List<city.Data> list = appNavigatorKey.currentState!.context.read<CityCubit>().getCityResponse();
-   List<city.Data> list2 = appNavigatorKey.currentState!.context.read<CityCubit>().getCountryResponse();
+
+   List<city.Data> list2 = appNavigatorKey.currentState!.context.read<CityCubit>().getOverSeasCitiesResponse();
    list=list+list2;
 
     if(isCode){

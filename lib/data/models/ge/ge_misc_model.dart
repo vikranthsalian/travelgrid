@@ -3,6 +3,7 @@ class GEMiscModel {
   int? miscellaneousType;
   String? startDate;
   String? endDate;
+  int? noOfDays;
   int? city;
   String? cityName;
   int? unitType;
@@ -18,6 +19,7 @@ class GEMiscModel {
         this.miscellaneousType,
         this.startDate,
         this.endDate,
+        this.noOfDays,
         this.city,
         this.cityName,
         this.unitType,
@@ -33,6 +35,7 @@ class GEMiscModel {
     miscellaneousType = json['miscellaneousType'];
     startDate = json['startDate'];
     endDate = json['endDate'];
+    noOfDays = json['noOfDays'];
     city = json['city'];
     cityName = json['cityName'];
     unitType = json['unitType'];
@@ -50,6 +53,7 @@ class GEMiscModel {
     data['miscellaneousType'] = this.miscellaneousType;
     data['startDate'] = this.startDate;
     data['endDate'] = this.endDate;
+    data['noOfDays'] = this.noOfDays;
     data['city'] = this.city;
     data['cityName'] = this.cityName;
     data['unitType'] = this.unitType;
@@ -68,6 +72,7 @@ class GEMiscModel {
       'miscellaneousType': this.miscellaneousType,
       'startDate': this.startDate,
       'endDate': this.endDate,
+      'noOfDays': this.noOfDays,
       'city': this.city,
       'cityName': this.cityName,
       'unitType': this.unitType,
@@ -86,6 +91,7 @@ class GEMiscModel {
       miscellaneousType: map['miscellaneousType'] as int,
       startDate: map['startDate'] as String,
       endDate: map['endDate'] as String,
+      noOfDays: map['noOfDays'] as int,
       city: map['city'] as int,
       cityName: map['cityName'] as String,
       unitType: map['unitType'] ?? 0,

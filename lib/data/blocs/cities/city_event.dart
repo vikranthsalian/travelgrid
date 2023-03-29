@@ -9,6 +9,14 @@ class GetCityListEvent extends CityEvent {
   GetCityListEvent({this.tripType="D",this.countryCode="IN"});
 }
 
+class GetCountryCityListEvent extends CityEvent {
+  String? tripType;
+  String? countryCode;
+  GetCountryCityListEvent({this.tripType="O",this.countryCode=""});
+}
+
+
+
 class GetCountryListEvent extends CityEvent {
   String? tripType;
   String? countryCode;

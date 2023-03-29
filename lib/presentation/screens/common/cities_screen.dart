@@ -37,7 +37,7 @@ class _CityScreenState extends State<CityScreen> {
     jsonData = FlavourConstants.cityData;
     list = appNavigatorKey.currentState!.context.read<CityCubit>().getCityResponse();
       if(widget.code!="IN"){
-        List<Data>  overseasCities = appNavigatorKey.currentState!.context.read<CityCubit>().getCountryResponse();
+        List<Data>  overseasCities = appNavigatorKey.currentState!.context.read<CityCubit>().getOverSeasCitiesResponse();
         list=overseasCities+list;
       }
 

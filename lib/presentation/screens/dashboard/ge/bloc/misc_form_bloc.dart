@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
+import 'package:travelgrid/common/utils/date_time_util.dart';
 import 'package:travelgrid/common/utils/show_alert.dart';
 import 'package:travelgrid/common/utils/validators.dart';
 
@@ -102,14 +103,27 @@ class MiscFormBloc extends FormBloc<String, String> {
 
   @override
   FutureOr<void> onSubmitting() async {
+    DateTime dob1 = MetaDateTime().getDateTime(checkInDate.value);
+    print(dob1);
 
+    DateTime dob2 = MetaDateTime().getDateTime(checkOutDate.value);
+    print(dob2);
+    print("differenceInYears 2");
+    Duration dur =  dob2.difference(dob1);
+
+    int differenceInYears = (dur.inDays);
+
+    print(differenceInYears);
 
 
     Map<String,dynamic> saveMiscData = {
       "miscellaneousTypeName": miscName.value,
       "miscellaneousType":int.parse(miscID.value ?? "0"),
+
       "startDate": checkInDate.value,
       "endDate": checkOutDate.value,
+      "noOfDays": dur.inDays,
+
       "city":int.parse(cityID.value),
       "cityName":cityName.value,
       if(miscID.value == "212")

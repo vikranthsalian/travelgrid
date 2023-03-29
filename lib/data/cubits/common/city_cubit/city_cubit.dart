@@ -2,13 +2,15 @@ import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:travelgrid/data/datasources/others/cities_list.dart';
+import 'package:travelgrid/data/datasources/others/countries_list.dart' as cn;
 
 part 'city_state.dart';
 
 class CityCubit extends Cubit<CityState> {
   CityCubit() : super(CityIn(response: [],responseCountry: []));
   List<Data> city=[];
-  List<Data> country=[];
+  List<Data> countryCities=[];
+  List<cn.Data> countries=[];
   setCityResponse(List<Data> response) {
     if(state is CityIn) {
       city = response;
@@ -26,22 +28,36 @@ class CityCubit extends Cubit<CityState> {
   }
 
 
-  setCountryResponse(List<Data> response) {
+  setOverSeasCitiesResponse(List<Data> response) {
     print("setCountryResponse");
     if(state is CityIn) {
-      print("country.length");
-      print(country.length);
-      country = response;
+      countryCities = response;
       emit(CityIn( responseCountry: response));
     }
   }
-  List<Data> getCountryResponse() {
+  List<Data> getOverSeasCitiesResponse() {
     List<Data> response = [];
     if(state is CityIn) {
       final current = state as CityIn;
-      return country;
+      return countryCities;
     }
     return response;
   }
 
+
+  setCountryResponse(List<cn.Data> response) {
+    if(state is CityIn) {
+      countries = response;
+      emit(CityIn( countryList: response));
+    }
+  }
+  List<cn.Data> getCountryResponse() {
+    List<cn.Data> response = [];
+    if(state is CityIn) {
+      final current = state as CityIn;
+
+      return countries;
+    }
+    return response;
+  }
 }

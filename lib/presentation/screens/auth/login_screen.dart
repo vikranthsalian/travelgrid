@@ -77,6 +77,7 @@ class LoginScreen extends StatelessWidget {
                        Injector.resolve<CurrencyBloc>()..add(GetCurrencyListEvent());
                        Injector.resolve<CityBloc>()..add(GetCityListEvent());
                        Injector.resolve<CityBloc>()..add(GetCountryListEvent());
+                       Injector.resolve<CityBloc>()..add(GetCountryListEvent());
                        Injector.resolve<EmployeeBloc>()..add(GetEmployeeListEvent());
                        Injector.resolve<EmployeeBloc>()..add(GetNonEmployeeListEvent());
 
