@@ -15,4 +15,6 @@ class GeUseCase {
   Future<SuccessModel> takeBackGE(data) async => apiAbstract.takeBackGE(data);
 
   Future<SuccessModel> approveGE(id,comment) async => apiAbstract.approveGE(id,comment);
+
+  Future<SuccessModel> rejectGE(id,comment) async => apiAbstract.rejectGE(id,comment);
 }

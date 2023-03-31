@@ -1,4 +1,5 @@
 import 'package:travelgrid/data/datasources/list/tr_list_response.dart';
+import 'package:travelgrid/data/datasources/list/tr_upcoming_response.dart';
 import 'package:travelgrid/data/datasources/summary/tr_summary_response.dart';
 import 'package:travelgrid/data/models/success_model.dart';
 import 'package:travelgrid/data/remote/remote_datasource.dart';
@@ -23,7 +24,17 @@ class TrRepository extends TrAPIAbstract {
 
       return TRListResponse(status: false);
   }
+  @override
+  Future<MetaUpcomingTRResponse> upcomingApi() async {
 
+    var response = await apiRemoteDatasource.getList("upcommingTR");
+    if(response!=null) {
+      MetaUpcomingTRResponse modelResponse = MetaUpcomingTRResponse.fromJson(response);
+      return modelResponse;
+    }
+
+    return MetaUpcomingTRResponse(status: false);
+  }
 
   @override
   Future<TRSummaryResponse> getTR(id) async {
@@ -105,4 +116,22 @@ class TrRepository extends TrAPIAbstract {
     return SuccessModel(status: false);
   }
 
+  @override
+  Future<SuccessModel> rejectTR(id, comment) async{
+
+    Map<String,dynamic> data= {
+      "recordLocator":id,
+      "action":"Reject",
+      "comments":comment
+    };
+
+    var response = await apiRemoteDatasource.approve("/ge/geApproveAction",data,msg: "Rejecting...");
+
+    if(response!=null) {
+      SuccessModel modelResponse = SuccessModel.fromJson(response);
+      return modelResponse;
+    }
+
+    return SuccessModel(status: false);
+  }
 }

@@ -1,4 +1,5 @@
 import 'package:travelgrid/data/datasources/list/tr_list_response.dart';
+import 'package:travelgrid/data/datasources/list/tr_upcoming_response.dart';
 import 'package:travelgrid/data/datasources/summary/tr_summary_response.dart';
 import 'package:travelgrid/data/models/success_model.dart';
 import 'package:travelgrid/domain/repo_abstract/api_abstract.dart';
@@ -7,6 +8,8 @@ class TrUseCase {
   final TrAPIAbstract apiAbstract;
   TrUseCase(this.apiAbstract);
   Future<TRListResponse> callApi() async => apiAbstract.callList();
+
+  Future<MetaUpcomingTRResponse> upcomingApi() async => apiAbstract.upcomingApi();
 
   Future<TRSummaryResponse> getSummary(id) async => apiAbstract.getTR(id);
 
@@ -19,4 +22,6 @@ class TrUseCase {
   Future<SuccessModel> checkFireFareClassRule(data) async => apiAbstract.checkFireFareClassRule(data);
 
   Future<SuccessModel> approveTR(id,comment) async => apiAbstract.approveTR(id,comment);
+
+  Future<SuccessModel> rejectTR(id,comment) async => apiAbstract.rejectTR(id,comment);
 }

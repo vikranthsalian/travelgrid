@@ -354,7 +354,7 @@ class GeneralExpense extends StatelessWidget {
                                  });
                                },
                                child: Visibility(
-                                 visible: isVisible,
+                                 visible: false,
                                    child: MetaTextView( mapData: cancel,text:"Edit")
                                ),
                              ),

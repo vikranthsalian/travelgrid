@@ -109,9 +109,12 @@ class CreateTravelExpense extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
         Expanded(
-          child: MetaButton(mapData: jsonData!['bottomButtonLeft'],text: "Cancel",
-              onButtonPressed: (){
-
+          child: MetaButton(mapData: jsonData!['bottomButtonLeft'],text: "Reject",
+              onButtonPressed: ()async{
+                SuccessModel  model =  await Injector.resolve<TeUseCase>().rejectTE(title,controller.text);
+                if(model.status==true){
+                  Navigator.pop(ctx);
+                }
               }
           ),
         ),
@@ -354,10 +357,13 @@ class _CreateTravelExpenseBodyState extends State<CreateTravelExpenseBody> {
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          MetaButton(mapData: jsonData['bottomButtonLeft'],
-              onButtonPressed: (){
-                submitGe("modify");
-              }
+          Visibility(
+            visible: false,
+            child: MetaButton(mapData: jsonData['bottomButtonLeft'],
+                onButtonPressed: (){
+                  submitGe("modify");
+                }
+            ),
           ),
 
           MetaButton(mapData: jsonData['bottomButtonRight'],
@@ -403,140 +409,6 @@ class _CreateTravelExpenseBodyState extends State<CreateTravelExpenseBody> {
     return Container();
   }
 
-  Container buildExpandableView(Map mapData,String key){
-    Map map= mapData[key];
-
-    Container getSwitches(map,value){
-      switch(value){
-        case "requesterDetails":
-          return Container(
-            alignment: Alignment.centerLeft,
-            child: MetaSwitch(mapData: map['showDetails'],
-              value: showRequesterDetails,
-              onSwitchPressed: (value){
-                setState(() {
-                  showRequesterDetails=value;
-                });
-              })
-          );
-        case "visitItems":
-          return Container(
-            alignment: Alignment.centerRight,
-            child: MetaSwitch(mapData: map['showDetails'],
-              value: showVisitDetails,
-              onSwitchPressed: (value){
-
-                setState(() {
-                  showVisitDetails=value;
-                });
-
-              },),
-          );
-        case "summaryItems":
-          return Container(
-            alignment: Alignment.centerRight,
-            child: MetaSwitch(mapData: map['showDetails'],
-              value: showSummaryItems,
-              onSwitchPressed: (value){
-
-                setState(() {
-                  showSummaryItems=value;
-                });
-
-              },),
-          );
-        case "summaryDetails":
-          return Container(
-            alignment: Alignment.centerRight,
-            child: MetaSwitch(mapData: map['showDetails'],
-              value: showSummaryDetails,
-              onSwitchPressed: (value){
-
-                setState(() {
-                  showSummaryDetails=value;
-                });
-
-              },),
-          );
-        case "approverDetails":
-          return Container(
-            alignment: Alignment.centerRight,
-            child: MetaSwitch(mapData: map['showDetails'],
-              value: showApproverDetails,
-              onSwitchPressed: (value){
-
-                setState(() {
-                  showApproverDetails=value;
-                });
-
-              },),
-          );
-        case "commentDetails":
-          return Container(
-            alignment: Alignment.centerRight,
-            child: MetaSwitch(mapData: map['showDetails'],
-              value: showCommentDetails,
-              onSwitchPressed: (value){
-
-                setState(() {
-                  showCommentDetails=value;
-                });
-
-              },),
-          );
-        default:
-          return Container();
-
-      }
-
-    }
-
-    Container getViews(map,value){
-      switch(value){
-        case "requesterDetails":
-          return showRequesterDetails ? buildRequesterWidget(map):Container();
-        case "visitItems":
-          return showVisitDetails ? buildVisitItemWidget(map):Container();
-        case "summaryItems":
-          return showSummaryItems ? buildSummaryItemWidget(map):Container();
-        case "summaryDetails":
-          return showSummaryDetails ? buildSummaryWidget(map):Container();
-        case "approverDetails":
-          return showApproverDetails ? buildApproverWidget(map):Container();
-        case "commentDetails":
-          return showCommentDetails ? buildCommentWidget(map):Container();
-        default:
-          return Container();
-      }
-
-    }
-
-    return Container(
-      child: Column(
-        children: [
-          buildHeaders(map, getSwitches(map,key)),
-          getViews(map,key)
-        ],
-      ),
-    );
-  }
-
-
-  Container buildHeaders(Map map, Container child) {
-    return Container(
-            height: 40.h,
-            color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
-            child: Row(
-
-              children: [
-                Container(
-                    margin: EdgeInsets.symmetric(horizontal: 20.w),
-                    child: MetaTextView(mapData: map['label'])),
-                Expanded(child: child)
-              ],
-            ),
-          );
-  }
 
   Container buildSummaryWidget(Map map) {
 
@@ -691,7 +563,6 @@ class _CreateTravelExpenseBodyState extends State<CreateTravelExpenseBody> {
   }
 
   Container buildVisitItemWidget(Map map) {
-    print("buildVisitItemWidget");
     List items =[];
     items =  map['dataHeader'];
     return Container(
@@ -737,31 +608,31 @@ class _CreateTravelExpenseBodyState extends State<CreateTravelExpenseBody> {
                         Expanded(flex:1,child: MetaTextView(mapData: map['listView']['item'],text:visitItems[i].evdStartDate!+"\n-"+visitItems[i].evdStartTime! )),
                         Expanded(flex:1,child: MetaTextView(mapData: map['listView']['item'],text:visitItems[i].evdEndDate!+"\n-"+visitItems[i].evdEndTime! )),
                         widget.isEdit? Container(
-                          width: 50.w,
+                          width: 56.w,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               InkWell(
                                   onTap: (){
-                                    // navigate({"onClick": type}, true,summaryItems[index].item2,index);
+                                     navigate({"onClick": "visit"}, true,visitItems[i].toMap(),i);
                                   },
                                   child: Container(
-                                      width:20.w,
-                                      height:20.w,
+                                      width:25.w,
+                                      height:25.w,
                                       child: MetaSVGView(mapData:  map['listView']['item']['items'][0]))),
                               SizedBox(width: 5.h,),
 
                               InkWell(onTap: (){
-                                // print("removing index:"+index.toString() );
-                                // setState(() {
-                                //   summaryItems.removeAt(index);
-                                //   calculateSummary();
-                                // });
+                                print("removing index:"+i.toString() );
+                                setState(() {
+                                  visitItems.removeAt(i);
+                                  calculateSummary();
+                                });
 
                               },
                                   child: Container(
-                                      width:20.w,
-                                      height:20.w,
+                                      width:25.w,
+                                      height:25.w,
                                       child: MetaSVGView(mapData:  map['listView']['item']['items'][1]))),
                             ],
                           ),
@@ -893,7 +764,7 @@ class _CreateTravelExpenseBodyState extends State<CreateTravelExpenseBody> {
     for(var item in summaryItems){
 
       if(item.item1.teType==TETypes.ACCOMMODATION){
-        accomTotal=accomTotal + double.parse(item.item1.amount.toString());
+        accomTotal=accomTotal + double.parse(item.item1.amount.toString() );
       }
 
       if(item.item1.teType==TETypes.CONVEYANCE){
@@ -996,8 +867,35 @@ class _CreateTravelExpenseBodyState extends State<CreateTravelExpenseBody> {
   }
 
   void navigate(e,bool isEdit,Map<String,dynamic> data,int index) {
+    print(e);
 
-    if(e['onClick'] == RouteConstants.createTeMiscExpensePath || e['onClick']  == TETypes.MISCELLANEOUS.toString()){
+    if(e['onClick']  == "visit"){
+      print(data);
+      ExpenseVisitDetails? model;
+      if(data.isNotEmpty){
+        model =  ExpenseVisitDetails.fromMap(data);
+      }
+
+
+      Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
+
+          AddVisitDetails(
+            "D",
+            isEdit:true,
+            expenseVisitDetails: model,
+            onAdd: (value){
+              if(isEdit){
+                visitItems.removeAt(index);
+              }
+              visitItems.add(value);
+              calculateSummary();
+            },)
+
+      ));
+    }
+
+
+    if(e['onClick'].toString()  == RouteConstants.createTeMiscExpensePath || e['onClick'].toString()  == TETypes.MISCELLANEOUS.toString()){
       print(TETypes.MISCELLANEOUS);
       print(data);
       TEMiscModel? model;
@@ -1019,7 +917,7 @@ class _CreateTravelExpenseBodyState extends State<CreateTravelExpenseBody> {
             },)));
     }
 
-    if(e['onClick'] == RouteConstants.createTeAccommodationExpensePath  || e['onClick']  == TETypes.ACCOMMODATION.toString()){
+    if(e['onClick'].toString()  == RouteConstants.createTeAccommodationExpensePath  || e['onClick'].toString()  == TETypes.ACCOMMODATION.toString()){
 
       print(data);
       TEAccomModel? model;
@@ -1042,7 +940,7 @@ class _CreateTravelExpenseBodyState extends State<CreateTravelExpenseBody> {
           },)));
     }
 
-    if(e['onClick'] == RouteConstants.createTeConveyanceExpensePath || e['onClick']  == TETypes.CONVEYANCE.toString()){
+    if(e['onClick'].toString()  == RouteConstants.createTeConveyanceExpensePath || e['onClick'].toString()  == TETypes.CONVEYANCE.toString()){
 
 
       print(data);
@@ -1065,7 +963,7 @@ class _CreateTravelExpenseBodyState extends State<CreateTravelExpenseBody> {
           },)));
     }
 
-    if(e['onClick'] == RouteConstants.createTeTicketExpensePath || e['onClick']  == TETypes.TICKET.toString()){
+    if(e['onClick'].toString()  == RouteConstants.createTeTicketExpensePath || e['onClick'].toString()  == TETypes.TICKET.toString()){
 
 
       print(data);

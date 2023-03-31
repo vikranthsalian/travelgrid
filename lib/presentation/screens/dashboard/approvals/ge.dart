@@ -50,6 +50,7 @@ class ApprovalGE extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             MetaButton(mapData: mapData['bottomButtonLeft'],
+                text: "Cancel",
                 onButtonPressed: (){
                   showModalBottomSheet(
                       context: context,

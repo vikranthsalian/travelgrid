@@ -113,9 +113,12 @@ class CreateGeneralExpense extends StatelessWidget {
     return Row(
       children: <Widget>[
         Expanded(
-          child: MetaButton(mapData: jsonData!['bottomButtonLeft'],text: "Cancel",
-              onButtonPressed: (){
+          child: MetaButton(mapData: jsonData!['bottomButtonLeft'],text: "Reject",
+              onButtonPressed: ()async{
+                SuccessModel  model =  await Injector.resolve<GeUseCase>().rejectGE(title,controller.text);
+                if(model.status==true){
                   Navigator.pop(ctx);
+                }
               }
           ),
         ),

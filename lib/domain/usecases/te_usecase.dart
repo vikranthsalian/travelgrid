@@ -15,4 +15,6 @@ class TeUseCase {
   Future<SuccessModel> takeBackTE(data) async => apiAbstract.takeBackTE(data);
 
   Future<SuccessModel> approveGE(id,comment) async => apiAbstract.approveTE(id,comment);
+
+  Future<SuccessModel> rejectTE(id,comment) async => apiAbstract.rejectTE(id,comment);
 }

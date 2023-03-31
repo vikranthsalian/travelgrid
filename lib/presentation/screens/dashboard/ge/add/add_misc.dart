@@ -8,6 +8,7 @@ import 'package:travelgrid/common/constants/flavour_constants.dart';
 import 'package:travelgrid/common/enum/dropdown_types.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
 import 'package:travelgrid/common/injector/injector.dart';
+import 'package:travelgrid/common/utils/date_time_util.dart';
 import 'package:travelgrid/common/utils/show_alert.dart';
 import 'package:travelgrid/data/models/expense_model.dart';
 import 'package:travelgrid/data/models/ge/ge_misc_model.dart';
@@ -40,6 +41,7 @@ class _CreateMiscExpenseState extends State<CreateMiscExpense> {
   MiscFormBloc? formBloc;
   bool loaded=false;
   File? file;
+  int days =1;
   Map errorMap={
     "text" : '',
     "color" : "0xFFFFFFFF",
@@ -218,6 +220,7 @@ class _CreateMiscExpenseState extends State<CreateMiscExpense> {
                                               value: {"date": formBloc!.checkInDate.value},
                                               onChange: (value){
                                             formBloc!.checkInDate.updateValue(value['date'].toString());
+                                            getDays();
                                           }),
                                         ),
                                       ),
@@ -227,6 +230,7 @@ class _CreateMiscExpenseState extends State<CreateMiscExpense> {
                                               value: {"date": formBloc!.checkOutDate.value},
                                               onChange: (value){
                                             formBloc!.checkOutDate.updateValue(value['date'].toString());
+                                            getDays();
                                           }),
                                         ),
                                       ),
@@ -260,9 +264,6 @@ class _CreateMiscExpenseState extends State<CreateMiscExpense> {
                                                   formBloc!.showError.updateValue(false);
                                                 }else{
 
-                                                  print(" formBloc!.unitTypeID.value");
-                                                  print( formBloc!.unitTypeID.value);
-
                                                   if( formBloc!.unitTypeID.value == "288" &&  formBloc!.tfAmount.valueToDouble! > 200){
                                                     formBloc!.showError.updateValue(false);
                                                     formBloc!.showError.updateValue(true);
@@ -273,7 +274,7 @@ class _CreateMiscExpenseState extends State<CreateMiscExpense> {
                                                     formBloc!.showError.updateValue(false);
                                                     formBloc!.showError.updateValue(true);
                                                   }
-
+                                                  getDays();
                                                 }
 
 
@@ -293,16 +294,23 @@ class _CreateMiscExpenseState extends State<CreateMiscExpense> {
                                                       formBloc!.unitTypeName.updateValue(value['text']);
                                                       formBloc!.unitTypeID.updateValue(value['id'].toString());
 
-                                                        if( formBloc!.unitTypeID.value == "288" &&  formBloc!.tfAmount.valueToDouble! > 200){
+                                                        if( formBloc!.unitTypeID.value == "288"
+                                                            && formBloc!.tfAmount.value.isNotEmpty
+                                                            && formBloc!.tfAmount.valueToDouble! > 200
+                                                        ){
                                                           formBloc!.showError.updateValue(false);
                                                           formBloc!.showError.updateValue(true);
                                                         }
 
-                                                        if( formBloc!.unitTypeID.value == "289" &&  formBloc!.tfAmount.valueToDouble! > 400){
+                                                        if( formBloc!.unitTypeID.value == "289"
+                                                            && formBloc!.tfAmount.value.isNotEmpty
+                                                            &&  formBloc!.tfAmount.valueToDouble! > 400){
 
                                                           formBloc!.showError.updateValue(false);
                                                           formBloc!.showError.updateValue(true);
                                                         }
+
+                                                        getDays();
 
 
                                                     },),
@@ -320,6 +328,15 @@ class _CreateMiscExpenseState extends State<CreateMiscExpense> {
                                               textFieldBloc: formBloc!.tfAmount,
                                               onChanged:(value){
                                                 formBloc!.tfAmount.updateValue(value);
+                                                getDays();
+
+                                                if(formBloc!.unitTypeID.value=="288"){
+                                                  formBloc!.showErrorValue.updateValue((200*days).toString());
+                                                  //   msg= (200*days).toString();
+                                                }else if(formBloc!.unitTypeID.value=="289"){
+                                                  formBloc!.showErrorValue.updateValue((400*days).toString());
+                                                  //    msg=(400*days).toString();
+                                                }
                                               }),
                                         ),
                                       ),
@@ -341,11 +358,15 @@ class _CreateMiscExpenseState extends State<CreateMiscExpense> {
                                       builder: (context, state) {
                                         print("formBloc!.unitTypeID.value");
                                         print(formBloc!.unitTypeID.value);
-                                        String msg="";
+                                        //String msg="";
+
+
                                         if(formBloc!.unitTypeID.value=="288"){
-                                          msg="200";
+                                          formBloc!.showErrorValue.updateValue((200*days).toString());
+                                       //   msg= (200*days).toString();
                                         }else if(formBloc!.unitTypeID.value=="289"){
-                                          msg="400";
+                                          formBloc!.showErrorValue.updateValue((400*days).toString());
+                                      //    msg=(400*days).toString();
                                         }
 
                                         return Visibility(
@@ -354,7 +375,7 @@ class _CreateMiscExpenseState extends State<CreateMiscExpense> {
                                             padding: EdgeInsets.symmetric(horizontal: 10.w),
                                               height: 20.h,
                                               color: Color(0xFFB71C1C),
-                                              child: MetaTextView(mapData: errorMap,text: "Eligible amount is "+msg)
+                                              child: MetaTextView(mapData: errorMap,text: "Eligible amount is "+formBloc!.showErrorValue.value)
                                           ),
                                         );
                                       }
@@ -390,6 +411,17 @@ class _CreateMiscExpenseState extends State<CreateMiscExpense> {
       return text;
     }
     return null;
+  }
+
+  getDays(){
+    DateTime dob1 = MetaDateTime().getDateTime(formBloc!.checkInDate.value);
+    DateTime dob2 = MetaDateTime().getDateTime(formBloc!.checkOutDate.value);
+    Duration dur =  dob2.difference(dob1);
+
+
+    int count = (dur.inDays);
+    days = count == 0 ? 1: count;
+
   }
 
 

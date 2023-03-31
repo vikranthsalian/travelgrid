@@ -1,3 +1,4 @@
+import 'package:travelgrid/data/datasources/list/tr_upcoming_response.dart';
 import 'package:travelgrid/data/datasources/others/accom_type_list.dart';
 import 'package:travelgrid/data/datasources/list/approver_list.dart';
 import 'package:travelgrid/data/datasources/others/cities_list.dart';
@@ -26,12 +27,14 @@ abstract class LoginAPIAbstract {
 
 abstract class TrAPIAbstract {
   Future<TRListResponse> callList();
+  Future<MetaUpcomingTRResponse> upcomingApi();
   Future<TRSummaryResponse> getTR(id);
   Future<SuccessModel> createTR(data,body);
   Future<SuccessModel> updateTR(data,body);
   Future<SuccessModel> checkOverlapped(data);
   Future<SuccessModel> checkFireFareClassRule(data);
   Future<SuccessModel> approveTR(id,comment);
+  Future<SuccessModel> rejectTR(id,comment);
 }
 
 
@@ -41,6 +44,7 @@ abstract class GeAPIAbstract {
   Future<SuccessModel> createGE(data,body);
   Future<SuccessModel> takeBackGE(data);
   Future<SuccessModel> approveGE(id,comment);
+  Future<SuccessModel> rejectGE(id,comment);
 }
 
 abstract class TeAPIAbstract {
@@ -49,6 +53,7 @@ abstract class TeAPIAbstract {
   Future<SuccessModel> createTE(data,body);
   Future<SuccessModel> takeBackTE(data);
   Future<SuccessModel> approveTE(id,comment);
+  Future<SuccessModel> rejectTE(id,comment);
 }
 
 abstract class AeAPIAbstract {

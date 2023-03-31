@@ -10,6 +10,11 @@ class GetTravelRequestListEvent extends TravelRequestEvent {
 
 }
 
+class GetUpcomingListEvent extends TravelRequestEvent {
+  GetUpcomingListEvent();
+
+}
+
 class GetTravelRequestSummaryEvent extends TravelRequestEvent {
   final String recordLocator;
   GetTravelRequestSummaryEvent({required this.recordLocator});

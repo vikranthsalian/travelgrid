@@ -7,7 +7,7 @@ class TESummaryResponse {
   TESummaryResponse({this.status, this.token, this.message, this.data});
 
   TESummaryResponse.fromJson(Map<String, dynamic> json) {
-    status = json['status'] == "SUCCESS" ? true:false;
+    status = json['status'] == "SUCCESS" ? true : false;
     token = json['token'];
     message = json['message'];
     data = json['data'] != null ? new Data.fromJson(json['data']) : null;
@@ -45,7 +45,24 @@ class Data {
   List<MaTravelExpenseComment>? matravelExpenseComment;
   MaExpenseSummary? maExpenseSummary;
 
-  Data({this.id, this.recordLocator, this.currentStatus, this.startDate, this.startTime, this.endDate, this.endTime, this.maTravelRequest, this.expenseVisitDetails, this.ticketExpenses, this.accommodationExpenses, this.conveyanceExpenses, this.miscellaneousExpenses, this.cashAdvances, this.dailyAllowances, this.matravelExpenseComment, this.maExpenseSummary});
+  Data(
+      {this.id,
+      this.recordLocator,
+      this.currentStatus,
+      this.startDate,
+      this.startTime,
+      this.endDate,
+      this.endTime,
+      this.maTravelRequest,
+      this.expenseVisitDetails,
+      this.ticketExpenses,
+      this.accommodationExpenses,
+      this.conveyanceExpenses,
+      this.miscellaneousExpenses,
+      this.cashAdvances,
+      this.dailyAllowances,
+      this.matravelExpenseComment,
+      this.maExpenseSummary});
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -56,26 +73,38 @@ class Data {
     startTime = json['startTime'];
     endDate = json['endDate'];
     endTime = json['endTime'];
-    maTravelRequest = json['maTravelRequest'] != null ? new MaTravelRequest.fromJson(json['maTravelRequest']) : null;
+    maTravelRequest = json['maTravelRequest'] != null
+        ? new MaTravelRequest.fromJson(json['maTravelRequest'])
+        : null;
     if (json['expenseVisitDetails'] != null) {
       expenseVisitDetails = <ExpenseVisitDetails>[];
-      json['expenseVisitDetails'].forEach((v) { expenseVisitDetails!.add(new ExpenseVisitDetails.fromJson(v)); });
+      json['expenseVisitDetails'].forEach((v) {
+        expenseVisitDetails!.add(new ExpenseVisitDetails.fromJson(v));
+      });
     }
     if (json['ticketExpenses'] != null) {
       ticketExpenses = <TicketExpense>[];
-      json['ticketExpenses'].forEach((v) { ticketExpenses!.add(new TicketExpense.fromJson(v)); });
+      json['ticketExpenses'].forEach((v) {
+        ticketExpenses!.add(new TicketExpense.fromJson(v));
+      });
     }
     if (json['accommodationExpenses'] != null) {
       accommodationExpenses = <AccommodationExpense>[];
-      json['accommodationExpenses'].forEach((v) { accommodationExpenses!.add(new AccommodationExpense.fromJson(v)); });
+      json['accommodationExpenses'].forEach((v) {
+        accommodationExpenses!.add(new AccommodationExpense.fromJson(v));
+      });
     }
     if (json['conveyanceExpenses'] != null) {
       conveyanceExpenses = <ConveyanceExpense>[];
-      json['conveyanceExpenses'].forEach((v) { conveyanceExpenses!.add(new ConveyanceExpense.fromJson(v)); });
+      json['conveyanceExpenses'].forEach((v) {
+        conveyanceExpenses!.add(new ConveyanceExpense.fromJson(v));
+      });
     }
     if (json['miscellaneousExpenses'] != null) {
       miscellaneousExpenses = <MiscellaneousExpense>[];
-      json['miscellaneousExpenses'].forEach((v) { miscellaneousExpenses!.add(new MiscellaneousExpense.fromJson(v)); });
+      json['miscellaneousExpenses'].forEach((v) {
+        miscellaneousExpenses!.add(new MiscellaneousExpense.fromJson(v));
+      });
     }
     // if (json['cashAdvances'] != null) {
     //   cashAdvances = <Null>[];
@@ -87,9 +116,13 @@ class Data {
     // }
     if (json['matravelExpenseComment'] != null) {
       matravelExpenseComment = <MaTravelExpenseComment>[];
-      json['matravelExpenseComment'].forEach((v) { matravelExpenseComment!.add(new MaTravelExpenseComment.fromJson(v)); });
+      json['matravelExpenseComment'].forEach((v) {
+        matravelExpenseComment!.add(new MaTravelExpenseComment.fromJson(v));
+      });
     }
-    maExpenseSummary = json['maExpenseSummary'] != null ? new MaExpenseSummary.fromJson(json['maExpenseSummary']) : null;
+    maExpenseSummary = json['maExpenseSummary'] != null
+        ? new MaExpenseSummary.fromJson(json['maExpenseSummary'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -105,19 +138,24 @@ class Data {
       data['maTravelRequest'] = this.maTravelRequest!.toJson();
     }
     if (this.expenseVisitDetails != null) {
-      data['expenseVisitDetails'] = this.expenseVisitDetails!.map((v) => v.toJson()).toList();
+      data['expenseVisitDetails'] =
+          this.expenseVisitDetails!.map((v) => v.toJson()).toList();
     }
     if (this.ticketExpenses != null) {
-      data['ticketExpenses'] = this.ticketExpenses!.map((v) => v.toJson()).toList();
+      data['ticketExpenses'] =
+          this.ticketExpenses!.map((v) => v.toJson()).toList();
     }
     if (this.accommodationExpenses != null) {
-      data['accommodationExpenses'] = this.accommodationExpenses!.map((v) => v.toJson()).toList();
+      data['accommodationExpenses'] =
+          this.accommodationExpenses!.map((v) => v.toJson()).toList();
     }
     if (this.conveyanceExpenses != null) {
-      data['conveyanceExpenses'] = this.conveyanceExpenses!.map((v) => v.toJson()).toList();
+      data['conveyanceExpenses'] =
+          this.conveyanceExpenses!.map((v) => v.toJson()).toList();
     }
     if (this.miscellaneousExpenses != null) {
-      data['miscellaneousExpenses'] = this.miscellaneousExpenses!.map((v) => v.toJson()).toList();
+      data['miscellaneousExpenses'] =
+          this.miscellaneousExpenses!.map((v) => v.toJson()).toList();
     }
     // if (this.cashAdvances != null) {
     //   data['cashAdvances'] = this.cashAdvances!.map((v) => v.toJson()).toList();
@@ -126,7 +164,8 @@ class Data {
     //   data['dailyAllowances'] = this.dailyAllowances!.map((v) => v.toJson()).toList();
     // }
     if (this.matravelExpenseComment != null) {
-      data['matravelExpenseComment'] = this.matravelExpenseComment!.map((v) => v.toJson()).toList();
+      data['matravelExpenseComment'] =
+          this.matravelExpenseComment!.map((v) => v.toJson()).toList();
     }
     if (this.maExpenseSummary != null) {
       data['maExpenseSummary'] = this.maExpenseSummary!.toJson();
@@ -219,7 +258,41 @@ class MaTravelRequest {
   List<Null>? maTravelInsurance;
   List<TravelComments>? travelComments;
 
-  MaTravelRequest({this.id, this.tripNumber, this.employeeName, this.mobileNumber, this.emergencyMobileNumber, this.startDate, this.endDate, this.purposeOfTravel, this.purposeOfVisit, this.origin, this.destination, this.currentStatus, this.tripType, this.tripBillable, this.approver1, this.approver2, this.approver3, this.segmentType, this.voilationMessage, this.travelerName, this.tripPlan, this.forexAdvance, this.comments, this.grade, this.maRequesterDetails, this.maTravelerDetails, this.maCityPairs, this.maAccomodationPlanDetail, this.maTaxiPlanDetail, this.maCashAdvance, this.maForexAdvance, this.maTravelVisas, this.maTravelInsurance, this.travelComments});
+  MaTravelRequest(
+      {this.id,
+      this.tripNumber,
+      this.employeeName,
+      this.mobileNumber,
+      this.emergencyMobileNumber,
+      this.startDate,
+      this.endDate,
+      this.purposeOfTravel,
+      this.purposeOfVisit,
+      this.origin,
+      this.destination,
+      this.currentStatus,
+      this.tripType,
+      this.tripBillable,
+      this.approver1,
+      this.approver2,
+      this.approver3,
+      this.segmentType,
+      this.voilationMessage,
+      this.travelerName,
+      this.tripPlan,
+      this.forexAdvance,
+      this.comments,
+      this.grade,
+      this.maRequesterDetails,
+      this.maTravelerDetails,
+      this.maCityPairs,
+      this.maAccomodationPlanDetail,
+      this.maTaxiPlanDetail,
+      this.maCashAdvance,
+      this.maForexAdvance,
+      this.maTravelVisas,
+      this.maTravelInsurance,
+      this.travelComments});
 
   MaTravelRequest.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -246,11 +319,15 @@ class MaTravelRequest {
     forexAdvance = json['forexAdvance'];
     comments = json['comments'];
     grade = json['grade'];
-    maRequesterDetails = json['maRequesterDetails'] != null ? new MaRequesterDetails.fromJson(json['maRequesterDetails']) : null;
+    maRequesterDetails = json['maRequesterDetails'] != null
+        ? new MaRequesterDetails.fromJson(json['maRequesterDetails'])
+        : null;
     maTravelerDetails = json['maTravelerDetails'];
     if (json['maCityPairs'] != null) {
       maCityPairs = <MaCityPairs>[];
-      json['maCityPairs'].forEach((v) { maCityPairs!.add(new MaCityPairs.fromJson(v)); });
+      json['maCityPairs'].forEach((v) {
+        maCityPairs!.add(new MaCityPairs.fromJson(v));
+      });
     }
     maAccomodationPlanDetail = json['maAccomodationPlanDetail'];
     maTaxiPlanDetail = json['maTaxiPlanDetail'];
@@ -272,7 +349,9 @@ class MaTravelRequest {
     // }
     if (json['travelComments'] != null) {
       travelComments = <TravelComments>[];
-      json['travelComments'].forEach((v) { travelComments!.add(new TravelComments.fromJson(v)); });
+      json['travelComments'].forEach((v) {
+        travelComments!.add(new TravelComments.fromJson(v));
+      });
     }
   }
 
@@ -324,7 +403,8 @@ class MaTravelRequest {
     //   data['maTravelInsurance'] = this.maTravelInsurance!.map((v) => v.toJson()).toList();
     // }
     if (this.travelComments != null) {
-      data['travelComments'] = this.travelComments!.map((v) => v.toJson()).toList();
+      data['travelComments'] =
+          this.travelComments!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -348,7 +428,23 @@ class MaRequesterDetails {
   String? profitCenter;
   String? compCode;
 
-  MaRequesterDetails({this.id, this.travelerName, this.employeeCode, this.requestType, this.grade, this.gender, this.division, this.department, this.costCenter, this.email, this.primaryTraveler, this.mobileNumber, this.emergencyMobileNumber, this.location, this.profitCenter, this.compCode});
+  MaRequesterDetails(
+      {this.id,
+      this.travelerName,
+      this.employeeCode,
+      this.requestType,
+      this.grade,
+      this.gender,
+      this.division,
+      this.department,
+      this.costCenter,
+      this.email,
+      this.primaryTraveler,
+      this.mobileNumber,
+      this.emergencyMobileNumber,
+      this.location,
+      this.profitCenter,
+      this.compCode});
 
   MaRequesterDetails.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -409,16 +505,40 @@ class MaCityPairs {
   Null? airlines;
   bool? booked;
 
-  MaCityPairs({this.id, this.leavingFrom, this.goingTo, this.startDate, this.startTime, this.byCompany, this.fareClass, this.travelMode, this.pnr, this.price, this.ticketNo, this.arrivalDate, this.arrivalTime, this.flightNo, this.airlines, this.booked});
+  MaCityPairs(
+      {this.id,
+      this.leavingFrom,
+      this.goingTo,
+      this.startDate,
+      this.startTime,
+      this.byCompany,
+      this.fareClass,
+      this.travelMode,
+      this.pnr,
+      this.price,
+      this.ticketNo,
+      this.arrivalDate,
+      this.arrivalTime,
+      this.flightNo,
+      this.airlines,
+      this.booked});
 
   MaCityPairs.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    leavingFrom = json['leavingFrom'] != null ? new LeavingFrom.fromJson(json['leavingFrom']) : null;
-    goingTo = json['goingTo'] != null ? new LeavingFrom.fromJson(json['goingTo']) : null;
+    leavingFrom = json['leavingFrom'] != null
+        ? new LeavingFrom.fromJson(json['leavingFrom'])
+        : null;
+    goingTo = json['goingTo'] != null
+        ? new LeavingFrom.fromJson(json['goingTo'])
+        : null;
     startDate = json['startDate'];
     startTime = json['startTime'];
-    byCompany = json['byCompany'] != null ? new ByCompany.fromJson(json['byCompany']) : null;
-    fareClass = json['fareClass'] != null ? new ByCompany.fromJson(json['fareClass']) : null;
+    byCompany = json['byCompany'] != null
+        ? new ByCompany.fromJson(json['byCompany'])
+        : null;
+    fareClass = json['fareClass'] != null
+        ? new ByCompany.fromJson(json['fareClass'])
+        : null;
     travelMode = json['travelMode'];
     pnr = json['pnr'];
     price = json['price'];
@@ -469,7 +589,14 @@ class LeavingFrom {
   String? cityClass;
   SSState? state;
 
-  LeavingFrom({this.id, this.name, this.locationName, this.enabled, this.cityCode, this.cityClass, this.state});
+  LeavingFrom(
+      {this.id,
+      this.name,
+      this.locationName,
+      this.enabled,
+      this.cityCode,
+      this.cityClass,
+      this.state});
 
   LeavingFrom.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -505,7 +632,14 @@ class SSState {
   bool? enabled;
   Country? country;
 
-  SSState({this.id, this.name, this.printableName, this.iso, this.iso3, this.enabled, this.country});
+  SSState(
+      {this.id,
+      this.name,
+      this.printableName,
+      this.iso,
+      this.iso3,
+      this.enabled,
+      this.country});
 
   SSState.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -514,7 +648,8 @@ class SSState {
     iso = json['iso'];
     iso3 = json['iso3'];
     enabled = json['enabled'];
-    country = json['country'] != null ? new Country.fromJson(json['country']) : null;
+    country =
+        json['country'] != null ? new Country.fromJson(json['country']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -542,7 +677,15 @@ class Country {
   bool? enabled;
   String? countryClass;
 
-  Country({this.id, this.iso, this.name, this.printableName, this.iso3, this.currency, this.enabled, this.countryClass});
+  Country(
+      {this.id,
+      this.iso,
+      this.name,
+      this.printableName,
+      this.iso3,
+      this.currency,
+      this.enabled,
+      this.countryClass});
 
   Country.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -577,14 +720,22 @@ class ByCompany {
   I18nTextName? i18nTextName;
   String? label;
 
-  ByCompany({this.id, this.value, this.disabled, this.deleted, this.i18nTextName, this.label});
+  ByCompany(
+      {this.id,
+      this.value,
+      this.disabled,
+      this.deleted,
+      this.i18nTextName,
+      this.label});
 
   ByCompany.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     value = json['value'];
     disabled = json['disabled'];
     deleted = json['deleted'];
-    i18nTextName = json['i18nTextName'] != null ? new I18nTextName.fromJson(json['i18nTextName']) : null;
+    i18nTextName = json['i18nTextName'] != null
+        ? new I18nTextName.fromJson(json['i18nTextName'])
+        : null;
     label = json['label'];
   }
 
@@ -621,61 +772,90 @@ class I18nTextName {
   }
 }
 
-
 class TravelComments {
-String? comments;
-String? action;
-String? actionFrom;
-String? actionBy;
-String? actionOn;
+  String? comments;
+  String? action;
+  String? actionFrom;
+  String? actionBy;
+  String? actionOn;
 
-TravelComments({this.comments, this.action, this.actionFrom, this.actionBy, this.actionOn});
+  TravelComments(
+      {this.comments,
+      this.action,
+      this.actionFrom,
+      this.actionBy,
+      this.actionOn});
 
-TravelComments.fromJson(Map<String, dynamic> json) {
-comments = json['comments'];
-action = json['action'];
-actionFrom = json['actionFrom'];
-actionBy = json['actionBy'];
-actionOn = json['actionOn'];
-}
+  TravelComments.fromJson(Map<String, dynamic> json) {
+    comments = json['comments'];
+    action = json['action'];
+    actionFrom = json['actionFrom'];
+    actionBy = json['actionBy'];
+    actionOn = json['actionOn'];
+  }
 
-Map<String, dynamic> toJson() {
-final Map<String, dynamic> data = new Map<String, dynamic>();
-data['comments'] = this.comments;
-data['action'] = this.action;
-data['actionFrom'] = this.actionFrom;
-data['actionBy'] = this.actionBy;
-data['actionOn'] = this.actionOn;
-return data;
-}
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['comments'] = this.comments;
+    data['action'] = this.action;
+    data['actionFrom'] = this.actionFrom;
+    data['actionBy'] = this.actionBy;
+    data['actionOn'] = this.actionOn;
+    return data;
+  }
 }
 
 class ExpenseVisitDetails {
-String? city;
-String? evdStartDate;
-String? evdStartTime;
-String? evdEndDate;
-String? evdEndTime;
+  String? city;
+  String? evdStartDate;
+  String? evdStartTime;
+  String? evdEndDate;
+  String? evdEndTime;
 
-ExpenseVisitDetails({ this.city, this.evdStartDate, this.evdStartTime, this.evdEndDate, this.evdEndTime});
+  ExpenseVisitDetails(
+      {this.city,
+      this.evdStartDate,
+      this.evdStartTime,
+      this.evdEndDate,
+      this.evdEndTime});
 
-ExpenseVisitDetails.fromJson(Map<String, dynamic> json) {
-city = json['city'];
-evdStartDate = json['evdStartDate'];
-evdStartTime = json['evdStartTime'];
-evdEndDate = json['evdEndDate'];
-evdEndTime = json['evdEndTime'];
-}
+  ExpenseVisitDetails.fromJson(Map<String, dynamic> json) {
+    city = json['city'];
+    evdStartDate = json['evdStartDate'];
+    evdStartTime = json['evdStartTime'];
+    evdEndDate = json['evdEndDate'];
+    evdEndTime = json['evdEndTime'];
+  }
 
-Map<String, dynamic> toJson() {
-final Map<String, dynamic> data = new Map<String, dynamic>();
-data['city'] = this.city;
-data['evdStartDate'] = this.evdStartDate;
-data['evdStartTime'] = this.evdStartTime;
-data['evdEndDate'] = this.evdEndDate;
-data['evdEndTime'] = this.evdEndTime;
-return data;
-}
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['city'] = this.city;
+    data['evdStartDate'] = this.evdStartDate;
+    data['evdStartTime'] = this.evdStartTime;
+    data['evdEndDate'] = this.evdEndDate;
+    data['evdEndTime'] = this.evdEndTime;
+    return data;
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'city': this.city,
+      'evdStartDate': this.evdStartDate,
+      'evdStartTime': this.evdStartTime,
+      'evdEndDate': this.evdEndDate,
+      'evdEndTime': this.evdEndTime,
+    };
+  }
+
+  factory ExpenseVisitDetails.fromMap(Map<String, dynamic> map) {
+    return ExpenseVisitDetails(
+      city: map['city'] as String,
+      evdStartDate: map['evdStartDate'] as String,
+      evdStartTime: map['evdStartTime'] as String,
+      evdEndDate: map['evdEndDate'] as String,
+      evdEndTime: map['evdEndTime'] as String,
+    );
+  }
 }
 
 class AccommodationExpense {
@@ -704,27 +884,27 @@ class AccommodationExpense {
 
   AccommodationExpense(
       {this.id,
-        this.checkInDate,
-        this.checkInTime,
-        this.checkOutDate,
-        this.checkOutTime,
-        this.accomodationType,
-        this.hotelName,
-        this.city,
-        this.amount,
-        this.tax,
-        this.currency,
-        this.byCompany,
-        this.exchangeRate,
-        this.voucherNumber,
-        this.voucherPath,
-        this.eligibleAmount,
-        this.withBill,
-        this.voilationMessage,
-        this.receivedApproval,
-        this.requireApproval,
-        this.modified,
-        this.description});
+      this.checkInDate,
+      this.checkInTime,
+      this.checkOutDate,
+      this.checkOutTime,
+      this.accomodationType,
+      this.hotelName,
+      this.city,
+      this.amount,
+      this.tax,
+      this.currency,
+      this.byCompany,
+      this.exchangeRate,
+      this.voucherNumber,
+      this.voucherPath,
+      this.eligibleAmount,
+      this.withBill,
+      this.voilationMessage,
+      this.receivedApproval,
+      this.requireApproval,
+      this.modified,
+      this.description});
 
   AccommodationExpense.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -738,16 +918,16 @@ class AccommodationExpense {
     amount = json['amount'];
     tax = json['tax'];
     currency = json['currency'];
-    byCompany = json['byCompany']??false;
+    byCompany = json['byCompany'] ?? false;
     exchangeRate = json['exchangeRate'];
     voucherNumber = json['voucherNumber'];
     voucherPath = json['voucherPath'];
     eligibleAmount = json['eligibleAmount'];
-    withBill = json['withBill']??false;
-    voilationMessage = json['voilationMessage']??"";
-    receivedApproval = json['receivedApproval']??false;
-    requireApproval = json['requireApproval']??false;
-    modified = json['modified']??false;
+    withBill = json['withBill'] ?? false;
+    voilationMessage = json['voilationMessage'] ?? "";
+    receivedApproval = json['receivedApproval'] ?? false;
+    requireApproval = json['requireApproval'] ?? false;
+    modified = json['modified'] ?? false;
     description = json['description'];
   }
 
@@ -853,21 +1033,21 @@ class MiscellaneousExpense {
 
   MiscellaneousExpense(
       {this.id,
-        this.miscellaneousExpenseDate,
-        this.miscellaneousExpenseEndDate,
-        this.miscellaneousType,
-        this.unitType,
-        this.voucherNumber,
-        this.amount,
-        this.byCompany,
-        this.currency,
-        this.exchangeRate,
-        this.voucherPath,
-        this.voilationMessage,
-        this.requireApproval,
-        this.withBill,
-        this.modified,
-        this.description});
+      this.miscellaneousExpenseDate,
+      this.miscellaneousExpenseEndDate,
+      this.miscellaneousType,
+      this.unitType,
+      this.voucherNumber,
+      this.amount,
+      this.byCompany,
+      this.currency,
+      this.exchangeRate,
+      this.voucherPath,
+      this.voilationMessage,
+      this.requireApproval,
+      this.withBill,
+      this.modified,
+      this.description});
 
   MiscellaneousExpense.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -877,15 +1057,15 @@ class MiscellaneousExpense {
     unitType = json['unitType'];
     voucherNumber = json['voucherNumber'];
     amount = json['amount'];
-    byCompany = json['byCompany']??false;
+    byCompany = json['byCompany'] ?? false;
     currency = json['currency'];
     exchangeRate = json['exchangeRate'];
     voucherPath = json['voucherPath'];
-    voilationMessage = json['voilationMessage']??"";
-    requireApproval = json['requireApproval']??false;
-    withBill = json['withBill']??false;
-    modified = json['modified']??false;
-    description = json['description']??"";
+    voilationMessage = json['voilationMessage'] ?? "";
+    requireApproval = json['requireApproval'] ?? false;
+    withBill = json['withBill'] ?? false;
+    modified = json['modified'] ?? false;
+    description = json['description'] ?? "";
   }
 
   Map<String, dynamic> toJson() {
@@ -972,21 +1152,21 @@ class ConveyanceExpense {
 
   ConveyanceExpense(
       {this.id,
-        this.conveyanceDate,
-        this.fromPlace,
-        this.toPlace,
-        this.travelMode,
-        this.amount,
-        this.byCompany,
-        this.currency,
-        this.exchangeRate,
-        this.voucherPath,
-        this.voucherNumber,
-        this.voilationMessage,
-        this.requireApproval,
-        this.withBill,
-        this.modified,
-        this.description});
+      this.conveyanceDate,
+      this.fromPlace,
+      this.toPlace,
+      this.travelMode,
+      this.amount,
+      this.byCompany,
+      this.currency,
+      this.exchangeRate,
+      this.voucherPath,
+      this.voucherNumber,
+      this.voilationMessage,
+      this.requireApproval,
+      this.withBill,
+      this.modified,
+      this.description});
 
   ConveyanceExpense.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -995,15 +1175,15 @@ class ConveyanceExpense {
     toPlace = json['toPlace'];
     travelMode = json['travelMode'];
     amount = json['amount'];
-    byCompany = json['byCompany']??false;
+    byCompany = json['byCompany'] ?? false;
     currency = json['currency'];
     exchangeRate = json['exchangeRate'];
     voucherPath = json['voucherPath'];
     voucherNumber = json['voucherNumber'];
-    voilationMessage = json['voilationMessage']??"";
-    requireApproval = json['requireApproval']??false;
-    withBill = json['withBill']??false;
-    modified = json['modified']??false;
+    voilationMessage = json['voilationMessage'] ?? "";
+    requireApproval = json['requireApproval'] ?? false;
+    withBill = json['withBill'] ?? false;
+    modified = json['modified'] ?? false;
     description = json['description'];
   }
 
@@ -1096,26 +1276,26 @@ class TicketExpense {
 
   TicketExpense(
       {this.id,
-        this.travelDate,
-        this.traveltime,
-        this.leavingFrom,
-        this.goingTo,
-        this.travelMode,
-        this.byCompany,
-        this.fareClass,
-        this.pnrNumber,
-        this.ticketNumber,
-        this.flightTrainBusNo,
-        this.amount,
-        this.currency,
-        this.exchangeRate,
-        this.description,
-        this.voucherPath,
-        this.withBill,
-        this.voilationMessage,
-        this.receivedApproval,
-        this.requireApproval,
-        this.modified});
+      this.travelDate,
+      this.traveltime,
+      this.leavingFrom,
+      this.goingTo,
+      this.travelMode,
+      this.byCompany,
+      this.fareClass,
+      this.pnrNumber,
+      this.ticketNumber,
+      this.flightTrainBusNo,
+      this.amount,
+      this.currency,
+      this.exchangeRate,
+      this.description,
+      this.voucherPath,
+      this.withBill,
+      this.voilationMessage,
+      this.receivedApproval,
+      this.requireApproval,
+      this.modified});
 
   TicketExpense.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -1124,7 +1304,7 @@ class TicketExpense {
     leavingFrom = json['leavingFrom'];
     goingTo = json['goingTo'];
     travelMode = json['travelMode'];
-    byCompany = json['byCompany']??false;
+    byCompany = json['byCompany'] ?? false;
     fareClass = json['fareClass'];
     pnrNumber = json['pnrNumber'];
     ticketNumber = json['ticketNumber'];
@@ -1134,11 +1314,11 @@ class TicketExpense {
     exchangeRate = json['exchangeRate'];
     description = json['description'];
     voucherPath = json['voucherPath'];
-    withBill = json['withBill']??false;
-    voilationMessage = json['voilationMessage']??"";
-    receivedApproval = json['receivedApproval']??false;
-    requireApproval = json['requireApproval']??false;
-    modified = json['modified']??false;
+    withBill = json['withBill'] ?? false;
+    voilationMessage = json['voilationMessage'] ?? "";
+    receivedApproval = json['receivedApproval'] ?? false;
+    requireApproval = json['requireApproval'] ?? false;
+    modified = json['modified'] ?? false;
   }
 
   Map<String, dynamic> toJson() {
@@ -1220,7 +1400,6 @@ class TicketExpense {
   }
 }
 
-
 class MaExpenseSummary {
   double? bookedTicketCost;
   double? ticketByCompany;
@@ -1240,23 +1419,43 @@ class MaExpenseSummary {
   double? dueToCompany;
   double? dueFromCompany;
 
-  MaExpenseSummary({this.bookedTicketCost, this.ticketByCompany, this.ticketSelf, this.accommodationByCompany, this.accommodationSelf, this.dailyAllowanceByCompany, this.conveyanceByCompany, this.conveyanceSelf, this.miscellaneousByCompany, this.miscellaneousSelf, this.advanceByCash, this.advanceByCard, this.totalAmountByCompany, this.totalAmountSelf, this.totalExpense, this.dueToCompany, this.dueFromCompany});
-
+  MaExpenseSummary(
+      {this.bookedTicketCost,
+      this.ticketByCompany,
+      this.ticketSelf,
+      this.accommodationByCompany,
+      this.accommodationSelf,
+      this.dailyAllowanceByCompany,
+      this.conveyanceByCompany,
+      this.conveyanceSelf,
+      this.miscellaneousByCompany,
+      this.miscellaneousSelf,
+      this.advanceByCash,
+      this.advanceByCard,
+      this.totalAmountByCompany,
+      this.totalAmountSelf,
+      this.totalExpense,
+      this.dueToCompany,
+      this.dueFromCompany});
 
   MaExpenseSummary.fromJson(Map<String, dynamic> json) {
     bookedTicketCost = double.parse(json['bookedTicketCost'].toString());
     ticketByCompany = double.parse(json['ticketByCompany'].toString());
     ticketSelf = double.parse(json['ticketSelf'].toString());
-    accommodationByCompany = double.parse(json['accommodationByCompany'].toString());
+    accommodationByCompany =
+        double.parse(json['accommodationByCompany'].toString());
     accommodationSelf = double.parse(json['accommodationSelf'].toString());
-    dailyAllowanceByCompany = double.parse(json['dailyAllowanceByCompany'].toString());
+    dailyAllowanceByCompany =
+        double.parse(json['dailyAllowanceByCompany'].toString());
     conveyanceByCompany = double.parse(json['conveyanceByCompany'].toString());
     conveyanceSelf = double.parse(json['conveyanceSelf'].toString());
-    miscellaneousByCompany = double.parse(json['miscellaneousByCompany'].toString());
+    miscellaneousByCompany =
+        double.parse(json['miscellaneousByCompany'].toString());
     miscellaneousSelf = double.parse(json['miscellaneousSelf'].toString());
     advanceByCash = double.parse(json['advanceByCash'].toString());
     advanceByCard = double.parse(json['advanceByCard'].toString());
-    totalAmountByCompany = double.parse(json['totalAmountByCompany'].toString());
+    totalAmountByCompany =
+        double.parse(json['totalAmountByCompany'].toString());
     totalAmountSelf = double.parse(json['totalAmountSelf'].toString());
     totalExpense = double.parse(json['totalExpense'].toString());
     dueToCompany = double.parse(json['dueToCompany'].toString());
@@ -1293,7 +1492,12 @@ class MaTravelExpenseComment {
   String? actionBy;
   String? actionOn;
 
-  MaTravelExpenseComment({this.comments, this.action, this.actionFrom, this.actionBy, this.actionOn});
+  MaTravelExpenseComment(
+      {this.comments,
+      this.action,
+      this.actionFrom,
+      this.actionBy,
+      this.actionOn});
 
   MaTravelExpenseComment.fromJson(Map<String, dynamic> json) {
     comments = json['comments'];

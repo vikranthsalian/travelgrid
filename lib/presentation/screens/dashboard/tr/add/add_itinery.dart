@@ -103,10 +103,18 @@ class AddItinerary  extends StatelessWidget {
                         formBloc!.checkInDate.updateValue(dateText);
                         //formBloc!.checkInTime.updateValue("00:00");
 
+                        formBloc!.travelMode.updateValue("A");
+                        formBloc!.travelModeID.updateValue("A");
+
+                        formBloc!.swByCompany.updateValue(true);
+                        formBloc!.swByCompanyID.updateValue(true);
+
+
                         if(tripType=="O"){
                           formBloc!.travelMode.updateValue("A");
                           formBloc!.travelModeID.updateValue("A");
                         }
+
                         if(isEdit){
 
                           print(cityPairs!.toJson());

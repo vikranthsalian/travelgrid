@@ -271,9 +271,12 @@ class _TravelRequestSummaryState extends State<TravelRequestSummary> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
         Expanded(
-          child: MetaButton(mapData: jsonData['bottomButtonLeft'],text: "Cancel",
-              onButtonPressed: (){
-
+          child: MetaButton(mapData: jsonData['bottomButtonLeft'],text: "Reject",
+              onButtonPressed: ()async{
+                SuccessModel  model =  await Injector.resolve<TrUseCase>().rejectTR(widget.title!,controller.text);
+                if(model.status==true){
+                  Navigator.pop(context);
+                }
               }
           ),
         ),

@@ -157,7 +157,17 @@ class CityUtil{
 
   }
 
+  static String? getMiscNameFromID(id) {
 
+    if(id.toString().isEmpty){
+      return null;
+    }
+
+    List<misc.Data> list = appNavigatorKey.currentState!.context.read<MiscTypeCubit>().getMiscTypeResponse();
+
+    Iterable<misc.Data> data= list.where((item) => (item.id.toString() == id.toString()));
+    return data.first.label;
+  }
 
   static int? getMiscIDFromName(name) {
 
@@ -169,6 +179,19 @@ class CityUtil{
 
     Iterable<misc.Data> data= list.where((item) => (item.label.toString() == name.toString()));
     return data.first.id;
+  }
+
+
+  static String? getAccomNameFromID(id) {
+
+    if(id.toString().isEmpty){
+      return null;
+    }
+
+    List<accom.Data> list = appNavigatorKey.currentState!.context.read<AccomTypeCubit>().getAccomTypeResponse();
+
+    Iterable<accom.Data> data= list.where((item) => (item.id.toString() == id.toString()));
+    return data.first.label;
   }
 
   static int? getAccomIDFromName(name) {

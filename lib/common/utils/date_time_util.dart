@@ -4,7 +4,12 @@ import 'package:intl/intl.dart';
 class MetaDateTime{
 
   String getDate(String date,{String format = 'MM/dd/yyyy'}) {
-    DateTime parseDate = new DateFormat("dd-MM-yyyy").parse(date);
+    DateTime parseDate;
+    try {
+       parseDate = new DateFormat("dd-MM-yyyy").parse(date);
+    }catch(e){
+      parseDate = new DateFormat("dd/MM/yyyy").parse(date);
+    }
     if(date !="null") {
       final DateFormat formatter = DateFormat(format);
       final String formatted = formatter.format(DateTime.parse(parseDate.toString()));

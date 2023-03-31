@@ -5,6 +5,7 @@ import 'package:travelgrid/common/injector/injector.dart';
 import 'package:travelgrid/common/utils/sort_util.dart';
 import 'package:travelgrid/data/datasources/summary/ge_summary_response.dart';
 import 'package:travelgrid/data/datasources/list/tr_list_response.dart' as trlist;
+import 'package:travelgrid/data/datasources/list/tr_upcoming_response.dart' as uplist;
 import 'package:travelgrid/data/datasources/summary/tr_summary_response.dart';
 import 'package:travelgrid/data/models/success_model.dart';
 import 'package:travelgrid/domain/usecases/tr_usecase.dart';
@@ -56,6 +57,15 @@ class TravelRequestBloc extends Bloc<TravelRequestEvent, TravelRequestState> {
         emit(TravelRequestSummaryLoadedState(data: response));
       }else{
         emit(TravelRequestSummaryLoadedState(data: TRSummaryResponse(message: response.message)));
+      }
+
+    }
+    if(event is GetUpcomingListEvent) {
+      uplist.MetaUpcomingTRResponse? response = await Injector.resolve<TrUseCase>().upcomingApi();
+      if(response!=null && response.status == true){
+        emit(UpcomingTravelRequestLoadedState(data: response));
+      }else{
+        emit(UpcomingTravelRequestLoadedState(data: uplist.MetaUpcomingTRResponse(data: [],message: response.message)));
       }
 
     }

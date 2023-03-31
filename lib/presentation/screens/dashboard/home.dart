@@ -6,17 +6,21 @@ import 'package:travelgrid/common/constants/flavour_constants.dart';
 import 'package:travelgrid/common/constants/route_constants.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
 import 'package:travelgrid/common/injector/injector.dart';
+import 'package:travelgrid/common/utils/date_time_util.dart';
 import 'package:travelgrid/common/utils/show_alert.dart';
+import 'package:travelgrid/data/blocs/travel_request/tr_bloc.dart';
 import 'package:travelgrid/data/cubits/login_cubit/login_cubit.dart';
 import 'package:travelgrid/data/datasources/login_response.dart';
 import 'package:travelgrid/data/models/success_model.dart';
 import 'package:travelgrid/domain/usecases/common_usecase.dart';
+import 'package:travelgrid/presentation/components/bloc_map_event.dart';
 import 'package:travelgrid/presentation/components/dialog_yes_no.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';
 import 'package:travelgrid/presentation/widgets/icon.dart';
 import 'package:travelgrid/presentation/widgets/svg_view.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:travelgrid/data/datasources/list/tr_upcoming_response.dart' as trData;
 
 class HomePage extends StatefulWidget {
   @override
@@ -28,6 +32,7 @@ class _HomePageState extends State<HomePage> {
   List items=[];
   String?  dateText;
   String  fullname="";
+  double cardHt =70.h;
   @override
   void initState() {
     super.initState();
@@ -41,10 +46,14 @@ class _HomePageState extends State<HomePage> {
 
     dateText = DateFormat('dd MMM y, EEEE').format(DateTime.now());
   }
-
+  TravelRequestBloc? bloc;
 
   @override
   Widget build(BuildContext context) {
+
+    bloc = Injector.resolve<TravelRequestBloc>();
+    callBloc();
+
 
     return Scaffold(
       backgroundColor:ParseDataType().getHexToColor(jsonData['backgroundColor']),
@@ -122,6 +131,7 @@ class _HomePageState extends State<HomePage> {
 
                   child: ListView(
                     shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
                     padding: EdgeInsets.zero,
                     children: [
                       Container(
@@ -201,6 +211,37 @@ class _HomePageState extends State<HomePage> {
                             )
                           ],
                         ),
+                      ),
+                      Container(
+                        height: 200.h,
+                        child: BlocBuilder<TravelRequestBloc, TravelRequestState>(
+                            bloc: bloc,
+                            builder:(context, state) {
+                              jsonData['listView']['recordsFound']['value'] = 0;
+                              return Container(
+                                  child: BlocMapToEvent(state: state.eventState, message: state.message,
+                                      callback: (){
+                                        jsonData['listView']['recordsFound']['value'] = state.response?.data?.length;
+                                        if(state.response?.data== null)
+                                          return;
+
+                                      },
+                                      topComponent: Container(
+                                          margin: EdgeInsets.symmetric(vertical: 10.w),
+                                          padding: EdgeInsets.symmetric(horizontal: 10.w),
+                                          child: MetaTextView(mapData: {
+                                            "text" :"Upcoming Travel Requests",
+                                            "color" : "0xFF2854A1",
+                                            "size": "17",
+                                            "family": "bold",
+                                            "align" : "center-left"
+                                          })
+                                      ),
+                                      child:getListView(state)
+                                  )
+                              );
+                            }
+                        ),
                       )
                     ],
 
@@ -213,6 +254,132 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
+  }
+
+  Widget getListView(TravelRequestState state){
+
+    List<trData.Data>? list = state.responseUp?.data ?? [];
+
+    return  list.isNotEmpty ? ListView.separated(
+      shrinkWrap: true,
+      padding: EdgeInsets.zero,
+      itemCount:list.length,
+      itemBuilder: (BuildContext context, int index) {
+        trData.Data item = list[index];
+
+        String date=MetaDateTime().getDate(item.startDate.toString(),format: "dd MMM");
+        // Map date = {
+        //   "text" : MetaDateTime().getDate(item.startDate.toString(),format: "dd MMM"),
+        //   "color" : "0xFF2854A1",
+        //   "size": "16",
+        //   "family": "bold",
+        //   "align" : "center"
+        // };
+
+        Map week = {
+          "text" :date+", "+ MetaDateTime().getDate(item.startDate.toString(),format: "EEE").toUpperCase(),
+          "color" : "0xFFFFFFFF",
+          "size": "13",
+          "family": "bold",
+          "align" : "center-right"
+        };
+
+
+        Map recordLocator = {
+          "text" :"#"+ item.tripNumber.toString().toUpperCase(),
+          "color" : "0xFFFFFFFF",
+          "size": "14",
+          "family": "bold",
+          "align" : "center-left"
+        };
+
+        Map code = {
+          "text" :"#"+ item.tripNumber.toString().toUpperCase(),
+          "color" : "0xFF2854A1",
+          "size": "20",
+          "family": "bold",
+          "align" : "center-left"
+        };
+
+
+        return Container(
+          padding: EdgeInsets.symmetric(horizontal: 10.w),
+          child: Card(
+            color: Color(0xFF2854A1),
+            elevation: 5,
+            child: Container(
+              width: cardHt,
+              height: cardHt,
+              child: Column(
+                children: [
+                  Container(
+                    height:cardHt * 0.3,
+                    child: Container(
+                      margin: EdgeInsets.symmetric(horizontal: 10.w),
+                      child:Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                              child: MetaTextView(mapData: recordLocator)
+                          ),
+                          Container(
+                              margin: EdgeInsets.only(right: 5.w),
+                              height:cardHt * 0.25,
+                              child: MetaTextView( mapData: week)
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+
+                  Container(
+                    color: Color(0xFFFFFFFF),
+                    child: Column(
+                      children: [
+                        Container(
+                          margin: EdgeInsets.symmetric(horizontal: 10.w),
+                          height: cardHt * 0.5,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Container(
+                                  child: MetaTextView(mapData: code,text: item.origin.toString().toUpperCase())
+                              ),
+
+                              Container(
+                                  child: MetaTextView(mapData: code,text: item.destination.toString().toUpperCase())
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          )
+        );
+      },
+      separatorBuilder: (BuildContext context, int index) {
+        return SizedBox(height: 3.h);
+      },
+    ):  Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        MetaTextView(mapData: jsonData['listView']['emptyData']['title']),
+        SizedBox(height: 10.h,),
+        MetaButton(mapData: jsonData['listView']['emptyData']['bottomButtonRefresh'],
+            onButtonPressed: (){
+              callBloc();
+            })
+      ],
+    );
+  }
+
+  void callBloc() {
+    bloc!.add(GetUpcomingListEvent());
   }
 
   List<Color> getColor(List items) {

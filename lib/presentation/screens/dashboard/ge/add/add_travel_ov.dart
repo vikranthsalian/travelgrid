@@ -296,7 +296,8 @@ class CreateTravelExpenseOV extends StatelessWidget {
            bloc: formBloc!.onLocationAdded,
            builder: (context, state) {
 
-             List<LocationModel>? list  = formBloc!.onLocationAdded.value!.reversed.toList();
+             List<LocationModel>? list  = formBloc!.onLocationAdded.value!.toList();
+
              return  locationItemWidget(jsonData['locationItems'],list);
            }
        );
@@ -610,10 +611,10 @@ class CreateTravelExpenseOV extends StatelessWidget {
                           InkWell(
                             onTap:(){
                               print(i);
-                              locationItems.removeAt(i);
-                              PreferenceConfig.setString(PreferenceConstants.location, jsonEncode(locationItems));
+                              list.removeAt(i);
+                              PreferenceConfig.setString(PreferenceConstants.location, jsonEncode(list));
                               formBloc!.onLocationAdded.clear();
-                              formBloc!.onLocationAdded.changeValue(locationItems);
+                              formBloc!.onLocationAdded.changeValue(list);
 
                                 },
                             child: Container(

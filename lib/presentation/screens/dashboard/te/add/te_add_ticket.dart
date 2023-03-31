@@ -25,33 +25,22 @@ import 'package:travelgrid/presentation/widgets/switch.dart';
 import 'package:travelgrid/presentation/widgets/text_field.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
 
-class AddTeTicketExpense extends StatefulWidget {
+class AddTeTicketExpense extends StatelessWidget {
   Function(Map)? onAdd;
   bool isEdit;
   TETicketModel? teTicketModel;
   String? tripType;
   AddTeTicketExpense(this.tripType,{this.onAdd,this.isEdit=false,this.teTicketModel});
-  @override
-  _AddTeTicketExpenseState createState() => _AddTeTicketExpenseState();
-}
-
-class _AddTeTicketExpenseState extends State<AddTeTicketExpense> {
+  
+  
   Map<String,dynamic> jsonData = {};
   TicketTeFormBloc?  formBloc;
   File? file;
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    jsonData = FlavourConstants.teTicketAddData;
-   // prettyPrint(jsonData);
-
-  }
 
 
   @override
   Widget build(BuildContext context) {
-
+    jsonData = FlavourConstants.teTicketAddData;
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -126,36 +115,27 @@ class _AddTeTicketExpenseState extends State<AddTeTicketExpense> {
                     builder: (context) {
                     formBloc =  BlocProvider.of<TicketTeFormBloc>(context);
 
-                    if(widget.isEdit){
+                    if(isEdit){
 
-                   //    formBloc!.checkInDate.updateValue(widget.accomModel!.checkInDate.toString());
-                   //    formBloc!.checkInTime.updateValue(widget.accomModel!.checkInTime.toString());
-                   //
-                   //    formBloc!.checkOutDate.updateValue(widget.accomModel!.checkOutDate.toString());
-                   //    formBloc!.checkOutTime.updateValue(widget.accomModel!.checkOutTime.toString());
-                   //
-                   // //   formBloc!.cityName.updateValue(widget.accomModel!.cityName.toString());
-                   //    formBloc!.cityID.updateValue(widget.accomModel!.city.toString());
-                   //
-                   //    formBloc!.selectAccomID.updateValue(widget.accomModel!.accomodationType.toString());
-                   //  //  formBloc!.accomName.updateValue(widget.accomModel!.accomodationTypeName.toString());
-                   //
-                   //    formBloc!.tfHotelName.updateValue(widget.accomModel!.hotelName.toString());
-                   //    if(widget.accomModel!.hotelName.toString().isEmpty){
-                   //      formBloc!.tfHotelName.updateValue("nill");
-                   //    }
-                   //
-                   //
-                   //    formBloc!.tfVoucher.updateValue(widget.accomModel!.voucherNumber.toString());
-                   //    if(widget.accomModel!.voucherNumber.toString().isEmpty){
-                   //      formBloc!.tfVoucher.updateValue("nill");
-                   //    }
-                   //
-                   //    formBloc!.voucherPath.updateValue(widget.accomModel!.voucherPath.toString());
-                   //
-                   //    formBloc!.tfTax.updateValue(widget.accomModel!.tax.toString());
-                   //    formBloc!.tfAmount.updateValue(widget.accomModel!.amount.toString());
-                   //    formBloc!.tfDescription.updateValue(widget.accomModel!.description.toString());
+                      formBloc!.checkInDate.updateValue(teTicketModel!.travelDate.toString());
+                      formBloc!.checkInTime.updateValue(teTicketModel!.traveltime.toString());
+
+
+                      formBloc!.origin.updateValue(teTicketModel!.leavingFrom.toString());
+                      formBloc!.destination.updateValue(teTicketModel!.goingTo.toString());
+
+                      formBloc!.travelMode.updateValue(teTicketModel!.travelMode.toString());
+                      
+                      formBloc!.fareClass.updateValue(teTicketModel!.fareClass.toString());
+
+                      formBloc!.tfFlight.updateValue(teTicketModel!.flightTrainBusNo.toString());
+                      formBloc!.tfTicket.updateValue(teTicketModel!.ticketNumber.toString());
+                      formBloc!.tfPNR.updateValue(teTicketModel!.pnrNumber.toString());
+                      formBloc!.tfAmount.updateValue(teTicketModel!.amount.toString());
+                      formBloc!.voucherPath.updateValue(teTicketModel!.voucherPath.toString());
+
+                      formBloc!.tfAmount.updateValue(teTicketModel!.amount.toString());
+                      formBloc!.tfDescription.updateValue(teTicketModel!.description.toString());
                     }else{
 
                       String  dateText = DateFormat('dd-MM-yyyy').format(DateTime.now());
@@ -177,7 +157,7 @@ class _AddTeTicketExpenseState extends State<AddTeTicketExpense> {
                             print(state.successResponse);
                             TETicketModel modelResponse = TETicketModel.fromJson(jsonDecode(state.successResponse.toString()));
 
-                            widget.onAdd!(
+                            onAdd!(
                                 {
                                   "data": jsonDecode(state.successResponse.toString()),
                                   "item" : ExpenseModel(teType: TETypes.TICKET,amount: modelResponse.amount.toString())
@@ -213,7 +193,7 @@ class _AddTeTicketExpenseState extends State<AddTeTicketExpense> {
                                         Expanded(
                                           child: Container(
                                             child: MetaSearchSelectorView(
-                                              widget.tripType,
+                                              tripType,
                                               mapData: jsonData['selectOrigin'],
                                               text: CityUtil.getCityNameFromID(formBloc!.origin.value),
                                               onChange:(value){
@@ -226,7 +206,7 @@ class _AddTeTicketExpenseState extends State<AddTeTicketExpense> {
                                         Expanded(
                                           child: Container(
                                             child: MetaSearchSelectorView(
-                                              widget.tripType,
+                                              tripType,
                                               mapData: jsonData['selectDestination'],
                                               text: CityUtil.getCityNameFromID(formBloc!.destination.value),
                                               onChange:(value){

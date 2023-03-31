@@ -9,6 +9,7 @@ import 'package:travelgrid/common/constants/flavour_constants.dart';
 import 'package:travelgrid/common/enum/dropdown_types.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
 import 'package:travelgrid/common/injector/injector.dart';
+import 'package:travelgrid/common/utils/city_util.dart';
 import 'package:travelgrid/common/utils/show_alert.dart';
 import 'package:travelgrid/data/models/expense_model.dart';
 import 'package:travelgrid/data/models/success_model.dart';
@@ -132,10 +133,10 @@ class _AddTeMiscExpenseState extends State<AddTeMiscExpense> {
                        formBloc!.checkOutDate.updateValue(widget.miscModel!.miscellaneousExpenseEndDate.toString());
 
                        formBloc!.miscID.updateValue(widget.miscModel!.miscellaneousType.toString());
-                     //  formBloc!.miscName.updateValue(widget.miscModel!.miscellaneousTypeName.toString());
+                       formBloc!.miscName.updateValue(widget.miscModel!.miscellaneousType.toString());
 
 
-                       formBloc!.unitTypeName.updateValue("test");
+                       formBloc!.unitTypeName.updateValue(widget.miscModel!.unitType.toString());
                        formBloc!.unitTypeID.updateValue(widget.miscModel!.unitType.toString());
 
 
@@ -218,7 +219,7 @@ class _AddTeMiscExpenseState extends State<AddTeMiscExpense> {
                                         Expanded(
                                           child: Container(
                                             child: MetaDialogSelectorView(mapData: jsonData['selectMiscType'],
-                                              text :getInitialText(formBloc!.miscName.value),
+                                              text :CityUtil.getMiscNameFromID(formBloc!.miscID.value),
                                               onChange:(value){
                                                 print(value);
                                                 formBloc!.miscName.updateValue(value['label']);
@@ -294,10 +295,22 @@ class _AddTeMiscExpenseState extends State<AddTeMiscExpense> {
   }
 
   getInitialText(String text) {
+    print(text);
 
     if(text.isNotEmpty){
+      if(text=="288"){
+        return "Within Unit";
+      }
+
+      if(text=="289"){
+        return "Out Side Unit";
+      }
+
       return text;
     }
+
+
+
     return null;
   }
 

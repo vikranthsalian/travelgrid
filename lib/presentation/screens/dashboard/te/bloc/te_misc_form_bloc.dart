@@ -7,7 +7,7 @@ import 'package:travelgrid/common/utils/validators.dart';
 
 class MiscTeFormBloc extends FormBloc<String, String> {
 
-  final miscID =  SelectFieldBloc<String, dynamic>();
+  final miscID =  SelectFieldBloc<String, dynamic>(initialValue: "");
   final checkInDate = TextFieldBloc(validators: [emptyValidator]);
   final checkOutDate =  TextFieldBloc(validators: [emptyValidator]);
   final miscName =  TextFieldBloc(validators: [emptyValidator]);

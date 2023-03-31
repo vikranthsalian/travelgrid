@@ -87,6 +87,9 @@ class TrProcessed extends StatelessWidget {
                 formBloc =  BlocProvider.of<ProcessedTrFormBloc>(context);
                 formBloc!.segmentType.updateValue(segment[0]);
                 formBloc!.segmentTypeID.updateValue(segment[0]);
+
+                formBloc!.requestType.updateValue("Self");
+                formBloc!.requestTypeID.updateValue("self");
                 
                 if(isEdit!){
 
@@ -243,8 +246,7 @@ class TrProcessed extends StatelessWidget {
                                 child: BlocBuilder<SelectFieldBloc, SelectFieldBlocState>(
                                     bloc: formBloc!.employeeType,
                                     builder: (context, state) {
-                                      print("Pick Employee");
-                                      print(formBloc!.requestTypeID.value.toString());
+
                                       return Visibility(
                                         visible: (formBloc!.requestTypeID.value.toString().toLowerCase() == "onBehalf".toLowerCase()) ? true : false,
                                         child:  Column(

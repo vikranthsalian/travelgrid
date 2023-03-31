@@ -9,6 +9,7 @@ import 'package:travelgrid/common/constants/flavour_constants.dart';
 import 'package:travelgrid/common/enum/dropdown_types.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
 import 'package:travelgrid/common/injector/injector.dart';
+import 'package:travelgrid/common/utils/city_util.dart';
 import 'package:travelgrid/data/models/expense_model.dart';
 import 'package:travelgrid/data/models/success_model.dart';
 import 'package:travelgrid/data/models/te/te_accom_model.dart';
@@ -24,33 +25,22 @@ import 'package:travelgrid/presentation/widgets/switch.dart';
 import 'package:travelgrid/presentation/widgets/text_field.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
 
-class AddTeAccommodationExpense extends StatefulWidget {
+
+
+class AddTeAccommodationExpense extends StatelessWidget {
   Function(Map)? onAdd;
   bool isEdit;
   TEAccomModel? accomModel;
   String? tripType;
   AddTeAccommodationExpense(this.tripType,{this.onAdd,this.isEdit=false,this.accomModel});
-  @override
-  _AddTeAccommodationExpenseState createState() => _AddTeAccommodationExpenseState();
-}
-
-class _AddTeAccommodationExpenseState extends State<AddTeAccommodationExpense> {
   Map<String,dynamic> jsonData = {};
   AccomTeFormBloc?  formBloc;
   File? file;
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    jsonData = FlavourConstants.teAccomAddData;
-   // prettyPrint(jsonData);
-
-  }
 
 
   @override
   Widget build(BuildContext context) {
-
+    jsonData = FlavourConstants.teAccomAddData;
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -125,36 +115,36 @@ class _AddTeAccommodationExpenseState extends State<AddTeAccommodationExpense> {
                     builder: (context) {
                     formBloc =  BlocProvider.of<AccomTeFormBloc>(context);
 
-                    if(widget.isEdit){
+                    if(isEdit){
 
-                      formBloc!.checkInDate.updateValue(widget.accomModel!.checkInDate.toString());
-                      formBloc!.checkInTime.updateValue(widget.accomModel!.checkInTime.toString());
+                      formBloc!.checkInDate.updateValue(accomModel!.checkInDate.toString());
+                      formBloc!.checkInTime.updateValue(accomModel!.checkInTime.toString());
 
-                      formBloc!.checkOutDate.updateValue(widget.accomModel!.checkOutDate.toString());
-                      formBloc!.checkOutTime.updateValue(widget.accomModel!.checkOutTime.toString());
+                      formBloc!.checkOutDate.updateValue(accomModel!.checkOutDate.toString());
+                      formBloc!.checkOutTime.updateValue(accomModel!.checkOutTime.toString());
 
-                   //   formBloc!.cityName.updateValue(widget.accomModel!.cityName.toString());
-                      formBloc!.cityID.updateValue(widget.accomModel!.city.toString());
+                      formBloc!.cityName.updateValue(accomModel!.city.toString());
+                      formBloc!.cityID.updateValue(accomModel!.city.toString());
 
-                      formBloc!.selectAccomID.updateValue(widget.accomModel!.accomodationType.toString());
-                    //  formBloc!.accomName.updateValue(widget.accomModel!.accomodationTypeName.toString());
+                      formBloc!.selectAccomID.updateValue(accomModel!.accomodationType.toString());
+                      formBloc!.accomName.updateValue(accomModel!.accomodationType.toString());
 
-                      formBloc!.tfHotelName.updateValue(widget.accomModel!.hotelName.toString());
-                      if(widget.accomModel!.hotelName.toString().isEmpty){
+                      formBloc!.tfHotelName.updateValue(accomModel!.hotelName.toString());
+                      if(accomModel!.hotelName.toString().isEmpty){
                         formBloc!.tfHotelName.updateValue("nill");
                       }
 
 
-                      formBloc!.tfVoucher.updateValue(widget.accomModel!.voucherNumber.toString());
-                      if(widget.accomModel!.voucherNumber.toString().isEmpty){
+                      formBloc!.tfVoucher.updateValue(accomModel!.voucherNumber.toString());
+                      if(accomModel!.voucherNumber.toString().isEmpty){
                         formBloc!.tfVoucher.updateValue("nill");
                       }
 
-                      formBloc!.voucherPath.updateValue(widget.accomModel!.voucherPath.toString());
+                      formBloc!.voucherPath.updateValue(accomModel!.voucherPath.toString());
 
-                      formBloc!.tfTax.updateValue(widget.accomModel!.tax.toString());
-                      formBloc!.tfAmount.updateValue(widget.accomModel!.amount.toString());
-                      formBloc!.tfDescription.updateValue(widget.accomModel!.description.toString());
+                      formBloc!.tfTax.updateValue(accomModel!.tax.toString());
+                      formBloc!.tfAmount.updateValue(accomModel!.amount.toString());
+                      formBloc!.tfDescription.updateValue(accomModel!.description.toString());
                     }else{
 
                       String  dateText = DateFormat('dd-MM-yyyy').format(DateTime.now());
@@ -176,10 +166,10 @@ class _AddTeAccommodationExpenseState extends State<AddTeAccommodationExpense> {
                             print(state.successResponse);
                             TEAccomModel modelResponse = TEAccomModel.fromJson(jsonDecode(state.successResponse.toString()));
 
-                            widget.onAdd!(
+                            onAdd!(
                                 {
                                   "data": jsonDecode(state.successResponse.toString()),
-                                  "item" : ExpenseModel(teType: TETypes.ACCOMMODATION,amount: modelResponse.amount.toString())
+                                  "item" : ExpenseModel(teType: TETypes.ACCOMMODATION,amount: (modelResponse.amount!+modelResponse.tax!).toString())
                                 }
                             );
                             Navigator.pop(context);
@@ -223,9 +213,9 @@ class _AddTeAccommodationExpenseState extends State<AddTeAccommodationExpense> {
                                         Expanded(
                                           child: Container(
                                             child: MetaSearchSelectorView(
-                                              widget.tripType,
+                                              tripType,
                                               mapData: jsonData['selectCity'],
-                                              text: getInitialText(formBloc!.cityName.value),
+                                              text: CityUtil.getCityNameFromID(formBloc!.cityName.value) ,
                                               onChange:(value){
                                                 formBloc!.cityName.updateValue(value.name);
                                                 formBloc!.cityID.updateValue(value.id.toString());
@@ -236,7 +226,7 @@ class _AddTeAccommodationExpenseState extends State<AddTeAccommodationExpense> {
                                         Expanded(
                                           child: Container(
                                             child: MetaDialogSelectorView(mapData: jsonData['selectType'],
-                                              text :getInitialText(formBloc!.accomName.value),
+                                              text :CityUtil.getAccomNameFromID(formBloc!.accomName.value),
                                               onChange:(value){
                                                 print(value);
                                                 formBloc!.selectAccomID.updateValue(value['id'].toString());

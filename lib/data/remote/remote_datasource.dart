@@ -136,12 +136,12 @@ class APIRemoteDatasource{
 
   }
 
-  Future<dynamic> approve(pathUrl,data) async {
+  Future<dynamic> approve(pathUrl,data, {msg="Approving Expense..."}) async {
     data["token"]=appNavigatorKey.currentState!.context.read<LoginCubit>().getLoginToken();
     try {
       final responseJson = await CustomDio().getWrapper().post(
         pathUrl,
-        loadingMessage:"Approving Expense...",
+        loadingMessage:msg,
         queryParameters:data,
       );
       return responseJson.data;

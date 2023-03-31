@@ -5,6 +5,7 @@ import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:travelgrid/common/constants/flavour_constants.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
+import 'package:travelgrid/common/utils/city_util.dart';
 import 'package:travelgrid/common/utils/show_alert.dart';
 import 'package:travelgrid/data/datasources/summary/te_summary_response.dart';
 import 'package:travelgrid/data/models/ge/ge_misc_model.dart';
@@ -15,36 +16,24 @@ import 'package:travelgrid/presentation/widgets/icon.dart';
 import 'package:travelgrid/presentation/widgets/search_selector_view.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
 
-class AddVisitDetails extends StatefulWidget {
+class AddVisitDetails extends StatelessWidget {
   Function(ExpenseVisitDetails)? onAdd;
   bool isEdit;
-  GEMiscModel? miscModel;
+  ExpenseVisitDetails? expenseVisitDetails;
   String? tripType;
-  AddVisitDetails(this.tripType,{this.onAdd,this.isEdit=false,this.miscModel});
-  @override
-  _AddVisitDetailsState createState() => _AddVisitDetailsState();
-}
-
-class _AddVisitDetailsState extends State<AddVisitDetails> {
+  AddVisitDetails(this.tripType,{this.onAdd,this.isEdit=false,this.expenseVisitDetails});
+  
   Map<String,dynamic> jsonData = {};
   List items=[];
   double cardHt = 90.h;
   VisitFormBloc? formBloc;
   bool loaded=false;
   File? file;
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    jsonData = FlavourConstants.teAddVisitData;
-  //  prettyPrint(jsonData);
-
-  }
 
 
   @override
   Widget build(BuildContext context) {
-
+    jsonData = FlavourConstants.teAddVisitData;
     return Scaffold(
       backgroundColor: Colors.white,
       bottomNavigationBar: BottomAppBar(
@@ -107,13 +96,18 @@ class _AddVisitDetailsState extends State<AddVisitDetails> {
                      formBloc =  BlocProvider.of<VisitFormBloc>(context);
 
 
-                     if(widget.isEdit){
+                     if(isEdit){
+                       print("expenseVisitDetails!.toMap()");
+                       print(expenseVisitDetails!.toMap());
 
-                       formBloc!.checkInDate.updateValue(widget.miscModel!.startDate.toString());
-                       formBloc!.checkOutDate.updateValue(widget.miscModel!.endDate.toString());
+                       formBloc!.checkInDate.updateValue(expenseVisitDetails!.evdStartDate.toString());
+                       formBloc!.checkInTime.updateValue(expenseVisitDetails!.evdStartTime.toString());
 
-                       formBloc!.cityName.updateValue(widget.miscModel!.cityName.toString());
-                       formBloc!.cityID.updateValue(widget.miscModel!.city.toString());
+                       formBloc!.checkOutDate.updateValue(expenseVisitDetails!.evdEndDate.toString());
+                       formBloc!.checkOutTime.updateValue(expenseVisitDetails!.evdEndTime.toString());
+
+                       formBloc!.cityName.updateValue(expenseVisitDetails!.city.toString());
+                       formBloc!.cityID.updateValue(expenseVisitDetails!.city.toString());
                      }else{
 
                      String  dateText = DateFormat('dd-MM-yyyy').format(DateTime.now());
@@ -141,7 +135,7 @@ class _AddVisitDetailsState extends State<AddVisitDetails> {
                             print(state.successResponse);
                             ExpenseVisitDetails modelResponse = ExpenseVisitDetails.fromJson(jsonDecode(state.successResponse.toString()));
 
-                            widget.onAdd!(modelResponse);
+                            onAdd!(modelResponse);
                             Navigator.pop(context);
 
 
@@ -182,9 +176,9 @@ class _AddVisitDetailsState extends State<AddVisitDetails> {
 
                                   Container(
                                     child: MetaSearchSelectorView(
-                                      widget.tripType,
+                                      tripType,
                                       mapData: jsonData['selectCity'],
-                                      text: getInitialText(formBloc!.cityName.value),
+                                      text:CityUtil.getCityNameFromID(formBloc!.cityName.value) ,
                                       onChange:(value){
                                         formBloc!.cityName.updateValue(value.name);
                                         formBloc!.cityID.updateValue(value.id.toString());

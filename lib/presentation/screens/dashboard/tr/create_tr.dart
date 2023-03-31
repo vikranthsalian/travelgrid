@@ -289,6 +289,8 @@ class CreateTravelRequestBody extends StatelessWidget {
       submitMap['maForexAdvance']= [];
       submitMap['maTravelVisas']= [];
       submitMap['maTravelInsurance']= [];
+      submitMap['maAccomodationPlanDetail']= [];
+      submitMap['maTaxiPlanDetail']= [];
     }catch(ex){
 
     }

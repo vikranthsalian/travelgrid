@@ -21,6 +21,7 @@ class MiscFormBloc extends FormBloc<String, String> {
   final tfVoucher = TextFieldBloc();
   final tfAmount = TextFieldBloc();
   final showError = SelectFieldBloc<bool, dynamic>(initialValue: false);
+  final showErrorValue = TextFieldBloc(initialValue: "0");
   final tfDescription = TextFieldBloc();
   final voucherPath = TextFieldBloc();
 
@@ -71,12 +72,12 @@ class MiscFormBloc extends FormBloc<String, String> {
 
       tfAmount.onValueChanges(onData: (previous, current) async* {
 
-        if(unitTypeID.value == "288" && tfAmount.valueToDouble! > 200){
+        if(unitTypeID.value == "288" && tfAmount.valueToDouble! > showErrorValue.valueToDouble!){
           showError.updateValue(true);
           return;
         }
 
-        if(unitTypeID.value == "289" && tfAmount.valueToDouble! > 400){
+        if(unitTypeID.value == "289" && tfAmount.valueToDouble! > showErrorValue.valueToDouble!){
           showError.updateValue(true);
           return;
         }
@@ -103,17 +104,6 @@ class MiscFormBloc extends FormBloc<String, String> {
 
   @override
   FutureOr<void> onSubmitting() async {
-    DateTime dob1 = MetaDateTime().getDateTime(checkInDate.value);
-    print(dob1);
-
-    DateTime dob2 = MetaDateTime().getDateTime(checkOutDate.value);
-    print(dob2);
-    print("differenceInYears 2");
-    Duration dur =  dob2.difference(dob1);
-
-    int differenceInYears = (dur.inDays);
-
-    print(differenceInYears);
 
 
     Map<String,dynamic> saveMiscData = {
@@ -122,8 +112,6 @@ class MiscFormBloc extends FormBloc<String, String> {
 
       "startDate": checkInDate.value,
       "endDate": checkOutDate.value,
-      "noOfDays": dur.inDays,
-
       "city":int.parse(cityID.value),
       "cityName":cityName.value,
       if(miscID.value == "212")
