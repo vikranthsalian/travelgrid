@@ -233,7 +233,7 @@ class _CreateTravelExpenseBodyState extends State<CreateTravelExpenseBody> {
                   builder: (_) => DialogExpensePicker(
                     mapData: expenseTypes,
                     onSelected: (e){
-                      navigate(e,false,{},0);
+                      navigate(e,false,{},0,false);
                     },
                   ));
 
@@ -614,7 +614,7 @@ class _CreateTravelExpenseBodyState extends State<CreateTravelExpenseBody> {
                             children: [
                               InkWell(
                                   onTap: (){
-                                     navigate({"onClick": "visit"}, true,visitItems[i].toMap(),i);
+                                     navigate({"onClick": "visit"}, true,visitItems[i].toMap(),i,false);
                                   },
                                   child: Container(
                                       width:25.w,
@@ -714,7 +714,7 @@ class _CreateTravelExpenseBodyState extends State<CreateTravelExpenseBody> {
                             type != TETypes.CONVEYANCE?
                             InkWell(
                             onTap: (){
-                                  navigate({"onClick": type}, true,summaryItems[index].item2,index);
+                                  navigate({"onClick": type}, true,summaryItems[index].item2,index,false);
                             },
                             child: Container(
                                 width:25.w,
@@ -738,7 +738,14 @@ class _CreateTravelExpenseBodyState extends State<CreateTravelExpenseBody> {
                                 child: MetaSVGView(mapData:  map['listView']['item']['items'][1]))),
                           ],
                         )):
-                        Expanded(flex:1,child: SizedBox())
+                        Expanded(flex:1,child: InkWell(
+                            onTap: (){
+                              navigate({"onClick": type}, true,summaryItems[index].item2,index,true);
+                            },
+                            child: Container(
+                                width:25.w,
+                                height:25.w,
+                                child: MetaSVGView(mapData:  map['listView']['item']['items'][2]))))
                         ]),
                   );
                 },
@@ -866,7 +873,7 @@ class _CreateTravelExpenseBodyState extends State<CreateTravelExpenseBody> {
 
   }
 
-  void navigate(e,bool isEdit,Map<String,dynamic> data,int index) {
+  void navigate(e,bool isEdit,Map<String,dynamic> data,int index,isView) {
     print(e);
 
     if(e['onClick']  == "visit"){
@@ -907,6 +914,7 @@ class _CreateTravelExpenseBodyState extends State<CreateTravelExpenseBody> {
       Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
           AddTeMiscExpense(
             isEdit:isEdit,
+            isView:isView,
             miscModel:model,
             onAdd: (values){
               if(isEdit){
@@ -1203,8 +1211,8 @@ class _CreateTravelExpenseBodyState extends State<CreateTravelExpenseBody> {
       }
       if(summaryDetails[i].item1['key']=="CA"){
         summaryDetails[i]= Tuple3(map,
-          summary.advanceByCard.toString(),
-          summary.advanceByCash.toString() ,
+          summary.advanceByCash.toString(),
+          summary.advanceByCard.toString() ,
         );
       }
       if(summaryDetails[i].item1['key']=="TE"){
