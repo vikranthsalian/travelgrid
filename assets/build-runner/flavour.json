@@ -3400,6 +3400,10 @@
             {
               "icon": "delete.svg",
               "color" : "0xFFff0000"
+            },
+            {
+              "icon": "image.svg",
+              "color" : "0xFF2854A1"
             }
           ]
         },

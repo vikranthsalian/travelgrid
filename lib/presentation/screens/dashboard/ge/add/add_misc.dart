@@ -1,19 +1,17 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:travelgrid/common/constants/flavour_constants.dart';
 import 'package:travelgrid/common/enum/dropdown_types.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
-import 'package:travelgrid/common/injector/injector.dart';
 import 'package:travelgrid/common/utils/date_time_util.dart';
 import 'package:travelgrid/common/utils/show_alert.dart';
+import 'package:travelgrid/common/utils/upload_util.dart';
 import 'package:travelgrid/data/models/expense_model.dart';
 import 'package:travelgrid/data/models/ge/ge_misc_model.dart';
 import 'package:travelgrid/data/models/success_model.dart';
-import 'package:travelgrid/domain/usecases/common_usecase.dart';
 import 'package:travelgrid/presentation/components/upload_component.dart';
 import 'package:travelgrid/presentation/screens/dashboard/ge/bloc/misc_form_bloc.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';
@@ -24,17 +22,17 @@ import 'package:travelgrid/presentation/widgets/search_selector_view.dart';
 import 'package:travelgrid/presentation/widgets/text_field.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
 
-class CreateMiscExpense extends StatefulWidget {
+class CreateMiscExpense extends StatelessWidget {
   Function(Map)? onAdd;
   bool isEdit;
+  bool isView;
   GEMiscModel? miscModel;
   String? tripType;
-  CreateMiscExpense(this.tripType,{this.onAdd,this.isEdit=false,this.miscModel});
-  @override
-  _CreateMiscExpenseState createState() => _CreateMiscExpenseState();
-}
-
-class _CreateMiscExpenseState extends State<CreateMiscExpense> {
+  CreateMiscExpense(this.tripType,{this.onAdd,
+    this.isEdit=false,
+    this.isView=false,
+    this.miscModel});
+  
   Map<String,dynamic> jsonData = {};
   List items=[];
   double cardHt = 90.h;
@@ -42,6 +40,7 @@ class _CreateMiscExpenseState extends State<CreateMiscExpense> {
   bool loaded=false;
   File? file;
   int days =1;
+  
   Map errorMap={
     "text" : '',
     "color" : "0xFFFFFFFF",
@@ -49,17 +48,11 @@ class _CreateMiscExpenseState extends State<CreateMiscExpense> {
     "family": "regular",
     "align" : "center-left"
   };
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    jsonData = FlavourConstants.miscCreateData;
-  }
 
 
   @override
   Widget build(BuildContext context) {
-
+    jsonData = FlavourConstants.miscCreateData;
     return Scaffold(
       backgroundColor: Colors.white,
       bottomNavigationBar: BottomAppBar(
@@ -67,7 +60,7 @@ class _CreateMiscExpenseState extends State<CreateMiscExpense> {
         shape: CircularNotchedRectangle(),
         notchMargin: 5,
         elevation: 2.0,
-        child: Row(
+        child: !isView ? Row(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
@@ -78,24 +71,19 @@ class _CreateMiscExpenseState extends State<CreateMiscExpense> {
             ),
             MetaButton(mapData: jsonData['bottomButtonRight'],
                 onButtonPressed: ()async{
-              if(file!=null){
-                String fileName = file!.path.split('/').last;
-                String  dateText = DateFormat('dd-MM-yyyy_hh:ss').format(DateTime.now());
-                FormData formData = FormData.fromMap({
-                  "file": await MultipartFile.fromFile(file!.path, filename:dateText+"_"+fileName),
-                });
-              SuccessModel model =  await Injector.resolve<CommonUseCase>().uploadFile(formData,"GE");
-              if(model.status!){
-                formBloc!.voucherPath.updateValue(model.data!);
-                formBloc!.submit();
-              }
+                if(file!=null){
+                  SuccessModel model = await  MetaUpload().uploadImage(file!,"GE");
+                  if(model.status!){
+                    formBloc!.voucherPath.updateValue(model.data!);
+                    formBloc!.submit();
+                  }
               }else{
                formBloc!.submit();
               }
            }
             )
           ],
-        ),
+        ) : SizedBox(),
       ),
       body: Column(
         children: [
@@ -134,30 +122,29 @@ class _CreateMiscExpenseState extends State<CreateMiscExpense> {
                      formBloc =  BlocProvider.of<MiscFormBloc>(context);
 
 
-                     if(widget.isEdit){
+                     if(isEdit){
 
-                       formBloc!.checkInDate.updateValue(widget.miscModel!.startDate.toString());
-                       formBloc!.checkOutDate.updateValue(widget.miscModel!.endDate.toString());
+                       formBloc!.checkInDate.updateValue(miscModel!.startDate.toString());
+                       formBloc!.checkOutDate.updateValue(miscModel!.endDate.toString());
 
-                       formBloc!.cityName.updateValue(widget.miscModel!.cityName.toString());
-                       formBloc!.cityID.updateValue(widget.miscModel!.city.toString());
+                       formBloc!.cityName.updateValue(miscModel!.cityName.toString());
+                       formBloc!.cityID.updateValue(miscModel!.city.toString());
 
-                       formBloc!.miscID.updateValue(widget.miscModel!.miscellaneousType.toString());
-                       formBloc!.miscName.updateValue(widget.miscModel!.miscellaneousTypeName.toString());
+                       formBloc!.miscID.updateValue(miscModel!.miscellaneousType.toString());
+                       formBloc!.miscName.updateValue(miscModel!.miscellaneousTypeName.toString());
 
 
                        formBloc!.unitTypeName.updateValue("test");
-                       formBloc!.unitTypeID.updateValue(widget.miscModel!.unitType.toString());
+                       formBloc!.unitTypeID.updateValue(miscModel!.unitType.toString());
 
-
-                       formBloc!.tfVoucher.updateValue(widget.miscModel!.voucherNumber.toString());
-                       if(widget.miscModel!.voucherNumber.toString().isEmpty){
+                       formBloc!.tfVoucher.updateValue(miscModel!.voucherNumber.toString());
+                       if(miscModel!.voucherNumber.toString().isEmpty){
                          formBloc!.tfVoucher.updateValue("nill");
                        }
-                       formBloc!.voucherPath.updateValue(widget.miscModel!.voucherPath.toString());
+                       formBloc!.voucherPath.updateValue(miscModel!.voucherPath.toString());
 
-                      formBloc!.tfAmount.updateValue(widget.miscModel!.amount.toString());
-                      formBloc!.tfDescription.updateValue(widget.miscModel!.description.toString());
+                      formBloc!.tfAmount.updateValue(miscModel!.amount.toString());
+                      formBloc!.tfDescription.updateValue(miscModel!.description.toString());
                      }else{
 
                      String  dateText = DateFormat('dd-MM-yyyy').format(DateTime.now());
@@ -188,7 +175,7 @@ class _CreateMiscExpenseState extends State<CreateMiscExpense> {
                               GEMiscModel modelResponse = GEMiscModel.fromJson(
                                   jsonDecode(state.successResponse.toString()));
 
-                              widget.onAdd!(
+                              onAdd!(
                                   {
                                     "data": jsonDecode(
                                         state.successResponse.toString()),
@@ -212,123 +199,159 @@ class _CreateMiscExpenseState extends State<CreateMiscExpense> {
                                 padding: EdgeInsets.zero,
                                 shrinkWrap: true,
                                 children:[
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                        child: Container(
-                                          child: MetaDateTimeView(mapData: jsonData['checkInDateTime'],
-                                              value: {"date": formBloc!.checkInDate.value},
-                                              onChange: (value){
-                                            formBloc!.checkInDate.updateValue(value['date'].toString());
-                                            getDays();
-                                          }),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Container(
-                                          child: MetaDateTimeView(mapData: jsonData['checkOutDateTime'],
-                                              value: {"date": formBloc!.checkOutDate.value},
-                                              onChange: (value){
-                                            formBloc!.checkOutDate.updateValue(value['date'].toString());
-                                            getDays();
-                                          }),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-
-                                  Container(
-                                    child: MetaSearchSelectorView(
-                                      widget.tripType,
-                                      mapData: jsonData['selectCity'],
-                                      text: getInitialText(formBloc!.cityName.value),
-                                      onChange:(value){
-                                        formBloc!.cityName.updateValue(value.name);
-                                        formBloc!.cityID.updateValue(value.id.toString());
-                                      },),
-                                    alignment: Alignment.centerLeft,
-                                  ),
-
-                                  Row(
-                                      children: [
-                                        Expanded(
-                                          child: Container(
-                                            child: MetaDialogSelectorView(mapData: jsonData['selectMiscType'],
-                                              text :getInitialText(formBloc!.miscName.value),
-                                              onChange:(value){
-                                                print(value);
-                                                formBloc!.miscName.updateValue(value['label']);
-                                                formBloc!.miscID.updateValue(value['id'].toString());
-
-                                                if(formBloc!.miscID!="212"){
-                                                  formBloc!.showError.updateValue(false);
-                                                }else{
-
-                                                  if( formBloc!.unitTypeID.value == "288" &&  formBloc!.tfAmount.valueToDouble! > 200){
-                                                    formBloc!.showError.updateValue(false);
-                                                    formBloc!.showError.updateValue(true);
-                                                  }
-
-                                                  if( formBloc!.unitTypeID.value == "289" &&  formBloc!.tfAmount.valueToDouble! > 400){
-
-                                                    formBloc!.showError.updateValue(false);
-                                                    formBloc!.showError.updateValue(true);
-                                                  }
-                                                  getDays();
-                                                }
-
-
-                                              },),
+                                  ...[
+                                    AbsorbPointer(
+                                      
+                                      child: Column(
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Expanded(
+                                                child: Container(
+                                                  child: MetaDateTimeView(mapData: jsonData['checkInDateTime'],
+                                                      value: {"date": formBloc!.checkInDate.value},
+                                                      onChange: (value){
+                                                        formBloc!.checkInDate.updateValue(value['date'].toString());
+                                                        getDays();
+                                                      }),
+                                                ),
+                                              ),
+                                              Expanded(
+                                                child: Container(
+                                                  child: MetaDateTimeView(mapData: jsonData['checkOutDateTime'],
+                                                      value: {"date": formBloc!.checkOutDate.value},
+                                                      onChange: (value){
+                                                        formBloc!.checkOutDate.updateValue(value['date'].toString());
+                                                        getDays();
+                                                      }),
+                                                ),
+                                              ),
+                                            ],
                                           ),
-                                        ),
-                                        Expanded(
-                                          child: BlocBuilder<SelectFieldBloc, SelectFieldBlocState>(
-                                              bloc: formBloc!.miscID,
-                                              builder: (context, state) {
-                                                return Visibility(
-                                                  visible: state.value == "212" ? true : false,
-                                                  child:MetaDialogSelectorView(mapData: jsonData['selectUnitType'],
-                                                    text :getInitialText(formBloc!.unitTypeName.value),
-                                                    onChange:(value){
-                                                      print(value);
-                                                      formBloc!.unitTypeName.updateValue(value['text']);
-                                                      formBloc!.unitTypeID.updateValue(value['id'].toString());
 
-                                                        if( formBloc!.unitTypeID.value == "288"
-                                                            && formBloc!.tfAmount.value.isNotEmpty
-                                                            && formBloc!.tfAmount.valueToDouble! > 200
-                                                        ){
+                                          Container(
+                                            child: MetaSearchSelectorView(
+                                              tripType,
+                                              mapData: jsonData['selectCity'],
+                                              text: getInitialText(formBloc!.cityName.value),
+                                              onChange:(value){
+                                                formBloc!.cityName.updateValue(value.name);
+                                                formBloc!.cityID.updateValue(value.id.toString());
+                                              },),
+                                            alignment: Alignment.centerLeft,
+                                          ),
+
+                                          Row(
+                                              children: [
+                                                Expanded(
+                                                  child: Container(
+                                                    child: MetaDialogSelectorView(mapData: jsonData['selectMiscType'],
+                                                      text :getInitialText(formBloc!.miscName.value),
+                                                      onChange:(value){
+                                                        print(value);
+                                                        formBloc!.miscName.updateValue(value['label']);
+                                                        formBloc!.miscID.updateValue(value['id'].toString());
+
+                                                        if(formBloc!.miscID!="212"){
                                                           formBloc!.showError.updateValue(false);
-                                                          formBloc!.showError.updateValue(true);
+                                                        }else{
+
+                                                          if( formBloc!.unitTypeID.value == "288" &&  formBloc!.tfAmount.valueToDouble! > 200){
+                                                            formBloc!.showError.updateValue(false);
+                                                            formBloc!.showError.updateValue(true);
+                                                          }
+
+                                                          if( formBloc!.unitTypeID.value == "289" &&  formBloc!.tfAmount.valueToDouble! > 400){
+
+                                                            formBloc!.showError.updateValue(false);
+                                                            formBloc!.showError.updateValue(true);
+                                                          }
+                                                          getDays();
                                                         }
 
-                                                        if( formBloc!.unitTypeID.value == "289"
-                                                            && formBloc!.tfAmount.value.isNotEmpty
-                                                            &&  formBloc!.tfAmount.valueToDouble! > 400){
 
-                                                          formBloc!.showError.updateValue(false);
-                                                          formBloc!.showError.updateValue(true);
-                                                        }
+                                                      },),
+                                                  ),
+                                                ),
+                                                Expanded(
+                                                  child: BlocBuilder<SelectFieldBloc, SelectFieldBlocState>(
+                                                      bloc: formBloc!.miscID,
+                                                      builder: (context, state) {
+                                                        return Visibility(
+                                                          visible: state.value == "212" ? true : false,
+                                                          child:MetaDialogSelectorView(mapData: jsonData['selectUnitType'],
+                                                            text :getInitialText(formBloc!.unitTypeName.value),
+                                                            onChange:(value){
+                                                              print(value);
+                                                              formBloc!.unitTypeName.updateValue(value['text']);
+                                                              formBloc!.unitTypeID.updateValue(value['id'].toString());
 
+                                                              if( formBloc!.unitTypeID.value == "288"
+                                                                  && formBloc!.tfAmount.value.isNotEmpty
+                                                                  && formBloc!.tfAmount.valueToDouble! > 200
+                                                              ){
+                                                                formBloc!.showError.updateValue(false);
+                                                                formBloc!.showError.updateValue(true);
+                                                              }
+
+                                                              if( formBloc!.unitTypeID.value == "289"
+                                                                  && formBloc!.tfAmount.value.isNotEmpty
+                                                                  &&  formBloc!.tfAmount.valueToDouble! > 400){
+
+                                                                formBloc!.showError.updateValue(false);
+                                                                formBloc!.showError.updateValue(true);
+                                                              }
+
+                                                              getDays();
+
+
+                                                            },),
+                                                        );
+                                                      }
+                                                  ),
+                                                ),
+                                              ]),
+
+                                          Row(
+                                            children: [
+                                              Expanded(
+                                                child: Container(
+                                                  child: MetaTextFieldBlocView(mapData: jsonData['text_field_amount'],
+                                                      textFieldBloc: formBloc!.tfAmount,
+                                                      onChanged:(value){
+                                                        formBloc!.tfAmount.updateValue(value);
                                                         getDays();
 
+                                                        if(formBloc!.unitTypeID.value=="288"){
+                                                          formBloc!.showErrorValue.updateValue((200*days).toString());
+                                                          //   msg= (200*days).toString();
+                                                        }else if(formBloc!.unitTypeID.value=="289"){
+                                                          formBloc!.showErrorValue.updateValue((400*days).toString());
+                                                          //    msg=(400*days).toString();
+                                                        }
+                                                      }),
+                                                ),
+                                              ),
 
-                                                    },),
-                                                );
-                                              }
+                                              SizedBox(width: 10.w,),
+
+                                              Expanded(
+                                                child: MetaTextFieldBlocView(mapData: jsonData['text_field_voucher'],
+                                                    textFieldBloc: formBloc!.tfVoucher,
+                                                    onChanged:(value){
+                                                      formBloc!.tfVoucher.updateValue(value);
+                                                    }),
+                                              ),
+
+                                            ],
                                           ),
-                                        ),
-                                      ]),
+                                          BlocBuilder<SelectFieldBloc, SelectFieldBlocState>(
+                                              bloc: formBloc!.showError,
+                                              builder: (context, state) {
+                                                print("formBloc!.unitTypeID.value");
+                                                print(formBloc!.unitTypeID.value);
+                                                //String msg="";
 
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                        child: Container(
-                                          child: MetaTextFieldBlocView(mapData: jsonData['text_field_amount'],
-                                              textFieldBloc: formBloc!.tfAmount,
-                                              onChanged:(value){
-                                                formBloc!.tfAmount.updateValue(value);
-                                                getDays();
 
                                                 if(formBloc!.unitTypeID.value=="288"){
                                                   formBloc!.showErrorValue.updateValue((200*days).toString());
@@ -337,56 +360,34 @@ class _CreateMiscExpenseState extends State<CreateMiscExpense> {
                                                   formBloc!.showErrorValue.updateValue((400*days).toString());
                                                   //    msg=(400*days).toString();
                                                 }
-                                              }),
-                                        ),
-                                      ),
 
-                                      SizedBox(width: 10.w,),
-
-                                      Expanded(
-                                        child: MetaTextFieldBlocView(mapData: jsonData['text_field_voucher'],
-                                            textFieldBloc: formBloc!.tfVoucher,
-                                            onChanged:(value){
-                                              formBloc!.tfVoucher.updateValue(value);
-                                            }),
-                                      ),
-
-                                    ],
-                                  ),
-                                  BlocBuilder<SelectFieldBloc, SelectFieldBlocState>(
-                                      bloc: formBloc!.showError,
-                                      builder: (context, state) {
-                                        print("formBloc!.unitTypeID.value");
-                                        print(formBloc!.unitTypeID.value);
-                                        //String msg="";
-
-
-                                        if(formBloc!.unitTypeID.value=="288"){
-                                          formBloc!.showErrorValue.updateValue((200*days).toString());
-                                       //   msg= (200*days).toString();
-                                        }else if(formBloc!.unitTypeID.value=="289"){
-                                          formBloc!.showErrorValue.updateValue((400*days).toString());
-                                      //    msg=(400*days).toString();
-                                        }
-
-                                        return Visibility(
-                                          visible:state.value,
-                                          child:Container(
-                                            padding: EdgeInsets.symmetric(horizontal: 10.w),
-                                              height: 20.h,
-                                              color: Color(0xFFB71C1C),
-                                              child: MetaTextView(mapData: errorMap,text: "Eligible amount is "+formBloc!.showErrorValue.value)
+                                                return Visibility(
+                                                  visible:state.value,
+                                                  child:Container(
+                                                      padding: EdgeInsets.symmetric(horizontal: 10.w),
+                                                      height: 20.h,
+                                                      color: Color(0xFFB71C1C),
+                                                      child: MetaTextView(mapData: errorMap,text: "Eligible amount is "+formBloc!.showErrorValue.value)
+                                                  ),
+                                                );
+                                              }
                                           ),
-                                        );
-                                      }
-                                  ),
-                                  MetaTextFieldBlocView(mapData: jsonData['text_field_desc'],
-                                      textFieldBloc: formBloc!.tfDescription,
-                                      onChanged:(value){
-                                        formBloc!.tfDescription.updateValue(value);
-                                      }),
+                                          MetaTextFieldBlocView(mapData: jsonData['text_field_desc'],
+                                              textFieldBloc: formBloc!.tfDescription,
+                                              onChanged:(value){
+                                                formBloc!.tfDescription.updateValue(value);
+                                              }),
+                                        ],
+                                      ),
+                                      absorbing: isView,
+                                    )
+                                  ],
+
                                   UploadComponent(jsonData: jsonData['uploadButton'],
+                                      url:formBloc!.voucherPath.value,
+                                      isViewOnly:isView,
                                       onSelected: (dataFile){
+
                                         file=dataFile;
                                   }),
                                 ]

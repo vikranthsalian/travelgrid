@@ -230,6 +230,7 @@ class AddTeTicketExpense extends StatelessWidget {
                                         Expanded(
                                           child: Container(
                                             child: AbsorbPointer(
+
                                               child: MetaDialogSelectorView(mapData: jsonData['selectMode'],
                                                 text :CityUtil.getTraveModeFromID(formBloc!.travelMode.value),
                                                 onChange:(value){

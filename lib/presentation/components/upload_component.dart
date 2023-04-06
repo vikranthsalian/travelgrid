@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:travelgrid/common/constants/flavour_constants.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
 import 'package:travelgrid/common/utils/show_alert.dart';
 import 'package:travelgrid/presentation/components/dialog_upload_type.dart';
@@ -15,8 +16,10 @@ import 'package:dotted_border/dotted_border.dart';
 class UploadComponent extends StatefulWidget {
   Map<String,dynamic> jsonData;
   Function? onSelected;
+  String? url;
+  bool? isViewOnly;
 
-  UploadComponent({required this.jsonData,this.onSelected});
+  UploadComponent({required this.jsonData,this.onSelected,this.url,this.isViewOnly=false});
   @override
   _UploadComponentState createState() => _UploadComponentState();
 }
@@ -55,9 +58,19 @@ class _UploadComponentState extends State<UploadComponent> {
       strokeCap: StrokeCap.butt,
       child: ClipRRect(
         borderRadius: BorderRadius.all(Radius.circular(12)),
-        child:file!=null ? getViewer() : getUploaderView(),
+        child:widget.isViewOnly! ? urlViewer() : file!=null ? getViewer() : getUploaderView(),
       ),
     );
+  }
+
+  Widget urlViewer(){
+    print("urlViewer");
+
+    if(widget.url!.isEmpty){
+      return MetaTextView(mapData: widget.jsonData['title'],text: "No Document Found",);
+    }
+
+    return Image.network(FlavourConstants.apiHost+"downloadAttachment?filePath="+widget.url.toString());
   }
 
   getViewer() {
@@ -78,6 +91,7 @@ class _UploadComponentState extends State<UploadComponent> {
             child: Stack(
               alignment: Alignment.bottomCenter,
                 children: [
+                  widget.url!=null ? Image.network(FlavourConstants.apiHost+"downloadAttachment?filePath="+widget.url.toString()):
                   Container(
                       height:60.h,
                       width: 60.h,
@@ -128,6 +142,7 @@ class _UploadComponentState extends State<UploadComponent> {
                       setState(() {
 
                       });
+                      widget.onSelected!(file);
                     } else {
                       // User canceled the picker
                     }

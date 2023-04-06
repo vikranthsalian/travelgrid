@@ -96,11 +96,15 @@ class TravelOVFormBloc extends FormBloc<String, String> {
   @override
   FutureOr<void> onSubmitting() async {
 
+
+
     try {
       Map<String, dynamic> saveOVMap = {
         //  "checkInDate": checkInDate.value,
-        "srcLatLog": "12.96643,77.58718",
-        "desLatLog": "18.94017,72.83483",
+        "srcLatLog": onAutoSelected.value=="auto" ? onListLoaded.value!.first.srcLatLog!+","+onListLoaded.value!.first.desLatLog! : "",
+       // "srcLatLog": "12.96643,77.58718",
+        "desLatLog": onAutoSelected.value=="auto" ? onListLoaded.value!.last.srcLatLog!+","+onListLoaded.value!.last.desLatLog! : "",
+       // "desLatLog": "18.94017,72.83483",
         "travelMode": 193,
        // "vehicleType": int.parse(selectTypeID.value.toString()),
 

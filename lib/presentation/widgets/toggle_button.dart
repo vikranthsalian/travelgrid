@@ -31,7 +31,9 @@ class _MetaToggleButtonState extends State<MetaToggleButton> {
 
 
     return Container(
+
       decoration: BoxDecoration(
+        color: Colors.grey.withOpacity(0.3),
         borderRadius:  BorderRadius.all(Radius.circular(widget.border)),
       ),
       child:ToggleButtons(
@@ -46,14 +48,14 @@ class _MetaToggleButtonState extends State<MetaToggleButton> {
           });
         },
         borderRadius:  BorderRadius.all(Radius.circular(widget.border)),
-        selectedBorderColor: Colors.white,
-        selectedColor: Colors.white,
+       // / selectedBorderColor: Colors.white,
+       // selectedColor: Colors.white,
         fillColor: widget.enabledColor,
-        color: Colors.grey,
-        borderColor: Colors.grey,
+        //color: Colors.grey,
+       // borderColor: Colors.grey,
         constraints: BoxConstraints(
-          minHeight: widget.type == 1 ? 40.0 : 15,
-          minWidth: widget.type == 1 ? 100.0:70,
+          minHeight:15,
+          minWidth: 70,
         ),
         isSelected: widget.steps,
         children: widget.items,

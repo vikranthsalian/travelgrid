@@ -90,7 +90,8 @@ class TrProcessed extends StatelessWidget {
 
                 formBloc!.requestType.updateValue("Self");
                 formBloc!.requestTypeID.updateValue("self");
-                
+
+                formBloc!.swBillable.updateValue(true);
                 if(isEdit!){
 
                   final idx = segLabel.indexWhere((element) => element == summaryResponse?.data?.segmentType.toString());
@@ -175,11 +176,12 @@ class TrProcessed extends StatelessWidget {
                             shrinkWrap: true,
                             children:[
                               Container(
+                                color: Colors.white,
                                 padding: EdgeInsets.only(bottom: 10.h,top: 5.h),
-                                decoration: BoxDecoration(
-                                  color: ParseDataType().getHexToColor(jsonData['backgroundColor']),
-                                  //  borderRadius:  BorderRadius.all(Radius.circular(30)),
-                                ),
+                                // decoration: BoxDecoration(
+                                //   color: ParseDataType().getHexToColor(jsonData['backgroundColor']),
+                                //   //  borderRadius:  BorderRadius.all(Radius.circular(30)),
+                                // ),
                                 alignment: Alignment.center,
 
                                 child: Container(

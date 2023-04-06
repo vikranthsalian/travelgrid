@@ -106,13 +106,20 @@ class AddRoundItinerary  extends StatelessWidget {
                         formBloc!.checkInDate.updateValue(dateText);
                         formBloc!.checkInDate2.updateValue(dateText);
                         //formBloc!.checkInTime.updateValue("00:00");
+                        formBloc!.travelMode.updateValue("A");
+                        formBloc!.travelModeID.updateValue("A");
+
+                        formBloc!.swByCompany.updateValue(true);
+                        formBloc!.swByCompanyID.updateValue(true);
+
+                        formBloc!.travelMode2.updateValue("A");
+                        formBloc!.travelModeID2.updateValue("A");
+                        formBloc!.swByCompany2.updateValue(true);
+                        formBloc!.swByCompanyID2.updateValue(true);
 
                         if(tripType=="O"){
                           formBloc!.travelMode.updateValue("A");
                           formBloc!.travelModeID.updateValue("A");
-
-                          formBloc!.travelMode2.updateValue("A");
-                          formBloc!.travelModeID2.updateValue("A");
                         }
 
                         if(isEdit){

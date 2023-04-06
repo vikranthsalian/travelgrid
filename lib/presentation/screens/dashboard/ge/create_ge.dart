@@ -238,7 +238,7 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpenseBody> {
                 builder: (_) => DialogExpensePicker(
                   mapData: expenseTypes,
                   onSelected: (e){
-                    navigate(e,false,{},0);
+                    navigate(e,false,{},0,false);
                   },
                 ));
 
@@ -347,13 +347,6 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpenseBody> {
           MetaButton(mapData: jsonData['bottomButtonLeft'],text: "Cancel",
               onButtonPressed: (){
                   Navigator.pop(context);
-                // if(summaryItems.isNotEmpty && isCalculated){
-                //   submitGe("draft");
-                // }else{
-                //   MetaAlert.showErrorAlert(
-                //       message: "Please add expenses"
-                //   );
-                // }
               }
           ),
           MetaButton(mapData: jsonData['bottomButtonRight'],
@@ -587,7 +580,7 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpenseBody> {
                             type != GETypes.CONVEYANCE?
                             InkWell(
                             onTap: (){
-                                  navigate({"onClick": type}, true,summaryItems[index].item2,index);
+                                  navigate({"onClick": type}, true,summaryItems[index].item2,index,false);
                             },
                             child: Container(
                                 width:25.w,
@@ -611,7 +604,15 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpenseBody> {
                                 child: MetaSVGView(mapData:  map['listView']['item']['items'][1]))),
                           ],
                         )):
-                        Expanded(flex:1,child: SizedBox())
+                        Expanded(flex:1,child:
+                        type != GETypes.CONVEYANCE? InkWell(
+                                onTap: (){
+                              navigate({"onClick": type}, true,summaryItems[index].item2,index,true);
+                            },
+                            child: Container(
+                                width:25.w,
+                                height:25.w,
+                                child: MetaSVGView(mapData:  map['listView']['item']['items'][2]))):SizedBox())
                         ]),
                   );
                 },
@@ -697,7 +698,7 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpenseBody> {
 
   }
 
-  void navigate(e,bool isEdit,Map<String,dynamic> data,int index) {
+  void navigate(e,bool isEdit,Map<String,dynamic> data,int index,isView) {
     print(e);
     print(GETypes.ACCOMMODATION.toString());
 
@@ -714,6 +715,7 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpenseBody> {
           CreateMiscExpense(
             "D",
             isEdit:isEdit,
+            isView:isView,
             miscModel:model,
             onAdd: (values){
               if(isEdit){
@@ -736,10 +738,9 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpenseBody> {
           CreateAccommodationExpense(
             "D",
             isEdit:isEdit,
+            isView:isView,
             accomModel:model,
             onAdd: (values){
-              print("isEdit");
-              print(isEdit);
               if(isEdit){
                 summaryItems.removeAt(index);
                 print("removed");

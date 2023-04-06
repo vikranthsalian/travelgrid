@@ -178,7 +178,7 @@ class MaGeAccomodationExpense {
   double? tax;
   String? description;
   bool? withBill;
-  Null? voilationMessage;
+  String? voilationMessage;
   String? voucherPath;
   bool? violated;
   String? voucherNumber;
