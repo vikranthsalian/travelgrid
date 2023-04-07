@@ -9,9 +9,6 @@ class ConveyanceTeFormBloc extends FormBloc<String, String> {
   final selectWithBill = SelectFieldBloc<String, dynamic>();
   final checkInDate =  TextFieldBloc(validators: [emptyValidator]);
 
-  final checkInTime =  TextFieldBloc(validators: [emptyValidator]);
-  final checkOutTime =  TextFieldBloc(validators: [emptyValidator]);
-
   final modeName =  TextFieldBloc(validators: [emptyValidator]);
 
   final swWithBill = BooleanFieldBloc(initialValue: false);

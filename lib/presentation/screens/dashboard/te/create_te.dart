@@ -962,6 +962,7 @@ class _CreateTravelExpenseBodyState extends State<CreateTravelExpenseBody> {
       Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
           AddTeConveyance(
             isEdit:isEdit,
+            isView:isView,
             teConveyanceModel:model,
             onAdd: (values){
             if(isEdit){

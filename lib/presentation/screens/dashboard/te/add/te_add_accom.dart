@@ -47,7 +47,7 @@ class AddTeAccommodationExpense extends StatelessWidget {
         shape: CircularNotchedRectangle(),
         notchMargin: 5,
         elevation: 2.0,
-        child: Row(
+        child: !isView ?  Row(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
@@ -70,7 +70,7 @@ class AddTeAccommodationExpense extends StatelessWidget {
                 }
             )
           ],
-        ),
+        ):SizedBox(),
       ),
       body: Column(
         children: [
