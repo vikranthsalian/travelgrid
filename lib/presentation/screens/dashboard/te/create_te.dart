@@ -986,6 +986,7 @@ class _CreateTravelExpenseBodyState extends State<CreateTravelExpenseBody> {
           AddTeTicketExpense(
             "D",
             isEdit:isEdit,
+            isView:isView,
             teTicketModel:model,
             onAdd: (values){
               if(isEdit){
