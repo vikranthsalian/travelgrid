@@ -58,7 +58,8 @@ class _UploadComponentState extends State<UploadComponent> {
       strokeCap: StrokeCap.butt,
       child: ClipRRect(
         borderRadius: BorderRadius.all(Radius.circular(12)),
-        child:widget.isViewOnly! ? urlViewer() : file!=null ? getViewer() : getUploaderView(),
+        child:widget.isViewOnly! ? urlViewer() :
+           (file==null && (widget.url==null || widget.url!.isEmpty)) ? getUploaderView() : getViewer(),
       ),
     );
   }
@@ -91,7 +92,8 @@ class _UploadComponentState extends State<UploadComponent> {
             child: Stack(
               alignment: Alignment.bottomCenter,
                 children: [
-                  widget.url!=null ? Image.network(FlavourConstants.apiHost+"downloadAttachment?filePath="+widget.url.toString()):
+                  (widget.url!=null && widget.url!.isNotEmpty) ?
+                  Image.network(FlavourConstants.apiHost+"downloadAttachment?filePath="+widget.url.toString()):
                   Container(
                       height:60.h,
                       width: 60.h,
