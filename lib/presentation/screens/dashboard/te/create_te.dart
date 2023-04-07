@@ -937,6 +937,7 @@ class _CreateTravelExpenseBodyState extends State<CreateTravelExpenseBody> {
           AddTeAccommodationExpense(
             "D",
             isEdit:isEdit,
+            isView:isView,
             accomModel:model,
             onAdd: (values){
               if(isEdit){

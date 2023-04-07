@@ -117,33 +117,6 @@ class AccomTeFormBloc extends FormBloc<String, String> {
     "requireApproval": false,
     "modified": false,
     };
-
-
-
-    // Map<String,dynamic> saveAccomMap = {
-    //   "checkInDate": checkInDate.value,
-    //   "checkInTime": checkInTime.value,
-    //
-    //   "checkOutDate": checkOutDate.value,
-    //   "checkOutTime": checkOutTime.value,
-    //
-    //   "noOfDays":dur.inDays,
-    //   "city": int.parse(cityID.value),
-    //   "cityName": cityName.value,
-    //   "hotelName": selectAccomID.value == "250" ? tfHotelName.value :"",
-    //
-    //   "accomodationType": int.parse(selectAccomID.value.toString()),
-    //   "accomodationTypeName": accomName.value,
-    //
-    //   "amount": int.parse(tfAmount.value),
-    //   "tax": int.parse(tfTax.value.isEmpty ? "0.0" : tfTax.value),
-    //   "description": tfDescription.value,
-    //   "withBill":swWithBill.value,
-    //
-    //   "voucherPath": voucherPath.value,
-    //
-    //   "voucherNumber":swWithBill.value ? tfVoucher.value : ""
-    // };
     emitSuccess(successResponse: jsonEncode(saveAccomMap));
 
   }
