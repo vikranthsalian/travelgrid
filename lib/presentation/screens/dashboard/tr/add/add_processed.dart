@@ -8,7 +8,9 @@ import 'package:travelgrid/common/constants/flavour_constants.dart';
 import 'package:travelgrid/common/extensions/capitalize.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
 import 'package:travelgrid/common/utils/city_util.dart';
+import 'package:travelgrid/common/utils/upload_util.dart';
 import 'package:travelgrid/data/datasources/summary/tr_summary_response.dart';
+import 'package:travelgrid/data/models/success_model.dart';
 import 'package:travelgrid/data/models/tr/tr_city_pair_model.dart';
 import 'package:travelgrid/data/models/tr/tr_forex_model.dart';
 import 'package:travelgrid/data/models/tr/tr_insurance_model.dart';
@@ -35,7 +37,7 @@ class TrProcessed extends StatelessWidget {
   TRSummaryResponse? summaryResponse;
   bool? isEdit;
   TrProcessed({this.onNext,this.tripType,this.summaryResponse,this.isEdit=false});
-
+  File? file;
   Map<String,dynamic> jsonData = {};
   ProcessedTrFormBloc?  formBloc;
   var map = {
@@ -356,23 +358,25 @@ class TrProcessed extends StatelessWidget {
 
                                 margin: EdgeInsets.symmetric(horizontal: 10.w),
                                 child: MetaTextFieldBlocView(mapData: jsonData['text_field_appprover'],
-                                    textFieldBloc: formBloc!.noteAgent,
-                                    onChanged:(value){
-                                      formBloc!.noteAgent.updateValue(value);
-                                    }),
-                              ),
-                              Container(
-                                margin: EdgeInsets.symmetric(horizontal: 10.w),
-                                child: MetaTextFieldBlocView(mapData: jsonData['text_field_agent'],
                                     textFieldBloc: formBloc!.noteApprover,
                                     onChanged:(value){
                                       formBloc!.noteApprover.updateValue(value);
                                     }),
                               ),
+                              Container(
+                                margin: EdgeInsets.symmetric(horizontal: 10.w),
+                                child: MetaTextFieldBlocView(mapData: jsonData['text_field_agent'],
+                                    textFieldBloc: formBloc!.noteAgent,
+                                    onChanged:(value){
+                                      formBloc!.noteAgent.updateValue(value);
+                                    }),
+                              ),
                               SizedBox(height: 20.h,),
                               UploadComponent(jsonData: jsonData['uploadButton'],
+                                  url: formBloc!.voucherPath.value,
+                                  isViewOnly: false,
                                   onSelected: (File dataFile){
-                                    formBloc!.voucherPath.updateValue(dataFile.path);
+                                    file=dataFile;
                                   }),
                               SizedBox(height: 20.h,),
                             ]
@@ -889,9 +893,17 @@ class TrProcessed extends StatelessWidget {
     );
   }
 
-  procSubmit(){
+  procSubmit()async{
     print('page1 submit');
-    formBloc!.submit();
+    if(file!=null){
+      SuccessModel model = await  MetaUpload().uploadImage(file!,"TR");
+      if(model.status!){
+        formBloc!.voucherPath.updateValue(model.data!);
+        formBloc!.submit();
+      }
+    }else{
+      formBloc!.submit();
+    }
   }
 
   getInitialText(String text) {

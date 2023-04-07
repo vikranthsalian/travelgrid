@@ -8,6 +8,7 @@ import 'package:travelgrid/common/constants/flavour_constants.dart';
 import 'package:travelgrid/common/enum/dropdown_types.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
 import 'package:travelgrid/common/injector/injector.dart';
+import 'package:travelgrid/common/utils/city_util.dart';
 import 'package:travelgrid/common/utils/upload_util.dart';
 import 'package:travelgrid/data/models/expense_model.dart';
 import 'package:travelgrid/data/models/success_model.dart';
@@ -225,7 +226,8 @@ class AddTeConveyance extends StatelessWidget {
                                             children: [
                                               Expanded(child: Container(
                                                 child: MetaDialogSelectorView(mapData: jsonData['selectMode'],
-                                                  text :getInitialText(formBloc!.modeName.value),
+                                                  text : CityUtil.getModeNameFromID(formBloc!.modeName.value.toString()),
+                                                 // getInitialText(formBloc!.modeName.value),
                                                   onChange:(data)async{
                                                     print(data);
                                                     formBloc!.selectModeID.updateValue("193");

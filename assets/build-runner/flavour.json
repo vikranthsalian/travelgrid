@@ -1166,6 +1166,177 @@
         "validators" : []
       }
     },
+    "supportingDetails": {
+      "label": {
+        "text" : "Supporting Details",
+        "color" : "0xFF2854A1",
+        "size": "16",
+        "family": "bold",
+        "align": "center-left"
+      },
+      "showDetails": {
+        "label": {
+          "text" : "Show",
+          "color" : "0XFFFFFFFF",
+          "size": "10",
+          "family": "bold",
+          "align": "center-right"
+        }
+      },
+      "noteAgent": {
+        "showView": true,
+        "key": "disabled",
+        "label":  {
+          "text" : "Note to agent",
+          "color" : "0xFF2854A1",
+          "size": "14",
+          "family": "regular",
+          "align": "center-left"
+        },
+        "dataText":  {
+          "text" : "",
+          "color" : "0xFFAEAEAE",
+          "size": "14",
+          "family": "regular",
+          "align": "center-left"
+        }
+      },
+      "noteApprover": {
+        "showView": true,
+        "key": "disabled",
+        "label":  {
+          "text" : "Note to approver",
+          "color" : "0xFF2854A1",
+          "size": "14",
+          "family": "regular",
+          "align": "center-left"
+        },
+        "dataText":  {
+          "text" : "",
+          "color" : "0xFFAEAEAE",
+          "size": "14",
+          "family": "regular",
+          "align": "center-left"
+        },
+        "text_field_desc":  {
+          "name": "Description",
+          "apiKey": "description",
+          "type": "text_field_view",
+          "inputType": "text",
+          "isPassword": false,
+          "backgroundColor": "0XFFFFFFFF",
+          "borderColor": "0XFFAEAEAE",
+          "text" : {
+            "text" : "",
+            "color" : "0xFF2854A1",
+            "size": "14",
+            "family": "regular"
+          },
+          "labelText" : {
+            "text" : "Description",
+            "color" : "0xFF2854A1",
+            "size": "14",
+            "family": "regular",
+            "align" : "center-left"
+          },
+          "hintText" : {
+            "text" : "Enter Description",
+            "color" : "0xFF2854A1",
+            "size": "14",
+            "family": "regular"
+          },
+          "errorText" : {
+            "text" : "",
+            "color" : "0xFFFF0000",
+            "size": "14",
+            "family": "regular"
+          },
+          "validators" : []
+        }
+      },
+      "text_field_desc":  {
+        "name": "Description",
+        "apiKey": "description",
+        "type": "text_field_view",
+        "inputType": "text",
+        "isPassword": false,
+        "backgroundColor": "0XFFFFFFFF",
+        "borderColor": "0XFFAEAEAE",
+        "text" : {
+          "text" : "",
+          "color" : "0xFF2854A1",
+          "size": "14",
+          "family": "regular"
+        },
+        "labelText" : {
+          "text" : "Description",
+          "color" : "0xFF2854A1",
+          "size": "14",
+          "family": "regular",
+          "align" : "center-left"
+        },
+        "hintText" : {
+          "text" : "Enter Description",
+          "color" : "0xFF2854A1",
+          "size": "14",
+          "family": "regular"
+        },
+        "errorText" : {
+          "text" : "",
+          "color" : "0xFFFF0000",
+          "size": "14",
+          "family": "regular"
+        },
+        "validators" : []
+      },
+      "uploadButton":  {
+        "backgroundColor" : "0xFF2854A1",
+        "onClick": "/uploadDoc",
+        "title":  {
+          "text" : "Browse for Documents/Images here",
+          "color" : "0XFF000000",
+          "size": "12",
+          "family": "bold",
+          "align": "center"
+        },
+        "subtitle":  {
+          "text" : "PNG,JPEG,JPG,PDF",
+          "color" : "0XFFAEAEAE",
+          "size": "10",
+          "family": "regular",
+          "align": "center"
+        },
+        "svgIcon":{
+          "icon": "upload.svg",
+          "color" : "0xFF2854A1"
+        },
+        "listView": {
+          "data": [
+            {
+              "text" : "Camera",
+              "color" : "0XFF000000",
+              "size": "12",
+              "family": "regular",
+              "align": "center-left"
+            },
+            {
+              "text" : "Gallery",
+              "color" : "0XFF000000",
+              "size": "12",
+              "family": "regular",
+              "align": "center-left"
+            }
+          ]
+        },
+        "bottomButtonCentre": {
+          "text" : "Cancel",
+          "color" : "0xFFFFFFFF",
+          "backgroundColor" : "0xFF2854A1",
+          "size": "18",
+          "family": "regular"
+        }
+      }
+    },
     "bottomButtonLeft": {
       "text" : "Draft",
       "color" : "0xFFFFFFFF",
@@ -1654,7 +1825,7 @@
         "align": "center-left"
       },
       "dataText":  {
-        "text" : "Travel Purpose",
+        "text" : "Select Travel Purpose",
         "color" : "0xFFAEAEAE",
         "size": "14",
         "family": "regular",

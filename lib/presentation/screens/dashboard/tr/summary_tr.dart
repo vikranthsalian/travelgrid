@@ -18,6 +18,7 @@ import 'package:travelgrid/domain/usecases/ge_usecase.dart';
 import 'package:travelgrid/domain/usecases/tr_usecase.dart';
 import 'package:travelgrid/presentation/components/bloc_map_event.dart';
 import 'package:travelgrid/presentation/components/switch_component.dart';
+import 'package:travelgrid/presentation/components/upload_component.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';
 import 'package:travelgrid/presentation/widgets/dialog_selector_view.dart';
 import 'package:travelgrid/presentation/widgets/icon.dart';
@@ -59,6 +60,7 @@ class _TravelRequestSummaryState extends State<TravelRequestSummary> {
   List<MaForexAdvance>? forexAdvanceList=[];
   List<MaTravelVisas>? visaList=[];
   List<MaTravelInsurance>? insuranceList=[];
+  String voucherPath="";
 
   String total="0.00";
   MetaLoginResponse loginResponse = MetaLoginResponse();
@@ -135,7 +137,11 @@ class _TravelRequestSummaryState extends State<TravelRequestSummary> {
         shape: CircularNotchedRectangle(),
         notchMargin: 5,
         elevation: 2.0,
-        child:buildViewRow(),
+        child:widget.isApproval ? buildViewRow():MetaButton(mapData: jsonData['bottomButtonLeft'],text: "Cancel",
+            onButtonPressed: ()async{
+              Navigator.pop(context);
+            }
+        ),
       ),
       body: Container(
         color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
@@ -191,6 +197,8 @@ class _TravelRequestSummaryState extends State<TravelRequestSummary> {
        forexAdvanceList = response.data?.maForexAdvance ?? [];
        visaList = response.data?.maTravelVisas ?? [];
        insuranceList = response.data?.maTravelInsurance ?? [];
+      // voucherPath=response.data?.
+
 
         loaded=true;
 
@@ -244,7 +252,12 @@ class _TravelRequestSummaryState extends State<TravelRequestSummary> {
           //  buildExpandableView(jsonData,"insuranceDetails"),
             SwitchComponent(
                 color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
-                jsonData: jsonData['insuranceDetails'],
+                jsonData: jsonData['supportingDetails'],
+                childWidget: buildSupportingWidget(jsonData['supportingDetails']),
+                initialValue: showApproverDetails),
+            SwitchComponent(
+                color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
+                jsonData: jsonData['approverDetails'],
                 childWidget: buildApproverWidget(jsonData['approverDetails']),
                 initialValue: showApproverDetails),
            // buildExpandableView(jsonData,"approverDetails"),
@@ -746,6 +759,44 @@ class _TravelRequestSummaryState extends State<TravelRequestSummary> {
 
   }
 
+  Container buildSupportingWidget(Map map){
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 20.w,vertical: 10.h),
+      color: Colors.white,
+      child:ListView(
+        padding: EdgeInsets.zero,
+        shrinkWrap: true,
+        children:[
+          Row(
+              children: [
+                Expanded(
+                  child: Container(
+                    child: MetaDialogSelectorView(
+                        text: "",
+                        mapData: map['noteAgent']
+                    ),
+                    alignment: Alignment.centerLeft,
+                  ),
+                ),
+                Expanded(
+                  child: Container(
+                    child: MetaDialogSelectorView(
+                        text: "",
+                        mapData: map['noteApprover']
+                    ),
+                  ),
+                ),
+              ]),
+          UploadComponent(jsonData: map['uploadButton'],
+              url:voucherPath,
+              isViewOnly: true,
+              onSelected: (dataFile){
+
+              })
+        ],
+      ),
+    );
+  }
   Container buildApproverWidget(Map map){
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20.w,vertical: 10.h),

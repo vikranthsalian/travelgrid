@@ -218,6 +218,18 @@ class CityUtil{
     return data.first.id;
   }
 
+  static String? getModeNameFromID(id) {
+
+    if(id.toString().isEmpty){
+      return null;
+    }
+
+    List<mode.Data> list = appNavigatorKey.currentState!.context.read<TravelModeCubit>().getTravelModeResponse();
+
+    Iterable<mode.Data> data= list.where((item) => (item.id.toString() == id.toString()));
+    return data.first.label;
+  }
+
   static String? getFareValueFromName(name,mode) {
 
     if(mode=="Air"){
