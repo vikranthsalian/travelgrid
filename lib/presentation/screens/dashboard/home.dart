@@ -152,6 +152,7 @@ class _HomePageState extends State<HomePage> {
                               onTap: (){
 
                                 if(e["onClick"].isNotEmpty){
+                                  print(e["onClick"]);
                                   Navigator.of(appNavigatorKey.currentState!.context).pushNamed(e["onClick"]);
                                 }else{
                                   MetaAlert.showErrorAlert(
@@ -205,7 +206,9 @@ class _HomePageState extends State<HomePage> {
                             Expanded(
                               child: MetaButton(mapData: jsonData['walletButton'],
                                   onButtonPressed: (){
-
+                                    if(jsonData['walletButton']["onClick"].isNotEmpty) {
+                                      Navigator.of(appNavigatorKey.currentState!.context).pushNamed(jsonData['walletButton']["onClick"]);
+                                    }
                                   }
                               ),
                             )

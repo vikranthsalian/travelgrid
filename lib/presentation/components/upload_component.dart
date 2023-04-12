@@ -31,10 +31,7 @@ class _UploadComponentState extends State<UploadComponent> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
    // setupCamera();
-
-
   }
   @override
   void dispose() {

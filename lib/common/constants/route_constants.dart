@@ -16,6 +16,8 @@ class RouteConstants {
   static const addItineraryPath = "/addItinerary";
 
   static const policyPath = "/viewPolicies";
+  static const walletPath = "/viewWallet";
+  static const imagePath = "/viewImage";
   static const pdfPath = "/viewPdfScreen";
 
   //GE

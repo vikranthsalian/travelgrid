@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:travelgrid/common/constants/route_constants.dart';
 import 'package:travelgrid/presentation/components/pdf_component.dart';
 import 'package:travelgrid/presentation/screens/auth/login_screen.dart';
+import 'package:travelgrid/presentation/screens/common/image_screen.dart';
 import 'package:travelgrid/presentation/screens/dashboard/approvals/approval_expense.dart';
 import 'package:travelgrid/presentation/screens/dashboard/home.dart';
 import 'package:travelgrid/presentation/screens/dashboard/ge/add/add_travel.dart';
@@ -14,6 +15,7 @@ import 'package:travelgrid/presentation/screens/policy/policy_screen.dart';
 import 'package:travelgrid/presentation/screens/splash/splash_screen.dart';
 import 'package:travelgrid/presentation/screens/dashboard/ge/general_expense.dart';
 import 'package:travelgrid/presentation/screens/dashboard/te/travel_expense.dart';
+import 'package:travelgrid/presentation/screens/wallet/wallet_screen.dart';
 class AppRoutes {
 
   Route generateRoute(RouteSettings routeSettings) {
@@ -101,6 +103,22 @@ class AppRoutes {
 
       case RouteConstants.policyPath:
         return PolicyHome();
+
+      case RouteConstants.walletPath:
+        return WalletHome();
+
+      case RouteConstants.imagePath:
+        if(args!=null) {
+          args as Map<String, dynamic>;
+
+          if(args["file"] !=null){
+            return ImageScreen(file:args["file"]);
+          }else {
+            return ImageScreen(image:args["image"]);
+          }
+
+        }
+        return Container();
 
       case RouteConstants.pdfPath:
         return PDFComponent(path: args.toString());

@@ -8,66 +8,57 @@ import 'package:travelgrid/common/extensions/parse_data_type.dart';
 import 'package:travelgrid/common/extensions/pretty.dart';
 import 'package:travelgrid/presentation/widgets/icon.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
-class PolicyHome extends StatefulWidget {
-  @override
-  _PolicyHomeState createState() => _PolicyHomeState();
-}
 
-class _PolicyHomeState extends State<PolicyHome> {
+
+class PolicyHome extends StatelessWidget {
   Map<String,dynamic> jsonData = {};
   List items=[];
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    jsonData = FlavourConstants.policyData;
-    prettyPrint(jsonData);
-    items = jsonData['listView']['data'];
-  }
 
 
   @override
   Widget build(BuildContext context) {
+    jsonData = FlavourConstants.policyData;
+    items = jsonData['listView']['data'];
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: Column(
-        children: [
-          Container(
-            color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
-            height: 120.h,
-            child:  Column(
-              children: [
-                SizedBox(height:40.h),
-                Container(
-                  height: 40.h,
-                  alignment: Alignment.center,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      MetaIcon(mapData:jsonData['backBar'],
-                          onButtonPressed: (){
-                            Navigator.pop(context);
-                          }),
-                      Container(
-                        child:MetaTextView(mapData: jsonData['title']),
-                      ),
-                    ],
+        backgroundColor: Colors.white,
+        body: Column(
+          children: [
+            Container(
+              color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
+              height: 120.h,
+              child:  Column(
+                children: [
+                  SizedBox(height:40.h),
+                  Container(
+                    height: 40.h,
+                    alignment: Alignment.center,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        MetaIcon(mapData:jsonData['backBar'],
+                            onButtonPressed: (){
+                              Navigator.pop(context);
+                            }),
+                        Container(
+                          child:MetaTextView(mapData: jsonData['title']),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                SizedBox(height:10.h),
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 20.w),
-                  child:MetaTextView(mapData: jsonData['listView']['recordsFound']),
-                ),
-                SizedBox(height:10.h),
-              ],
+                  SizedBox(height:10.h),
+                  Container(
+                    margin: EdgeInsets.symmetric(horizontal: 20.w),
+                    child:MetaTextView(mapData: jsonData['listView']['recordsFound']),
+                  ),
+                  SizedBox(height:10.h),
+                ],
+              ),
             ),
-          ),
-          SizedBox(height:10.h),
-          getListView()
-        ],
-      )
+            SizedBox(height:10.h),
+            getListView()
+          ],
+        )
     );
   }
 

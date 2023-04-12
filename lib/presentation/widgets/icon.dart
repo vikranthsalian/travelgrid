@@ -34,12 +34,13 @@ class MetaIcon extends StatelessWidget {
 Map<String, IconData> iconMapping = {
   'search' : FontAwesomeIcons.magnifyingGlass,
   'search_close' : Icons.search_off,
+  'camera' : Icons.camera,
   'close' : FontAwesomeIcons.xmark,
   'back' : FontAwesomeIcons.chevronLeft,
   'add' : FontAwesomeIcons.circlePlus,
   'home' : FontAwesomeIcons.house,
   'filter' : Icons.filter_list_outlined,
   'sort' : Icons.sort,
-  'logout' : FontAwesomeIcons.powerOff,
+  'logout' : FontAwesomeIcons.powerOff
 
 };

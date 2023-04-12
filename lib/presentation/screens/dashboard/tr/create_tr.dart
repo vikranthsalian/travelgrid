@@ -236,7 +236,7 @@ class CreateTravelRequestBody extends StatelessWidget {
       "approver1":approver1!.item2.toString().toLowerCase(),
       "approver2":approver2!.item2.toString().toLowerCase(),
       if(isEdit)...{
-       "id":"1",
+       "id":state!.responseSum!.data?.id.toString() ?? "",
        "action":"modify",
       },
     };

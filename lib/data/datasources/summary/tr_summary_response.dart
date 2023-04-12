@@ -26,7 +26,7 @@ class TRSummaryResponse {
 }
 
 class Data {
-  Null? id;
+  int? id;
   String? tripNumber;
   String? employeeName;
   String? mobileNumber;

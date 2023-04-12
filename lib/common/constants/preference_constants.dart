@@ -8,4 +8,5 @@ class PreferenceConstants {
   static const profilePicture = "ProfilePicture";
   static const appName = "AppName";
   static const location = "location";
+  static const image = "image";
 }

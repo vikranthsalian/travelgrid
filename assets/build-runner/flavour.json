@@ -288,7 +288,8 @@
       "color" : "0xFFFFFFFF",
       "backgroundColor" : "0xFF2854A1",
       "size": "18",
-      "family": "regular"
+      "family": "regular",
+      "onClick": "/viewWallet"
     },
     "listView": {
       "recordsFound":  {
@@ -8104,7 +8105,7 @@
           },
           "subtitle": {
             "text" : "Tap to view",
-            "color" : "0xFFAEAEAE",
+            "color" : "0xFFFFFFFF",
             "size": "10",
             "family": "bold",
             "align": "center"
@@ -8142,6 +8143,105 @@
         "family": "regular",
         "align": "center-right"
       }
+    }
+  },
+  "image_screen_data" : {
+    "backgroundColor" : "0xFF2854A1",
+    "bottomButtonFab": {
+      "icon": "camera",
+      "size": 20.0,
+      "color": "0XFFFFFFFF",
+      "onPress": true
+    },
+    "bottomButtonLeft": {
+      "text" : "Discard",
+      "color" : "0xFFFFFFFF",
+      "backgroundColor" : "0xFF2854A1",
+      "size": "18",
+      "family": "regular"
+    },
+    "bottomButtonRight": {
+      "text" : "Save",
+      "color" : "0xFFFFFFFF",
+      "backgroundColor" : "0xFF2854A1",
+      "size": "18",
+      "family": "regular"
+    }
+  },
+  "wallet_screen_data" : {
+    "backgroundColor" : "0xFF2854A1",
+    "title":  {
+      "text" : "Wallet",
+      "color" : "0XFFFFFFFF",
+      "size": "18",
+      "family": "bold",
+      "align": "center-left"
+    },
+    "backBar": {
+      "icon": "back",
+      "size": 20.0,
+      "color": "0XFFFFFFFF",
+      "backgroundColor": "transparent",
+      "onPress": true,
+      "align": "center-left"
+    },
+    "listView": {
+      "svgIconColor" : "0xFF2854A1",
+      "data": [
+        {
+          "title": {
+            "text" : "",
+            "color" : "0xFF2854A1",
+            "size": "12",
+            "family": "regular",
+            "align": "center"
+          },
+          "subtitle": {
+            "text" : "Tap to view",
+            "color" : "0xFFAEAEAE",
+            "size": "10",
+            "family": "bold",
+            "align": "center"
+          }
+        }
+      ],
+      "emptyData": {
+        "image_view":   {
+          "image" : "logo_banner.png",
+          "align": "center",
+          "wd": 250.0
+        },
+        "title":  {
+          "text" : "No Data Found!!!",
+          "color" : "0XFF3D3D3D",
+          "size": "16",
+          "family": "regular"
+        },
+        "bottomButtonRefresh": {
+          "text" : "Refresh",
+          "height": 35.0,
+          "color" : "0xFFFFFFFF",
+          "borderRadius": 30.0,
+          "backgroundColor" : "0xFF2854A1",
+          "size": "15",
+          "family": "regular"
+        }
+      },
+      "recordsFound":  {
+        "text" : "Records Found",
+        "value" : "1",
+        "color" : "0XFFFFFFFF",
+        "size": "12",
+        "family": "regular",
+        "align": "center-right"
+      }
+    },
+    "bottomButtonFab": {
+      "icon": "camera",
+      "size": 20.0,
+      "color": "0XFFFFFFFF",
+      "onClick": "/openCamera",
+      "onSave": "/viewImage"
     }
   },
   "pdf_screen_data" : {
