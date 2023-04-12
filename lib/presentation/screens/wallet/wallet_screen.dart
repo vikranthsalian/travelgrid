@@ -85,7 +85,7 @@ class _WalletHomeState extends State<WalletHome> {
               ),
             ),
             SizedBox(height:10.h),
-            getListView()
+            Expanded(child: getListView())
           ],
         )
     );
@@ -101,10 +101,13 @@ class _WalletHomeState extends State<WalletHome> {
       itemBuilder: (BuildContext context, int index) {
 
         return InkWell(
-          onTap: (){
+          onTap: () async{
             Navigator.of(appNavigatorKey.currentState!.context).pushNamed(jsonData['bottomButtonFab']["onSave"],arguments: {
               "image":imageList[index]
-            });
+            }).then((value) {
+            loadImageFromPreferences();
+          });;
+
           },
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 10.w),
@@ -164,6 +167,7 @@ class _WalletHomeState extends State<WalletHome> {
   }
 
   loadImageFromPreferences() async {
+    imageList.clear();
     List list=[];
     var data = await  PreferenceConfig.getString(PreferenceConstants.image);
     if(data!=null && data.isNotEmpty) {

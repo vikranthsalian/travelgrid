@@ -2,21 +2,14 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_form_bloc/flutter_form_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:travelgrid/common/config/navigator_key.dart';
 import 'package:travelgrid/common/config/preferences_config.dart';
 import 'package:travelgrid/common/constants/flavour_constants.dart';
 import 'package:travelgrid/common/constants/preference_constants.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
 import 'package:travelgrid/common/utils/image_utility.dart';
 import 'package:travelgrid/common/utils/show_alert.dart';
-import 'package:travelgrid/data/cubits/accom_type_cubit/accom_type_cubit.dart';
-import 'package:travelgrid/data/datasources/others/accom_type_list.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';
-import 'package:travelgrid/presentation/widgets/icon.dart';
-import 'package:travelgrid/presentation/widgets/text_view.dart';
 
 
 class ImageScreen extends StatelessWidget {
@@ -54,11 +47,10 @@ class ImageScreen extends StatelessWidget {
           children: <Widget>[
             MetaButton(mapData: jsonData['bottomButtonLeft'],
                 onButtonPressed: () async {
-              Navigator.pop(context);
-
+                   Navigator.pop(context);
                 }
             ),
-
+            if(file!=null)
             MetaButton(mapData: jsonData['bottomButtonRight'],
                 onButtonPressed: (){
 
