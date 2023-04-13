@@ -78,13 +78,7 @@ class ImageScreen extends StatelessWidget {
     var data = await  PreferenceConfig.getString(PreferenceConstants.image);
     if(data!=null && data.isNotEmpty) {
       list = jsonDecode(data.toString());
-      print("loadImageFromPreferences length: "+list.length.toString());
-      print(list);
     }
-  print("loadImageFromPreferences length: "+list.length.toString());
-      // setState(() {
-      //   imageFromPreferences = Utility.imageFromBase64String(img);
-      // });
 
   }
 

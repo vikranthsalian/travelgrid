@@ -162,6 +162,8 @@ class CreateTravelExpenseOV extends StatelessWidget {
 
                               formBloc!.endTimeWidget.updateValue("00:00");
                               formBloc!.endTime.updateValue("00:00");
+
+
                               formBloc!.vehicleTypeName.updateValue(typeName);
                               formBloc!.selectTypeID.updateValue(typeID);
 

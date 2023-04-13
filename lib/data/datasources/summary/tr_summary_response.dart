@@ -48,7 +48,7 @@ class Data {
   Null? travelerName;
   String? tripPlan;
   Null? forexAdvance;
-  Null? comments;
+  String? comments;
   String? grade;
   MaRequesterDetails? maRequesterDetails;
   MaTravelerDetails? maTravelerDetails;

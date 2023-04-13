@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:travelgrid/common/constants/flavour_constants.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
 
@@ -10,11 +11,14 @@ class DialogUploadType extends StatelessWidget{
   DialogUploadType({required this.mapData,this.onSelected});
   @override
   Widget build(BuildContext context) {
+
+    mapData=FlavourConstants.uploadData;
+
     return Dialog(
       backgroundColor: Colors.transparent,
       child: Container(
 
-        height: MediaQuery.of(context).size.height * 0.25,
+        height: MediaQuery.of(context).size.height * 0.3,
         child:ClipRRect(
             borderRadius: BorderRadius.circular(12.r),
             child: Scaffold(

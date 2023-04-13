@@ -8676,6 +8676,13 @@
     "listView": {
       "data": [
         {
+          "text" : "Wallet",
+          "color" : "0XFF000000",
+          "size": "12",
+          "family": "regular",
+          "align": "center-left"
+        },
+        {
           "text" : "Camera",
           "color" : "0XFF000000",
           "size": "12",

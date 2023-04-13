@@ -72,7 +72,7 @@ class TeRepository extends TeAPIAbstract {
       "comments":comment
     };
 
-    var response = await apiRemoteDatasource.approve("/teApproveAction",data);
+    var response = await apiRemoteDatasource.approve("teApproveAction",data);
 
     if(response!=null) {
       SuccessModel modelResponse = SuccessModel.fromJson(response);
@@ -91,7 +91,7 @@ class TeRepository extends TeAPIAbstract {
       "comments":comment
     };
 
-    var response = await apiRemoteDatasource.approve("/ge/geApproveAction",data,msg: "Rejecting...");
+    var response = await apiRemoteDatasource.approve("teApproveAction",data,msg: "Rejecting...");
 
     if(response!=null) {
       SuccessModel modelResponse = SuccessModel.fromJson(response);

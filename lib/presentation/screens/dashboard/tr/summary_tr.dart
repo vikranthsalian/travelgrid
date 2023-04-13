@@ -4,7 +4,6 @@ import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:travelgrid/common/constants/flavour_constants.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
-import 'package:travelgrid/common/extensions/pretty.dart';
 import 'package:travelgrid/common/injector/injector.dart';
 import 'package:travelgrid/data/blocs/travel_request/tr_bloc.dart';
 import 'package:travelgrid/data/cubits/approver_type_cubit/approver_type_cubit.dart';
@@ -14,7 +13,7 @@ import 'package:travelgrid/data/datasources/login_response.dart';
 import 'package:travelgrid/data/datasources/summary/tr_summary_response.dart';
 import 'package:travelgrid/data/models/expense_model.dart';
 import 'package:travelgrid/data/models/success_model.dart';
-import 'package:travelgrid/domain/usecases/ge_usecase.dart';
+import 'package:travelgrid/domain/usecases/te_usecase.dart';
 import 'package:travelgrid/domain/usecases/tr_usecase.dart';
 import 'package:travelgrid/presentation/components/bloc_map_event.dart';
 import 'package:travelgrid/presentation/components/switch_component.dart';
@@ -61,6 +60,8 @@ class _TravelRequestSummaryState extends State<TravelRequestSummary> {
   List<MaTravelVisas>? visaList=[];
   List<MaTravelInsurance>? insuranceList=[];
   String voucherPath="";
+  String approverData="";
+  String agentData="";
 
   String total="0.00";
   MetaLoginResponse loginResponse = MetaLoginResponse();
@@ -70,16 +71,15 @@ class _TravelRequestSummaryState extends State<TravelRequestSummary> {
   String description="";
   TextEditingController controller =TextEditingController();
 
-
-
-
-
   TravelRequestBloc?  bloc;
   bool loaded =false;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+
+    print("status");
+    print(widget.status);
     loaded=false;
     jsonData = FlavourConstants.trViewData;
    // prettyPrint(jsonData);
@@ -137,11 +137,7 @@ class _TravelRequestSummaryState extends State<TravelRequestSummary> {
         shape: CircularNotchedRectangle(),
         notchMargin: 5,
         elevation: 2.0,
-        child:widget.isApproval ? buildViewRow():MetaButton(mapData: jsonData['bottomButtonLeft'],text: "Cancel",
-            onButtonPressed: ()async{
-              Navigator.pop(context);
-            }
-        ),
+        child:widget.isApproval ? buildArroverRow():buildViewRow(),
       ),
       body: Container(
         color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
@@ -198,7 +194,8 @@ class _TravelRequestSummaryState extends State<TravelRequestSummary> {
        visaList = response.data?.maTravelVisas ?? [];
        insuranceList = response.data?.maTravelInsurance ?? [];
       // voucherPath=response.data?.
-
+       approverData = response.data?.comments ?? "";
+       agentData = response.data?.comments ?? "";
 
         loaded=true;
 
@@ -270,6 +267,34 @@ class _TravelRequestSummaryState extends State<TravelRequestSummary> {
 
   Row buildViewRow() {
     bool isTBVisible=false;
+    if(widget.status!.toLowerCase()== "approver 1"){
+      isTBVisible=true;
+    }
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        Expanded(
+          child: MetaButton(mapData: jsonData['bottomButtonLeft'],text: "Cancel",
+              onButtonPressed: ()async{
+                Navigator.pop(context);
+              }
+          ),
+        ),
+        isTBVisible?
+        Expanded(
+          child: MetaButton(mapData: jsonData['bottomButtonRight'],text: "Take Back",
+              onButtonPressed: (){
+                takeBack();
+              }
+          ),
+        ):SizedBox(width: 0),
+      ],
+    );
+  }
+
+  Row buildArroverRow() {
+    bool isTBVisible=false;
     bool isAPVisible=false;
     if(widget.status!.toLowerCase()== "approver 1"){
       isTBVisible=true;
@@ -297,10 +322,10 @@ class _TravelRequestSummaryState extends State<TravelRequestSummary> {
         Expanded(
           child: MetaButton(mapData: jsonData['bottomButtonRight'],text: "Approve",
               onButtonPressed: ()async{
-             SuccessModel  model =  await Injector.resolve<TrUseCase>().approveTR(widget.title!,controller.text);
+                SuccessModel  model =  await Injector.resolve<TrUseCase>().approveTR(widget.title!,controller.text);
 
                 if(model.status==true){
-                Navigator.pop(context);
+                  Navigator.pop(context);
                 }
               }
           ),
@@ -772,7 +797,7 @@ class _TravelRequestSummaryState extends State<TravelRequestSummary> {
                 Expanded(
                   child: Container(
                     child: MetaDialogSelectorView(
-                        text: "",
+                        text: agentData,
                         mapData: map['noteAgent']
                     ),
                     alignment: Alignment.centerLeft,
@@ -781,7 +806,7 @@ class _TravelRequestSummaryState extends State<TravelRequestSummary> {
                 Expanded(
                   child: Container(
                     child: MetaDialogSelectorView(
-                        text: "",
+                        text: approverData,
                         mapData: map['noteApprover']
                     ),
                   ),
@@ -797,6 +822,7 @@ class _TravelRequestSummaryState extends State<TravelRequestSummary> {
       ),
     );
   }
+
   Container buildApproverWidget(Map map){
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20.w,vertical: 10.h),
@@ -868,30 +894,19 @@ class _TravelRequestSummaryState extends State<TravelRequestSummary> {
     );
   }
 
+  void takeBack() async{
 
-  void submitGe(text) async{
-    submitMap['selfApprovals']= false;
-    submitMap['violated']= false;
-
-    final String requestBody = json.encoder.convert(submitMap);
-
-    Map<String, dynamic> valueMap = json.decode(requestBody);
-
-   Map<String,dynamic> queryParams = {
-     "approver1":approver1!.item2.toString().toLowerCase(),
-     "approver2":approver2!.item2.toString().toLowerCase(),
-     "action":text,
-     "comment":"daskdsakdkasdka",
-   };
-
-   prettyPrint(valueMap);
-
-    SuccessModel model =   await Injector.resolve<GeUseCase>().createGE(queryParams,valueMap);
+    Map<String,dynamic> queryParams = {
+      "comment":"Take Back",
+      "recordLocator":widget.title,
+    };
+    SuccessModel model =   await await Injector.resolve<TrUseCase>().takeBackTR(queryParams);
 
     if(model.status==true){
       Navigator.pop(context);
     }
 
   }
+
 
 }

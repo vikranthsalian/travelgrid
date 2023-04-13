@@ -35,6 +35,7 @@ Map<String, IconData> iconMapping = {
   'search' : FontAwesomeIcons.magnifyingGlass,
   'search_close' : Icons.search_off,
   'camera' : Icons.camera,
+  'select' : Icons.done_all,
   'close' : FontAwesomeIcons.xmark,
   'back' : FontAwesomeIcons.chevronLeft,
   'add' : FontAwesomeIcons.circlePlus,

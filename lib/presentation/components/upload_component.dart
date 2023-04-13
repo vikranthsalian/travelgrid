@@ -1,13 +1,16 @@
+import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:travelgrid/common/constants/flavour_constants.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
-import 'package:travelgrid/common/utils/show_alert.dart';
 import 'package:travelgrid/presentation/components/dialog_upload_type.dart';
 import 'package:travelgrid/presentation/components/dialog_yes_no.dart';
+import 'package:travelgrid/presentation/screens/wallet/wallet_screen.dart';
 import 'package:travelgrid/presentation/widgets/svg_view.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
 
@@ -26,18 +29,7 @@ class UploadComponent extends StatefulWidget {
 
 class _UploadComponentState extends State<UploadComponent> {
    File? file;
- // late CameraController controller;
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-   // setupCamera();
-  }
-  @override
-  void dispose() {
-    //controller.dispose();
-    super.dispose();
-  }
+   final ImagePicker _picker = ImagePicker();
 
   @override
   Widget build(BuildContext context) {
@@ -134,9 +126,14 @@ class _UploadComponentState extends State<UploadComponent> {
                 mapData: widget.jsonData,
                 onSelected: (value)async{
                   if(value == "Gallery"){
-                    FilePickerResult? result = await FilePicker.platform.pickFiles(allowMultiple: false);
-                    if (result != null) {
-                      file =   File(result.files.single.path.toString());
+
+                    final XFile? pickedFile = await _picker.pickImage(
+                      source: ImageSource.gallery
+                    );
+
+
+                    if (pickedFile != null) {
+                      file =   File(pickedFile.path.toString());
 
                       setState(() {
 
@@ -145,9 +142,28 @@ class _UploadComponentState extends State<UploadComponent> {
                     } else {
                       // User canceled the picker
                     }
-                  }else{
-                  MetaAlert.showErrorAlert(message: "Working on it.");
-                //  takePicture();
+                  }else  if(value == "Wallet"){
+
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) =>
+                            WalletHome(
+                              isSelectable: true,
+                              selected:(val)async {
+                                Navigator.pop(context);
+                                file =   await convertImageToFile(val);
+                                setState(() {});
+                                widget.onSelected!(file);
+                              })));
+
+                  }else {
+                    final XFile? pickedFile = await _picker.pickImage(
+                        source: ImageSource.camera
+                    );
+                    if (pickedFile != null) {
+                      file = File(pickedFile.path.toString());
+                      setState(() {});
+                      widget.onSelected!(file);
+                    }
                   }
 
 
@@ -175,53 +191,14 @@ class _UploadComponentState extends State<UploadComponent> {
       ),
     );
   }
+   Future<File> convertImageToFile(byteData) async {
 
-  // void setupCamera() {
-  //   availableCameras().then((_cameras) {
-  //     print(_cameras[0]);
-  //     controller = CameraController(_cameras[0], ResolutionPreset.medium);
-  //     controller.initialize().then((_) {
-  //       if (!mounted) {
-  //         return;
-  //       }
-  //       setState(() {});
-  //     }).catchError((Object e) {
-  //       print(e);
-  //       if (e is CameraException) {
-  //         switch (e.code) {
-  //           case 'CameraAccessDenied':
-  //           // Handle access errors here.
-  //             break;
-  //           default:
-  //           // Handle other errors here.
-  //             break;
-  //         }
-  //       }
-  //     });
-  //   });
-  // }
-  //
-  // Future takePicture() async {
-  //   if (!controller.value.isInitialized) {
-  //     print("!isInitialized");
-  //     return null;
-  //   }
-  //   if (controller.value.isTakingPicture) {
-  //     print("!isTakingPicture");
-  //     return null;
-  //   }
-  //   try {
-  //     await controller.setFlashMode(FlashMode.off);
-  //     XFile picture = await controller.takePicture();
-  //
-  //
-  //     setState(() {
-  //     file = picture;
-  //     });
-  //
-  //   } on CameraException catch (e) {
-  //     debugPrint('Error occured while taking picture: $e');
-  //     return null;
-  //   }
-  // }
+     Uint8List bytes = base64.decode(byteData);
+     String dir = (await getApplicationDocumentsDirectory()).path;
+     File file = File(
+         "$dir/" + DateTime.now().millisecondsSinceEpoch.toString() + ".png");
+     await file.writeAsBytes(bytes);
+     print(file);
+     return file;
+   }
 }

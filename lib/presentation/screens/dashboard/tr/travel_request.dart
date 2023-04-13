@@ -410,10 +410,10 @@ class TravelRequest extends StatelessWidget {
                                   children: [
                                     InkWell(
                                         onTap: (){
-                                          MetaAlert.showErrorAlert(message:"Working on it");
                                           Navigator.of(context).pushNamed(jsonData['bottomButtonFab']['onClick'],
                                               arguments: {
                                                 "isEdit": true,
+                                                "status": item.currentStatus!.toLowerCase(),
                                                 "tripType":item.tripType=="Domestic"?"D":"O",
                                                 "title": item.tripNumber.toString().toUpperCase()
                                               }).then((value) {
@@ -436,6 +436,7 @@ class TravelRequest extends StatelessWidget {
                                           Navigator.of(context).pushNamed(jsonData['listView']['onClick'],
                                               arguments: {
                                                 "isEdit": false,
+                                                "status": item.currentStatus!.toLowerCase(),
                                                 "isApproval":false,
                                                 "title": item.tripNumber.toString().toUpperCase()
                                               }).then((value) {

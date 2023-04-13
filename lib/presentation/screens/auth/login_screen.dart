@@ -1,7 +1,9 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:travelgrid/common/constants/flavour_constants.dart';
 import 'package:travelgrid/common/constants/route_constants.dart';
@@ -31,108 +33,112 @@ class LoginScreen extends StatelessWidget {
   final double _sizedBoxHeight= 10.0.h;
 
   LoginFormBloc? formBloc ;
-
+  late StreamSubscription<bool> keyboardSubscription;
   @override
   Widget build(BuildContext context) {
 
     loginJsonData = FlavourConstants.loginData;
 
 
-      return BlocProvider(
-        create: (context) => LoginFormBloc(loginJsonData),
-        child: Builder(
-            builder: (context) {
+      return SafeArea(
+        child: Scaffold(
+          backgroundColor: ParseDataType().getHexToColor(loginJsonData['backgroundColor']),
+          resizeToAvoidBottomInset : false,
+          body: BlocProvider(
+            create: (context) => LoginFormBloc(loginJsonData),
+            child: Builder(
+                builder: (context) {
 
-              LoginFormBloc  formBloc =  BlocProvider.of<LoginFormBloc>(context);
-              formBloc.tfUsername.updateValue("cm06");
-              formBloc.tfPassword.updateValue("Test123#");
+                  LoginFormBloc  formBloc =  BlocProvider.of<LoginFormBloc>(context);
+                  formBloc.tfUsername.updateValue("cm06");
+                  formBloc.tfPassword.updateValue("Test123#");
 
-              return Scaffold(
-                backgroundColor: ParseDataType().getHexToColor(loginJsonData['backgroundColor']),
-                body: Container(
-                  margin: EdgeInsets.symmetric(horizontal: 20.w),
-                  child: FormBlocListener<LoginFormBloc, String, String>(
-                      onSubmissionFailed: (context, state) {
+                  return Container(
+                    height: double.infinity,
 
-                      },
-                      onSubmitting: (context, state) {
-                        FocusScope.of(context).unfocus();
-                      },
-                      onSuccess: (context, state) {
-                       MetaLoginResponse modelResponse = MetaLoginResponse.fromJson(jsonDecode(state.successResponse.toString()));
-                       print(modelResponse.data?.toJson());
-                       context.read<LoginCubit>().setLoginResponse(modelResponse);
-                       MetaAlert.showSuccessAlert(
-                         message: "Login Success"
-                       );
+                    child: FormBlocListener<LoginFormBloc, String, String>(
+                        onSubmissionFailed: (context, state) {
 
-                       Injector.resolve<AccomTypeBloc>()..add(GetAccomTypeListEvent());
-                       Injector.resolve<TravelModeBloc>()..add(GetTravelModeListEvent());
-                       Injector.resolve<MiscTypeBloc>()..add(GetMiscTypeListEvent());
-                       Injector.resolve<ApproverTypeBloc>()..add(GetApproverTypeListEvent());
-                       Injector.resolve<FareClassBloc>()..add(GetAirFareClassListEvent());
-                       Injector.resolve<FareClassBloc>()..add(GetRailFareClassListEvent());
-                       Injector.resolve<FareClassBloc>()..add(GetRoadFareClassListEvent());
-                       Injector.resolve<TravelPurposeBloc>()..add(GetTravelPurposeListEvent());
-                       Injector.resolve<CurrencyBloc>()..add(GetCurrencyListEvent());
-                       Injector.resolve<CityBloc>()..add(GetCityListEvent());
-                       Injector.resolve<CityBloc>()..add(GetCountryListEvent());
-                       Injector.resolve<CityBloc>()..add(GetCountryListEvent());
-                       Injector.resolve<EmployeeBloc>()..add(GetEmployeeListEvent());
-                       Injector.resolve<EmployeeBloc>()..add(GetNonEmployeeListEvent());
+                        },
+                        onSubmitting: (context, state) {
+                          FocusScope.of(context).unfocus();
+                        },
+                        onSuccess: (context, state) {
+                          MetaLoginResponse modelResponse = MetaLoginResponse.fromJson(jsonDecode(state.successResponse.toString()));
+                          print(modelResponse.data?.toJson());
+                          context.read<LoginCubit>().setLoginResponse(modelResponse);
+                          MetaAlert.showSuccessAlert(
+                              message: "Login Success"
+                          );
 
-
-                       Navigator.of(context).pushReplacementNamed(RouteConstants.dashboardPath);
-                      },
-                      onFailure: (context, state) {
+                          Injector.resolve<AccomTypeBloc>()..add(GetAccomTypeListEvent());
+                          Injector.resolve<TravelModeBloc>()..add(GetTravelModeListEvent());
+                          Injector.resolve<MiscTypeBloc>()..add(GetMiscTypeListEvent());
+                          Injector.resolve<ApproverTypeBloc>()..add(GetApproverTypeListEvent());
+                          Injector.resolve<FareClassBloc>()..add(GetAirFareClassListEvent());
+                          Injector.resolve<FareClassBloc>()..add(GetRailFareClassListEvent());
+                          Injector.resolve<FareClassBloc>()..add(GetRoadFareClassListEvent());
+                          Injector.resolve<TravelPurposeBloc>()..add(GetTravelPurposeListEvent());
+                          Injector.resolve<CurrencyBloc>()..add(GetCurrencyListEvent());
+                          Injector.resolve<CityBloc>()..add(GetCityListEvent());
+                          Injector.resolve<CityBloc>()..add(GetCountryListEvent());
+                          Injector.resolve<CityBloc>()..add(GetCountryListEvent());
+                          Injector.resolve<EmployeeBloc>()..add(GetEmployeeListEvent());
+                          Injector.resolve<EmployeeBloc>()..add(GetNonEmployeeListEvent());
 
 
-                      },
-                      child: ScrollableFormBlocManager(
-                        formBloc: formBloc,
-                        child: ListView(
-                            padding: EdgeInsets.zero,
-                            shrinkWrap: true,
-                            children:[
-                              SizedBox(height: _sizedBoxHeight),
-                              SizedBox(height: _sizedBoxHeight),
-                              SizedBox(height: _sizedBoxHeight),
-                              SizedBox(height: _sizedBoxHeight),
-                              SizedBox(height: _sizedBoxHeight),
-                              SizedBox(height: _sizedBoxHeight),
-                              MetaTextView(mapData: loginJsonData['text_title']),
-                              SizedBox(height: _sizedBoxHeight * 0.2),
-                              MetaTextView(mapData: loginJsonData['text_subtitle']),
-                              SizedBox(height: _sizedBoxHeight),
-                              SizedBox(height: _sizedBoxHeight),
-                              MetaImageView(mapData: loginJsonData['image_view']),
-                              SizedBox(height: _sizedBoxHeight),
-                              SizedBox(height: _sizedBoxHeight),
-                              MetaTextFieldBlocView(mapData: loginJsonData['text_field_username'],
-                                  textFieldBloc: formBloc.tfUsername,
-                                  onChanged:(value){
-                                    formBloc.tfUsername.updateValue(value);
-                                  }),
-                              MetaTextFieldBlocView(mapData: loginJsonData['text_field_password'],
-                                  textFieldBloc: formBloc.tfPassword,
-                                  onChanged: (value){
-                                    formBloc.tfPassword.updateValue(value);
-                                  }),
-                              SizedBox(height: _sizedBoxHeight),
-                              SizedBox(height: _sizedBoxHeight),
-                              SizedBox(height: _sizedBoxHeight),
-                              MetaButton(mapData: loginJsonData['bottomButton'],
-                                  onButtonPressed: (){
-                                   formBloc.submit();
-                                  }
-                              )
-                            ]
-                        ),
-                      )
-                  ),
-                ),
-              );
-            }
+                          Navigator.of(context).pushReplacementNamed(RouteConstants.dashboardPath);
+                        },
+                        onFailure: (context, state) {
+
+
+                        },
+                        child: ScrollableFormBlocManager(
+                          formBloc: formBloc,
+                          child: SingleChildScrollView (
+                            padding: EdgeInsets.symmetric(horizontal: 20.w),
+                            child: Column(
+                                children:[
+                                  SizedBox(height: _sizedBoxHeight),
+                                  SizedBox(height: _sizedBoxHeight),
+                                  SizedBox(height: _sizedBoxHeight),
+                                  SizedBox(height: _sizedBoxHeight),
+                                  SizedBox(height: _sizedBoxHeight),
+                                  MetaTextView(mapData: loginJsonData['text_title']),
+                                  SizedBox(height: _sizedBoxHeight * 0.2),
+                                  MetaTextView(mapData: loginJsonData['text_subtitle']),
+                                  SizedBox(height: _sizedBoxHeight),
+                                  SizedBox(height: _sizedBoxHeight),
+                                  MetaImageView(mapData: loginJsonData['image_view']),
+                                  SizedBox(height: _sizedBoxHeight),
+                                  SizedBox(height: _sizedBoxHeight),
+                                  MetaTextFieldBlocView(mapData: loginJsonData['text_field_username'],
+                                      textFieldBloc: formBloc.tfUsername,
+                                      onChanged:(value){
+                                        formBloc.tfUsername.updateValue(value);
+                                      }),
+                                  MetaTextFieldBlocView(mapData: loginJsonData['text_field_password'],
+                                      textFieldBloc: formBloc.tfPassword,
+                                      onChanged: (value){
+                                        formBloc.tfPassword.updateValue(value);
+                                      }),
+                                  SizedBox(height: _sizedBoxHeight),
+                                  SizedBox(height: _sizedBoxHeight),
+                                  SizedBox(height: _sizedBoxHeight),
+                                  MetaButton(mapData: loginJsonData['bottomButton'],
+                                      onButtonPressed: (){
+                                        formBloc.submit();
+                                      }
+                                  ),
+                                ]
+                            ),
+                          ),
+                        )
+                    ),
+                  );
+                }
+            ),
+          ),
         ),
       );
   }

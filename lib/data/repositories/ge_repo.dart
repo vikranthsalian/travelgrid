@@ -74,7 +74,7 @@ class GeRepository extends GeAPIAbstract {
       "comments":comment
     };
 
-    var response = await apiRemoteDatasource.approve("/ge/geApproveAction",data);
+    var response = await apiRemoteDatasource.approve("ge/geApproveAction",data);
 
     if(response!=null) {
       SuccessModel modelResponse = SuccessModel.fromJson(response);
@@ -94,7 +94,7 @@ class GeRepository extends GeAPIAbstract {
       "comments":comment
     };
 
-    var response = await apiRemoteDatasource.approve("/ge/geApproveAction",data,msg: "Rejecting...");
+    var response = await apiRemoteDatasource.approve("ge/geApproveAction",data,msg: "Rejecting...");
 
     if(response!=null) {
       SuccessModel modelResponse = SuccessModel.fromJson(response);

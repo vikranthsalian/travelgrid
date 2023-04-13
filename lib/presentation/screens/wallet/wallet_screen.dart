@@ -2,22 +2,21 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:travelgrid/common/config/navigator_key.dart';
 import 'package:travelgrid/common/config/preferences_config.dart';
-import 'package:travelgrid/common/constants/asset_constants.dart';
 import 'package:travelgrid/common/constants/flavour_constants.dart';
 import 'package:travelgrid/common/constants/preference_constants.dart';
-import 'package:travelgrid/common/constants/route_constants.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
-import 'package:travelgrid/common/extensions/pretty.dart';
 import 'package:travelgrid/common/utils/image_utility.dart';
 import 'package:travelgrid/presentation/widgets/icon.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
 
 
 class WalletHome extends StatefulWidget {
+  WalletHome({this.isSelectable=false,this.selected});
+  bool isSelectable;
+  Function? selected;
   @override
   _WalletHomeState createState() => _WalletHomeState();
 }
@@ -26,7 +25,7 @@ class _WalletHomeState extends State<WalletHome> {
   Map<String,dynamic> jsonData = {};
   List items=[];
   final ImagePicker _picker = ImagePicker();
-  List<Image> imageList =[];
+  List<String> imageList =[];
   @override
   void initState() {
     // TODO: implement initState
@@ -41,6 +40,17 @@ class _WalletHomeState extends State<WalletHome> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
+        bottomNavigationBar: BottomAppBar(
+          color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
+          shape: CircularNotchedRectangle(),
+          notchMargin: 5,
+          elevation: 2.0,
+          child: Container(
+            height: 40.h,
+              color: ParseDataType().getHexToColor(jsonData['backgroundColor'])
+          ),
+        ),
+
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         floatingActionButton:  FloatingActionButton(
             child:MetaIcon(mapData:jsonData['bottomButtonFab'],onButtonPressed: ()async{
@@ -115,30 +125,56 @@ class _WalletHomeState extends State<WalletHome> {
               color: Color(0xFF2854A1),
               elevation: 5,
               child: Container(
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        height: cardHt * 0.1,
+                child: Stack(
+                  children: [
+                        Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            height: cardHt * 0.1,
+                          ),
+                          Expanded(
+                            child:Container(
+                              child: Utility.imageFromBase64String(imageList[index],context),
+                              width: 150.w,
+                              height: 50.w,
+                            ),
+                          ),
+
+                          Container(
+                            height: cardHt * 0.20,
+                            child: MetaTextView( mapData:  {
+                              "text" : "Tap to view",
+                              "color" : "0xFFFFFFFF",
+                              "size": "10",
+                              "family": "bold",
+                              "align": "center"
+                            }),
+                          ),
+                        ]),
+                    widget.isSelectable?
+                    Positioned(
+                      top: 0,
+                      right: 0,
+                      child: Container(
+                        width: 30.w,height: 30.w,
+                        child: MetaIcon(mapData: {
+                          "icon": "select",
+                          "size": 20.0,
+                          "color": "0XFFFFFFFF",
+                          "backgroundColor": "transparent",
+                          "onPress": true,
+                          "align": "center-left"
+                        },
+                            onButtonPressed: () {
+
+                              widget.selected!(imageList[index]);
+
+                            }),
                       ),
-                      Expanded(
-                        child: Container(
-                          child: imageList[index],
-                          width: 150.w,
-                          height: 50.w,
-                        ),
-                      ),
-                      Container(
-                        height: cardHt * 0.20,
-                        child: MetaTextView( mapData:  {
-                          "text" : "Tap to view",
-                          "color" : "0xFFFFFFFF",
-                          "size": "10",
-                          "family": "bold",
-                          "align": "center"
-                        }),
-                      ),
-                    ]),
+                    ):SizedBox(),
+                      ],
+                ),
               ),
             ),
           ),
@@ -174,7 +210,8 @@ class _WalletHomeState extends State<WalletHome> {
       list = jsonDecode(data.toString());
     }
     for(var item in list){
-      imageList.add(Utility.imageFromBase64String(item,context));
+     // imageList.add(Utility.imageFromBase64String(item,context));
+      imageList.add(item);
     }
     setState(() {
 

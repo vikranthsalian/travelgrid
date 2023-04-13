@@ -35,6 +35,7 @@ abstract class TrAPIAbstract {
   Future<SuccessModel> checkFireFareClassRule(data);
   Future<SuccessModel> approveTR(id,comment);
   Future<SuccessModel> rejectTR(id,comment);
+  Future<SuccessModel> takeBackTR(data);
 }
 
 

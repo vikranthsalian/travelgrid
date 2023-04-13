@@ -105,7 +105,11 @@ class AppRoutes {
         return PolicyHome();
 
       case RouteConstants.walletPath:
-        return WalletHome();
+        if(args!=null) {
+          args as Map<String, dynamic>;
+          return WalletHome(isSelectable:args['selectable']);
+        }
+        return Container();
 
       case RouteConstants.imagePath:
         if(args!=null) {

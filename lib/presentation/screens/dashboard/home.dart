@@ -207,7 +207,9 @@ class _HomePageState extends State<HomePage> {
                               child: MetaButton(mapData: jsonData['walletButton'],
                                   onButtonPressed: (){
                                     if(jsonData['walletButton']["onClick"].isNotEmpty) {
-                                      Navigator.of(appNavigatorKey.currentState!.context).pushNamed(jsonData['walletButton']["onClick"]);
+                                      Navigator.of(appNavigatorKey.currentState!.context).pushNamed(jsonData['walletButton']["onClick"],arguments: {
+                                        "selectable":false
+                                      });
                                     }
                                   }
                               ),

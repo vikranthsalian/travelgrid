@@ -74,6 +74,19 @@ class TrRepository extends TrAPIAbstract {
   }
 
   @override
+  Future<SuccessModel> takeBackTR(data) async {
+
+    var response = await apiRemoteDatasource.takeBack("takeBack",data);
+
+    if(response!=null) {
+      SuccessModel modelResponse = SuccessModel.fromJson(response);
+      return modelResponse;
+    }
+
+    return SuccessModel(status: false);
+  }
+
+  @override
   Future<SuccessModel> approveTR(id, comment) async{
 
     Map<String,dynamic> data= {
@@ -125,7 +138,7 @@ class TrRepository extends TrAPIAbstract {
       "comments":comment
     };
 
-    var response = await apiRemoteDatasource.approve("/ge/geApproveAction",data,msg: "Rejecting...");
+    var response = await apiRemoteDatasource.approve("approveAction",data,msg: "Rejecting...");
 
     if(response!=null) {
       SuccessModel modelResponse = SuccessModel.fromJson(response);
