@@ -76,7 +76,7 @@ class TrRepository extends TrAPIAbstract {
   @override
   Future<SuccessModel> takeBackTR(data) async {
 
-    var response = await apiRemoteDatasource.takeBack("takeBack",data);
+    var response = await apiRemoteDatasource.takeBack("getMaTakeBack",data);
 
     if(response!=null) {
       SuccessModel modelResponse = SuccessModel.fromJson(response);
