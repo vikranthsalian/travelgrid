@@ -202,7 +202,7 @@ class _CreateTravelExpenseBodyState extends State<CreateTravelExpenseBody> {
       Tuple2<app.Data,app.Data> approvers = context.read<ApproverTypeCubit>().getApprovers();
 
       approver1 = Tuple2(approvers.item1.approverName.toString(), approvers.item1.approverCode.toString());
-      approver2 = Tuple2(approvers.item2.approverName.toString(), approvers.item1.approverCode.toString());
+      approver2 = Tuple2(approvers.item2.approverName.toString(), approvers.item2.approverCode.toString());
 
 
 

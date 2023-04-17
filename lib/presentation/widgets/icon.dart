@@ -34,6 +34,7 @@ class MetaIcon extends StatelessWidget {
 Map<String, IconData> iconMapping = {
   'search' : FontAwesomeIcons.magnifyingGlass,
   'search_close' : Icons.search_off,
+  'error' : Icons.error,
   'camera' : Icons.camera,
   'select' : Icons.done_all,
   'close' : FontAwesomeIcons.xmark,

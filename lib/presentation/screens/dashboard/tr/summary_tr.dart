@@ -106,7 +106,7 @@ class _TravelRequestSummaryState extends State<TravelRequestSummary> {
       Tuple2<app.Data,app.Data> approvers = context.read<ApproverTypeCubit>().getApprovers();
 
       approver1 = Tuple2(approvers.item1.approverName.toString(), approvers.item1.approverCode.toString());
-      approver2 = Tuple2(approvers.item2.approverName.toString(), approvers.item1.approverCode.toString());
+      approver2 = Tuple2(approvers.item2.approverName.toString(), approvers.item2.approverCode.toString());
 
 
 
@@ -897,10 +897,11 @@ class _TravelRequestSummaryState extends State<TravelRequestSummary> {
   void takeBack() async{
 
     Map<String,dynamic> queryParams = {
-      "comment":"Take Back",
-      "recordLocator":widget.title,
+      "recordlocator":widget.title,
+      "token":"",
+      "comment":"TR takeback",
     };
-    SuccessModel model =   await await Injector.resolve<TrUseCase>().takeBackTR(queryParams);
+    SuccessModel model =   await Injector.resolve<TrUseCase>().takeBackTR(queryParams);
 
     if(model.status==true){
       Navigator.pop(context);

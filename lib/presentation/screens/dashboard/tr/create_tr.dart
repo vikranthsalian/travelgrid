@@ -235,6 +235,7 @@ class CreateTravelRequestBody extends StatelessWidget {
     Map<String,dynamic> queryParams = {
       "approver1":approver1!.item2.toString().toLowerCase(),
       "approver2":approver2!.item2.toString().toLowerCase(),
+      "action":"create",
       if(isEdit)...{
        "id":state!.responseSum!.data?.id.toString() ?? "",
        "action":"modify",
@@ -280,7 +281,7 @@ class CreateTravelRequestBody extends StatelessWidget {
       //  values.add(loginResponse.data!.permanentContact ?? "");
       Tuple2<app.Data,app.Data> approvers = ctx!.read<ApproverTypeCubit>().getApprovers();
       approver1 = Tuple2(approvers.item1.approverName.toString(), approvers.item1.approverCode.toString());
-      approver2 = Tuple2(approvers.item2.approverName.toString(), approvers.item1.approverCode.toString());
+      approver2 = Tuple2(approvers.item2.approverName.toString(), approvers.item2.approverCode.toString());
 
       submitMap['emergencyContactNo']= loginResponse.data!.currentContact!.telephoneNo ?? "";
       submitMap['mobileNumber']= loginResponse.data!.currentContact!.mobile ?? "";

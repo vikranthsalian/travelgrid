@@ -40,7 +40,8 @@ class CreateMiscExpense extends StatelessWidget {
   bool loaded=false;
   File? file;
   int days =1;
-  
+  String violationMessage ="";
+
   Map errorMap={
     "text" : '',
     "color" : "0xFFFFFFFF",
@@ -71,6 +72,19 @@ class CreateMiscExpense extends StatelessWidget {
             ),
             MetaButton(mapData: jsonData['bottomButtonRight'],
                 onButtonPressed: ()async{
+
+              if(formBloc!.showError.value!){
+                if(formBloc!.unitTypeID.value=="288"  && (formBloc!.tfAmount.valueToDouble! > (200*days))){
+                  MetaAlert.showErrorAlert(message: "Please submit valid amount");
+                  return;
+                }else if(formBloc!.unitTypeID.value=="289"  && (formBloc!.tfAmount.valueToDouble! > (400*days))){
+                  MetaAlert.showErrorAlert(message: "Please submit valid amount");
+                  return;
+                }
+
+              }
+
+
                 if(file!=null){
                   SuccessModel model = await  MetaUpload().uploadImage(file!,"GE");
                   if(model.status!){
@@ -133,8 +147,8 @@ class CreateMiscExpense extends StatelessWidget {
                        formBloc!.miscID.updateValue(miscModel!.miscellaneousType.toString());
                        formBloc!.miscName.updateValue(miscModel!.miscellaneousTypeName.toString());
 
-
-                       formBloc!.unitTypeName.updateValue("test");
+                       violationMessage=miscModel!.voilationMessage!;
+                       formBloc!.unitTypeName.updateValue(miscModel!.unitType.toString());
                        formBloc!.unitTypeID.updateValue(miscModel!.unitType.toString());
 
                        formBloc!.tfVoucher.updateValue(miscModel!.voucherNumber.toString());
@@ -372,6 +386,13 @@ class CreateMiscExpense extends StatelessWidget {
                                                 );
                                               }
                                           ),
+                                          (isView && violationMessage!=null && violationMessage.isNotEmpty) ?
+                                          Container(
+                                              padding: EdgeInsets.symmetric(horizontal: 10.w),
+                                              height: 20.h,
+                                              color: Color(0xFFB71C1C),
+                                              child: MetaTextView(mapData: errorMap,text:violationMessage)
+                                          ):SizedBox(),
                                           MetaTextFieldBlocView(mapData: jsonData['text_field_desc'],
                                               textFieldBloc: formBloc!.tfDescription,
                                               onChanged:(value){

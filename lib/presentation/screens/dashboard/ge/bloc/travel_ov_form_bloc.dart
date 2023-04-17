@@ -55,9 +55,9 @@ class TravelOVFormBloc extends FormBloc<String, String> {
 
       if(tfDistance.value.isNotEmpty){
         if(current.value == "Two-Wheeler") {
-          tfAmount.updateValue((tfDistance.valueToInt!* tfFuelPrice.valueToInt!).toString());
+          tfAmount.updateValue(((tfDistance.valueToInt ?? 0)* tfFuelPrice.valueToInt!).toString());
         } else if(current.value == "Four-Wheeler"){
-          tfAmount.updateValue((tfDistance.valueToInt!* tfFuelPrice.valueToInt!).toString());
+          tfAmount.updateValue(((tfDistance.valueToInt ?? 0)* tfFuelPrice.valueToInt!).toString());
         }else{
           tfAmount.updateValue("0");
         }
@@ -77,9 +77,10 @@ class TravelOVFormBloc extends FormBloc<String, String> {
 
       if(vehicleTypeName.value.isNotEmpty){
         if(vehicleTypeName.value == "Two-Wheeler") {
-          tfAmount.updateValue((tfDistance.valueToInt! * tfFuelPrice.valueToInt!).toString());
+          tfAmount.updateValue(((tfDistance.valueToInt ?? 0) * tfFuelPrice.valueToInt!).toString());
         } else if(vehicleTypeName.value == "Four-Wheeler"){
-          tfAmount.updateValue((tfDistance.valueToInt! * tfFuelPrice.valueToInt!).toString());
+
+          tfAmount.updateValue(((tfDistance.valueToInt ?? 0) * tfFuelPrice.valueToInt!).toString());
         }else{
           tfAmount.updateValue("0");
         }
@@ -96,30 +97,32 @@ class TravelOVFormBloc extends FormBloc<String, String> {
   @override
   FutureOr<void> onSubmitting() async {
 
+    print("catc 1h");
+try {
+  Map<String, dynamic> saveOVMap = {
+    //  "checkInDate": checkInDate.value,
+    "srcLatLog": onAutoSelected.value == "auto" ? onListLoaded.value!.first
+        .srcLatLog! + "," + onListLoaded.value!.first.desLatLog! : "",
+    // "srcLatLog": "12.96643,77.58718",
+    "desLatLog": onAutoSelected.value == "auto" ? onListLoaded.value!.last
+        .srcLatLog! + "," + onListLoaded.value!.last.desLatLog! : "",
+    // "desLatLog": "18.94017,72.83483",
+    "travelMode": 193,
+    // "vehicleType": int.parse(selectTypeID.value.toString()),
 
-
-    try {
-      Map<String, dynamic> saveOVMap = {
-        //  "checkInDate": checkInDate.value,
-        "srcLatLog": onAutoSelected.value=="auto" ? onListLoaded.value!.first.srcLatLog!+","+onListLoaded.value!.first.desLatLog! : "",
-       // "srcLatLog": "12.96643,77.58718",
-        "desLatLog": onAutoSelected.value=="auto" ? onListLoaded.value!.last.srcLatLog!+","+onListLoaded.value!.last.desLatLog! : "",
-       // "desLatLog": "18.94017,72.83483",
-        "travelMode": 193,
-       // "vehicleType": int.parse(selectTypeID.value.toString()),
-
-        "origin": tfOrigin.value,
-        "destination": tfDestination.value,
-        "distance": double.parse(tfDistance.value),
-        "startTime": startTime.value,
-        "endTime": endTime.value,
-        "amount": double.parse(tfAmount.value),
-      };
-      emitSuccess(successResponse: jsonEncode(saveOVMap),canSubmitAgain: true);
-    }catch(e){
-      print(e);
-    }
-
+    "origin": tfOrigin.value,
+    "destination": tfDestination.value,
+    "distance": double.parse(tfDistance.value),
+    "startTime": startTime.value,
+    "endTime": endTime.value,
+    "amount": double.parse(tfAmount.value),
+  };
+  print(saveOVMap);
+  emitSuccess(successResponse: jsonEncode(saveOVMap), canSubmitAgain: true);
+}catch(e){
+  print("catch");
+  print(e);
+}
 
 
   }

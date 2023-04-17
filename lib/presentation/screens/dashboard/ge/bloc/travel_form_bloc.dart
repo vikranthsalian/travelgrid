@@ -109,7 +109,7 @@ class TravelFormBloc extends FormBloc<String, String> {
         //
         // "voucherPath": voucherPath.value,
 
-        "voilationMessage": "Exception due to manual creation of Conveyance"
+        "voilationMessage": ""
       };
       emitSuccess(successResponse: jsonEncode(saveConvMap),canSubmitAgain: true);
     }catch(e){

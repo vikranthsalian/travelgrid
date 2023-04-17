@@ -9,6 +9,7 @@ class GEAccomModel {
   String? hotelName;
   int? accomodationType;
   String? accomodationTypeName;
+  String? voilationMessage;
   double? amount;
   double? tax;
   String? description;
@@ -33,6 +34,7 @@ class GEAccomModel {
         this.description,
         this.withBill,
         this.voucherPath,
+        this.voilationMessage,
         this.voucherNumber});
 
   GEAccomModel.fromJson(Map<String, dynamic> json) {
@@ -40,6 +42,7 @@ class GEAccomModel {
     checkInTime = json['checkInTime'];
     checkOutDate = json['checkOutDate'];
     checkOutTime = json['checkOutTime'];
+    voilationMessage = json['voilationMessage'] ?? "";
     noOfDays = json['noOfDays'];
     city = json['city'];
     cityName = json['cityName'];
@@ -87,6 +90,7 @@ class GEAccomModel {
       'hotelName': this.hotelName,
       'accomodationType': this.accomodationType,
       'accomodationTypeName': this.accomodationTypeName,
+      'voilationMessage': this.voilationMessage,
       'amount': this.amount,
       'tax': this.tax,
       'description': this.description,
@@ -102,6 +106,7 @@ class GEAccomModel {
       checkInTime: map['checkInTime'] as String,
       checkOutDate: map['checkOutDate'] as String,
       checkOutTime: map['checkOutTime'] as String,
+      voilationMessage: map['voilationMessage']!=null ?map['voilationMessage'] : "" ,
       noOfDays: map['noOfDays'] as int,
       city: map['city'] as int,
       cityName: map['cityName'] as String,

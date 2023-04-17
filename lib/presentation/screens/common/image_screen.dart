@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:travelgrid/common/config/preferences_config.dart';
 import 'package:travelgrid/common/constants/flavour_constants.dart';
@@ -14,7 +15,7 @@ import 'package:travelgrid/presentation/widgets/button.dart';
 
 class ImageScreen extends StatelessWidget {
   XFile? file;
-  Image? image;
+  String? image;
   ImageScreen({this.file,this.image});
   List list =[];
 
@@ -69,7 +70,9 @@ class ImageScreen extends StatelessWidget {
           File(file!.path),
         width: MediaQuery.of(context).size.width,
         fit: BoxFit.cover,
-      ):image
+      ):Container(
+        child: Utility.imageFromBase64String(image!,context)
+      )
     );
   }
 

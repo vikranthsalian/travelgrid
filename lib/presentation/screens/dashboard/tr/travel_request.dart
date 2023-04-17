@@ -201,6 +201,11 @@ class TravelRequest extends StatelessWidget {
       itemBuilder: (BuildContext context, int index) {
         Data item = list[index];
 
+        bool isVisible=false;
+        if(item.currentStatus!.toLowerCase()=="take back"){
+          isVisible=true;
+        }
+
         Map date = {
           "text" : MetaDateTime().getDate(item.startDate.toString(),format: "dd MMM"),
           "color" : "0xFF2854A1",
@@ -367,10 +372,10 @@ class TravelRequest extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     Container(
-                                        child: MetaTextView(mapData: subtitle,text: item.origin)
+                                        child: MetaTextView(mapData: subtitle,text:  item.maCityPairs?.first.leavingFrom!.name)
                                     ),
                                     Container(
-                                        child: MetaTextView(mapData: subtitle,text:item.destination)
+                                        child: MetaTextView(mapData: subtitle,text:item.maCityPairs?.first.goingTo!.name)
                                     ),
                                   ],
                                 ),
@@ -420,7 +425,9 @@ class TravelRequest extends StatelessWidget {
                                           });
                                         },
                                         child: Container(
-                                            child: MetaTextView( mapData:  edit ))),
+                                            child:  Visibility(
+                                                visible: isVisible,
+                                                child: MetaTextView( mapData: edit)))),
                                     Container(
                                       margin: EdgeInsets.symmetric(horizontal: 10.w),
                                       child: MetaTextView(mapData: {

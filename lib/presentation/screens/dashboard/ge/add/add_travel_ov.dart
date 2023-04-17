@@ -701,7 +701,17 @@ class CreateTravelExpenseOV extends StatelessWidget {
 
                     formBloc!.tfDistance.updateValue(roundDistanceInKM.toString());
                     formBloc!.tfAmount.updateValue((roundDistanceInKM *   formBloc!.tfFuelPrice.valueToInt!).toString());
+
+                    if(roundDistanceInKM==0){
+                      MetaAlert.showErrorAlert(message: "Invalid Selection, Distance is 0 KM");
+                      return;
                   }
+                }else{
+                    MetaAlert.showErrorAlert(message: "Invalid Route, Distance is 0 KM");
+                    return;
+                }
+
+
                 }
                 formBloc!.submit();
                 for(var item in locationItems){

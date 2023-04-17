@@ -86,28 +86,8 @@ class MiscTeFormBloc extends FormBloc<String, String> {
         "requireApproval": false,
         "withBill": false,
         "modified": false,
-
       };
 
-      //
-      // Map<String,dynamic> saveMiscData = {
-      //   "miscellaneousTypeName": miscName.value,
-      //   "miscellaneousType":int.parse(miscID.value ?? "0"),
-      //   "startDate": checkInDate.value,
-      //   "endDate": checkOutDate.value,
-      //   "city":int.parse(cityID.value),
-      //   "cityName":cityName.value,
-      //   if(miscID.value == "212")
-      //   "unitType":int.parse(unitTypeID.value),
-      //   "amount": int.parse(tfAmount.value),
-      //   "voucherNumber": tfVoucher.value,
-      //   "description": tfDescription.value,
-      //
-      //   "voucherPath": voucherPath.value,
-      //   "voucherFile": null,
-      //
-      //   "voilationMessage": "Exception due to manual creation of Miscellaneous",
-      // };
       emitSuccess(successResponse: jsonEncode(saveMiscData));
     }catch(e){
       print(e);

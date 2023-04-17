@@ -35,7 +35,15 @@ class AddTeMiscExpense extends StatelessWidget {
   MiscTeFormBloc? formBloc;
   bool loaded=false;
   File? file;
- 
+  String violationMessage="";
+
+  Map errorMap={
+    "text" : '',
+    "color" : "0xFFFFFFFF",
+    "size": "10",
+    "family": "regular",
+    "align" : "center-left"
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -130,6 +138,7 @@ class AddTeMiscExpense extends StatelessWidget {
 
                       formBloc!.tfAmount.updateValue(miscModel!.amount.toString());
                       formBloc!.tfDescription.updateValue(miscModel!.description.toString());
+                       violationMessage=miscModel!.voilationMessage!;
                      }else{
 
                      String  dateText = DateFormat('dd-MM-yyyy').format(DateTime.now());
@@ -263,6 +272,12 @@ class AddTeMiscExpense extends StatelessWidget {
                                               onChanged:(value){
                                                 formBloc!.tfDescription.updateValue(value);
                                               }),
+                                          (violationMessage!=null && violationMessage.isNotEmpty) ?
+                                          Container(
+                                            padding: EdgeInsets.symmetric(horizontal: 10.w),
+                                            height: 20.h,
+                                            color: Color(0xFFB71C1C),
+                                            child: MetaTextView(mapData: errorMap,text:violationMessage)):SizedBox(),
                                           SizedBox(height: 20.h,),
                                         ],
                                       ),

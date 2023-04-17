@@ -34,8 +34,15 @@ class AddTeAccommodationExpense extends StatelessWidget {
   Map<String,dynamic> jsonData = {};
   AccomTeFormBloc?  formBloc;
   File? file;
+  String violationMessage="";
 
-
+  Map errorMap={
+    "text" : '',
+    "color" : "0xFFFFFFFF",
+    "size": "10",
+    "family": "regular",
+    "align" : "center-left"
+  };
   @override
   Widget build(BuildContext context) {
     jsonData = FlavourConstants.teAccomAddData;
@@ -140,6 +147,7 @@ class AddTeAccommodationExpense extends StatelessWidget {
 
                       formBloc!.selectWithBill.updateValue(accomModel!.withBill.toString());
                       formBloc!.swWithBill.updateValue(accomModel!.withBill!);
+                      violationMessage=accomModel!.voilationMessage!;
 
                     }else{
 
@@ -298,6 +306,13 @@ class AddTeAccommodationExpense extends StatelessWidget {
                                             onChanged:(value){
                                               formBloc!.tfDescription.updateValue(value);
                                             }),
+                                        (violationMessage!=null && violationMessage.isNotEmpty) ?
+                                        Container(
+                                            padding: EdgeInsets.symmetric(horizontal: 10.w),
+                                            height: 20.h,
+                                            color: Color(0xFFB71C1C),
+                                            child: MetaTextView(mapData: errorMap,text:violationMessage)
+                                        ):SizedBox(),
                                         Container(
                                           child: MetaSwitchBloc(
                                               mapData:  jsonData['withBillSwitch'],
