@@ -123,6 +123,7 @@ class APIRemoteDatasource{
         pathUrl,
         loadingMessage:"Loading Data...",
         queryParameters:data,
+        data:{}
       );
       return responseJson.data;
     } on DioError catch (e) {

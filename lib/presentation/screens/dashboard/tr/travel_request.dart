@@ -202,7 +202,7 @@ class TravelRequest extends StatelessWidget {
         Data item = list[index];
 
         bool isVisible=false;
-        if(item.currentStatus!.toLowerCase()=="take back"){
+        if(item.currentStatus!.toLowerCase() == "take back"){
           isVisible=true;
         }
 

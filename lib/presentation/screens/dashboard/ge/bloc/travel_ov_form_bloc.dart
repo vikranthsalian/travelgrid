@@ -99,13 +99,16 @@ class TravelOVFormBloc extends FormBloc<String, String> {
 
     print("catc 1h");
 try {
+
+  print("onListLoaded.value");
+  print(onListLoaded.value);
   Map<String, dynamic> saveOVMap = {
     //  "checkInDate": checkInDate.value,
-    "srcLatLog": onAutoSelected.value == "auto" ? onListLoaded.value!.first
-        .srcLatLog! + "," + onListLoaded.value!.first.desLatLog! : "",
+    "srcLatLog": onAutoSelected.value == "auto" ? onLocationAdded.value!.first
+        .latitude!.toString() + "," + onLocationAdded.value!.first.longitude!.toString() : "",
     // "srcLatLog": "12.96643,77.58718",
-    "desLatLog": onAutoSelected.value == "auto" ? onListLoaded.value!.last
-        .srcLatLog! + "," + onListLoaded.value!.last.desLatLog! : "",
+    "desLatLog": onAutoSelected.value == "auto" ? onLocationAdded.value!.last
+        .latitude!.toString()  + "," + onLocationAdded.value!.last.longitude.toString()  : "",
     // "desLatLog": "18.94017,72.83483",
     "travelMode": 193,
     // "vehicleType": int.parse(selectTypeID.value.toString()),
@@ -117,11 +120,12 @@ try {
     "endTime": endTime.value,
     "amount": double.parse(tfAmount.value),
   };
-  print(saveOVMap);
+
   emitSuccess(successResponse: jsonEncode(saveOVMap), canSubmitAgain: true);
 }catch(e){
   print("catch");
   print(e);
+  emitSuccess(successResponse: jsonEncode(""), canSubmitAgain: true);
 }
 
 

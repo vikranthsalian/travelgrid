@@ -1031,7 +1031,7 @@ class _CreateTravelExpenseBodyState extends State<CreateTravelExpenseBody> {
       "comment":"Take Back",
       "recordLocator":widget.title,
     };
-    SuccessModel model =   await await Injector.resolve<TeUseCase>().takeBackTE(queryParams);
+    SuccessModel model =   await Injector.resolve<TeUseCase>().takeBackTE(queryParams);
 
     if(model.status==true){
       Navigator.pop(context);

@@ -239,11 +239,12 @@ class CreateTravelRequestBody extends StatelessWidget {
       if(isEdit)...{
        "id":state!.responseSum!.data?.id.toString() ?? "",
        "action":"modify",
-      },
+      }
     };
+
     SuccessModel model;
     if(isEdit){
-     model =   await Injector.resolve<TrUseCase>().updateTR(queryParams,submitMap);
+      model =   await Injector.resolve<TrUseCase>().updateTR(queryParams,submitMap);
     }else{
       model =   await Injector.resolve<TrUseCase>().createTR(queryParams,submitMap);
     }

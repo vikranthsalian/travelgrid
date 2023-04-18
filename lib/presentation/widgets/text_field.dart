@@ -3,43 +3,52 @@ import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:travelgrid/common/constants/flavour_constants.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
+import 'package:travelgrid/presentation/components/password_ey_component.dart';
+import 'package:travelgrid/presentation/widgets/icon.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
 
-class MetaTextFieldBlocView extends StatelessWidget {
+class MetaTextFieldBlocView extends StatefulWidget {
   MetaTextFieldBlocView({Key? key,
-    this.controller,
     required this.mapData,
     required this.onChanged,
     required this.textFieldBloc,
-     this.isEnabled=true,
+    this.isEnabled=true,
+    this.isPassword=false,
   })
       : super(key: key);
   Map mapData;
-  TextEditingController? controller;
   Function(String)? onChanged;
   TextFieldBloc textFieldBloc;
   bool isEnabled;
+  bool isPassword;
+
+
+  @override
+  MetaTextFieldBlocViewState createState() => MetaTextFieldBlocViewState();
+}
+
+
+
+class MetaTextFieldBlocViewState extends State<MetaTextFieldBlocView> {
 
   @override
   Widget build(BuildContext context) {
     return TextFieldBlocBuilder(
       key: UniqueKey(),
-      textFieldBloc: textFieldBloc,
+      textFieldBloc: widget.textFieldBloc,
       //controller:controller,
       autofocus: false,
     //  enabled: mapData['enabled'],
-      keyboardType: ParseDataType().getInputType(mapData['inputType'] ?? "") ,
-      maxLength: mapData['maxLength'] ?? null,
+      keyboardType: ParseDataType().getInputType(widget.mapData['inputType'] ?? "") ,
+      maxLength: widget.mapData['maxLength'] ?? null,
     //  onChanged: onChanged,
-     // suffixButton:mapData['isPassword'] ? SuffixButton.obscureText: SuffixButton.clearText,
-      obscureText: mapData['isPassword']  ?? false,
-      obscureTextTrueIcon: Icon(Icons.remove_red_eye,
-          color: ParseDataType().getHexToColor(FlavourConstants.appThemeData['cursor_color'])),
-      textStyle: MetaStyle(mapData: mapData['text']).getStyle() ,
-      inputFormatters: mapData['inputFormatters']  ?? [],
-      maxLines:  mapData['maxLines'] ?? 1 ,
+      suffixButton:widget.isPassword ? SuffixButton.obscureText: null,
+      obscureText: widget.isPassword  ?? false,
+      textStyle: MetaStyle(mapData: widget.mapData['text']).getStyle() ,
+      inputFormatters: widget.mapData['inputFormatters']  ?? [],
+      maxLines:  widget.mapData['maxLines'] ?? 1 ,
      // autovalidateMode: AutovalidateMode.disabled,
-      isEnabled: isEnabled,
+      isEnabled: widget.isEnabled,
       decoration: InputDecoration(
         isDense: true,
      //   enabled: mapData['readOnly'] ?? isEnabled,
@@ -48,21 +57,38 @@ class MetaTextFieldBlocView extends StatelessWidget {
      // disabledBorder: _renderBorder(),
         focusedBorder: _renderBorder(),
         enabledBorder: _renderBorder(),
-        label: MetaTextView(mapData: mapData['labelText']),
-        hintText: mapData['hintText']['text'],
-        hintStyle: MetaStyle(mapData: mapData['hintText']).getStyle() ,
+        label: MetaTextView(mapData: widget.mapData['labelText']),
+        hintText: widget.mapData['hintText']['text'],
+        hintStyle: MetaStyle(mapData: widget.mapData['hintText']).getStyle() ,
         filled: true,
-        fillColor:ParseDataType().getHexToColor(mapData['backgroundColor'] ?? "0xFFFFFFFF"),
-        errorStyle: MetaStyle(mapData: mapData['errorText']).getStyle(),
-        suffixIcon: mapData['suffixIcon'] ?? null,
+        fillColor:ParseDataType().getHexToColor(widget.mapData['backgroundColor'] ?? "0xFFFFFFFF"),
+        errorStyle: MetaStyle(mapData: widget.mapData['errorText']).getStyle(),
+        suffixIcon:widget.mapData['isPassword']  ?
+
+
+
+        InkWell(
+          onTap: (){
+            setState(() {
+              widget.isPassword=!widget.isPassword;
+            });
+          },
+          child: Icon(
+            // Based on passwordVisible state choose the icon
+            widget.isPassword
+                ? Icons.visibility
+                : Icons.visibility_off,
+            color: Theme.of(context).primaryColorDark,
+          ),
+        ):null,
       ),
-      readOnly: mapData['readOnly'] ?? false,
+      readOnly: widget.mapData['readOnly'] ?? false,
       cursorColor:ParseDataType().getHexToColor(FlavourConstants.appThemeData['cursor_color']),
     );
   }
 
   UnderlineInputBorder _renderBorder() =>
-      UnderlineInputBorder(borderSide:BorderSide(color:ParseDataType().getHexToColor(mapData['borderColor'] ?? "0xFFFFFFFF")));
+      UnderlineInputBorder(borderSide:BorderSide(color:ParseDataType().getHexToColor(widget.mapData['borderColor'] ?? "0xFFFFFFFF")));
 
 }
 

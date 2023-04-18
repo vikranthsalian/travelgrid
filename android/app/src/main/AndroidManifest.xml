@@ -6,7 +6,7 @@
         <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
         <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
    <application
-        android:label="NH-TG-UAT4"
+        android:label="NH Travelgrid"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity

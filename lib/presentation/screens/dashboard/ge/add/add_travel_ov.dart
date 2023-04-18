@@ -154,14 +154,15 @@ class CreateTravelExpenseOV extends StatelessWidget {
                               formBloc!.clear();
 
 
-                          formBloc!.checkInDate.updateValue(date.toString());
+                              formBloc!.checkInDate.updateValue(date.toString());
 
 
                               formBloc!.startTime.updateValue(modelResponse.endTime.toString());
                               formBloc!.startTimeWidget.updateValue(modelResponse.endTime.toString());
 
-                              formBloc!.endTimeWidget.updateValue("00:00");
                               formBloc!.endTime.updateValue("00:00");
+                              formBloc!.endTimeWidget.updateValue("00:00");
+
 
 
                               formBloc!.vehicleTypeName.updateValue(typeName);
@@ -372,7 +373,8 @@ class CreateTravelExpenseOV extends StatelessWidget {
                        return
                          Container(
                            child: MetaDateTimeView(mapData: jsonData['startTime'],
-                             isEnabled: formBloc!.onDataAdded.value == "Added" ? false :true,
+                             isEnabled:true,
+                            // isEnabled: formBloc!.onDataAdded.value == "Added" ? false :true,
                              value: {
                                "date": {},
                                "time": formBloc!.startTime.value,
@@ -420,7 +422,8 @@ class CreateTravelExpenseOV extends StatelessWidget {
                        return Container(
                          child:MetaTextFieldBlocView(mapData: jsonData['text_field_origin'],
                              textFieldBloc: formBloc!.tfOrigin,
-                             isEnabled : state.value == "Added" ? false: true,
+                             isEnabled :  true,
+                            // isEnabled : state.value == "Added" ? false: true,
                              onChanged:(value){
                                formBloc!.tfOrigin.updateValue(value);
                              }),

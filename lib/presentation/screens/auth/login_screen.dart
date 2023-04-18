@@ -119,6 +119,8 @@ class LoginScreen extends StatelessWidget {
                                       }),
                                   MetaTextFieldBlocView(mapData: loginJsonData['text_field_password'],
                                       textFieldBloc: formBloc.tfPassword,
+                                      isPassword: true,
+
                                       onChanged: (value){
                                         formBloc.tfPassword.updateValue(value);
                                       }),
