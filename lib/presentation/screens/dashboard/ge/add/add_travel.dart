@@ -1,18 +1,16 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:travelgrid/common/constants/flavour_constants.dart';
 import 'package:travelgrid/common/enum/dropdown_types.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
-import 'package:travelgrid/common/injector/injector.dart';
+import 'package:travelgrid/common/utils/upload_util.dart';
 import 'package:travelgrid/data/models/expense_model.dart';
 import 'package:travelgrid/data/models/ge/ge_conveyance_model.dart';
 import 'package:travelgrid/data/models/success_model.dart';
-import 'package:travelgrid/domain/usecases/common_usecase.dart';
 import 'package:travelgrid/presentation/components/upload_component.dart';
 import 'package:travelgrid/presentation/screens/dashboard/ge/add/add_travel_ov.dart';
 import 'package:travelgrid/presentation/screens/dashboard/ge/bloc/travel_form_bloc.dart';
@@ -70,20 +68,13 @@ class _CreateConveyanceExpenseState extends State<CreateConveyanceExpense> {
             MetaButton(mapData: jsonData['bottomButtonRight'],
                 onButtonPressed: () async {
 
-                  if(formBloc!.swWithBill.value && file!=null){
-                    String fileName = file!.path.split('/').last;
-                    String  dateText = DateFormat('dd-MM-yyyy_hh:ss').format(DateTime.now());
-                    FormData formData = FormData.fromMap({
-                      "file": await MultipartFile.fromFile(file!.path, filename:dateText+"_"+fileName),
-                    });
-                    SuccessModel model =  await Injector.resolve<CommonUseCase>().uploadFile(formData,"GE");
+                  if(file!=null){
+                    SuccessModel model = await  MetaUpload().uploadImage(file!,"GE");
                     if(model.status!){
                       formBloc!.voucherPath.updateValue(model.data!);
                       formBloc!.submit();
                     }
-                  }
-                  else{
-                    print("sfdfds");
+                  }else{
                     formBloc!.submit();
                   }
                 }
@@ -338,28 +329,28 @@ class _CreateConveyanceExpenseState extends State<CreateConveyanceExpense> {
                                             onChanged:(value){
                                               formBloc!.tfDescription.updateValue(value);
                                             }),
-                                        // Container(
-                                        //   child: MetaSwitchBloc(
-                                        //       mapData:  jsonData['withBillCheckBox'],
-                                        //       bloc:  formBloc!.swWithBill,
-                                        //       onSwitchPressed: (value){
-                                        //
-                                        //         formBloc!.selectWithBill.updateValue(value.toString());
-                                        //         formBloc!.swWithBill.updateValue(value);
-                                        //       }),
-                                        // ),
-                                        // BlocBuilder<SelectFieldBloc, SelectFieldBlocState>(
-                                        //     bloc: formBloc!.selectWithBill,
-                                        //     builder: (context, state) {
-                                        //       return Visibility(
-                                        //         visible: state.value == "true" ? true : false,
-                                        //         child:UploadComponent(jsonData: jsonData['uploadButton'],
-                                        //             onSelected: (dataFile){
-                                        //               file=dataFile;
-                                        //             }),
-                                        //       );
-                                        //     }
-                                        // )
+                                        Container(
+                                          child: MetaSwitchBloc(
+                                              mapData:  jsonData['withBillCheckBox'],
+                                              bloc:  formBloc!.swWithBill,
+                                              onSwitchPressed: (value){
+
+                                                formBloc!.selectWithBill.updateValue(value.toString());
+                                                formBloc!.swWithBill.updateValue(value);
+                                              }),
+                                        ),
+                                        BlocBuilder<SelectFieldBloc, SelectFieldBlocState>(
+                                            bloc: formBloc!.selectWithBill,
+                                            builder: (context, state) {
+                                              return Visibility(
+                                                visible: state.value == "true" ? true : false,
+                                                child:UploadComponent(jsonData: jsonData['uploadButton'],
+                                                    onSelected: (dataFile){
+                                                      file=dataFile;
+                                                    }),
+                                              );
+                                            }
+                                        )
 
                                       ]
                                   );
@@ -380,21 +371,6 @@ class _CreateConveyanceExpenseState extends State<CreateConveyanceExpense> {
     );
   }
 
-  void createMapData() {
-    Map<String,dynamic> saveTravelData = {
-      "conveyanceDate": "06-01-2023",
-      "origin": "cbi",
-      "destination": "hebbal",
-      "travelMode": 193,
-      "travelModeName": "Own Vehicle",
-      "amount": 1000.0,
-      "description": "",
-      "voucherNumber": "",
-      "withBill": false,
-      "voucherPath": "",
-      "voucherFile": null,
-    };
-  }
   getInitialText(String text) {
 
     if(text.isNotEmpty){

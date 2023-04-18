@@ -85,12 +85,12 @@ class CreateMiscExpense extends StatelessWidget {
               }
 
 
-                if(file!=null){
-                  SuccessModel model = await  MetaUpload().uploadImage(file!,"GE");
-                  if(model.status!){
-                    formBloc!.voucherPath.updateValue(model.data!);
-                    formBloc!.submit();
-                  }
+            if(file!=null){
+              SuccessModel model = await  MetaUpload().uploadImage(file!,"GE");
+                if(model.status!){
+                  formBloc!.voucherPath.updateValue(model.data!);
+                  formBloc!.submit();
+                }
               }else{
                formBloc!.submit();
               }
