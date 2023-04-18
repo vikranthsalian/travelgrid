@@ -8,6 +8,7 @@ import 'package:travelgrid/common/constants/flavour_constants.dart';
 import 'package:travelgrid/common/extensions/capitalize.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
 import 'package:travelgrid/common/utils/city_util.dart';
+import 'package:travelgrid/common/utils/show_alert.dart';
 import 'package:travelgrid/common/utils/upload_util.dart';
 import 'package:travelgrid/data/datasources/summary/tr_summary_response.dart';
 import 'package:travelgrid/data/models/success_model.dart';
@@ -449,6 +450,12 @@ class TrProcessed extends StatelessWidget {
                 margin: EdgeInsets.symmetric(horizontal: 20.w),
                 child: InkWell(
                   onTap: ()async{
+
+                    if(formBloc!.cityList.value!.isEmpty){
+                      MetaAlert.showSuccessAlert(message: "Please add Itinerary Details First");
+                      return;
+                    }
+
 
                     if(map['add']['type']=="cash") {
                       await showDialog(

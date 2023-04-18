@@ -32,7 +32,7 @@ class _HomePageState extends State<HomePage> {
   List items=[];
   String?  dateText;
   String  fullname="";
-  double cardHt =70.h;
+  double cardHt =50.h;
   @override
   void initState() {
     super.initState();
@@ -149,7 +149,7 @@ class _HomePageState extends State<HomePage> {
                             crossAxisCellCount: e['cross'],
                             mainAxisCellCount: e['main'],
                             child: InkWell(
-                              onTap: (){
+                              onTap: () {
 
                                 if(e["onClick"].isNotEmpty){
                                   print(e["onClick"]);
@@ -242,7 +242,9 @@ class _HomePageState extends State<HomePage> {
                                             "align" : "center-left"
                                           })
                                       ),
-                                      child:getListView(state)
+                                      child:Container(
+                                        padding: EdgeInsets.only(bottom: 30.h),
+                                          child: getListView(state))
                                   )
                               );
                             }
@@ -301,7 +303,7 @@ class _HomePageState extends State<HomePage> {
         Map code = {
           "text" :"#"+ item.tripNumber.toString().toUpperCase(),
           "color" : "0xFF2854A1",
-          "size": "20",
+          "size": "17",
           "family": "bold",
           "align" : "center-left"
         };
@@ -343,7 +345,7 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         Container(
                           margin: EdgeInsets.symmetric(horizontal: 10.w),
-                          height: cardHt * 0.5,
+                          height: cardHt * 0.4,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.center,
