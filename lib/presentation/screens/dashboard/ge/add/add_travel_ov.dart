@@ -345,6 +345,7 @@ class CreateTravelExpenseOV extends StatelessWidget {
                        return
                          Container(
                            child: MetaDateTimeView(mapData: jsonData['checkInDateTime'],
+                             disableFutureDates:true,
                              isEnabled: state.value =="Added" ? false :true,
                              value: {
                                "date": formBloc!.checkInDate.value,
@@ -373,6 +374,7 @@ class CreateTravelExpenseOV extends StatelessWidget {
                        return
                          Container(
                            child: MetaDateTimeView(mapData: jsonData['startTime'],
+                             disableFutureDates:true,
                              isEnabled:true,
                             // isEnabled: formBloc!.onDataAdded.value == "Added" ? false :true,
                              value: {
@@ -395,6 +397,7 @@ class CreateTravelExpenseOV extends StatelessWidget {
                      builder: (context, state) {
                        return Container(
                          child: MetaDateTimeView(mapData: jsonData['endTime'],
+                           disableFutureDates:true,
                            value: {
                              "date": {},
                              "time": formBloc!.endTime.value,

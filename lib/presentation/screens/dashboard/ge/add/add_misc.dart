@@ -223,6 +223,7 @@ class CreateMiscExpense extends StatelessWidget {
                                               Expanded(
                                                 child: Container(
                                                   child: MetaDateTimeView(mapData: jsonData['checkInDateTime'],
+                                                      disableFutureDates:true,
                                                       value: {"date": formBloc!.checkInDate.value},
                                                       onChange: (value){
                                                         formBloc!.checkInDate.updateValue(value['date'].toString());
@@ -233,6 +234,7 @@ class CreateMiscExpense extends StatelessWidget {
                                               Expanded(
                                                 child: Container(
                                                   child: MetaDateTimeView(mapData: jsonData['checkOutDateTime'],
+                                                      disableFutureDates:true,
                                                       value: {"date": formBloc!.checkOutDate.value},
                                                       onChange: (value){
                                                         formBloc!.checkOutDate.updateValue(value['date'].toString());

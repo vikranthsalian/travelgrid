@@ -14,7 +14,8 @@ class MetaDateTimeView extends StatefulWidget {
   Function(Map)? onChange;
   Map value;
   bool isEnabled;
-  MetaDateTimeView({required this.mapData,this.isEnabled=true,this.text,this.onChange,this.value=const {}});
+  bool disableFutureDates;
+  MetaDateTimeView({required this.mapData,this.isEnabled=true,this.text,this.onChange,this.value=const {},this.disableFutureDates=false});
 
 
   @override
@@ -55,7 +56,7 @@ class _MetaDateTimeViewState extends State<MetaDateTimeView> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    print("Rebuild");
+
     if(widget.value['date'].isEmpty){
       date= currentDateTime.day.toString();
       week= DateFormat('EEEE').format(currentDateTime);
@@ -97,7 +98,7 @@ class _MetaDateTimeViewState extends State<MetaDateTimeView> {
                     context: appNavigatorKey.currentState!.context,
                     initialDate: DateTime.now(), //get today's date
                     firstDate:DateTime(2000), //DateTime.now() - not to allow to choose before today.
-                    lastDate: DateTime(2101),
+                    lastDate: widget.disableFutureDates ?  DateTime.now() : DateTime(2101),
                     builder: (context, child) {
                       return Theme(
                         data: Theme.of(context).copyWith(

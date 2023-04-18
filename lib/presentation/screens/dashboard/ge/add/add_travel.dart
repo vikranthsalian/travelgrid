@@ -191,6 +191,7 @@ class _CreateConveyanceExpenseState extends State<CreateConveyanceExpense> {
                                       children:[
                                         Container(
                                           child: MetaDateTimeView(mapData: jsonData['checkInDateTime'],
+                                            disableFutureDates:true,
                                             isEnabled: formBloc!.selectModeID.value=="193" ? false: true,
                                             value: {
                                               "date": formBloc!.checkInDate.value,
