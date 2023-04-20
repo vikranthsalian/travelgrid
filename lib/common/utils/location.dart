@@ -14,7 +14,7 @@ class LocationUtils{
     // Location services are not enabled don't continue
     // accessing the position and request users of the
     // App to enable the location services.
-    MetaAlert.showErrorAlert(message: "Please Enable Location!!!");
+    MetaAlert.showErrorAlert(message: "Please Enable Location!");
     return Future.error('Location services are disabled.');
   }
 

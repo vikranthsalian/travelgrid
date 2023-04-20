@@ -43,7 +43,7 @@
       "borderRadius": 25.0
     },
     "text_title": {
-      "text" : "Welcome!!!",
+      "text" : "Welcome!",
       "color" : "0xFF2854A1",
       "size": "28",
       "family": "bold",
@@ -312,7 +312,7 @@
           "wd": 250.0
         },
         "title":  {
-          "text" : "No Data Found!!!",
+          "text" : "No Data Found!",
           "color" : "0XFF3D3D3D",
           "size": "16",
           "family": "regular"
@@ -364,7 +364,7 @@
           "wd": 250.0
         },
         "title":  {
-          "text" : "No Data Found!!!",
+          "text" : "No Data Found!",
           "color" : "0XFF3D3D3D",
           "size": "16",
           "family": "regular"
@@ -435,7 +435,7 @@
           "wd": 250.0
         },
         "title":  {
-          "text" : "No Data Found!!!",
+          "text" : "No Data Found!",
           "color" : "0XFF3D3D3D",
           "size": "16",
           "family": "regular"
@@ -499,7 +499,7 @@
           "wd": 250.0
         },
         "title":  {
-          "text" : "No Data Found!!!",
+          "text" : "No Data Found!",
           "color" : "0XFF3D3D3D",
           "size": "16",
           "family": "regular"
@@ -604,7 +604,7 @@
           "wd": 250.0
         },
         "title":  {
-          "text" : "No Data Found!!!",
+          "text" : "No Data Found!",
           "color" : "0XFF3D3D3D",
           "size": "16",
           "family": "regular"
@@ -654,7 +654,7 @@
           "wd": 250.0
         },
         "title":  {
-          "text" : "No Data Found!!!",
+          "text" : "No Data Found!",
           "color" : "0XFF3D3D3D",
           "size": "16",
           "family": "regular"
@@ -704,7 +704,7 @@
           "wd": 250.0
         },
         "title":  {
-          "text" : "No Data Found!!!",
+          "text" : "No Data Found!",
           "color" : "0XFF3D3D3D",
           "size": "16",
           "family": "regular"
@@ -1411,7 +1411,7 @@
             "wd": 250.0
           },
           "title":  {
-            "text" : "No Data Found!!!",
+            "text" : "No Data Found!",
             "color" : "0XFF3D3D3D",
             "size": "16",
             "family": "regular"
@@ -1484,7 +1484,7 @@
             "wd": 250.0
           },
           "title":  {
-            "text" : "No Data Found!!!",
+            "text" : "No Data Found!",
             "color" : "0XFF3D3D3D",
             "size": "16",
             "family": "regular"
@@ -1674,7 +1674,7 @@
             "wd": 250.0
           },
           "title":  {
-            "text" : "No Data Found!!!",
+            "text" : "No Data Found!",
             "color" : "0XFF3D3D3D",
             "size": "16",
             "family": "regular"
@@ -1747,7 +1747,7 @@
             "wd": 250.0
           },
           "title":  {
-            "text" : "No Data Found!!!",
+            "text" : "No Data Found!",
             "color" : "0XFF3D3D3D",
             "size": "16",
             "family": "regular"
@@ -2065,7 +2065,7 @@
               "wd": 250.0
             },
             "title":  {
-              "text" : "No Data Found!!!",
+              "text" : "No Data Found!",
               "color" : "0XFF3D3D3D",
               "size": "16",
               "family": "regular"
@@ -2338,7 +2338,7 @@
             "wd": 250.0
           },
           "title":  {
-            "text" : "No Data Added!!!",
+            "text" : "No Data Added!",
             "color" : "0XFF3D3D3D",
             "size": "16",
             "family": "regular"
@@ -2424,7 +2424,7 @@
             "wd": 250.0
           },
           "title":  {
-            "text" : "No Data Added!!!",
+            "text" : "No Data Added!",
             "color" : "0XFF3D3D3D",
             "size": "16",
             "family": "regular"
@@ -2496,7 +2496,7 @@
             "wd": 250.0
           },
           "title":  {
-            "text" : "No Data Added!!!",
+            "text" : "No Data Added!",
             "color" : "0XFF3D3D3D",
             "size": "16",
             "family": "regular"
@@ -2770,7 +2770,7 @@
             "wd": 250.0
           },
           "title":  {
-            "text" : "No Data Added!!!",
+            "text" : "No Data Added!",
             "color" : "0XFF3D3D3D",
             "size": "16",
             "family": "regular"
@@ -2909,7 +2909,7 @@
                 "wd": 250.0
               },
               "title":  {
-                "text" : "No Data Found!!!",
+                "text" : "No Data Found!",
                 "color" : "0XFF3D3D3D",
                 "size": "16",
                 "family": "regular"
@@ -2983,7 +2983,7 @@
                 "wd": 250.0
               },
               "title":  {
-                "text" : "No Data Found!!!",
+                "text" : "No Data Found!",
                 "color" : "0XFF3D3D3D",
                 "size": "16",
                 "family": "regular"
@@ -3078,7 +3078,7 @@
             "wd": 250.0
           },
           "title":  {
-            "text" : "No Data Added!!!",
+            "text" : "No Data Added!",
             "color" : "0XFF3D3D3D",
             "size": "16",
             "family": "regular"
@@ -3591,7 +3591,7 @@
             "wd": 250.0
           },
           "title":  {
-            "text" : "No item Added!!!",
+            "text" : "No item Added!",
             "color" : "0XFF3D3D3D",
             "size": "16",
             "family": "regular"
@@ -4952,7 +4952,7 @@
               "wd": 250.0
             },
             "title":  {
-              "text" : "No Data Found!!!",
+              "text" : "No Data Found!",
               "color" : "0XFF3D3D3D",
               "size": "16",
               "family": "regular"
@@ -5132,7 +5132,7 @@
               "wd": 250.0
             },
             "title":  {
-              "text" : "No item Added!!!",
+              "text" : "No item Added!",
               "color" : "0XFF3D3D3D",
               "size": "16",
               "family": "regular"
@@ -5217,7 +5217,7 @@
               "wd": 250.0
             },
             "title":  {
-              "text" : "No item Added!!!",
+              "text" : "No item Added!",
               "color" : "0XFF3D3D3D",
               "size": "16",
               "family": "regular"
@@ -5429,7 +5429,7 @@
             "wd": 250.0
           },
           "title":  {
-            "text" : "No Data Found!!!",
+            "text" : "No Data Found!",
             "color" : "0XFF3D3D3D",
             "size": "16",
             "family": "regular"
@@ -5799,7 +5799,7 @@
             "wd": 250.0
           },
           "title":  {
-            "text" : "No item Added!!!",
+            "text" : "No item Added!",
             "color" : "0XFF3D3D3D",
             "size": "16",
             "family": "regular"
@@ -5938,7 +5938,7 @@
             "wd": 250.0
           },
           "title":  {
-            "text" : "No item Added!!!",
+            "text" : "No item Added!",
             "color" : "0XFF3D3D3D",
             "size": "16",
             "family": "regular"
@@ -7879,7 +7879,7 @@
             "wd": 250.0
           },
           "title":  {
-            "text" : "No Data Found!!!",
+            "text" : "No Data Found!",
             "color" : "0XFF3D3D3D",
             "size": "16",
             "family": "regular"
@@ -8125,7 +8125,7 @@
           "wd": 250.0
         },
         "title":  {
-          "text" : "No Data Found!!!",
+          "text" : "No Data Found!",
           "color" : "0XFF3D3D3D",
           "size": "16",
           "family": "regular"
@@ -8217,7 +8217,7 @@
           "wd": 250.0
         },
         "title":  {
-          "text" : "No Data Found!!!",
+          "text" : "No Data Found!",
           "color" : "0XFF3D3D3D",
           "size": "16",
           "family": "regular"
@@ -8304,7 +8304,7 @@
           "wd": 250.0
         },
         "title":  {
-          "text" : "No Data Found!!!",
+          "text" : "No Data Found!",
           "color" : "0XFF3D3D3D",
           "size": "16",
           "family": "regular"
@@ -8358,7 +8358,7 @@
           "wd": 250.0
         },
         "title":  {
-          "text" : "No Data Found!!!",
+          "text" : "No Data Found!",
           "color" : "0XFF3D3D3D",
           "size": "16",
           "family": "regular"
@@ -8412,7 +8412,7 @@
           "wd": 250.0
         },
         "title":  {
-          "text" : "No Data Found!!!",
+          "text" : "No Data Found!",
           "color" : "0XFF3D3D3D",
           "size": "16",
           "family": "regular"
@@ -8454,7 +8454,7 @@
           "wd": 250.0
         },
         "title":  {
-          "text" : "No Data Found!!!",
+          "text" : "No Data Found!",
           "color" : "0XFF3D3D3D",
           "size": "16",
           "family": "regular"
@@ -8494,7 +8494,7 @@
           "wd": 250.0
         },
         "title":  {
-          "text" : "No Data Found!!!",
+          "text" : "No Data Found!",
           "color" : "0XFF3D3D3D",
           "size": "16",
           "family": "regular"
@@ -8534,7 +8534,7 @@
           "wd": 250.0
         },
         "title":  {
-          "text" : "No Data Found!!!",
+          "text" : "No Data Found!",
           "color" : "0XFF3D3D3D",
           "size": "16",
           "family": "regular"
@@ -8574,7 +8574,7 @@
           "wd": 250.0
         },
         "title":  {
-          "text" : "No Data Found!!!",
+          "text" : "No Data Found!",
           "color" : "0XFF3D3D3D",
           "size": "16",
           "family": "regular"
@@ -8614,7 +8614,7 @@
           "wd": 250.0
         },
         "title":  {
-          "text" : "No Data Found!!!",
+          "text" : "No Data Found!",
           "color" : "0XFF3D3D3D",
           "size": "16",
           "family": "regular"
@@ -8654,7 +8654,7 @@
           "wd": 250.0
         },
         "title":  {
-          "text" : "No Data Found!!!",
+          "text" : "No Data Found!",
           "color" : "0XFF3D3D3D",
           "size": "16",
           "family": "regular"
@@ -8847,7 +8847,7 @@
           "wd": 250.0
         },
         "title":  {
-          "text" : "No Data Found!!!",
+          "text" : "No Data Found!",
           "color" : "0XFF3D3D3D",
           "size": "16",
           "family": "regular"
