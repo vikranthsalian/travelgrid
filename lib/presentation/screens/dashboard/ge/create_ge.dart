@@ -572,7 +572,7 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpenseBody> {
                     child: Row(
                       children: [
                         Expanded(flex:2, child: MetaTextView(mapData: map['listView']['item'],text: configureExpenseTypes(type))),
-                        Expanded(flex:1,child: MetaTextView(mapData: map['listView']['item'],text:amount)),
+                        Expanded(flex:1,child: MetaTextView(mapData: map['listView']['item_amount'],text:amount)),
                         widget.isEdit?
                         Expanded(flex:1,child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,

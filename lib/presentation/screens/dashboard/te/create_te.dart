@@ -34,7 +34,6 @@ import 'package:travelgrid/presentation/widgets/button.dart';
 import 'package:travelgrid/presentation/widgets/dialog_selector_view.dart';
 import 'package:travelgrid/presentation/widgets/icon.dart';
 import 'package:travelgrid/presentation/widgets/svg_view.dart';
-import 'package:travelgrid/presentation/widgets/switch.dart';
 import 'package:travelgrid/presentation/widgets/text_field.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
 import 'package:tuple/tuple.dart';
@@ -706,12 +705,11 @@ class _CreateTravelExpenseBodyState extends State<CreateTravelExpenseBody> {
                     child: Row(
                       children: [
                         Expanded(flex:2, child: MetaTextView(mapData: map['listView']['item'],text: configureExpenseTypes(type) )),
-                        Expanded(flex:1,child: MetaTextView(mapData: map['listView']['item'],text:amount)),
+                        Expanded(flex:1,child: MetaTextView(mapData: map['listView']['item_amount'],text:amount)),
                         widget.isEdit?
                         Expanded(flex:1,child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            type != TETypes.CONVEYANCE?
                             InkWell(
                             onTap: (){
                                   navigate({"onClick": type}, true,summaryItems[index].item2,index,false);
@@ -719,9 +717,7 @@ class _CreateTravelExpenseBodyState extends State<CreateTravelExpenseBody> {
                             child: Container(
                                 width:25.w,
                                 height:25.w,
-                                child: MetaSVGView(mapData:  map['listView']['item']['items'][0]))):Container(
-                              width:25.w,
-                              height:25.w),
+                                child: MetaSVGView(mapData:  map['listView']['item']['items'][0]))),
                             SizedBox(width: 10.h,),
 
                             InkWell(onTap: (){

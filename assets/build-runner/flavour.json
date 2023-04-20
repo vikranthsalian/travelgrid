@@ -3584,6 +3584,13 @@
             }
           ]
         },
+        "item_amount": {
+          "text" : "",
+          "color" : "0XFF000000",
+          "size": "10",
+          "family": "regular",
+          "align": "center-right"
+        },
         "emptyData": {
           "image_view":   {
             "image" : "logo_banner.png",
@@ -5930,6 +5937,13 @@
               "color" : "0xFF2854A1"
             }
           ]
+        },
+        "item_amount": {
+          "text" : "",
+          "color" : "0XFF000000",
+          "size": "10",
+          "family": "regular",
+          "align": "center-right"
         },
         "emptyData": {
           "image_view":   {
