@@ -831,7 +831,7 @@ class TrProcessed extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  MetaTextView(mapData: map['item'],text: "No Data Found",),
+                  MetaTextView(mapData: map['item'],text: "No data found",),
                 ],
               ),
             );

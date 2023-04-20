@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:privacy_screen/privacy_screen.dart';
+import 'package:travelgrid/common/constants/color_constants.dart';
 import 'package:travelgrid/common/constants/flavour_constants.dart';
 import 'package:travelgrid/common/constants/route_constants.dart';
 import 'package:travelgrid/common/dio/dio_client.dart';
@@ -20,7 +22,7 @@ class SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState() {
-
+    setPrivacyScreenConfig();
     splashData = FlavourConstants.splashData;
     prettyPrint(splashData);
     splashBottomText = FlavourConstants.splashData['splash_bottom_text'];
@@ -77,4 +79,20 @@ class SplashScreenState extends State<SplashScreen> {
       // }
   }
 
+  Future setPrivacyScreenConfig() async {
+    await PrivacyScreen.instance.enable(
+      iosOptions: const PrivacyIosOptions(
+        enablePrivacy: true,
+        // privacyImageName: "LaunchImage",
+        autoLockAfterSeconds: 3,
+        lockTrigger: IosLockTrigger.didEnterBackground,
+      ),
+      androidOptions: const PrivacyAndroidOptions(
+        enableSecure: true,
+        autoLockAfterSeconds: 3,
+      ),
+      backgroundColor: ColorConstants.primaryColor.withOpacity(0),
+      blurEffect: PrivacyBlurEffect.dark,
+    );
+  }
 }
