@@ -142,7 +142,7 @@ class _UploadComponentState extends State<UploadComponent> {
                     } else {
                       // User canceled the picker
                     }
-                  }else  if(value == "Wallet"){
+                  }else  if(value == "Documents"){
 
                     Navigator.of(context).push(
                         MaterialPageRoute(builder: (context) =>

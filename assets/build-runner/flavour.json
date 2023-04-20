@@ -57,9 +57,14 @@
       "align" : "center-left"
     },
     "image_view":   {
+      "image" : "logo_banner.png",
+      "align": "center",
+      "wd": 200.0
+    },
+    "image_view_2":   {
       "image" : "logo_banner.jpg",
       "align": "center",
-      "wd": 250.0
+      "wd": 160.0
     },
     "text_field_username":  {
       "name": "Username",
@@ -284,7 +289,7 @@
       "onClick": "/viewPolicies"
     },
     "walletButton": {
-      "text" : "Wallet",
+      "text" : "Documents",
       "color" : "0xFFFFFFFF",
       "backgroundColor" : "0xFF2854A1",
       "size": "18",
@@ -8171,7 +8176,7 @@
   "wallet_screen_data" : {
     "backgroundColor" : "0xFF2854A1",
     "title":  {
-      "text" : "Wallet",
+      "text" : "Documents",
       "color" : "0XFFFFFFFF",
       "size": "18",
       "family": "bold",
@@ -8676,7 +8681,7 @@
     "listView": {
       "data": [
         {
-          "text" : "Wallet",
+          "text" : "Documents",
           "color" : "0XFF000000",
           "size": "12",
           "family": "regular",

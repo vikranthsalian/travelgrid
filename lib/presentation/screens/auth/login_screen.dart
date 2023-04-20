@@ -50,8 +50,8 @@ class LoginScreen extends StatelessWidget {
                 builder: (context) {
 
                   LoginFormBloc  formBloc =  BlocProvider.of<LoginFormBloc>(context);
-                  formBloc.tfUsername.updateValue("cm06");
-                  formBloc.tfPassword.updateValue("Test123#");
+                  //formBloc.tfUsername.updateValue("cm06");
+                 // formBloc.tfPassword.updateValue("Test123#");
 
                   return Container(
                     height: double.infinity,
@@ -100,18 +100,11 @@ class LoginScreen extends StatelessWidget {
                             child: Column(
                                 children:[
                                   SizedBox(height: _sizedBoxHeight),
-                                  SizedBox(height: _sizedBoxHeight),
-                                  SizedBox(height: _sizedBoxHeight),
-                                  SizedBox(height: _sizedBoxHeight),
-                                  SizedBox(height: _sizedBoxHeight),
                                   MetaTextView(mapData: loginJsonData['text_title']),
                                   SizedBox(height: _sizedBoxHeight * 0.2),
                                   MetaTextView(mapData: loginJsonData['text_subtitle']),
-                                  SizedBox(height: _sizedBoxHeight),
-                                  SizedBox(height: _sizedBoxHeight),
                                   MetaImageView(mapData: loginJsonData['image_view']),
-                                  SizedBox(height: _sizedBoxHeight),
-                                  SizedBox(height: _sizedBoxHeight),
+                                  MetaImageView(mapData: loginJsonData['image_view_2']),
                                   MetaTextFieldBlocView(mapData: loginJsonData['text_field_username'],
                                       textFieldBloc: formBloc.tfUsername,
                                       onChanged:(value){
