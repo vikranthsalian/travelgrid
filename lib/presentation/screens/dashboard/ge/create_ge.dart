@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:travelgrid/common/constants/flavour_constants.dart';
 import 'package:travelgrid/common/constants/route_constants.dart';
 import 'package:travelgrid/common/enum/dropdown_types.dart';
+import 'package:travelgrid/common/extensions/capitalize.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
 import 'package:travelgrid/common/extensions/pretty.dart';
 import 'package:travelgrid/common/injector/injector.dart';
@@ -440,7 +441,7 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpenseBody> {
                           child: Row(
                             children: [
                               Expanded(child: MetaTextView(mapData: summaryDetails[index].item1['label'])),
-                              Expanded(child: MetaTextView(mapData: summaryDetails[index].item1['value'],text:summaryDetails[index].item2))
+                              Expanded(child: MetaTextView(mapData: summaryDetails[index].item1['value'],text:summaryDetails[index].item2.inRupeesFormat()))
                             ],
                           ),
                         );
@@ -456,7 +457,7 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpenseBody> {
                   child: Row(
                     children: [
                       Expanded(child: MetaTextView(mapData:  map['dataFooter']['label'])),
-                      Expanded(child: MetaTextView(mapData:  map['dataFooter']['value'],text:total))
+                      Expanded(child: MetaTextView(mapData:  map['dataFooter']['value'],text:total.inRupeesFormat()))
                     ],
                   ),
                 ),
@@ -572,7 +573,7 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpenseBody> {
                     child: Row(
                       children: [
                         Expanded(flex:2, child: MetaTextView(mapData: map['listView']['item'],text: configureExpenseTypes(type))),
-                        Expanded(flex:1,child: MetaTextView(mapData: map['listView']['item_amount'],text:amount)),
+                        Expanded(flex:1,child: MetaTextView(mapData: map['listView']['item_amount'],text:amount.inRupeesFormat())),
                         widget.isEdit?
                         Expanded(flex:1,child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,

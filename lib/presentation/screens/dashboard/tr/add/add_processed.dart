@@ -591,7 +591,7 @@ class TrProcessed extends StatelessWidget {
                             Expanded(child: MetaTextView(mapData:  map['item'],text: "INR",)),
                             Expanded(
                                 flex: 2,
-                                child: MetaTextView(mapData:  map['item'],text:item.totalCashAmount.toString(),)),
+                                child: MetaTextView(mapData:  map['item'],text:item.totalCashAmount.toString().inRupeesFormat(),)),
                           //  Expanded(child: MetaTextView(mapData:  map['item'],text: item.currentStatus)),
 
                           ],
@@ -656,10 +656,8 @@ class TrProcessed extends StatelessWidget {
                                   width: 10.w,
                                   child: MetaTextView(mapData:  map['item'],text: (index+1).toString())),
                               Expanded(child: MetaTextView(mapData:  map['item'],text:  CityUtil.getCurrencyFromID(item.currency))),
-                              Expanded(child: MetaTextView(mapData:  map['item'],text: item.cash.toString(),)),
-                              Expanded(child: MetaTextView(mapData:  map['item'],text: item.card.toString(),)),
-
-
+                              Expanded(child: MetaTextView(mapData:  map['item'],text: item.cash.toString().inRupeesFormat(),)),
+                              Expanded(child: MetaTextView(mapData:  map['item'],text: item.card.toString().inRupeesFormat(),)),
                             ],
                           ),
                         ),

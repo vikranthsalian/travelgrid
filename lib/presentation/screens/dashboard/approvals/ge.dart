@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_flavor/flutter_flavor.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:travelgrid/common/extensions/capitalize.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
 import 'package:travelgrid/common/injector/injector.dart';
 import 'package:travelgrid/common/utils/date_time_util.dart';
@@ -189,7 +190,7 @@ class ApprovalGE extends StatelessWidget {
         };
 
         Map amount = {
-          "text" :"Amount : "+ item.totalAmount.toString().toUpperCase(),
+          "text" :"Amount : ".toUpperCase()+ item.totalAmount.toString().inRupeesFormat(),
           "color" : "0xFF000000",
           "size": "12",
           "family": "bold",

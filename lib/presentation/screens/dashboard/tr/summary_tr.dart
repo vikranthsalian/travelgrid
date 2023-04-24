@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:travelgrid/common/constants/flavour_constants.dart';
+import 'package:travelgrid/common/extensions/capitalize.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
 import 'package:travelgrid/common/injector/injector.dart';
 import 'package:travelgrid/data/blocs/travel_request/tr_bloc.dart';
@@ -627,7 +628,7 @@ class _TravelRequestSummaryState extends State<TravelRequestSummary> {
                       Expanded(child: MetaTextView(mapData:  map['item'],text: "INR",)),
                       Expanded(
                           flex: 2,
-                          child: MetaTextView(mapData:  map['item'],text:item.totalCashAmount.toString(),)),
+                          child: MetaTextView(mapData:  map['item'],text:item.totalCashAmount.toString().inRupeesFormat(),)),
                       Expanded(child: MetaTextView(mapData:  map['item'],text: item.currentStatus)),
                       //     Expanded(child: MetaTextView(mapData:  map['dAmount'])),
                     ],
@@ -678,9 +679,9 @@ class _TravelRequestSummaryState extends State<TravelRequestSummary> {
                           width: 10.w,
                           child: MetaTextView(mapData:  map['item'],text: (index+1).toString())),
                       Expanded(child: MetaTextView(mapData:  map['item'],text: item.currency)),
-                      Expanded(flex:2,child: MetaTextView(mapData:  map['item'],text: item.cash.toString(),)),
-                      Expanded(flex:2,child: MetaTextView(mapData:  map['item'],text: item.card.toString(),)),
-                      Expanded(flex:2,child: MetaTextView(mapData:  map['item'],text: item.totalForexAmount.toString())),
+                      Expanded(flex:2,child: MetaTextView(mapData:  map['item'],text: item.cash.toString().inRupeesFormat(),)),
+                      Expanded(flex:2,child: MetaTextView(mapData:  map['item'],text: item.card.toString().inRupeesFormat(),)),
+                      Expanded(flex:2,child: MetaTextView(mapData:  map['item'],text: item.totalForexAmount.toString().inRupeesFormat())),
                     ],
                   ),
                 );
@@ -812,12 +813,12 @@ class _TravelRequestSummaryState extends State<TravelRequestSummary> {
                   ),
                 ),
               ]),
-          UploadComponent(jsonData: map['uploadButton'],
-              url:voucherPath,
-              isViewOnly: true,
-              onSelected: (dataFile){
-
-              })
+          // UploadComponent(jsonData: map['uploadButton'],
+          //     url:voucherPath,
+          //     isViewOnly: true,
+          //     onSelected: (dataFile){
+          //
+          //     })
         ],
       ),
     );

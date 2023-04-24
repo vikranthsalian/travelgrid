@@ -1,5 +1,8 @@
+import 'package:aad_oauth/aad_oauth.dart';
+import 'package:aad_oauth/model/config.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
+import 'package:travelgrid/common/config/azure_sso.dart';
 import 'package:travelgrid/common/config/navigator_key.dart';
 import 'package:travelgrid/common/dio/dio_client.dart';
 import 'package:travelgrid/common/utils/loader_hud.dart';
@@ -9,6 +12,27 @@ import 'package:travelgrid/data/datasources/others/cities_list.dart';
 import 'package:travelgrid/data/datasources/login_response.dart';
 
 class APIRemoteDatasource{
+
+  Future<dynamic> ssoSignIn() async
+  {
+    Config config = AzureSSO().getConfig();
+    AadOAuth oauth = new AadOAuth(config);
+  //  config.loginHint = email;
+    await oauth.login();
+    final accessToken = await oauth.getAccessToken();
+
+    final graphResponse = await await CustomDio().getWrapper().get(
+        "https://graph.microsoft.com/oidc/userinfo ",
+        loadingMessage:"Logging In...",
+       // queryParameters:data,
+        options:Options(
+          headers: {
+            "Authorization": "Bearer" + "$accessToken",
+            "Content-Type": "application/json"
+          })
+    );
+    print(graphResponse);
+  }
 
   Future<dynamic> loginRequest(Map<String, String> data,pathUrl) async {
     try {

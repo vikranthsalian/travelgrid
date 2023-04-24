@@ -1,12 +1,16 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:aad_oauth/aad_oauth.dart';
+import 'package:aad_oauth/model/config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:travelgrid/common/config/azure_sso.dart';
 import 'package:travelgrid/common/constants/flavour_constants.dart';
 import 'package:travelgrid/common/constants/route_constants.dart';
+import 'package:travelgrid/common/extensions/capitalize.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
 import 'package:travelgrid/common/injector/injector.dart';
 import 'package:travelgrid/common/utils/show_alert.dart';
@@ -21,6 +25,7 @@ import 'package:travelgrid/data/blocs/travel/travel_mode_bloc.dart';
 import 'package:travelgrid/data/blocs/travel_purpose/travel_purpose_bloc.dart';
 import 'package:travelgrid/data/cubits/login_cubit/login_cubit.dart';
 import 'package:travelgrid/data/datasources/login_response.dart';
+import 'package:travelgrid/data/remote/remote_datasource.dart';
 import 'package:travelgrid/presentation/screens/auth/bloc/login_form_bloc.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';
 import 'package:travelgrid/presentation/widgets/image_view.dart';
@@ -31,13 +36,16 @@ class LoginScreen extends StatelessWidget {
   Map<String,dynamic> loginJsonData = {};
 
   final double _sizedBoxHeight= 10.0.h;
-
+  AadOAuth? oauth ;
   LoginFormBloc? formBloc ;
   late StreamSubscription<bool> keyboardSubscription;
   @override
   Widget build(BuildContext context) {
 
     loginJsonData = FlavourConstants.loginData;
+   // APIRemoteDatasource().ssoSignIn();
+  //  print('"1000000".toString().formatize()');
+  //  print("1000000".inRupeesFormat());
 
 
       return SafeArea(
@@ -50,8 +58,8 @@ class LoginScreen extends StatelessWidget {
                 builder: (context) {
 
                   LoginFormBloc  formBloc =  BlocProvider.of<LoginFormBloc>(context);
-                  //formBloc.tfUsername.updateValue("cm06");
-                 // formBloc.tfPassword.updateValue("Test123#");
+                  formBloc.tfUsername.updateValue("cm01");
+                  formBloc.tfPassword.updateValue("Test123#");
 
                   return Container(
                     height: double.infinity,
@@ -138,5 +146,29 @@ class LoginScreen extends StatelessWidget {
       );
   }
 
+
+  void login(bool redirect) async {
+    Config config = AzureSSO().getConfig();
+    oauth = new AadOAuth(config);
+    config.webUseRedirect = redirect;
+
+    final result = await oauth!.login();
+    result.fold(
+          (l) => print(l.toString()),
+          (r) => print('Logged in successfully, your access token: $r'),
+    );
+    var accessToken = await oauth!.getAccessToken();
+    if (accessToken != null) {
+      print(accessToken);
+    }
+  }
+
+  void hasCachedAccountInformation() async {
+    var hasCachedAccountInformation = await oauth!.hasCachedAccountInformation;
+
+        print('HasCachedAccountInformation: $hasCachedAccountInformation');
+
+
+  }
 
 }
