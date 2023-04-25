@@ -20,17 +20,16 @@ class ApprovalGE extends StatelessWidget {
   ApprovalGE({required this.data});
   List items=[];
   double cardHt = 90.h;
-  bool enableSearch = false;
-  final TextEditingController _searchController = TextEditingController();
-  bool loaded=false;
+
   ApprovalExpenseBloc? bloc;
   Map<String,dynamic> mapData={};
 
 
   int selected=0;
-  int filterSelected=0;
+ // int filterSelected=0;
   String sortedBy="Default";
-  List<String> filterOptions=["Default"];
+  List<String> filterSelected=["All"];
+  List<String> filterOptions=["All"];
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +77,7 @@ class ApprovalGE extends StatelessWidget {
                     backgroundColor: Colors.transparent,
                     builder: (context) =>
                         FilterComponent(
-                            tag: filterSelected,
+                            tags: filterSelected,
                             options: filterOptions,
                             selected:(id){
                               filterSelected=id;
@@ -128,7 +127,7 @@ class ApprovalGE extends StatelessWidget {
                               ),
                               Container(
                                 margin: EdgeInsets.symmetric(horizontal: 20.w),
-                                child:MetaTextView(mapData: mapData['listView']['recordsFound'],text: "Filtered By : "+filterOptions[filterSelected]),
+                                child:MetaTextView(mapData: mapData['listView']['recordsFound'],text: "Filtered By : "+filterSelected.length.toString()),
                               ),
                             ],
                           ),
@@ -324,7 +323,7 @@ class ApprovalGE extends StatelessWidget {
 
 
   void callBloc() {
-    bloc!.add(GetApprovalExpenseGE(selected,filterOptions[filterSelected]));
+    bloc!.add(GetApprovalExpenseGE(selected,filterSelected));
   }
 
   Future<void> _pullRefresh() async {

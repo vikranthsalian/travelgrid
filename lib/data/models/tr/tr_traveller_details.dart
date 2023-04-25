@@ -77,4 +77,48 @@ class TRTravellerDetails {
     data['location'] = this.location;
     return data;
   }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'employeeCode': this.employeeCode,
+      'employeeName': this.employeeName,
+      'employeeType': this.employeeType,
+      'telephoneNumber': this.telephoneNumber,
+      'emergencyContactNo': this.emergencyContactNo,
+      'mobileNumber': this.mobileNumber,
+      'email': this.email,
+      'name': this.name,
+      'gender': this.gender,
+      'costCenterName': this.costCenterName,
+      'organizationGrade': this.organizationGrade,
+      'profitcenter': this.profitcenter,
+      'costcenter': this.costcenter,
+      'divisionName': this.divisionName,
+      'deptName': this.deptName,
+      'companyCode': this.companyCode,
+      'location': this.location,
+    };
+  }
+
+  factory TRTravellerDetails.fromMap(Map<String, dynamic> map) {
+    return TRTravellerDetails(
+      employeeCode: map['employeeCode'] as String,
+      employeeName: map['employeeName'] as String,
+      employeeType: map['employeeType'] as String,
+      telephoneNumber: map['telephoneNumber'] as String,
+      emergencyContactNo: map['emergencyContactNo'] as String,
+      mobileNumber: map['mobileNumber'] as String,
+      email: map['email'] as String,
+      name: map['name'] as String,
+      gender: map['gender'] as String,
+      costCenterName: map['costCenterName'] as String,
+      organizationGrade: map['organizationGrade'] as String,
+      profitcenter: map['profitcenter'] as String,
+      costcenter: map['costcenter'] as String,
+      divisionName: map['divisionName'] as String,
+      deptName: map['deptName'] as String,
+      companyCode: map['companyCode'] as String,
+      location: map['location'] as String,
+    );
+  }
 }

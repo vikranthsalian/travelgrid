@@ -51,9 +51,8 @@ class FlavourConstants {
   //Create TR Data
   static  Map<String,dynamic> trCreateData = FlavorConfig.instance.variables["tr_create_data"];
   static  Map<String,dynamic> trViewData = FlavorConfig.instance.variables["tr_view_data"];
-  static  Map<String,dynamic> trAddApproval = FlavorConfig.instance.variables["tr_approval_add_data"];
   static  Map<String,dynamic> trAddProcessed = FlavorConfig.instance.variables["tr_processed_add_data"];
-  static  Map<String,dynamic> trAddDelivery = FlavorConfig.instance.variables["tr_delivery_add_data"];
+  static  Map<String,dynamic> trAddTraveller = FlavorConfig.instance.variables["tr_traveller_data"];
 
   //Create GE Data
   static  Map<String,dynamic> geCreateData = FlavorConfig.instance.variables["ge_create_data"];

@@ -17,7 +17,7 @@ class ProcessedTrFormBloc extends FormBloc<String, String> {
   final requestType = TextFieldBloc(validators: [emptyValidator]);
   final requestTypeID = SelectFieldBloc<String, dynamic>(initialValue: "");
 
-  final travellerDetails = SelectFieldBloc<TRTravellerDetails,dynamic>(initialValue: null);
+  final travellerDetails = SelectFieldBloc<List<TRTravellerDetails>,dynamic>(initialValue: []);
   final purposeOfTravelID = SelectFieldBloc();
   final purposeOfTravel = TextFieldBloc(validators: [emptyValidator]);
 
@@ -102,7 +102,7 @@ class ProcessedTrFormBloc extends FormBloc<String, String> {
         "tripBillable": swBillable.value ? 35 : 34,
         "purposeOfVisit": int.parse(purposeOfTravelID.value.toString()),
         "requestType": reqType,
-        "maTravelerDetails":requestTypeID.value=="self"?[] :[travellerDetails.value],
+        "maTravelerDetails":travellerDetails.value,
 
         if(requestTypeID.value!="self")
           "onbehalf": true,

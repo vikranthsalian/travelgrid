@@ -21,14 +21,13 @@ class TravelExpense extends StatelessWidget {
   Map<String,dynamic> jsonData = {};
   List items=[];
   double cardHt = 90.h;
-  bool enableSearch = false;
-  final TextEditingController _searchController = TextEditingController();
   TravelExpenseBloc? bloc;
 
   int selected=0;
-  int filterSelected=0;
+ // int filterSelected=0;
   String sortedBy="Default";
-  List<String> filterOptions=["Default"];
+  List<String> filterSelected=["All"];
+  List<String> filterOptions=["All"];
   @override
   Widget build(BuildContext context) {
     jsonData = FlavourConstants.teData;
@@ -74,7 +73,7 @@ class TravelExpense extends StatelessWidget {
                     backgroundColor: Colors.transparent,
                     builder: (context) =>
                         FilterComponent(
-                            tag: filterSelected,
+                            tags: filterSelected,
                             options: filterOptions,
                             selected:(id){
                               filterSelected=id;
@@ -162,7 +161,7 @@ class TravelExpense extends StatelessWidget {
                               ),
                               Container(
                                 margin: EdgeInsets.symmetric(horizontal: 20.w),
-                                child:MetaTextView(mapData: jsonData['listView']['recordsFound'],text: "Filtered By : "+filterOptions[filterSelected]),
+                                child:MetaTextView(mapData: jsonData['listView']['recordsFound'],text: "Filtered By : "+filterSelected.length.toString()),
                               ),
                             ],
                           ),
@@ -184,7 +183,7 @@ class TravelExpense extends StatelessWidget {
   }
 
   void callBloc() {
-    bloc = Injector.resolve<TravelExpenseBloc>()..add(GetTravelExpenseListEvent(selected,filterOptions[filterSelected]));
+    bloc = Injector.resolve<TravelExpenseBloc>()..add(GetTravelExpenseListEvent(selected,filterSelected));
   }
 
   Widget getListView(TravelExpenseState state){

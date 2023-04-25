@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:travelgrid/common/constants/color_constants.dart';
 
 class ChoiceComponent extends StatefulWidget {
- // List<String> tags;
-  int tag;
+  List<String> tags;
+ // int tag;
   List<String> options;
   Function? onChange;
 
   ChoiceComponent({
-   // required this.tags,
-    required this.tag,
+    required this.tags,
+   // required this.tag,
     required this.options,this.onChange});
   @override
   _ChoiceComponentState createState() => _ChoiceComponentState();
@@ -22,18 +22,23 @@ class _ChoiceComponentState extends State<ChoiceComponent> {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.centerLeft,
-      child: ChipsChoice<int>.single(
-        value: widget.tag,
+      child: ChipsChoice<String>.multiple(
+        value: widget.tags,
         onChanged: (val) {
+          if(val.length >1  && val.first=="All"){
+            val.remove("All");
+          }else if(val.length >1  && val.last=="All"){
+            val=["All"];
+          }
             setState(() {
-               widget.tag = val;
+               widget.tags = val;
            });
-            widget.onChange!(widget.tag);
+            widget.onChange!(widget.tags );
         },
         choiceItems:
-        C2Choice.listFrom<int, String>(
+        C2Choice.listFrom<String, String>(
           source: widget.options,
-          value: (i, v) => i,
+          value: (i, v) => v,
           label: (i, v) => v,
           tooltip: (i, v) => v,
         ),

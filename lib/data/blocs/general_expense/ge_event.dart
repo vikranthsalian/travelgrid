@@ -5,7 +5,7 @@ abstract class GeneralExpenseEvent {}
 
 class GetGeneralExpenseListEvent extends GeneralExpenseEvent {
   final int sortID;
-  final String filterString;
+  final List<String> filterString;
   GetGeneralExpenseListEvent(this.sortID,this.filterString);
 }
 

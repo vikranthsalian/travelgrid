@@ -5,7 +5,7 @@ abstract class TravelExpenseEvent {}
 
 class GetTravelExpenseListEvent extends TravelExpenseEvent {
   final int sortID;
-  final String filterString;
+  final List<String> filterString;
   GetTravelExpenseListEvent(this.sortID,this.filterString);
 }
 

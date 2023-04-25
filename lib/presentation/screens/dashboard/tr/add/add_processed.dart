@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:travelgrid/common/config/navigator_key.dart';
 import 'package:travelgrid/common/constants/flavour_constants.dart';
 import 'package:travelgrid/common/extensions/capitalize.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
@@ -19,9 +20,9 @@ import 'package:travelgrid/data/models/tr/tr_traveller_details.dart';
 import 'package:travelgrid/data/models/tr/tr_visa_model.dart';
 import 'package:travelgrid/presentation/components/dialog_cash.dart';
 import 'package:travelgrid/presentation/components/switch_component.dart';
-import 'package:travelgrid/presentation/components/upload_component.dart';
 import 'package:travelgrid/presentation/screens/dashboard/tr/add/add_forex.dart';
 import 'package:travelgrid/presentation/screens/dashboard/tr/add/add_insurance.dart';
+import 'package:travelgrid/presentation/screens/dashboard/tr/add/add_traveller.dart';
 import 'package:travelgrid/presentation/screens/dashboard/tr/add/add_visa.dart';
 import 'package:travelgrid/presentation/screens/dashboard/tr/add/build_itenerary.dart';
 import 'package:travelgrid/presentation/screens/dashboard/tr/bloc/tr_processed_form_bloc.dart';
@@ -127,7 +128,7 @@ class TrProcessed extends StatelessWidget {
                             ?.maTravelerDetails!.emergencyContactNo ?? ""
                     );
 
-                    formBloc!.travellerDetails.updateValue(details);
+                    formBloc!.travellerDetails.updateValue([details]);
                   }
 
                   formBloc!.purposeOfTravel.updateValue(summaryResponse?.data?.purposeOfVisit.toString()??"");
@@ -262,19 +263,66 @@ class TrProcessed extends StatelessWidget {
                                                 formBloc!.employeeType.value,
                                                 isCitySearch: false,
                                                 mapData: jsonData['selectEmployeeCode'],
-                                                text: getInitialText(formBloc!.travellerDetails.value?.employeeName ?? ""),
+                                                text: getInitialText(""),
+                                              //  text: getInitialText(formBloc!.travellerDetails.value?[0].employeeName ?? ""),
                                                 onChange:(value){
                                                   print(jsonEncode(value));
-                                                  formBloc!.travellerDetails.updateValue(value);
+                                                  formBloc!.travellerDetails.updateValue([value]);
                                                 },),
                                               alignment: Alignment.centerLeft,
                                             ),
 
-                                            SwitchComponent(
-                                                color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
-                                                jsonData: jsonData['travellerDetails'],
-                                                childWidget: buildTravellerWidget(jsonData['travellerDetails']),
-                                                initialValue: showTravellerItems),
+                                            buildExpandableView(jsonData,"travellerDetails",context),
+
+                                            // Container(
+                                            //   child: Row(
+                                            //     children: [
+                                            //       buildTravellerWidget(jsonData['travellerDetails']),
+                                            //       Expanded(
+                                            //         child: Container(
+                                            //             margin: EdgeInsets.symmetric(horizontal: 20.w),
+                                            //             child: InkWell(
+                                            //                 onTap: ()async{
+                                            //
+                                            //                   // if(formBloc!.cityList.value!.isEmpty){
+                                            //                   //   MetaAlert.showSuccessAlert(message: "Please add Itinerary Details First");
+                                            //                   //   return;
+                                            //                   // }
+                                            //                   //
+                                            //
+                                            //                     Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
+                                            //                         AddTravellerDetails(
+                                            //                           "D",
+                                            //                           isEdit:false,
+                                            //                           onAdd: (data){
+                                            //                           //  listInsurance.add(data);
+                                            //                           //  formBloc!.insuranceList.clear();
+                                            //                           //  formBloc!.insuranceList.changeValue(listInsurance);
+                                            //                           },)));
+                                            //
+                                            //
+                                            //
+                                            //
+                                            //                 },
+                                            //                 child: MetaTextView(mapData: {
+                                            //                   "text" : "Add",
+                                            //                   "color" : "0xFF2854A1",
+                                            //                   "size": "15",
+                                            //                   "family": "bold",
+                                            //                   "align": "center-right",
+                                            //                   "type": "cash"
+                                            //                 },text: "ADD")
+                                            //             )),
+                                            //       )
+                                            //     ],
+                                            //   ),
+                                            // )
+                                            //
+                                            // SwitchComponent(
+                                            //     color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
+                                            //     jsonData: jsonData['travellerDetails'],
+                                            //     childWidget: buildTravellerWidget(jsonData['travellerDetails']),
+                                            //     initialValue: showTravellerItems),
                                           ],
                                         ),
                                       );
@@ -373,13 +421,13 @@ class TrProcessed extends StatelessWidget {
                                     }),
                               ),
                               SizedBox(height: 20.h,),
-                              UploadComponent(jsonData: jsonData['uploadButton'],
-                                  url: formBloc!.voucherPath.value,
-                                  isViewOnly: false,
-                                  onSelected: (File dataFile){
-                                    file=dataFile;
-                                  }),
-                              SizedBox(height: 20.h,),
+                              // UploadComponent(jsonData: jsonData['uploadButton'],
+                              //     url: formBloc!.voucherPath.value,
+                              //     isViewOnly: false,
+                              //     onSelected: (File dataFile){
+                              //       file=dataFile;
+                              //     }),
+                              // SizedBox(height: 20.h,),
                             ]
                         ),
                       )
@@ -398,6 +446,8 @@ class TrProcessed extends StatelessWidget {
      getViews(map,value){
       switch(value){
 
+        case "travellerDetails":
+          return buildTravellerWidget(map);
         case "cashAdvanceDetails":
           return buildCashAdvanceWidget(map);
         case "forexAdvanceDetails":
@@ -456,6 +506,18 @@ class TrProcessed extends StatelessWidget {
                       return;
                     }
 
+
+                    if(map['add']['type']=="traveller") {
+                                          Navigator.of(ctx).push(MaterialPageRoute(builder: (context) =>
+                                              AddTravellerDetails(
+                                                tripType,
+                                                isEdit:false,
+                                                onAdd: (data){
+                                                //  listInsurance.add(data);
+                                                //  formBloc!.insuranceList.clear();
+                                                //  formBloc!.insuranceList.changeValue(listInsurance);
+                                                },)));
+                    }
 
                     if(map['add']['type']=="cash") {
                       await showDialog(
@@ -823,7 +885,7 @@ class TrProcessed extends StatelessWidget {
         bloc: formBloc!.travellerDetails,
         builder: (context, state) {
 
-          if(formBloc!.travellerDetails.value == null){
+          if(formBloc!.travellerDetails.value!.isEmpty){
             return Container(
               padding: EdgeInsets.symmetric(horizontal: 10.w,vertical: 10.h),
               child: Column(
@@ -835,80 +897,92 @@ class TrProcessed extends StatelessWidget {
             );
           }
 
-          TRTravellerDetails? details  = formBloc!.travellerDetails.value! ;
-          return  Container(
-            padding: EdgeInsets.symmetric(horizontal: 10.w,vertical: 10.h),
-            color: Colors.white,
-            child: Column(
-              children: [
-                Container(
-                  child: Row(
-                    children: [
-                      Expanded(child: Column(
-                        children: [
-                          MetaTextView(mapData:  map['header'],text: "Emp. Code",),
-                          MetaTextView(mapData:  map['item'],text: details.employeeCode!),
-                        ],
-                      )),
-                      Expanded(child: Column(
-                        children: [
-                          MetaTextView(mapData:  map['header'],text: "Emp. Name",),
-                          MetaTextView(mapData:  map['item'],text:details.employeeName),
-                        ],
-                      )),
 
+
+          return    ListView.builder(
+              physics: NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              padding: EdgeInsets.zero,
+              itemBuilder: (BuildContext context, int index) {
+                TRTravellerDetails? details  = formBloc!.travellerDetails.value![index] ;
+                return Container(
+                  padding: EdgeInsets.symmetric(horizontal: 10.w,vertical: 10.h),
+                  color: Colors.white,
+                  child: Column(
+                    children: [
+                      Container(
+                        child: Row(
+                          children: [
+                            Expanded(child: Column(
+                              children: [
+                                MetaTextView(mapData:  map['header'],text: "Emp. Code",),
+                                MetaTextView(mapData:  map['item'],text: details.employeeCode!),
+                              ],
+                            )),
+                            Expanded(child: Column(
+                              children: [
+                                MetaTextView(mapData:  map['header'],text: "Emp. Name",),
+                                MetaTextView(mapData:  map['item'],text:details.employeeName),
+                              ],
+                            )),
+
+                          ],
+                        ),
+                      ),
+
+                      Container(
+                        child: Row(
+                          children: [
+                            Expanded(child: Column(
+                              children: [
+                                MetaTextView(mapData:  map['header'],text: "Gender",),
+                                MetaTextView(mapData:  map['item'],text: details.gender ?? ""),
+                              ],
+                            )),
+                            Expanded(child: Column(
+                              children: [
+                                MetaTextView(mapData:  map['header'],text: "Grade",),
+                                MetaTextView(mapData:  map['item'],text:details.organizationGrade ?? ""),
+                              ],
+                            )),
+                            Expanded(child: Column(
+                              children: [
+                                MetaTextView(mapData:  map['header'],text: "Location",),
+                                MetaTextView(mapData:  map['item'],text:details.location ?? ""),
+                              ],
+                            )),
+                          ],
+                        ),
+                      ),
+                      Column(
+                        children: [
+                          MetaTextView(mapData:  map['header'],text: "Email",),
+                          MetaTextView(mapData:  map['item'],text: details.email!),
+                        ],
+                      ),
                     ],
                   ),
-                ),
-
-                Container(
-                  child: Row(
-                    children: [
-                      Expanded(child: Column(
-                        children: [
-                          MetaTextView(mapData:  map['header'],text: "Gender",),
-                          MetaTextView(mapData:  map['item'],text: details.gender ?? ""),
-                        ],
-                      )),
-                      Expanded(child: Column(
-                        children: [
-                          MetaTextView(mapData:  map['header'],text: "Grade",),
-                          MetaTextView(mapData:  map['item'],text:details.organizationGrade ?? ""),
-                        ],
-                      )),
-                      Expanded(child: Column(
-                        children: [
-                          MetaTextView(mapData:  map['header'],text: "Location",),
-                          MetaTextView(mapData:  map['item'],text:details.location ?? ""),
-                        ],
-                      )),
-                    ],
-                  ),
-                ),
-                Column(
-                  children: [
-                    MetaTextView(mapData:  map['header'],text: "Email",),
-                    MetaTextView(mapData:  map['item'],text: details.email!),
-                  ],
-                ),
-              ],
-            ),
+                );
+              },
+              itemCount: formBloc!.travellerDetails.value!.length
           );
+
         }
     );
   }
 
   procSubmit()async{
     print('page1 submit');
-    if(file!=null){
-      SuccessModel model = await  MetaUpload().uploadImage(file!,"TR");
-      if(model.status!){
-        formBloc!.voucherPath.updateValue(model.data!);
-        formBloc!.submit();
-      }
-    }else{
-      formBloc!.submit();
-    }
+    // if(file!=null){
+    //   SuccessModel model = await  MetaUpload().uploadImage(file!,"TR");
+    //   if(model.status!){
+    //     formBloc!.voucherPath.updateValue(model.data!);
+    //     formBloc!.submit();
+    //   }
+    // }else{
+    //   formBloc!.submit();
+    // }
+    formBloc!.submit();
   }
 
   getInitialText(String text) {

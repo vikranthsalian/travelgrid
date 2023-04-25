@@ -24,9 +24,10 @@ class GeneralExpense extends StatelessWidget {
   bool loaded=false;
   GeneralExpenseBloc? bloc;
   int selected=0;
-  int filterSelected=0;
+  //int filterSelected=0;
   String sortedBy="Default";
-  List<String> filterOptions=["Default"];
+  List<String> filterSelected=["All"];
+  List<String> filterOptions=["All"];
   @override
   Widget build(BuildContext context) {
     jsonData = FlavourConstants.geData;
@@ -88,7 +89,7 @@ class GeneralExpense extends StatelessWidget {
                     backgroundColor: Colors.transparent,
                     builder: (context) =>
                         FilterComponent(
-                          tag: filterSelected,
+                          tags: filterSelected,
                           options: filterOptions,
                           selected:(id){
                             filterSelected=id;
@@ -177,7 +178,7 @@ class GeneralExpense extends StatelessWidget {
                               ),
                               Container(
                                 margin: EdgeInsets.symmetric(horizontal: 20.w),
-                                child:MetaTextView(mapData: jsonData['listView']['recordsFound'],text: "Filtered By : "+filterOptions[filterSelected]),
+                                child:MetaTextView(mapData: jsonData['listView']['recordsFound'],text: "Filtered By : "+filterSelected.length.toString()),
                               ),
                             ],
                           ),
@@ -412,7 +413,7 @@ class GeneralExpense extends StatelessWidget {
   }
 
   void callBloc() {
-    bloc!.add(GetGeneralExpenseListEvent(selected,filterOptions[filterSelected]));
+    bloc!.add(GetGeneralExpenseListEvent(selected,filterSelected));
   }
 
   Future<void> _pullRefresh() async {

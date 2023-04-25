@@ -6,7 +6,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
 import 'package:travelgrid/common/utils/city_util.dart';
 import 'package:travelgrid/data/models/tr/tr_insurance_model.dart';
-import 'package:travelgrid/data/models/tr/tr_visa_model.dart';
 import 'package:travelgrid/presentation/screens/dashboard/tr/bloc/tr_insurance%20_form_bloc.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';
 import 'package:travelgrid/presentation/widgets/icon.dart';

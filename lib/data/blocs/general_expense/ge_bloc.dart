@@ -28,16 +28,17 @@ class GeneralExpenseBloc extends Bloc<GeneralExpenseEvent, GeneralExpenseState> 
           response.data = SortUtil().sort(event.sortID, response.data);
         }
 
-        if(event.filterString!="Default"){
-          List<list.Data> items=[];
-          for(var item in response.data!){
-            if (item.status!.toLowerCase().contains(event.filterString.toLowerCase())) {
-              items.add(item);
-            }
-           }
-          response.data = items;
+        if(event.filterString.contains("All")){
           emit(GeneralExpenseLoadedState(data: response));
         }else{
+
+          List<list.Data> items=[];
+          for(var item in response.data!){
+            if (event.filterString.contains(item.status)) {
+              items.add(item);
+            }
+          }
+          response.data = items;
           emit(GeneralExpenseLoadedState(data: response));
         }
 

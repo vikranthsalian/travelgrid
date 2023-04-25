@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:travelgrid/common/constants/event_types.dart';
+import 'package:travelgrid/common/extensions/capitalize.dart';
 import 'package:travelgrid/common/injector/injector.dart';
 import 'package:travelgrid/common/utils/sort_util.dart';
 import 'package:travelgrid/data/datasources/summary/ge_summary_response.dart';
@@ -29,20 +30,25 @@ class TravelRequestBloc extends Bloc<TravelRequestEvent, TravelRequestState> {
           response.data = SortUtil().sort(event.sortID, response.data);
         }
 
-        if(event.filterString!="Default"){
+      //  event.filterString.toLowerCase();
+
+        print("Select Filters");
+        print(event.filterString);
+
+        if(event.filterString.contains("All")){
+          emit(TravelRequestLoadedState(data: response));
+        }else{
           List<trlist.Data> items=[];
           for(var item in response.data!){
             if (
-            item.currentStatus!.toLowerCase().contains(event.filterString.toLowerCase()) ||
-            item.tripType!.toLowerCase().contains(event.filterString.toLowerCase()) ||
-            item.tripPlan!.toLowerCase().contains(event.filterString.toLowerCase()
-            )) {
+            event.filterString.contains(item.currentStatus) ||
+                event.filterString.contains( item.tripType) ||
+                event.filterString.contains( item.tripPlan)
+            ) {
               items.add(item);
             }
           }
           response.data = items;
-          emit(TravelRequestLoadedState(data: response));
-        }else{
           emit(TravelRequestLoadedState(data: response));
         }
       }else{

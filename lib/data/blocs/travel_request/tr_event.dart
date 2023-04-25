@@ -5,7 +5,7 @@ abstract class TravelRequestEvent {}
 
 class GetTravelRequestListEvent extends TravelRequestEvent {
   final int sortID;
-  final String filterString;
+  final List<String> filterString;
   GetTravelRequestListEvent(this.sortID,this.filterString);
 
 }

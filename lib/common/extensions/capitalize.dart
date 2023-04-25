@@ -9,6 +9,14 @@ extension StringExtension on String {
   }
 }
 
+extension LowerCaseList on List<String> {
+  void toLowerCase() {
+    for (int i = 0; i < length; i++) {
+      this[i] = this[i].toLowerCase();
+    }
+  }
+}
+
 extension RupeesFormatter on String {
 
 

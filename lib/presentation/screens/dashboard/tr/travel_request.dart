@@ -20,15 +20,15 @@ class TravelRequest extends StatelessWidget {
   Map<String,dynamic> jsonData = {};
   List items=[];
   double cardHt = 90.h;
-  bool enableSearch = false;
-  final TextEditingController _searchController = TextEditingController();
-  bool loaded=false;
+
   TravelRequestBloc? bloc;
 
   int selected=0;
-  int filterSelected=0;
+ // int filterSelected=0;
   String sortedBy="Default";
-  List<String> filterOptions=["Default"];
+
+  List<String> filterSelected=["All"];
+  List<String> filterOptions=["All"];
 
 
   @override
@@ -102,7 +102,7 @@ class TravelRequest extends StatelessWidget {
                     backgroundColor: Colors.transparent,
                     builder: (context) =>
                         FilterComponent(
-                            tag: filterSelected,
+                            tags: filterSelected,
                             options: filterOptions,
                             selected:(id){
                               filterSelected=id;
@@ -172,7 +172,7 @@ class TravelRequest extends StatelessWidget {
                               ),
                               Container(
                                 margin: EdgeInsets.symmetric(horizontal: 20.w),
-                                child:MetaTextView(mapData: jsonData['listView']['recordsFound'],text: "Filtered By : "+filterOptions[filterSelected]),
+                                child:MetaTextView(mapData: jsonData['listView']['recordsFound'],text: "Filtered By : "+filterSelected.length.toString()),
                               ),
                             ],
                           ),
@@ -484,7 +484,7 @@ class TravelRequest extends StatelessWidget {
   }
 
   void callBloc() {
-    bloc!.add(GetTravelRequestListEvent(selected,filterOptions[filterSelected]));
+    bloc!.add(GetTravelRequestListEvent(selected,filterSelected));
   }
 
   Future<void> _pullRefresh() async {

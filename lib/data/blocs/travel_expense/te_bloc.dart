@@ -29,16 +29,17 @@ class TravelExpenseBloc extends Bloc<TravelExpenseEvent, TravelExpenseState> {
           response.data = SortUtil().sort(event.sortID, response.data);
         }
 
-        if(event.filterString!="Default"){
+        if(event.filterString.contains("All")){
+          emit(TravelExpenseLoadedState(data: response));
+
+        }else{
           List<list.Data> items=[];
           for(var item in response.data!){
-            if (item.status!.toLowerCase().contains(event.filterString.toLowerCase())) {
+            if (event.filterString.contains(item.status!)) {
               items.add(item);
             }
           }
           response.data = items;
-          emit(TravelExpenseLoadedState(data: response));
-        }else{
           emit(TravelExpenseLoadedState(data: response));
         }
 

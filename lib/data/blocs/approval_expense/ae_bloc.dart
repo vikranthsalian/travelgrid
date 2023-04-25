@@ -29,16 +29,18 @@ class ApprovalExpenseBloc extends Bloc<ApprovalExpenseEvent, ApprovalExpenseStat
           response.data = SortUtil().sort(event.sortID, response.data);
         }
 
-        if(event.filterString!="Default"){
+        if(event.filterString.contains("All")){
+          emit(ApprovalExpenseTRLoadedState(data: response));
+        }else{
+
+
           List<listtr.Data> items=[];
           for(var item in response.data!){
-            if (item.currentStatus!.toLowerCase().contains(event.filterString.toLowerCase())) {
+            if (event.filterString.contains(item.currentStatus!)) {
               items.add(item);
             }
           }
           response.data = items;
-          emit(ApprovalExpenseTRLoadedState(data: response));
-        }else{
           emit(ApprovalExpenseTRLoadedState(data: response));
         }
       }else{
@@ -56,16 +58,17 @@ class ApprovalExpenseBloc extends Bloc<ApprovalExpenseEvent, ApprovalExpenseStat
           response.data = SortUtil().sort(event.sortID, response.data);
         }
 
-        if(event.filterString!="Default"){
+        if(event.filterString.contains("All")){
+          emit(ApprovalExpenseGELoadedState(data: response));
+
+        }else{
           List<listge.Data> items=[];
           for(var item in response.data!){
-            if (item.status!.toLowerCase().contains(event.filterString.toLowerCase())) {
+            if (event.filterString.contains(item.status!)) {
               items.add(item);
             }
           }
           response.data = items;
-          emit(ApprovalExpenseGELoadedState(data: response));
-        }else{
           emit(ApprovalExpenseGELoadedState(data: response));
         }
 
@@ -84,16 +87,18 @@ class ApprovalExpenseBloc extends Bloc<ApprovalExpenseEvent, ApprovalExpenseStat
           response.data = SortUtil().sort(event.sortID, response.data);
         }
 
-        if(event.filterString!="Default"){
+        if(event.filterString.contains("All")){
+          emit(ApprovalExpenseTELoadedState(data: response));
+        }else{
+
+
           List<Data> items=[];
           for(var item in response.data!){
-            if (item.currentStatus!.toLowerCase().contains(event.filterString.toLowerCase())) {
+            if (event.filterString.contains(item.currentStatus!)) {
               items.add(item);
             }
           }
           response.data = items.cast<Data>();
-          emit(ApprovalExpenseTELoadedState(data: response));
-        }else{
           emit(ApprovalExpenseTELoadedState(data: response));
         }
 

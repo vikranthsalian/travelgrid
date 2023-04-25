@@ -22,9 +22,10 @@ class ApprovalTR extends StatelessWidget {
   Map<String,dynamic> mapData={};
 
   int selected=0;
-  int filterSelected=0;
+//  int filterSelected=0;
   String sortedBy="Default";
-  List<String> filterOptions=["Default"];
+  List<String> filterSelected=["All"];
+  List<String> filterOptions=["All"];
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +72,7 @@ class ApprovalTR extends StatelessWidget {
                     backgroundColor: Colors.transparent,
                     builder: (context) =>
                         FilterComponent(
-                            tag: filterSelected,
+                            tags: filterSelected,
                             options: filterOptions,
                             selected:(id){
                               filterSelected=id;
@@ -122,7 +123,7 @@ class ApprovalTR extends StatelessWidget {
                               ),
                               Container(
                                 margin: EdgeInsets.symmetric(horizontal: 20.w),
-                                child:MetaTextView(mapData: mapData['listView']['recordsFound'],text: "Filtered By : "+filterOptions[filterSelected]),
+                                child:MetaTextView(mapData: mapData['listView']['recordsFound'],text: "Filtered By : "+filterSelected.length.toString()),
                               ),
                             ],
                           ),
@@ -347,7 +348,7 @@ class ApprovalTR extends StatelessWidget {
 
 
   void callBloc() {
-    bloc!.add(GetApprovalExpenseTR(selected,filterOptions[filterSelected]));
+    bloc!.add(GetApprovalExpenseTR(selected,filterSelected));
   }
 
   Future<void> _pullRefresh() async {
