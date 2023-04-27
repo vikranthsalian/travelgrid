@@ -11,9 +11,8 @@ import 'package:travelgrid/common/utils/show_alert.dart';
 import 'package:travelgrid/common/utils/upload_util.dart';
 import 'package:travelgrid/data/models/expense_model.dart';
 import 'package:travelgrid/data/models/ge/ge_misc_model.dart';
-import 'package:travelgrid/data/models/success_model.dart';
-import 'package:travelgrid/presentation/components/upload_component.dart';
-import 'package:travelgrid/presentation/screens/dashboard/ge/bloc/misc_form_bloc.dart';
+import 'package:travelgrid/data/models/tr/tr_traveller_details.dart';
+import 'package:travelgrid/presentation/screens/dashboard/te/bloc/traveller_form_bloc.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';
 import 'package:travelgrid/presentation/widgets/date_time_view.dart';
 import 'package:travelgrid/presentation/widgets/dialog_selector_view.dart';
@@ -23,20 +22,21 @@ import 'package:travelgrid/presentation/widgets/text_field.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
 
 class AddTravellerDetails extends StatelessWidget {
-  Function(Map)? onAdd;
+  Function? onAdd;
   bool isEdit;
   bool isView;
-  GEMiscModel? miscModel;
+  TRTravellerDetails? travellerDetails;
   String? tripType;
+
   AddTravellerDetails(this.tripType,{this.onAdd,
     this.isEdit=false,
     this.isView=false,
-    this.miscModel});
+    this.travellerDetails});
   
   Map<String,dynamic> jsonData = {};
   List items=[];
   double cardHt = 90.h;
-  MiscFormBloc? formBloc;
+  TravellerFormBloc? formBloc;
   bool loaded=false;
   File? file;
   int days =1;
@@ -72,28 +72,8 @@ class AddTravellerDetails extends StatelessWidget {
             ),
             MetaButton(mapData: jsonData['bottomButtonRight'],
                 onButtonPressed: ()async{
-
-              if(formBloc!.showError.value!){
-                if(formBloc!.unitTypeID.value=="288"  && (formBloc!.tfAmount.valueToDouble! > (200*days))){
-                  MetaAlert.showErrorAlert(message: "Please submit valid amount");
-                  return;
-                }else if(formBloc!.unitTypeID.value=="289"  && (formBloc!.tfAmount.valueToDouble! > (400*days))){
-                  MetaAlert.showErrorAlert(message: "Please submit valid amount");
-                  return;
-                }
-
-              }
-
-
-            if(file!=null){
-              SuccessModel model = await  MetaUpload().uploadImage(file!,"GE");
-                if(model.status!){
-                  formBloc!.voucherPath.updateValue(model.data!);
                   formBloc!.submit();
-                }
-              }else{
-               formBloc!.submit();
-              }
+
            }
             )
           ],
@@ -129,49 +109,43 @@ class AddTravellerDetails extends StatelessWidget {
           Expanded(
             child: Container(
               child: BlocProvider(
-                create: (context) => MiscFormBloc(jsonData),
+                create: (context) => TravellerFormBloc(jsonData),
                 child: Builder(
                     builder: (context) {
 
-                     formBloc =  BlocProvider.of<MiscFormBloc>(context);
+                     formBloc =  BlocProvider.of<TravellerFormBloc>(context);
 
 
-                     if(isEdit){
-
-                       formBloc!.checkInDate.updateValue(miscModel!.startDate.toString());
-                       formBloc!.checkOutDate.updateValue(miscModel!.endDate.toString());
-
-                       formBloc!.cityName.updateValue(miscModel!.cityName.toString());
-                       formBloc!.cityID.updateValue(miscModel!.city.toString());
-
-                       formBloc!.miscID.updateValue(miscModel!.miscellaneousType.toString());
-                       formBloc!.miscName.updateValue(miscModel!.miscellaneousTypeName.toString());
-
-                       violationMessage=miscModel!.voilationMessage!;
-                       formBloc!.unitTypeName.updateValue(miscModel!.unitType.toString());
-                       formBloc!.unitTypeID.updateValue(miscModel!.unitType.toString());
-
-                       formBloc!.tfVoucher.updateValue(miscModel!.voucherNumber.toString());
-                       if(miscModel!.voucherNumber.toString().isEmpty){
-                         formBloc!.tfVoucher.updateValue("nill");
-                       }
-                       formBloc!.voucherPath.updateValue(miscModel!.voucherPath.toString());
-
-                      formBloc!.tfAmount.updateValue(miscModel!.amount.toString());
-                      formBloc!.tfDescription.updateValue(miscModel!.description.toString());
-                     }else{
-
-                     String  dateText = DateFormat('dd-MM-yyyy').format(DateTime.now());
-
-                       formBloc!.checkInDate.updateValue(dateText);
-                       formBloc!.checkOutDate.updateValue(dateText);
-                     }
+                     // if(isEdit){
+                     //
+                     //   formBloc!.checkInDate.updateValue(miscModel!.startDate.toString());
+                     //   formBloc!.checkOutDate.updateValue(miscModel!.endDate.toString());
+                     //
+                     //   formBloc!.cityName.updateValue(miscModel!.cityName.toString());
+                     //   formBloc!.cityID.updateValue(miscModel!.city.toString());
+                     //
+                     //   formBloc!.miscID.updateValue(miscModel!.miscellaneousType.toString());
+                     //   formBloc!.miscName.updateValue(miscModel!.miscellaneousTypeName.toString());
+                     //
+                     //   violationMessage=miscModel!.voilationMessage!;
+                     //   formBloc!.unitTypeName.updateValue(miscModel!.unitType.toString());
+                     //   formBloc!.unitTypeID.updateValue(miscModel!.unitType.toString());
+                     //
+                     //   formBloc!.tfVoucher.updateValue(miscModel!.voucherNumber.toString());
+                     //   if(miscModel!.voucherNumber.toString().isEmpty){
+                     //     formBloc!.tfVoucher.updateValue("nill");
+                     //   }
+                     //   formBloc!.voucherPath.updateValue(miscModel!.voucherPath.toString());
+                     //
+                     //  formBloc!.tfAmount.updateValue(miscModel!.amount.toString());
+                     //  formBloc!.tfDescription.updateValue(miscModel!.description.toString());
+                     // }
 
 
 
                      return Container(
                       margin: EdgeInsets.symmetric(horizontal: 10.w),
-                      child: FormBlocListener<MiscFormBloc, String, String>(
+                      child: FormBlocListener<TravellerFormBloc, String, String>(
                           onSubmissionFailed: (context, state) {
                             print(state);
                             MetaAlert.showErrorAlert(
@@ -186,18 +160,10 @@ class AddTravellerDetails extends StatelessWidget {
                             print(state.successResponse);
 
                             if(state.successResponse!=null) {
-                              GEMiscModel modelResponse = GEMiscModel.fromJson(
+                              TRTravellerDetails modelResponse = TRTravellerDetails.fromJson(
                                   jsonDecode(state.successResponse.toString()));
 
-                              onAdd!(
-                                  {
-                                    "data": jsonDecode(
-                                        state.successResponse.toString()),
-                                    "item": ExpenseModel(
-                                        type: GETypes.MISCELLANEOUS,
-                                        amount: modelResponse.amount.toString())
-                                  }
-                              );
+                              onAdd!(modelResponse);
                               Navigator.pop(context);
                             }
 
@@ -224,11 +190,11 @@ class AddTravellerDetails extends StatelessWidget {
                                                 Expanded(
                                                   child: Container(
                                                     child: MetaDialogSelectorView(mapData: jsonData['selectGender'],
-                                                      text :getInitialText(formBloc!.miscName.value),
+                                                      text :getInitialText(formBloc!.gender.value),
                                                       onChange:(value){
                                                         print(value);
-                                                        formBloc!.miscName.updateValue(value['label']);
-                                                        formBloc!.miscID.updateValue(value['id'].toString());
+                                                        formBloc!.gender.updateValue(value['id']);
+
 
 
                                                       },),
@@ -242,9 +208,9 @@ class AddTravellerDetails extends StatelessWidget {
                                               Expanded(
                                                 child: Container(
                                                   child: MetaTextFieldBlocView(mapData: jsonData['text_field_fname'],
-                                                      textFieldBloc: formBloc!.tfAmount,
+                                                      textFieldBloc: formBloc!.fname,
                                                       onChanged:(value){
-                                                        formBloc!.tfAmount.updateValue(value);
+                                                        formBloc!.fname.updateValue(value);
 
                                                       }),
                                                 ),
@@ -254,9 +220,9 @@ class AddTravellerDetails extends StatelessWidget {
 
                                               Expanded(
                                                 child: MetaTextFieldBlocView(mapData: jsonData['text_field_lname'],
-                                                    textFieldBloc: formBloc!.tfVoucher,
+                                                    textFieldBloc: formBloc!.lname,
                                                     onChanged:(value){
-                                                      formBloc!.tfVoucher.updateValue(value);
+                                                      formBloc!.lname.updateValue(value);
                                                     }),
                                               ),
 
@@ -267,9 +233,9 @@ class AddTravellerDetails extends StatelessWidget {
                                               Expanded(
                                                 child: Container(
                                                   child: MetaTextFieldBlocView(mapData: jsonData['text_field_contact'],
-                                                      textFieldBloc: formBloc!.tfAmount,
+                                                      textFieldBloc: formBloc!.contact,
                                                       onChanged:(value){
-                                                        formBloc!.tfAmount.updateValue(value);
+                                                        formBloc!.contact.updateValue(value);
 
                                                       }),
                                                 ),
@@ -279,9 +245,9 @@ class AddTravellerDetails extends StatelessWidget {
 
                                               Expanded(
                                                 child: MetaTextFieldBlocView(mapData: jsonData['text_field_email'],
-                                                    textFieldBloc: formBloc!.tfVoucher,
+                                                    textFieldBloc: formBloc!.email,
                                                     onChanged:(value){
-                                                      formBloc!.tfVoucher.updateValue(value);
+                                                      formBloc!.email.updateValue(value);
                                                     }),
                                               ),
 
@@ -292,9 +258,9 @@ class AddTravellerDetails extends StatelessWidget {
                                               Expanded(
                                                 child: Container(
                                                   child: MetaTextFieldBlocView(mapData: jsonData['text_field_address'],
-                                                      textFieldBloc: formBloc!.tfAmount,
+                                                      textFieldBloc: formBloc!.address,
                                                       onChanged:(value){
-                                                        formBloc!.tfAmount.updateValue(value);
+                                                        formBloc!.address.updateValue(value);
 
                                                       }),
                                                 ),
@@ -319,9 +285,9 @@ class AddTravellerDetails extends StatelessWidget {
                                             ],
                                           ),
                                           MetaTextFieldBlocView(mapData: jsonData['text_field_pincode'],
-                                              textFieldBloc: formBloc!.tfVoucher,
+                                              textFieldBloc: formBloc!.pincode,
                                               onChanged:(value){
-                                                formBloc!.tfVoucher.updateValue(value);
+                                                formBloc!.pincode.updateValue(value);
                                               })
                                         ],
                                       ),

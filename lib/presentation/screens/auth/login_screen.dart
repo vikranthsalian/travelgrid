@@ -58,7 +58,7 @@ class LoginScreen extends StatelessWidget {
                 builder: (context) {
 
                   LoginFormBloc  formBloc =  BlocProvider.of<LoginFormBloc>(context);
-                  formBloc.tfUsername.updateValue("nh02");
+                  formBloc.tfUsername.updateValue("cm06");
                   formBloc.tfPassword.updateValue("Test123#");
 
                   return Container(

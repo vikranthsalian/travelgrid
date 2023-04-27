@@ -41,6 +41,7 @@ class FlavourConstants {
   static  Map<String,dynamic> tripTypeData = FlavorConfig.instance.variables["dialog_trip_type_data"];
   static  Map<String,dynamic> cashData = FlavorConfig.instance.variables["dialog_cash_data"];
   static  Map<String,dynamic> expensePickerData = FlavorConfig.instance.variables["dialog_expense_picker_data"];
+  static  Map<String,dynamic> groupPickerData = FlavorConfig.instance.variables["dialog_group_picker_data"];
 
 
   //bottomsheet

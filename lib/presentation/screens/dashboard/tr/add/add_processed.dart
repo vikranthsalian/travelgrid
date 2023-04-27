@@ -20,6 +20,7 @@ import 'package:travelgrid/data/models/tr/tr_traveller_details.dart';
 import 'package:travelgrid/data/models/tr/tr_visa_model.dart';
 import 'package:travelgrid/presentation/components/dialog_cash.dart';
 import 'package:travelgrid/presentation/components/switch_component.dart';
+import 'package:travelgrid/presentation/screens/common/employees_screen.dart';
 import 'package:travelgrid/presentation/screens/dashboard/tr/add/add_forex.dart';
 import 'package:travelgrid/presentation/screens/dashboard/tr/add/add_insurance.dart';
 import 'package:travelgrid/presentation/screens/dashboard/tr/add/add_traveller.dart';
@@ -28,6 +29,7 @@ import 'package:travelgrid/presentation/screens/dashboard/tr/add/build_itenerary
 import 'package:travelgrid/presentation/screens/dashboard/tr/bloc/tr_processed_form_bloc.dart';
 import 'package:travelgrid/presentation/widgets/dialog_selector_view.dart';
 import 'package:travelgrid/presentation/widgets/search_selector_view.dart';
+import 'package:travelgrid/presentation/widgets/svg_view.dart';
 import 'package:travelgrid/presentation/widgets/switch.dart';
 import 'package:travelgrid/presentation/widgets/text_field.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
@@ -218,7 +220,7 @@ class TrProcessed extends StatelessWidget {
                                             formBloc!.requestTypeID.updateValue(value['id']);
                                             if(formBloc!.requestTypeID.value == "self"){
                                               formBloc!.travellerDetails.clear();
-                                              formBloc!.travellerDetails.updateValue(null);
+                                              formBloc!.travellerDetails.updateValue([]);
                                               formBloc!.employeeType.updateValue("");
                                             }
 
@@ -237,7 +239,12 @@ class TrProcessed extends StatelessWidget {
                                                 child: MetaDialogSelectorView(mapData: jsonData['selectEmployeeType'],
                                                   text :getInitialText(formBloc!.employeeType.value!),
                                                   onChange:(value){
+
+                                                  if(formBloc!.employeeType.value!=value['text']){
                                                     formBloc!.employeeType.updateValue(value['text']);
+                                                    formBloc!.travellerDetails.clear();
+                                                  }
+
                                                   },),
                                               ),
                                             );
@@ -257,20 +264,20 @@ class TrProcessed extends StatelessWidget {
                                         visible: (formBloc!.requestTypeID.value.toString().toLowerCase() == "onBehalf".toLowerCase()) ? true : false,
                                         child:  Column(
                                           children: [
-                                            Container(
-                                              margin: EdgeInsets.symmetric(horizontal: 10.w),
-                                              child: MetaSearchSelectorView(
-                                                formBloc!.employeeType.value,
-                                                isCitySearch: false,
-                                                mapData: jsonData['selectEmployeeCode'],
-                                                text: getInitialText(""),
-                                              //  text: getInitialText(formBloc!.travellerDetails.value?[0].employeeName ?? ""),
-                                                onChange:(value){
-                                                  print(jsonEncode(value));
-                                                  formBloc!.travellerDetails.updateValue([value]);
-                                                },),
-                                              alignment: Alignment.centerLeft,
-                                            ),
+                                            // Container(
+                                            //   margin: EdgeInsets.symmetric(horizontal: 10.w),
+                                            //   child: MetaSearchSelectorView(
+                                            //     formBloc!.employeeType.value,
+                                            //     isCitySearch: false,
+                                            //     mapData: jsonData['selectEmployeeCode'],
+                                            //     text: getInitialText(""),
+                                            //   //  text: getInitialText(formBloc!.travellerDetails.value?[0].employeeName ?? ""),
+                                            //     onChange:(value){
+                                            //       print(jsonEncode(value));
+                                            //       formBloc!.travellerDetails.updateValue([value]);
+                                            //     },),
+                                            //   alignment: Alignment.centerLeft,
+                                            // ),
 
                                             buildExpandableView(jsonData,"travellerDetails",context),
 
@@ -500,77 +507,13 @@ class TrProcessed extends StatelessWidget {
                 margin: EdgeInsets.symmetric(horizontal: 20.w),
                 child: InkWell(
                   onTap: ()async{
+                    if(map['add']['type'] == "traveller") {
 
-                    if(formBloc!.cityList.value!.isEmpty){
-                      MetaAlert.showSuccessAlert(message: "Please add Itinerary Details First");
+                      addTraveller(ctx);
+
                       return;
                     }
-
-
-                    if(map['add']['type']=="traveller") {
-                                          Navigator.of(ctx).push(MaterialPageRoute(builder: (context) =>
-                                              AddTravellerDetails(
-                                                tripType,
-                                                isEdit:false,
-                                                onAdd: (data){
-                                                //  listInsurance.add(data);
-                                                //  formBloc!.insuranceList.clear();
-                                                //  formBloc!.insuranceList.changeValue(listInsurance);
-                                                },)));
-                    }
-
-                    if(map['add']['type']=="cash") {
-                      await showDialog(
-                          context: ctx,
-                          builder: (_) =>
-                              DialogCash(onSubmit: (value) {
-                                List<MaCashAdvance> list = [
-                                  MaCashAdvance(
-                                      totalCashAmount: int.parse(value),
-                                      currentStatus: "",
-                                      violation: "")
-                                ];
-                                formBloc!.cashList.changeValue(list);
-                              }));
-                    }
-
-                    if(map['add']['type']=="forex") {
-                      Navigator.of(ctx).push(MaterialPageRoute(builder: (context) =>
-                          AddForex(
-                            jsonData: map['details'],
-                            isEdit:false,
-                            onAdd: (TrForexAdvance data){
-                              listForex.add(data);
-                              formBloc!.forexList.clear();
-                              formBloc!.forexList.changeValue(listForex);
-                            },)));
-                    }
-
-                    if(map['add']['type']=="visa") {
-                      Navigator.of(ctx).push(MaterialPageRoute(builder: (context) =>
-                          AddVisa(
-                            jsonData: map['details'],
-                            isEdit:false,
-                            onAdd: (TRTravelVisas data){
-                              listVisa.add(data);
-                              formBloc!.visaList.clear();
-                              formBloc!.visaList.changeValue(listVisa);
-                            },)));
-                    }
-
-                    if(map['add']['type']=="insurance") {
-                      Navigator.of(ctx).push(MaterialPageRoute(builder: (context) =>
-                          AddInsurance(
-                            jsonData: map['details'],
-                            isEdit:false,
-                            onAdd: (TRTravelInsurance data){
-                              listInsurance.add(data);
-                              formBloc!.insuranceList.clear();
-                              formBloc!.insuranceList.changeValue(listInsurance);
-                            },)));
-                    }
-
-
+                    openAddons(map,ctx,false);
 
                   },
                     child: MetaTextView(mapData: map['add'],text: "ADD",)
@@ -826,6 +769,8 @@ class TrProcessed extends StatelessWidget {
         builder: (context, state) {
 
           List<TRTravelInsurance>? list  = formBloc!.insuranceList.value!.toList();
+
+
           return  Container(
             padding: EdgeInsets.symmetric(horizontal: 10.w,vertical: 10.h),
             color: Colors.white,
@@ -884,88 +829,83 @@ class TrProcessed extends StatelessWidget {
     return BlocBuilder<SelectFieldBloc, SelectFieldBlocState>(
         bloc: formBloc!.travellerDetails,
         builder: (context, state) {
+          List<TRTravellerDetails>? list  = formBloc!.travellerDetails.value ?? [] ;
 
-          if(formBloc!.travellerDetails.value!.isEmpty){
-            return Container(
-              padding: EdgeInsets.symmetric(horizontal: 10.w,vertical: 10.h),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  MetaTextView(mapData: map['item'],text: "No data found",),
-                ],
-              ),
-            );
-          }
+          return  Container(
+            padding: EdgeInsets.symmetric(horizontal: 10.w,vertical: 10.h),
+            color: Colors.white,
+            child: list.isNotEmpty ? Column(
+              children: [
+                Row(
+                  children: [
+                    Expanded(child: MetaTextView(mapData:  map['header'],text: "Name")),
+                  //  Expanded(child: MetaTextView(mapData:  map['header'],text: "Gender")),
+                    Expanded(
+                      flex: 2,
+                        child: MetaTextView(mapData:  map['header'],text: "Info",)),
+                    Container(
+                      width: 50.w,
+                        child: MetaTextView(mapData:  map['header'],text: "Update",)),
 
+                  ],
+                ),
+                ListView.builder(
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    padding: EdgeInsets.zero,
+                    itemBuilder: (BuildContext context, int index) {
+                      TRTravellerDetails? details  = formBloc!.travellerDetails.value![index] ;
+                      return Container(
+                        padding: EdgeInsets.symmetric(horizontal: 10.w,vertical: 10.h),
+                        color: Colors.white,
+                        child: Container(
+                          child: Row(
+                            children: [
+                              Expanded(child: MetaTextView(mapData:  map['item'],text:details.name)),
+                             // Expanded(child: MetaTextView(mapData:  map['item'],text: details.gender!)),
+                              Expanded(
+                                  flex: 2,
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      MetaTextView(mapData:  map['item'],textAlign:TextAlign.start,text: details.mobileNumber!),
+                                      MetaTextView(mapData:  map['item'],textAlign:TextAlign.start,text: details.email!)
+                                    ],
+                                  )),
+                              SizedBox(width: 10.w,),
+                              InkWell(
+                                  onTap: (){
 
+                                  },
+                                  child: Container(
+                                      width:25.w,
+                                      height:25.w,
+                                      child: MetaSVGView(mapData:  map['listView']['items'][0]))),
+                              SizedBox(width: 5.w,),
+                              InkWell(
+                                  onTap: (){
 
-          return    ListView.builder(
-              physics: NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              padding: EdgeInsets.zero,
-              itemBuilder: (BuildContext context, int index) {
-                TRTravellerDetails? details  = formBloc!.travellerDetails.value![index] ;
-                return Container(
-                  padding: EdgeInsets.symmetric(horizontal: 10.w,vertical: 10.h),
-                  color: Colors.white,
-                  child: Column(
-                    children: [
-                      Container(
-                        child: Row(
-                          children: [
-                            Expanded(child: Column(
-                              children: [
-                                MetaTextView(mapData:  map['header'],text: "Emp. Code",),
-                                MetaTextView(mapData:  map['item'],text: details.employeeCode!),
-                              ],
-                            )),
-                            Expanded(child: Column(
-                              children: [
-                                MetaTextView(mapData:  map['header'],text: "Emp. Name",),
-                                MetaTextView(mapData:  map['item'],text:details.employeeName),
-                              ],
-                            )),
-
-                          ],
+                                  },
+                                  child: Container(
+                                      width:25.w,
+                                      height:25.w,
+                                      child: MetaSVGView(mapData:  map['listView']['items'][1])))
+                            ],
+                          ),
                         ),
-                      ),
-
-                      Container(
-                        child: Row(
-                          children: [
-                            Expanded(child: Column(
-                              children: [
-                                MetaTextView(mapData:  map['header'],text: "Gender",),
-                                MetaTextView(mapData:  map['item'],text: details.gender ?? ""),
-                              ],
-                            )),
-                            Expanded(child: Column(
-                              children: [
-                                MetaTextView(mapData:  map['header'],text: "Grade",),
-                                MetaTextView(mapData:  map['item'],text:details.organizationGrade ?? ""),
-                              ],
-                            )),
-                            Expanded(child: Column(
-                              children: [
-                                MetaTextView(mapData:  map['header'],text: "Location",),
-                                MetaTextView(mapData:  map['item'],text:details.location ?? ""),
-                              ],
-                            )),
-                          ],
-                        ),
-                      ),
-                      Column(
-                        children: [
-                          MetaTextView(mapData:  map['header'],text: "Email",),
-                          MetaTextView(mapData:  map['item'],text: details.email!),
-                        ],
-                      ),
-                    ],
-                  ),
-                );
-              },
-              itemCount: formBloc!.travellerDetails.value!.length
+                      );
+                    },
+                    itemCount: formBloc!.travellerDetails.value!.length
+                ),
+              ],
+            ):Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                MetaTextView(mapData: map['listView']['emptyData']['title']),
+              ],
+            ),
           );
+
 
         }
     );
@@ -1060,6 +1000,120 @@ class TrProcessed extends StatelessWidget {
     print(formBloc!.forexList.value);
 
 
+  }
+
+  void openAddons(Map<String, dynamic> map,ctx,isEdit) async{
+
+    if(formBloc!.cityList.value!.isEmpty){
+      MetaAlert.showSuccessAlert(message: "Please add Itinerary Details First");
+      return;
+    }
+
+    if(map['add']['type']=="cash") {
+      await showDialog(
+      context: ctx,
+      builder: (_) =>
+          DialogCash(onSubmit: (value) {
+            List<MaCashAdvance> list = [
+              MaCashAdvance(
+                  totalCashAmount: int.parse(value),
+                  currentStatus: "",
+                  violation: ""
+              )
+            ];
+            formBloc!.cashList.changeValue(list);
+          }));
+    }
+
+
+    if(map['add']['type']=="forex") {
+      Navigator.of(ctx).push(MaterialPageRoute(builder: (context) =>
+          AddForex(
+            jsonData: map['details'],
+            isEdit:isEdit,
+            onAdd: (TrForexAdvance data){
+              listForex.add(data);
+              formBloc!.forexList.clear();
+              formBloc!.forexList.changeValue(listForex);
+            },)));
+    }
+
+    if(map['add']['type']=="visa") {
+      Navigator.of(ctx).push(MaterialPageRoute(builder: (context) =>
+          AddVisa(
+            jsonData: map['details'],
+            isEdit:isEdit,
+            onAdd: (TRTravelVisas data){
+              listVisa.add(data);
+              formBloc!.visaList.clear();
+              formBloc!.visaList.changeValue(listVisa);
+            },)));
+    }
+
+    if(map['add']['type']=="insurance") {
+      Navigator.of(ctx).push(MaterialPageRoute(builder: (context) =>
+          AddInsurance(
+            jsonData: map['details'],
+            isEdit:isEdit,
+            onAdd: (TRTravelInsurance data){
+              listInsurance.add(data);
+              formBloc!.insuranceList.clear();
+              formBloc!.insuranceList.changeValue(listInsurance);
+            },)));
+    }
+
+
+  }
+
+  void addTraveller(ctx) {
+
+    if(formBloc!.requestTypeID.value.toString().toLowerCase() == "onBehalf".toLowerCase()){
+
+    if(formBloc!.employeeType.value == "Employee"){
+        Navigator.of(ctx).push(
+            MaterialPageRoute(builder: (context) =>
+                EmployeeScreen(
+                  onTap: (data) {
+                    Navigator.pop(context);
+                      TRTravellerDetails model = TRTravellerDetails(
+                       //   employeeCode: data.employeecode,
+                          name: data.fullName,
+                          email: data.currentContact!.email ?? "",
+                          employeeType: "Employee",
+                          mobileNumber: data.currentContact!.mobile ?? "",
+                         // location: data.loc ?? ""
+                      );
+                    formBloc!.travellerDetails.changeValue([model]);
+                  },
+                ))
+        );
+      }else{
+        if(formBloc!.travellerDetails.value!.length == 0){
+          navigateTraveller(ctx,false);
+        }else{
+          MetaAlert.showSuccessAlert(message: "Traveller Details Already Added");
+        }
+      }
+
+    }
+
+
+
+
+
+  }
+
+  void navigateTraveller(ctx,isEdit) {
+    Navigator.of(ctx).push(MaterialPageRoute(builder: (context) =>
+        AddTravellerDetails(
+          tripType,
+          isEdit:isEdit,
+          onAdd: (data){
+            formBloc!.travellerDetails.changeValue([data]);
+            //  listInsurance.add(data);
+            //  formBloc!.insuranceList.clear();
+            //  formBloc!.insuranceList.changeValue(listInsurance);
+          },)));
   }
 
 }

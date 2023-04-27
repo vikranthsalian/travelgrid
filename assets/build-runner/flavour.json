@@ -281,7 +281,7 @@
       }
     ],
     "policiesButton": {
-      "text" : "Polices",
+      "text" : "Policies",
       "color" : "0xFFFFFFFF",
       "backgroundColor" : "0xFF2854A1",
       "size": "18",
@@ -1398,13 +1398,22 @@
             "family": "regular",
             "align": "center-left",
             "id": "self"
-          },{
+          },
+          {
             "text" : "On-Behalf",
             "color" : "0xFF000000",
             "size": "12",
             "family": "regular",
             "align": "center-left",
             "id": "onBehalf"
+          },
+          {
+            "text" : "Group",
+            "color" : "0xFF000000",
+            "size": "12",
+            "family": "regular",
+            "align": "center-left",
+            "id": "group"
           }
         ],
         "emptyData": {
@@ -1555,7 +1564,7 @@
       "item": {
         "text" : "",
         "color" : "0xFFCCCCCC",
-        "size": "11",
+        "size": "9",
         "family": "bold",
         "align": "center"
       }
@@ -2178,7 +2187,17 @@
             "size": "15",
             "family": "regular"
           }
-        }
+        },
+        "items": [
+          {
+            "icon": "edit.svg",
+            "color" : "0xFF2854A1"
+          },
+          {
+            "icon": "delete.svg",
+            "color" : "0xFFff0000"
+          }
+        ]
       }
     },
     "cashAdvanceDetails": {
@@ -5373,6 +5392,89 @@
       "backgroundColor": "transparent",
       "onPress": true,
       "align": "center-left"
+    },
+    "checkbox": {
+      "text" : "Add Group",
+      "color" : "0XFF000000",
+      "size": "10",
+      "family": "regular",
+      "align": "center-left"
+    },
+    "groupItems": {
+      "label": {
+        "text" : "Group Item Details",
+        "color" : "0xFF2854A1",
+        "size": "16",
+        "family": "bold",
+        "align": "center-left"
+      },
+      "showDetails": {
+        "label": {
+          "text" : "Show",
+          "color" : "0XFFFFFFFF",
+          "size": "10",
+          "family": "bold",
+          "align": "center-right"
+        }
+      },
+      "addButton": {
+        "text" : "Add Employee",
+        "color" : "0xFFFFFFFF",
+        "backgroundColor" : "0xFF2854A1",
+        "size": "10",
+        "family": "regular",
+        "borderRadius": 15.0
+      },
+      "dataHeader":  [
+        {
+          "text" : "Employee Code",
+          "color" : "0xFF000000",
+          "size": "10",
+          "family": "bold",
+          "align": "center-left",
+          "flex": 1
+        },
+        {
+          "text" : "Update",
+          "color" : "0xFF000000",
+          "size": "10",
+          "family": "bold",
+          "align": "center",
+          "flex": 0
+        }
+      ],
+      "listView": {
+        "item": {
+          "text" : "",
+          "color" : "0XFF000000",
+          "size": "10",
+          "family": "regular",
+          "align": "center-left",
+          "items": [
+            {
+              "icon": "edit.svg",
+              "color" : "0xFF2854A1"
+            },
+            {
+              "icon": "delete.svg",
+              "color" : "0xFFff0000"
+            }
+          ]
+        },
+        "emptyData": {
+          "image_view":   {
+            "image" : "logo_banner.png",
+            "align": "center",
+            "wd": 250.0
+          },
+          "title":  {
+            "text" : "No item Added!",
+            "color" : "0XFF3D3D3D",
+            "size": "16",
+            "family": "regular"
+          }
+        }
+      }
     },
     "checkInDateTime": {
       "showView": "date",
@@ -8933,6 +9035,94 @@
       "size": "18",
       "family": "bold",
       "align": "center"
+    },
+    "listView": {
+      "recordsFound":  {
+        "text" : "Records Found",
+        "value" : "0",
+        "color" : "0XFFFFFFFF",
+        "size": "12",
+        "family": "regular",
+        "align": "center-right"
+      },
+      "emptyData": {
+        "image_view":   {
+          "image" : "logo_banner.png",
+          "align": "center",
+          "wd": 250.0
+        },
+        "title":  {
+          "text" : "No data found!",
+          "color" : "0XFF3D3D3D",
+          "size": "16",
+          "family": "regular"
+        },
+        "bottomButtonRefresh": {
+          "text" : "Refresh",
+          "height": 35.0,
+          "color" : "0xFFFFFFFF",
+          "borderRadius": 30.0,
+          "backgroundColor" : "0xFF2854A1",
+          "size": "15",
+          "family": "regular"
+        }
+      }
+    },
+    "bottomButtonCentre": {
+      "text" : "Cancel",
+      "color" : "0xFFFFFFFF",
+      "backgroundColor" : "0xFF2854A1",
+      "size": "18",
+      "family": "regular"
+    }
+  },
+  "dialog_group_picker_data" : {
+    "backgroundColor" : "0xFFFFA500",
+    "title":  {
+      "text" : "Search Employee",
+      "color" : "0XFF000000",
+      "size": "18",
+      "family": "bold",
+      "align": "center"
+    },
+    "text_field_code":  {
+      "name": "Employee Code",
+      "apiKey": "code",
+      "type": "text_field_view",
+      "inputType": "text",
+      "isPassword": false,
+      "backgroundColor": "0XFFFFFFFF",
+      "borderColor": "0XFFAEAEAE",
+      "text" : {
+        "text" : "",
+        "color" : "0xFF2854A1",
+        "size": "14",
+        "family": "regular"
+      },
+      "labelText" : {
+        "text" : "Employee Code*",
+        "color" : "0xFF2854A1",
+        "size": "14",
+        "family": "regular",
+        "align" : "center-left"
+      },
+      "hintText" : {
+        "text" : "Enter Employee Code",
+        "color" : "0xFF2854A1",
+        "size": "14",
+        "family": "regular"
+      },
+      "errorText" : {
+        "text" : "",
+        "color" : "0xFFFF0000",
+        "size": "14",
+        "family": "regular"
+      },
+      "validators" : [
+        {
+          "type" : "empty"
+        }
+      ]
     },
     "listView": {
       "recordsFound":  {

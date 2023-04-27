@@ -46,6 +46,7 @@ abstract class GeAPIAbstract {
   Future<SuccessModel> takeBackGE(data);
   Future<SuccessModel> approveGE(id,comment);
   Future<SuccessModel> rejectGE(id,comment);
+  Future<SuccessModel> getGeGroup(data);
 }
 
 abstract class TeAPIAbstract {

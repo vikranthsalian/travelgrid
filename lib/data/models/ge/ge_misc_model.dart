@@ -12,6 +12,8 @@ class GEMiscModel {
   String? voucherPath;
   String? voucherFile;
   String? voilationMessage;
+  String? groupEmployees;
+  bool? groupExpense;
 
   GEMiscModel(
       {this.miscellaneousTypeName,
@@ -26,6 +28,8 @@ class GEMiscModel {
         this.description,
         this.voucherPath,
         this.voucherFile,
+        this.groupEmployees,
+        this.groupExpense,
         this.voilationMessage});
 
   GEMiscModel.fromJson(Map<String, dynamic> json) {
@@ -42,6 +46,8 @@ class GEMiscModel {
     voucherPath = json['voucherPath'];
     voucherFile = json['voucherFile'];
     voilationMessage = json['voilationMessage'];
+    groupEmployees = json['groupEmployees'];
+    groupExpense = json['groupExpense'];
   }
 
   Map<String, dynamic> toJson() {
@@ -59,6 +65,8 @@ class GEMiscModel {
     data['voucherPath'] = this.voucherPath;
     data['voucherFile'] = this.voucherFile;
     data['voilationMessage'] = this.voilationMessage;
+    data['groupEmployees'] = this.groupEmployees;
+    data['groupExpense'] = this.groupExpense;
     return data;
   }
 
@@ -77,6 +85,8 @@ class GEMiscModel {
       'voucherPath': this.voucherPath,
       'voucherFile': this.voucherFile,
       'voilationMessage': this.voilationMessage,
+      'groupExpense': this.groupExpense,
+      'groupEmployees': this.groupEmployees,
     };
   }
 
@@ -95,6 +105,8 @@ class GEMiscModel {
       voucherPath: map['voucherPath'] as String,
       voucherFile: map['voucherPath']!=null ? map['voucherFile']  : "",
       voilationMessage: map['voilationMessage'] as String,
+      groupExpense: map['groupExpense'] ?? false,
+      groupEmployees: map['groupEmployees'] ?? "" ,
     );
   }
 }

@@ -104,4 +104,17 @@ class GeRepository extends GeAPIAbstract {
     return SuccessModel(status: false);
   }
 
+  @override
+  Future<SuccessModel> getGeGroup(data) async{
+
+    var response = await apiRemoteDatasource.getCommonTypes("ge/checkedEmp",data);
+
+    if(response!=null) {
+      SuccessModel modelResponse = SuccessModel.fromJson(response);
+      return modelResponse;
+    }
+
+    return SuccessModel(status: false);
+  }
+
 }

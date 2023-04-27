@@ -25,7 +25,7 @@ import 'package:travelgrid/data/models/te/te_ticket_model.dart';
 import 'package:travelgrid/domain/usecases/te_usecase.dart';
 import 'package:travelgrid/presentation/components/bloc_map_event.dart';
 import 'package:travelgrid/presentation/components/switch_component.dart';
-import 'package:travelgrid/presentation/dialog_expense_picker.dart';
+import 'package:travelgrid/presentation/components/dialog_expense_picker.dart';
 import 'package:travelgrid/presentation/screens/dashboard/te/add/te_add_accom.dart';
 import 'package:travelgrid/presentation/screens/dashboard/te/add/te_add_conveyance.dart';
 import 'package:travelgrid/presentation/screens/dashboard/te/add/te_add_misc.dart';

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
+import 'package:travelgrid/common/utils/validators.dart';
 
 
 class TravellerFormBloc extends FormBloc<String, String> {
@@ -26,7 +27,19 @@ class TravellerFormBloc extends FormBloc<String, String> {
   }
 
 
-  TravellerFormBloc():super(autoValidate: true) {
+  TravellerFormBloc(Map<String, dynamic> data):super(autoValidate: true) {
+
+    if(data.isNotEmpty){
+
+      fname.addValidators(Validators().getValidators(data['text_field_fname']));
+      lname.addValidators(Validators().getValidators(data['text_field_lname']));
+      contact.addValidators(Validators().getValidators(data['text_field_contact']));
+
+      email.addValidators(Validators().getValidators(data['text_field_email']));
+
+      address.addValidators(Validators().getValidators(data['text_field_address']));
+      pincode.addValidators(Validators().getValidators(data['text_field_pincode']));
+    }
 
     addFieldBlocs(fieldBlocs: [
       gender,
@@ -38,6 +51,7 @@ class TravellerFormBloc extends FormBloc<String, String> {
       pincode,
       cityName,
     ]);
+
   }
 
   @override
@@ -49,6 +63,7 @@ class TravellerFormBloc extends FormBloc<String, String> {
       'name': this.fname.value+" "+lname.value,
       'gender': this.gender.value,
       'location': this.address.value,
+      'mobileNumber': this.contact.value,
     };
      emitSuccess(successResponse: jsonEncode(saveVisitData));
 

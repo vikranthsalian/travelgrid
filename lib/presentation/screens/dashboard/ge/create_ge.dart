@@ -24,7 +24,7 @@ import 'package:travelgrid/data/models/success_model.dart';
 import 'package:travelgrid/domain/usecases/ge_usecase.dart';
 import 'package:travelgrid/presentation/components/bloc_map_event.dart';
 import 'package:travelgrid/presentation/components/switch_component.dart';
-import 'package:travelgrid/presentation/dialog_expense_picker.dart';
+import 'package:travelgrid/presentation/components/dialog_expense_picker.dart';
 import 'package:travelgrid/presentation/screens/dashboard/ge/add/add_accom.dart';
 import 'package:travelgrid/presentation/screens/dashboard/ge/add/add_misc.dart';
 import 'package:travelgrid/presentation/screens/dashboard/ge/add/add_travel.dart';

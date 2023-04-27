@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
+import 'package:travelgrid/common/utils/show_alert.dart';
 import 'package:travelgrid/common/utils/validators.dart';
 
 
@@ -12,6 +13,9 @@ class MiscFormBloc extends FormBloc<String, String> {
   final cityName =  TextFieldBloc(validators: [emptyValidator]);
   final cityID =  TextFieldBloc(validators: [emptyValidator]);
   final miscName =  TextFieldBloc(validators: [emptyValidator]);
+  final showGroup =  SelectFieldBloc<bool,dynamic>(initialValue: false);
+  final showAdd =  SelectFieldBloc<bool,dynamic>(initialValue: false);
+  final groupIds =  SelectFieldBloc<List<String>,dynamic>(initialValue: []);
 
   final unitTypeID =  TextFieldBloc(validators: [emptyValidator]);
   final unitTypeName =  TextFieldBloc(validators: [emptyValidator]);
@@ -104,6 +108,14 @@ class MiscFormBloc extends FormBloc<String, String> {
   FutureOr<void> onSubmitting() async {
 
 
+    bool isGroupExpense=false;
+    if(showGroup.value == true && groupIds.value!.isEmpty){
+      MetaAlert.showErrorAlert(message: "Please add group employees");
+    }
+      isGroupExpense=true;
+    String groupValues=groupIds.value!.join(",");
+
+
     Map<String,dynamic> saveMiscData = {
       "miscellaneousTypeName": miscName.value,
       "miscellaneousType":int.parse(miscID.value ?? "0"),
@@ -123,6 +135,8 @@ class MiscFormBloc extends FormBloc<String, String> {
       "voucherFile": null,
 
       "voilationMessage": "",
+      "groupEmployees":groupValues,
+      "groupExpense":isGroupExpense,
     };
      emitSuccess(successResponse: jsonEncode(saveMiscData));
 
