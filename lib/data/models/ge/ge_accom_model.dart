@@ -16,6 +16,8 @@ class GEAccomModel {
   bool? withBill;
   String? voucherPath;
   String? voucherNumber;
+  String? groupEmployees;
+  bool? groupExpense;
 
   GEAccomModel(
       {
@@ -35,6 +37,8 @@ class GEAccomModel {
         this.withBill,
         this.voucherPath,
         this.voilationMessage,
+        this.groupEmployees,
+        this.groupExpense,
         this.voucherNumber});
 
   GEAccomModel.fromJson(Map<String, dynamic> json) {
@@ -55,6 +59,8 @@ class GEAccomModel {
     withBill = json['withBill'] =="true" ? true:false;
     voucherPath = json['voucherPath'];
     voucherNumber = json['voucherNumber'];
+    groupEmployees = json['groupEmployees'];
+    groupExpense = json['groupExpense'];
   }
 
   Map<String, dynamic> toJson() {
@@ -75,6 +81,8 @@ class GEAccomModel {
     data['withBill'] = this.withBill;
     data['voucherPath'] = this.voucherPath;
     data['voucherNumber'] = this.voucherNumber;
+    data['groupEmployees'] = this.groupEmployees;
+    data['groupExpense'] = this.groupExpense;
     return data;
   }
 
@@ -97,6 +105,8 @@ class GEAccomModel {
       'withBill': this.withBill,
       'voucherPath': this.voucherPath,
       'voucherNumber': this.voucherNumber,
+      'groupExpense': this.groupExpense,
+      'groupEmployees': this.groupEmployees,
     };
   }
 
@@ -119,6 +129,8 @@ class GEAccomModel {
       withBill: map['withBill'] as bool,
       voucherPath: map['voucherPath'] as String,
       voucherNumber: map['voucherNumber'] as String,
+      groupExpense: map['groupExpense'] ?? false,
+      groupEmployees: map['groupEmployees'] ?? "" ,
     );
   }
 }

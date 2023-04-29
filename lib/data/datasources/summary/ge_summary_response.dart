@@ -182,6 +182,8 @@ class MaGeAccomodationExpense {
   String? voucherPath;
   bool? violated;
   String? voucherNumber;
+  String? groupEmployees;
+  bool? groupExpense;
 
   MaGeAccomodationExpense(
       {this.id,
@@ -202,6 +204,8 @@ class MaGeAccomodationExpense {
         this.voilationMessage,
         this.voucherPath,
         this.violated,
+        this.groupEmployees,
+        this.groupExpense,
         this.voucherNumber});
 
   MaGeAccomodationExpense.fromJson(Map<String, dynamic> json) {
@@ -224,6 +228,8 @@ class MaGeAccomodationExpense {
     voucherPath = json['voucherPath'];
     violated = json['violated'];
     voucherNumber = json['voucherNumber'];
+    groupEmployees = json['groupEmployees'];
+    groupExpense = json['groupExpense'];
   }
 
   Map<String, dynamic> toJson() {
@@ -247,6 +253,8 @@ class MaGeAccomodationExpense {
     data['voucherPath'] = this.voucherPath;
     data['violated'] = this.violated;
     data['voucherNumber'] = this.voucherNumber;
+    data['groupEmployees'] = this.groupEmployees;
+    data['groupExpense'] = this.groupExpense;
     return data;
   }
 }
@@ -267,6 +275,8 @@ class MaGeMiscellaneousExpense {
   String? cityName;
   String? miscellaneousTypeName;
   int? unitType;
+  String? groupEmployees;
+  bool? groupExpense;
 
   MaGeMiscellaneousExpense(
       {this.id,
@@ -283,6 +293,8 @@ class MaGeMiscellaneousExpense {
         this.city,
         this.cityName,
         this.miscellaneousTypeName,
+        this.groupEmployees,
+        this.groupExpense,
         this.unitType});
 
   MaGeMiscellaneousExpense.fromJson(Map<String, dynamic> json) {
@@ -301,6 +313,8 @@ class MaGeMiscellaneousExpense {
     cityName = json['cityName'];
     miscellaneousTypeName = json['miscellaneousTypeName'];
     unitType = json['unitType'];
+    groupEmployees = json['groupEmployees'] ?? "";
+    groupExpense = json['groupExpense'] ?? false;
   }
 
   Map<String, dynamic> toJson() {
@@ -320,6 +334,8 @@ class MaGeMiscellaneousExpense {
     data['cityName'] = this.cityName;
     data['miscellaneousTypeName'] = this.miscellaneousTypeName;
     data['unitType'] = this.unitType;
+    data['groupEmployees'] = this.groupEmployees;
+    data['groupExpense'] = this.groupExpense;
     return data;
   }
 }

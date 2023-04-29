@@ -606,7 +606,7 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpenseBody> {
                           ],
                         )):
                         Expanded(flex:1,child:
-                        type != GETypes.CONVEYANCE? InkWell(
+                        type != GETypes.CONVEYANCE ? InkWell(
                                 onTap: (){
                               navigate({"onClick": type}, true,summaryItems[index].item2,index,true);
                             },
@@ -701,7 +701,7 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpenseBody> {
 
   void navigate(e,bool isEdit,Map<String,dynamic> data,int index,isView) {
     print(e);
-    print(GETypes.ACCOMMODATION.toString());
+
 
     if(e['onClick'].toString()  == RouteConstants.createMiscExpensePath || e['onClick'].toString()   == GETypes.MISCELLANEOUS.toString()){
       print(GETypes.MISCELLANEOUS);

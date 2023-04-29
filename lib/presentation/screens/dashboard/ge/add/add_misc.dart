@@ -42,7 +42,6 @@ class CreateMiscExpense extends StatelessWidget {
   List items=[];
   double cardHt = 90.h;
   MiscFormBloc? formBloc;
-  bool showGroupDetails=false;
   File? file;
   int days =1;
   String violationMessage ="";
@@ -143,6 +142,13 @@ class CreateMiscExpense extends StatelessWidget {
 
 
                      if(isEdit){
+
+                       if(miscModel!.groupExpense == true){
+                         formBloc!.showGroup.updateValue(true);
+                         formBloc!.showAdd.updateValue(true);
+                         List<String> groupValues= miscModel!.groupEmployees!.split(",");
+                         formBloc!.groupIds.updateValue(groupValues);
+                       }
 
                        formBloc!.checkInDate.updateValue(miscModel!.startDate.toString());
                        formBloc!.checkOutDate.updateValue(miscModel!.endDate.toString());
@@ -270,7 +276,7 @@ class CreateMiscExpense extends StatelessWidget {
                                                       color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
                                                       jsonData: jsonData['groupItems'],
                                                       childWidget: buildGroupItemWidget(jsonData['groupItems']),
-                                                      initialValue: showGroupDetails),
+                                                      initialValue: formBloc!.showGroup.value),
                                                 );
                                               }
                                           ),
