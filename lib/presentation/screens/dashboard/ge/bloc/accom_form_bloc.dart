@@ -3,9 +3,14 @@ import 'dart:convert';
 
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:travelgrid/common/utils/date_time_util.dart';
+import 'package:travelgrid/common/utils/show_alert.dart';
 import 'package:travelgrid/common/utils/validators.dart';
 
 class AccomFormBloc extends FormBloc<String, String> {
+
+  final showGroup =  SelectFieldBloc<bool,dynamic>(initialValue: false);
+  final showAdd =  SelectFieldBloc<bool,dynamic>(initialValue: false);
+  final groupIds =  SelectFieldBloc<List<String>,dynamic>(initialValue: []);
 
   final selectAccomID = SelectFieldBloc<String, dynamic>();
   final selectWithBill = SelectFieldBloc<String, dynamic>();
@@ -100,6 +105,16 @@ class AccomFormBloc extends FormBloc<String, String> {
     int differenceInYears = (dur.inDays);
 
     print(differenceInYears);
+
+
+    bool isGroupExpense=false;
+    if(showGroup.value == true && groupIds.value!.isEmpty){
+      MetaAlert.showErrorAlert(message: "Please add group employees");
+    }
+    isGroupExpense=true;
+    String groupValues=groupIds.value!.join(",");
+
+
   try {
   Map<String, dynamic> saveAccomMap = {
     "checkInDate": checkInDate.value,
@@ -123,7 +138,9 @@ class AccomFormBloc extends FormBloc<String, String> {
 
     "voucherPath": voucherPath.value,
 
-    "voucherNumber": swWithBill.value ? tfVoucher.value : ""
+    "voucherNumber": swWithBill.value ? tfVoucher.value : "",
+    "groupEmployees":groupValues,
+    "groupExpense":isGroupExpense,
   };
   emitSuccess(successResponse: jsonEncode(saveAccomMap));
   }catch(e){
