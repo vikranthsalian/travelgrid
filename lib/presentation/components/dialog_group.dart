@@ -13,7 +13,9 @@ import 'package:travelgrid/presentation/widgets/text_view.dart';
 class DialogGrooup extends StatelessWidget{
   Function? onSubmit;
   double? size;
-  DialogGrooup({this.onSubmit,this.size=0.2});
+  bool isAccommodation;
+  String isName;
+  DialogGrooup({this.onSubmit,this.size=0.2,this.isAccommodation=false,required this.isName});
   Map<String,dynamic> jsonData={};
   TextEditingController controller= TextEditingController();
   @override
@@ -33,7 +35,45 @@ class DialogGrooup extends StatelessWidget{
                 SizedBox(height: 20.h,),
                 MetaTextView(mapData: jsonData['title']),
                 MetaTextFieldView(
-                  mapData: jsonData['text_field_code'],
+                  mapData:{
+                    "name": "Employee "+isName,
+                    "apiKey": "code",
+                    "type": "text_field_view",
+                    "inputType": "text",
+                    "isPassword": false,
+                    "backgroundColor": "0XFFFFFFFF",
+                    "borderColor": "0XFFAEAEAE",
+                    "text" : {
+                      "text" : "",
+                      "color" : "0xFF2854A1",
+                      "size": "14",
+                      "family": "regular"
+                    },
+                    "labelText" : {
+                      "text" : "Employee "+isName+"*",
+                      "color" : "0xFF2854A1",
+                      "size": "14",
+                      "family": "regular",
+                      "align" : "center-left"
+                    },
+                    "hintText" : {
+                      "text" : "Enter "+isName,
+                      "color" : "0xFF2854A1",
+                      "size": "14",
+                      "family": "regular"
+                    },
+                    "errorText" : {
+                      "text" : "",
+                      "color" : "0xFFFF0000",
+                      "size": "14",
+                      "family": "regular"
+                    },
+                    "validators" : [
+                      {
+                        "type" : "empty"
+                      }
+                    ]
+                  },
                     onChanged:(value){
 
                     }, controller: controller,),
@@ -60,16 +100,30 @@ class DialogGrooup extends StatelessWidget{
                                   Map<String,dynamic> data={
                                     "checked":"",
                                     "requestType":"",
-                                    "employeeCode":controller.text,
-                                    "employeeName":"",
-                                    "employeeType":"Employee"
+                                    "employeeCode":isName == "Code" ? controller.text :"",
+                                    "employeeName":isName == "Name" ? controller.text :"",
+                                    "employeeType":"Employee",
+                                    if(isAccommodation)
+                                    "isAccommodation":true
                                   };
 
                                   SuccessModel model=   await Injector.resolve<GeUseCase>().getGeGroup(data);
 
-                                  if(model.message == null){
-                                    onSubmit!(controller.text.toUpperCase());
+                                  if(isAccommodation){
+                                    if(model.message == "User valid"){
+                                      onSubmit!({
+                                        "name": isName == "Name" ? controller.text :model.data,
+                                        "code": isName == "Code" ? controller.text :model.data
+                                      });
+                                    }
+                                  }else{
+
+                                    if(model.message == null){
+                                      onSubmit!(controller.text.toUpperCase());
+                                    }
                                   }
+
+
                                   Navigator.pop(context);
 
                                 }

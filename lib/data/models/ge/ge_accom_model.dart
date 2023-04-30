@@ -1,3 +1,5 @@
+import 'package:travelgrid/data/models/ge/ge_group_accom_model.dart';
+
 class GEAccomModel {
   String? checkInDate;
   String? checkInTime;
@@ -16,8 +18,7 @@ class GEAccomModel {
   bool? withBill;
   String? voucherPath;
   String? voucherNumber;
-  String? groupEmployees;
-  bool? groupExpense;
+  List<GEGroupAccomModel>? maGeAccomodationGroupExpense;
 
   GEAccomModel(
       {
@@ -37,8 +38,7 @@ class GEAccomModel {
         this.withBill,
         this.voucherPath,
         this.voilationMessage,
-        this.groupEmployees,
-        this.groupExpense,
+        this.maGeAccomodationGroupExpense,
         this.voucherNumber});
 
   GEAccomModel.fromJson(Map<String, dynamic> json) {
@@ -59,8 +59,12 @@ class GEAccomModel {
     withBill = json['withBill'] =="true" ? true:false;
     voucherPath = json['voucherPath'];
     voucherNumber = json['voucherNumber'];
-    groupEmployees = json['groupEmployees'];
-    groupExpense = json['groupExpense'];
+    if (json['maGeAccomodationGroupExpense'] != null) {
+      maGeAccomodationGroupExpense = <GEGroupAccomModel>[];
+      json['maGeAccomodationGroupExpense'].forEach((v) {
+        maGeAccomodationGroupExpense!.add(new GEGroupAccomModel.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -81,8 +85,10 @@ class GEAccomModel {
     data['withBill'] = this.withBill;
     data['voucherPath'] = this.voucherPath;
     data['voucherNumber'] = this.voucherNumber;
-    data['groupEmployees'] = this.groupEmployees;
-    data['groupExpense'] = this.groupExpense;
+    if (this.maGeAccomodationGroupExpense != null) {
+      data['maGeAccomodationGroupExpense'] =
+          this.maGeAccomodationGroupExpense!.map((v) => v.toJson()).toList();
+    }
     return data;
   }
 
@@ -105,8 +111,7 @@ class GEAccomModel {
       'withBill': this.withBill,
       'voucherPath': this.voucherPath,
       'voucherNumber': this.voucherNumber,
-      'groupExpense': this.groupExpense,
-      'groupEmployees': this.groupEmployees,
+      'maGeAccomodationGroupExpense': this.maGeAccomodationGroupExpense,
     };
   }
 
@@ -129,8 +134,7 @@ class GEAccomModel {
       withBill: map['withBill'] as bool,
       voucherPath: map['voucherPath'] as String,
       voucherNumber: map['voucherNumber'] as String,
-      groupExpense: map['groupExpense'] ?? false,
-      groupEmployees: map['groupEmployees'] ?? "" ,
+      maGeAccomodationGroupExpense: map['maGeAccomodationGroupExpense'] ?? []
     );
   }
 }

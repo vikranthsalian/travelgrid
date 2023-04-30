@@ -1076,8 +1076,10 @@ class TrProcessed extends StatelessWidget {
                   onTap: (data) {
                     Navigator.pop(context);
                       TRTravellerDetails model = TRTravellerDetails(
-                       //   employeeCode: data.employeecode,
+                          employeeCode: data.employeecode,
+                          employeeName: data.fullName,
                           name: data.fullName,
+                          gender: data.gender,
                           email: data.currentContact!.email ?? "",
                           employeeType: "Employee",
                           mobileNumber: data.currentContact!.mobile ?? "",

@@ -104,8 +104,14 @@ class ProcessedTrFormBloc extends FormBloc<String, String> {
         "requestType": reqType,
         "maTravelerDetails":travellerDetails.value,
 
-        if(requestTypeID.value!="self")
+        if(requestTypeID.value=="onBehalf")
           "onbehalf": true,
+
+        if(requestTypeID.value=="self")
+          "self": true,
+
+        if(requestTypeID.value=="group")
+          "group": true,
 
 
         "maCashAdvance": cashList.value,

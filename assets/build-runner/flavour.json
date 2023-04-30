@@ -4031,6 +4031,14 @@
       },
       "dataHeader":  [
         {
+          "text" : "Employee Name",
+          "color" : "0xFF000000",
+          "size": "10",
+          "family": "bold",
+          "align": "center-left",
+          "flex": 1
+        },
+        {
           "text" : "Employee Code",
           "color" : "0xFF000000",
           "size": "10",
@@ -8993,6 +9001,189 @@
     },
     "bottomButtonCentre": {
       "text" : "Cancel",
+      "color" : "0xFFFFFFFF",
+      "backgroundColor" : "0xFF2854A1",
+      "size": "18",
+      "family": "regular"
+    }
+  },
+  "group_accom_data": {
+    "backgroundColor" : "0xFF2854A1",
+    "title":  {
+      "text" : "GE Group Accommodation",
+      "color" : "0XFFFFFFFF",
+      "size": "18",
+      "family": "bold",
+      "align": "center-left"
+    },
+    "backBar": {
+      "icon": "back",
+      "size": 20.0,
+      "color": "0XFFFFFFFF",
+      "backgroundColor": "transparent",
+      "onPress": true,
+      "align": "center-left"
+    },
+    "checkInDateTime": {
+      "showView": "date_time",
+      "dateView": {
+        "label":  {
+          "text" : "Check-In Date*",
+          "color" : "0xFF2854A1",
+          "size": "14",
+          "family": "regular",
+          "align": "center-left"
+        },
+        "dateText":  {
+          "text" : "22",
+          "color" : "0xFF000000",
+          "size": "25",
+          "family": "bold",
+          "align": "center-left"
+        },
+        "monthYearText":  {
+          "text" : "January, 2024",
+          "color" : "0xFF000000",
+          "size": "12",
+          "family": "regular",
+          "align": "center-left"
+        },
+        "weekText":  {
+          "text" : "Monday",
+          "color" : "0xFFAEAEAE",
+          "size": "10",
+          "family": "regular",
+          "align": "center-left"
+        }
+      },
+      "timeView": {
+        "label":  {
+          "text" : "Check-In Time*",
+          "color" : "0xFF2854A1",
+          "size": "14",
+          "family": "regular",
+          "align": "center-left"
+        },
+        "timeText":  {
+          "text" : "12:23",
+          "color" : "0xFF000000",
+          "size": "25",
+          "family": "bold",
+          "align": "center-left"
+        }
+      }
+    },
+    "checkOutDateTime": {
+      "showView": "date_time",
+      "dateView": {
+        "label":  {
+          "text" : "Check-Out Date*",
+          "color" : "0xFF2854A1",
+          "size": "14",
+          "family": "regular",
+          "align": "center-left"
+        },
+        "dateText":  {
+          "text" : "22",
+          "color" : "0xFF000000",
+          "size": "25",
+          "family": "bold",
+          "align": "center-left"
+        },
+        "monthYearText":  {
+          "text" : "January, 2024",
+          "color" : "0xFF000000",
+          "size": "12",
+          "family": "regular",
+          "align": "center-left"
+        },
+        "weekText":  {
+          "text" : "Monday",
+          "color" : "0xFFAEAEAE",
+          "size": "10",
+          "family": "regular",
+          "align": "center-left"
+        }
+      },
+      "timeView": {
+        "label":  {
+          "text" : "Check-Out Time*",
+          "color" : "0xFF2854A1",
+          "size": "14",
+          "family": "regular",
+          "align": "center-left"
+        },
+        "timeText":  {
+          "text" : "12:23",
+          "color" : "0xFF000000",
+          "size": "25",
+          "family": "bold",
+          "align": "center-left"
+        }
+      }
+
+    },
+    "selectEmployeeName": {
+      "showView": true,
+      "key":"click_type",
+      "value":"Name",
+      "label":  {
+        "text" : "Employee Name*",
+        "color" : "0xFF2854A1",
+        "size": "14",
+        "family": "regular",
+        "align": "center-left"
+      },
+      "dataText":  {
+        "text" : "Choose Employee Name",
+        "color" : "0xFFAEAEAE",
+        "size": "14",
+        "family": "regular",
+        "align": "center-left"
+      },
+      "title":{
+        "text" : "Select Employee Name",
+        "color" : "0xFF2854A1",
+        "size": "18",
+        "family": "bold",
+        "align": "center"
+      }
+    },
+    "selectEmployeeCode": {
+      "showView": true,
+      "key":"click_type",
+      "value":"Code",
+      "label":  {
+        "text" : "Employee Code*",
+        "color" : "0xFF2854A1",
+        "size": "14",
+        "family": "regular",
+        "align": "center-left"
+      },
+      "dataText":  {
+        "text" : "Choose Employee Code",
+        "color" : "0xFFAEAEAE",
+        "size": "14",
+        "family": "regular",
+        "align": "center-left"
+      },
+      "title":{
+        "text" : "Select Employee Code",
+        "color" : "0xFF2854A1",
+        "size": "18",
+        "family": "bold",
+        "align": "center"
+      }
+    },
+    "bottomButtonLeft": {
+      "text" : "Cancel",
+      "color" : "0xFFFFFFFF",
+      "backgroundColor" : "0xFF2854A1",
+      "size": "18",
+      "family": "regular"
+    },
+    "bottomButtonRight": {
+      "text" : "Save",
       "color" : "0xFFFFFFFF",
       "backgroundColor" : "0xFF2854A1",
       "size": "18",

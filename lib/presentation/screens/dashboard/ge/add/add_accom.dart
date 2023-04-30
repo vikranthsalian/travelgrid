@@ -13,11 +13,13 @@ import 'package:travelgrid/common/injector/injector.dart';
 import 'package:travelgrid/common/utils/upload_util.dart';
 import 'package:travelgrid/data/models/expense_model.dart';
 import 'package:travelgrid/data/models/ge/ge_accom_model.dart';
+import 'package:travelgrid/data/models/ge/ge_group_accom_model.dart';
 import 'package:travelgrid/data/models/success_model.dart';
 import 'package:travelgrid/domain/usecases/common_usecase.dart';
 import 'package:travelgrid/presentation/components/dialog_group.dart';
 import 'package:travelgrid/presentation/components/switch_component.dart';
 import 'package:travelgrid/presentation/components/upload_component.dart';
+import 'package:travelgrid/presentation/screens/dashboard/ge/add/add_group_accom.dart';
 import 'package:travelgrid/presentation/screens/dashboard/ge/bloc/accom_form_bloc.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';
 import 'package:travelgrid/presentation/widgets/checkbox.dart';
@@ -49,7 +51,7 @@ class CreateAccommodationExpense extends StatelessWidget {
     "family": "regular",
     "align" : "center-left"
   };
-  List<String> groupValues=[];
+  List<GEGroupAccomModel> groupValues=[];
   @override
   Widget build(BuildContext context) {
     jsonData = FlavourConstants.accomCreateData;
@@ -125,11 +127,14 @@ class CreateAccommodationExpense extends StatelessWidget {
                     if(isEdit){
 
 
-                      if(accomModel!.groupExpense == true){
+                      if(accomModel!.maGeAccomodationGroupExpense!.isNotEmpty){
                         formBloc!.showGroup.updateValue(true);
                         formBloc!.showAdd.updateValue(true);
-                        List<String> groupValues= accomModel!.groupEmployees!.split(",");
-                        formBloc!.groupIds.updateValue(groupValues);
+                        List<GEGroupAccomModel> data= accomModel!.maGeAccomodationGroupExpense! ?? [];
+
+                        formBloc!.groupIds.updateValue(data);
+
+                        groupValues.addAll(data);
                       }
 
                       formBloc!.checkInDate.updateValue(accomModel!.checkInDate.toString());
@@ -427,7 +432,7 @@ class CreateAccommodationExpense extends StatelessWidget {
         builder: (context, state) {
 
 
-          List<String>? list  = formBloc!.groupIds.value ?? [] ;
+          List<GEGroupAccomModel>? list  = formBloc!.groupIds.value ?? [] ;
           print("Rebiuild formBloc!.groupIds");
 
           return Container(
@@ -467,7 +472,8 @@ class CreateAccommodationExpense extends StatelessWidget {
                         margin: EdgeInsets.symmetric(vertical: 2.h),
                         child: Row(
                             children: [
-                              Expanded(flex:1, child: MetaTextView(mapData: map['listView']['item'],text:list[i]) ),
+                              Expanded(flex:1, child: MetaTextView(mapData: map['listView']['item'],text:list[i].employeeName) ),
+                              Expanded(flex:1, child: MetaTextView(mapData: map['listView']['item'],text:list[i].employeeCode) ),
                               !isView ? Container(
                                 width: 56.w,
                                 child: Row(
@@ -500,14 +506,9 @@ class CreateAccommodationExpense extends StatelessWidget {
                   alignment: Alignment.centerRight,
                   child: MetaButton(mapData: map['addButton'],
                       onButtonPressed: ()async{
-                        await showDialog(
-                            context: appNavigatorKey.currentState!.context,
-                            builder: (_) =>
-                                DialogGrooup(onSubmit: (value) {
-                                  groupValues.add(value);
-                                  formBloc!.groupIds.clear();
-                                  formBloc!.groupIds.changeValue(groupValues);
-                                }));
+
+                    navigate("",context);
+
 
                       }
                   ),
@@ -525,6 +526,26 @@ class CreateAccommodationExpense extends StatelessWidget {
       return text;
     }
     return null;
+  }
+
+  void navigate(data,context) {
+
+    GEGroupAccomModel? model;
+    if(data.isNotEmpty){
+      model =  GEGroupAccomModel.fromMap(data);
+    }
+
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
+        AddGroupAccommodation(
+          isEdit:isEdit,
+          isView:isView,
+          accomModel:model,
+          onAdd: (value){
+            groupValues.add(value);
+            formBloc!.groupIds.clear();
+            formBloc!.groupIds.changeValue(groupValues);
+
+          },)));
   }
 
 

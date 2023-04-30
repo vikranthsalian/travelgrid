@@ -5,12 +5,13 @@ import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:travelgrid/common/utils/date_time_util.dart';
 import 'package:travelgrid/common/utils/show_alert.dart';
 import 'package:travelgrid/common/utils/validators.dart';
+import 'package:travelgrid/data/models/ge/ge_group_accom_model.dart';
 
 class AccomFormBloc extends FormBloc<String, String> {
 
   final showGroup =  SelectFieldBloc<bool,dynamic>(initialValue: false);
-  final showAdd =  SelectFieldBloc<bool,dynamic>(initialValue: false);
-  final groupIds =  SelectFieldBloc<List<String>,dynamic>(initialValue: []);
+  final showAdd =  SelectFieldBloc<bool,dynamic>(initialValue: true);
+  final groupIds =  SelectFieldBloc<List<GEGroupAccomModel>,dynamic>(initialValue: []);
 
   final selectAccomID = SelectFieldBloc<String, dynamic>();
   final selectWithBill = SelectFieldBloc<String, dynamic>();
@@ -139,8 +140,8 @@ class AccomFormBloc extends FormBloc<String, String> {
     "voucherPath": voucherPath.value,
 
     "voucherNumber": swWithBill.value ? tfVoucher.value : "",
-    "groupEmployees":groupValues,
-    "groupExpense":isGroupExpense,
+    "maGeAccomodationGroupExpense":groupIds.value,
+
   };
   emitSuccess(successResponse: jsonEncode(saveAccomMap));
   }catch(e){

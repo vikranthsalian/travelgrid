@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:travelgrid/common/config/navigator_key.dart';
+import 'package:travelgrid/presentation/components/dialog_group.dart';
 import 'package:travelgrid/presentation/components/dialog_type.dart';
 import 'package:travelgrid/presentation/screens/common/accom_type_screen.dart';
 import 'package:travelgrid/presentation/screens/common/common_type_screen.dart';
@@ -33,6 +35,21 @@ class _MetaDialogSelectorViewState extends State<MetaDialogSelectorView> {
           MetaTextView(mapData: widget.mapData['label'],textAlign: TextAlign.start,),
           InkWell(
             onTap: () async {
+
+
+              if(widget.mapData['key']=="click_type"){
+                showDialog(
+                    context: appNavigatorKey.currentState!.context,
+                    builder: (_) =>
+                        DialogGrooup(
+                            isName:widget.mapData['value'],
+                            isAccommodation: true,
+                            onSubmit: (value) {
+                              widget.text=widget.mapData['value']=="Name" ? value['name']:value['code'];
+                              widget.onChange!(value);
+                            }));
+                return;
+              }
 
               if(widget.mapData['key']!="disabled"){
                 await showDialog(

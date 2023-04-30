@@ -146,8 +146,13 @@ class CreateMiscExpense extends StatelessWidget {
                        if(miscModel!.groupExpense == true){
                          formBloc!.showGroup.updateValue(true);
                          formBloc!.showAdd.updateValue(true);
-                         List<String> groupValues= miscModel!.groupEmployees!.split(",");
-                         formBloc!.groupIds.updateValue(groupValues);
+
+
+                         List<String> data= miscModel!.groupEmployees!.split(",");
+
+                         formBloc!.groupIds.updateValue(data);
+
+                         groupValues.addAll(data);
                        }
 
                        formBloc!.checkInDate.updateValue(miscModel!.startDate.toString());
@@ -352,7 +357,7 @@ class CreateMiscExpense extends StatelessWidget {
                                                         if(
                                                         formBloc!.miscID.value=="212" ||
                                                             formBloc!.miscID.value=="213" ||
-                                                            formBloc!.miscID.value=="195"
+                                                            formBloc!.miscID.value=="290"
                                                         ){
                                                           formBloc!.showAdd.updateValue(true);
                                                         }else{
@@ -600,7 +605,9 @@ class CreateMiscExpense extends StatelessWidget {
                         await showDialog(
                             context: appNavigatorKey.currentState!.context,
                             builder: (_) =>
-                                DialogGrooup(onSubmit: (value) {
+                                DialogGrooup(
+                                    isName:"Code",
+                                    onSubmit: (value) {
                                   groupValues.add(value);
                                   formBloc!.groupIds.clear();
                                   formBloc!.groupIds.changeValue(groupValues);
