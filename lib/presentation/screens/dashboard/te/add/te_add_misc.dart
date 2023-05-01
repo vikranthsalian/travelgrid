@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:travelgrid/common/config/navigator_key.dart';
 import 'package:travelgrid/common/constants/flavour_constants.dart';
 import 'package:travelgrid/common/enum/dropdown_types.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
@@ -13,12 +14,16 @@ import 'package:travelgrid/common/utils/upload_util.dart';
 import 'package:travelgrid/data/models/expense_model.dart';
 import 'package:travelgrid/data/models/success_model.dart';
 import 'package:travelgrid/data/models/te/te_misc_model.dart';
+import 'package:travelgrid/presentation/components/dialog_group.dart';
+import 'package:travelgrid/presentation/components/switch_component.dart';
 import 'package:travelgrid/presentation/components/upload_component.dart';
 import 'package:travelgrid/presentation/screens/dashboard/te/bloc/te_misc_form_bloc.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';
+import 'package:travelgrid/presentation/widgets/checkbox.dart';
 import 'package:travelgrid/presentation/widgets/date_time_view.dart';
 import 'package:travelgrid/presentation/widgets/dialog_selector_view.dart';
 import 'package:travelgrid/presentation/widgets/icon.dart';
+import 'package:travelgrid/presentation/widgets/svg_view.dart';
 import 'package:travelgrid/presentation/widgets/text_field.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
 
@@ -36,7 +41,7 @@ class AddTeMiscExpense extends StatelessWidget {
   bool loaded=false;
   File? file;
   String violationMessage="";
-
+  List<String> groupValues=[];
   Map errorMap={
     "text" : '',
     "color" : "0xFFFFFFFF",
@@ -119,6 +124,18 @@ class AddTeMiscExpense extends StatelessWidget {
 
                      if(isEdit){
 
+                       if(miscModel!.groupExpense == true){
+                         formBloc!.showGroup.updateValue(true);
+                         formBloc!.showAdd.updateValue(true);
+
+
+                         List<String> data= miscModel!.groupEmployees!.split(",");
+
+                         formBloc!.groupIds.updateValue(data);
+
+                         groupValues.addAll(data);
+                       }
+
                        formBloc!.checkInDate.updateValue(miscModel!.miscellaneousExpenseDate.toString());
                        formBloc!.checkOutDate.updateValue(miscModel!.miscellaneousExpenseEndDate.toString());
 
@@ -190,6 +207,56 @@ class AddTeMiscExpense extends StatelessWidget {
                                     AbsorbPointer(
                                       child: Column(
                                         children: [
+
+                                          BlocBuilder<SelectFieldBloc, SelectFieldBlocState>(
+                                              bloc: formBloc!.showAdd,
+                                              builder: (context, state) {
+                                                return Visibility(
+                                                  visible: state.value,
+                                                  child:  Container(
+                                                    child: Row(
+                                                      children: [
+                                                        Container(
+                                                          padding: EdgeInsets.only(right: 5.w,left: 5.w),
+                                                          height:20.w,
+                                                          width: 20.w,
+                                                          child: MetaCheckBox(
+                                                              mapData:jsonData['checkbox'],
+                                                              value:formBloc!.showGroup.value,
+                                                              onCheckPressed: (bool? value){
+                                                                formBloc!.showGroup.updateValue(value);
+                                                              }),
+                                                        ),
+                                                        SizedBox(width: 10.w,),
+                                                        MetaTextView(mapData: {
+                                                          "text" : 'Add Group',
+                                                          "color" : "0xFF000000",
+                                                          "size": "14",
+                                                          "family": "regular",
+                                                          "align" : "center-left"
+                                                        })
+                                                      ],
+                                                    ),
+                                                    margin: EdgeInsets.symmetric(vertical: 10.h,horizontal: 5.w),
+                                                  ),
+                                                );
+                                              }
+                                          ),
+
+
+                                          BlocBuilder<SelectFieldBloc, SelectFieldBlocState>(
+                                              bloc: formBloc!.showGroup,
+                                              builder: (context, state) {
+                                                return Visibility(
+                                                  visible: state.value,
+                                                  child:SwitchComponent(
+                                                      color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
+                                                      jsonData: jsonData['groupItems'],
+                                                      childWidget: buildGroupItemWidget(jsonData['groupItems']),
+                                                      initialValue: formBloc!.showGroup.value),
+                                                );
+                                              }
+                                          ),
                                           Row(
                                             children: [
                                               Expanded(
@@ -223,6 +290,21 @@ class AddTeMiscExpense extends StatelessWidget {
                                                         print(value);
                                                         formBloc!.miscName.updateValue(value['label']);
                                                         formBloc!.miscID.updateValue(value['id'].toString());
+
+
+                                                        if(
+                                                        formBloc!.miscID.value=="212" ||
+                                                            formBloc!.miscID.value=="213"
+                                                        ){
+                                                          formBloc!.showAdd.updateValue(true);
+                                                        }else{
+                                                          groupValues.clear();
+                                                          formBloc!.groupIds.clear();
+                                                          formBloc!.groupIds.updateValue([]);
+                                                          formBloc!.showAdd.updateValue(false);
+                                                        }
+
+
                                                       },),
                                                   ),
                                                 ),
@@ -327,6 +409,108 @@ class AddTeMiscExpense extends StatelessWidget {
 
     return null;
   }
+  Widget buildGroupItemWidget(Map map) {
+    List items =[];
+    items =  map['dataHeader'];
 
+
+    return  BlocBuilder<SelectFieldBloc, SelectFieldBlocState>(
+        bloc: formBloc!.groupIds,
+        builder: (context, state) {
+
+
+          List<String>? list  = formBloc!.groupIds.value ?? [] ;
+          print("Rebiuild formBloc!.groupIds");
+
+          return Container(
+            padding: EdgeInsets.symmetric(horizontal: 20.w,vertical: 10.h),
+            color: Colors.white,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Container(
+                    child: Row(
+                      children: items.map((e) {
+
+                        if(e['flex']==0){
+                          return Container(
+                              width: 50.w,
+                              margin: EdgeInsets.symmetric(horizontal: 0.w),
+                              child: MetaTextView(mapData: e));
+                        }
+
+                        return Expanded(
+                            flex: e['flex'],
+                            child: Container(
+                                margin: EdgeInsets.symmetric(horizontal: 0.w),
+                                child: MetaTextView(mapData: e)));
+                      }).toList(),
+                    )
+                ),
+                Divider(color: Color(0xff3D3D3D),),
+                ListView.builder(
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    scrollDirection: Axis.vertical,
+                    padding: EdgeInsets.zero,
+                    itemBuilder: (BuildContext context, int i) {
+
+                      return Container(
+                        margin: EdgeInsets.symmetric(vertical: 2.h),
+                        child: Row(
+                            children: [
+                              Expanded(flex:1, child: MetaTextView(mapData: map['listView']['item'],text:list[i]) ),
+                              !isView ? Container(
+                                width: 56.w,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    InkWell(onTap: (){
+                                      print("removing index:"+i.toString() );
+                                      groupValues.removeAt(i);
+                                      formBloc!.groupIds.clear();
+                                      formBloc!.groupIds.changeValue(groupValues);
+
+                                    },
+                                        child: Container(
+                                            width:25.w,
+                                            height:25.w,
+                                            child: MetaSVGView(mapData:  map['listView']['item']['items'][1]))),
+                                  ],
+                                ),
+                              ):Container(width: 50.w)
+                            ]),
+                      );
+                    },
+                    itemCount: list.length
+                ),
+                !isView?
+                Container(
+                  margin: EdgeInsets.only(top: 5.h),
+                  width: 90.w,
+                  height: 20.h,
+                  alignment: Alignment.centerRight,
+                  child: MetaButton(mapData: map['addButton'],
+                      onButtonPressed: ()async{
+                        await showDialog(
+                            context: appNavigatorKey.currentState!.context,
+                            builder: (_) =>
+                                DialogGrooup(
+                                    isName:"Code",
+                                    onSubmit: (value) {
+                                      groupValues.add(value);
+                                      formBloc!.groupIds.clear();
+                                      formBloc!.groupIds.changeValue(groupValues);
+                                    }));
+
+                      }
+                  ),
+                ):SizedBox()
+              ],
+            ),
+          );
+        }
+    );
+  }
 
 }

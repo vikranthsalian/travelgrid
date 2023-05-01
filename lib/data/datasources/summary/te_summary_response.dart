@@ -1030,6 +1030,8 @@ class MiscellaneousExpense {
   bool? withBill;
   bool? modified;
   String? description;
+  String? groupEmployees;
+  bool? groupExpense;
 
   MiscellaneousExpense(
       {this.id,
@@ -1047,6 +1049,8 @@ class MiscellaneousExpense {
       this.requireApproval,
       this.withBill,
       this.modified,
+        this.groupEmployees,
+        this.groupExpense,
       this.description});
 
   MiscellaneousExpense.fromJson(Map<String, dynamic> json) {
@@ -1066,6 +1070,8 @@ class MiscellaneousExpense {
     withBill = json['withBill'] ?? false;
     modified = json['modified'] ?? false;
     description = json['description'] ?? "";
+    groupEmployees = json['groupEmployees'] ?? "";
+    groupExpense = json['groupExpense'] ?? false;
   }
 
   Map<String, dynamic> toJson() {
@@ -1086,6 +1092,8 @@ class MiscellaneousExpense {
     data['withBill'] = this.withBill;
     data['modified'] = this.modified;
     data['description'] = this.description;
+    data['groupEmployees'] = this.groupEmployees;
+    data['groupExpense'] = this.groupExpense;
     return data;
   }
 
@@ -1107,6 +1115,8 @@ class MiscellaneousExpense {
       'withBill': this.withBill,
       'modified': this.modified,
       'description': this.description,
+      'groupEmployees': this.groupEmployees,
+      'groupExpense': this.groupExpense,
     };
   }
 
@@ -1128,6 +1138,8 @@ class MiscellaneousExpense {
       withBill: map['withBill'] as bool,
       modified: map['modified'] as bool,
       description: map['description'] as String,
+        groupEmployees : map['groupEmployees'] ?? "",
+        groupExpense : map['groupExpense'] ?? false
     );
   }
 }

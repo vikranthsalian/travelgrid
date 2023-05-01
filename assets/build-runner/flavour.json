@@ -8042,6 +8042,89 @@
       "onPress": true,
       "align": "center-left"
     },
+    "checkbox": {
+      "text" : "Add Group",
+      "color" : "0XFF000000",
+      "size": "10",
+      "family": "regular",
+      "align": "center-left"
+    },
+    "groupItems": {
+      "label": {
+        "text" : "Group Item Details",
+        "color" : "0xFF2854A1",
+        "size": "16",
+        "family": "bold",
+        "align": "center-left"
+      },
+      "showDetails": {
+        "label": {
+          "text" : "Show",
+          "color" : "0XFFFFFFFF",
+          "size": "10",
+          "family": "bold",
+          "align": "center-right"
+        }
+      },
+      "addButton": {
+        "text" : "Add Employee",
+        "color" : "0xFFFFFFFF",
+        "backgroundColor" : "0xFF2854A1",
+        "size": "10",
+        "family": "regular",
+        "borderRadius": 15.0
+      },
+      "dataHeader":  [
+        {
+          "text" : "Employee Code",
+          "color" : "0xFF000000",
+          "size": "10",
+          "family": "bold",
+          "align": "center-left",
+          "flex": 1
+        },
+        {
+          "text" : "Update",
+          "color" : "0xFF000000",
+          "size": "10",
+          "family": "bold",
+          "align": "center",
+          "flex": 0
+        }
+      ],
+      "listView": {
+        "item": {
+          "text" : "",
+          "color" : "0XFF000000",
+          "size": "10",
+          "family": "regular",
+          "align": "center-left",
+          "items": [
+            {
+              "icon": "edit.svg",
+              "color" : "0xFF2854A1"
+            },
+            {
+              "icon": "delete.svg",
+              "color" : "0xFFff0000"
+            }
+          ]
+        },
+        "emptyData": {
+          "image_view":   {
+            "image" : "logo_banner.png",
+            "align": "center",
+            "wd": 250.0
+          },
+          "title":  {
+            "text" : "No item Added!",
+            "color" : "0XFF3D3D3D",
+            "size": "16",
+            "family": "regular"
+          }
+        }
+      }
+    },
     "checkInDateTime": {
       "showView": "date",
       "dateView": {

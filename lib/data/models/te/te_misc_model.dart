@@ -14,6 +14,8 @@ class TEMiscModel {
   bool? requireApproval;
   bool? withBill;
   bool? modified;
+  String? groupEmployees;
+  bool? groupExpense;
 
   TEMiscModel(
       {this.miscellaneousExpenseDate,
@@ -30,6 +32,8 @@ class TEMiscModel {
         this.voilationMessage,
         this.requireApproval,
         this.withBill,
+        this.groupEmployees,
+        this.groupExpense,
         this.modified});
 
   TEMiscModel.fromJson(Map<String, dynamic> json) {
@@ -48,6 +52,8 @@ class TEMiscModel {
     requireApproval = json['requireApproval']?? false;
     withBill = json['withBill']?? false;
     modified = json['modified']?? false;
+    groupEmployees = json['groupEmployees'];
+    groupExpense = json['groupExpense'];
   }
 
   Map<String, dynamic> toJson() {
@@ -67,6 +73,8 @@ class TEMiscModel {
     data['requireApproval'] = this.requireApproval;
     data['withBill'] = this.withBill;
     data['modified'] = this.modified;
+    data['groupEmployees'] = this.groupEmployees;
+    data['groupExpense'] = this.groupExpense;
     return data;
   }
 
@@ -87,6 +95,8 @@ class TEMiscModel {
       'requireApproval': this.requireApproval,
       'withBill': this.withBill,
       'modified': this.modified,
+      'groupExpense': this.groupExpense,
+      'groupEmployees': this.groupEmployees,
     };
   }
 
@@ -107,6 +117,8 @@ class TEMiscModel {
       requireApproval: map['requireApproval'] ?? false,
       withBill: map['withBill'] ?? false,
       modified: map['modified'] ?? false,
+      groupExpense: map['groupExpense'] ?? false,
+      groupEmployees: map['groupEmployees'] ?? "" ,
     );
   }
 }

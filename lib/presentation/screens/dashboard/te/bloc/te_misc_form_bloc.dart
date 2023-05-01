@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
+import 'package:travelgrid/common/utils/show_alert.dart';
 import 'package:travelgrid/common/utils/validators.dart';
 
 
@@ -21,6 +22,10 @@ class MiscTeFormBloc extends FormBloc<String, String> {
   final tfAmount = TextFieldBloc();
   final tfDescription = TextFieldBloc();
   final voucherPath = TextFieldBloc();
+
+  final showGroup =  SelectFieldBloc<bool,dynamic>(initialValue: false);
+  final showAdd =  SelectFieldBloc<bool,dynamic>(initialValue: false);
+  final groupIds =  SelectFieldBloc<List<String>,dynamic>(initialValue: []);
 
   static String? emptyValidator(dynamic value) {
     if (value.isEmpty) {
@@ -67,6 +72,14 @@ class MiscTeFormBloc extends FormBloc<String, String> {
 
   @override
   FutureOr<void> onSubmitting() async {
+
+    bool isGroupExpense=false;
+    if(showGroup.value == true && groupIds.value!.isEmpty){
+      MetaAlert.showErrorAlert(message: "Please add group employees");
+    }
+    isGroupExpense=true;
+    String groupValues=groupIds.value!.join(",");
+
     try {
       Map<String, dynamic> saveMiscData = {
         "miscellaneousExpenseDate": checkInDate.value,
@@ -86,6 +99,9 @@ class MiscTeFormBloc extends FormBloc<String, String> {
         "requireApproval": false,
         "withBill": false,
         "modified": false,
+
+        "groupEmployees":groupValues,
+        "groupExpense":isGroupExpense,
       };
 
       emitSuccess(successResponse: jsonEncode(saveMiscData));

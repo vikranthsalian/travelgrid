@@ -524,7 +524,7 @@ class CreateMiscExpense extends StatelessWidget {
     items =  map['dataHeader'];
 
 
-  return  BlocBuilder<SelectFieldBloc, SelectFieldBlocState>(
+    return  BlocBuilder<SelectFieldBloc, SelectFieldBlocState>(
         bloc: formBloc!.groupIds,
         builder: (context, state) {
 
@@ -608,10 +608,10 @@ class CreateMiscExpense extends StatelessWidget {
                                 DialogGrooup(
                                     isName:"Code",
                                     onSubmit: (value) {
-                                  groupValues.add(value);
-                                  formBloc!.groupIds.clear();
-                                  formBloc!.groupIds.changeValue(groupValues);
-                                }));
+                                      groupValues.add(value);
+                                      formBloc!.groupIds.clear();
+                                      formBloc!.groupIds.changeValue(groupValues);
+                                    }));
 
                       }
                   ),
