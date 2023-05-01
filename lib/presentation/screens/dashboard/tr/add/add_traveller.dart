@@ -12,7 +12,7 @@ import 'package:travelgrid/common/utils/upload_util.dart';
 import 'package:travelgrid/data/models/expense_model.dart';
 import 'package:travelgrid/data/models/ge/ge_misc_model.dart';
 import 'package:travelgrid/data/models/tr/tr_traveller_details.dart';
-import 'package:travelgrid/presentation/screens/dashboard/te/bloc/traveller_form_bloc.dart';
+import 'package:travelgrid/presentation/screens/dashboard/tr/bloc/traveller_form_bloc.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';
 import 'package:travelgrid/presentation/widgets/date_time_view.dart';
 import 'package:travelgrid/presentation/widgets/dialog_selector_view.dart';
@@ -28,7 +28,8 @@ class AddTravellerDetails extends StatelessWidget {
   TRTravellerDetails? travellerDetails;
   String? tripType;
 
-  AddTravellerDetails(this.tripType,{this.onAdd,
+  AddTravellerDetails(this.tripType,{
+    this.onAdd,
     this.isEdit=false,
     this.isView=false,
     this.travellerDetails});

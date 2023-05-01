@@ -61,6 +61,7 @@ class TravellerFormBloc extends FormBloc<String, String> {
       'employeeType': "Non-Employee",
       'email': this.email.value,
       'name': this.fname.value+" "+lname.value,
+      'employeeName': this.fname.value+" "+lname.value,
       'gender': this.gender.value,
       'location': this.address.value,
       'mobileNumber': this.contact.value,

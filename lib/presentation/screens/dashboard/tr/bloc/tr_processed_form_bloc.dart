@@ -88,7 +88,12 @@ class ProcessedTrFormBloc extends FormBloc<String, String> {
         MetaAlert.showErrorAlert(message: "Please Select Employee");
         return;
       }
-      reqType= "onBehalf - "+employeeType.value!;
+      if(requestTypeID.value=="onBehalf"){
+        reqType= "onBehalf - "+employeeType.value!;
+      }else if(requestTypeID.value=="group"){
+        reqType= "group";
+      }
+
     }
 
     if(cityList.value!.isEmpty){

@@ -4,22 +4,18 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:travelgrid/common/config/navigator_key.dart';
 import 'package:travelgrid/common/constants/flavour_constants.dart';
 import 'package:travelgrid/common/extensions/capitalize.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
 import 'package:travelgrid/common/utils/city_util.dart';
 import 'package:travelgrid/common/utils/show_alert.dart';
-import 'package:travelgrid/common/utils/upload_util.dart';
 import 'package:travelgrid/data/datasources/summary/tr_summary_response.dart';
-import 'package:travelgrid/data/models/success_model.dart';
 import 'package:travelgrid/data/models/tr/tr_city_pair_model.dart';
 import 'package:travelgrid/data/models/tr/tr_forex_model.dart';
 import 'package:travelgrid/data/models/tr/tr_insurance_model.dart';
 import 'package:travelgrid/data/models/tr/tr_traveller_details.dart';
 import 'package:travelgrid/data/models/tr/tr_visa_model.dart';
 import 'package:travelgrid/presentation/components/dialog_cash.dart';
-import 'package:travelgrid/presentation/components/switch_component.dart';
 import 'package:travelgrid/presentation/screens/common/employees_screen.dart';
 import 'package:travelgrid/presentation/screens/dashboard/tr/add/add_forex.dart';
 import 'package:travelgrid/presentation/screens/dashboard/tr/add/add_insurance.dart';
@@ -68,7 +64,7 @@ class TrProcessed extends StatelessWidget {
   List<TrForexAdvance> listForex=[];
   List<TRTravelVisas> listVisa=[];
   List<TRTravelInsurance> listInsurance=[];
-
+  List<TRTravellerDetails> list =  [];
   bool showTravellerItems=true;
 
   @override
@@ -220,6 +216,7 @@ class TrProcessed extends StatelessWidget {
                                             formBloc!.requestTypeID.updateValue(value['id']);
                                             if(formBloc!.requestTypeID.value == "self"){
                                               formBloc!.travellerDetails.clear();
+                                              list.clear();
                                               formBloc!.travellerDetails.updateValue([]);
                                               formBloc!.employeeType.updateValue("");
                                             }
@@ -234,7 +231,9 @@ class TrProcessed extends StatelessWidget {
                                           builder: (context, state) {
                                             print(formBloc!.requestTypeID.value);
                                             return Visibility(
-                                              visible: state.value.toString().toLowerCase() == "onBehalf".toLowerCase() ? true : false,
+                                              visible: (
+                                                  state.value.toString().toLowerCase() == "onBehalf".toLowerCase()
+                                                  || state.value.toString().toLowerCase() == "group".toLowerCase()) ? true : false,
                                               child:Container(
                                                 child: MetaDialogSelectorView(mapData: jsonData['selectEmployeeType'],
                                                   text :getInitialText(formBloc!.employeeType.value!),
@@ -243,6 +242,7 @@ class TrProcessed extends StatelessWidget {
                                                   if(formBloc!.employeeType.value!=value['text']){
                                                     formBloc!.employeeType.updateValue(value['text']);
                                                     formBloc!.travellerDetails.clear();
+                                                    list.clear();
                                                   }
 
                                                   },),
@@ -259,79 +259,12 @@ class TrProcessed extends StatelessWidget {
                                 child: BlocBuilder<SelectFieldBloc, SelectFieldBlocState>(
                                     bloc: formBloc!.employeeType,
                                     builder: (context, state) {
-
+                                      print(formBloc!.employeeType.value);
                                       return Visibility(
-                                        visible: (formBloc!.requestTypeID.value.toString().toLowerCase() == "onBehalf".toLowerCase()) ? true : false,
-                                        child:  Column(
-                                          children: [
-                                            // Container(
-                                            //   margin: EdgeInsets.symmetric(horizontal: 10.w),
-                                            //   child: MetaSearchSelectorView(
-                                            //     formBloc!.employeeType.value,
-                                            //     isCitySearch: false,
-                                            //     mapData: jsonData['selectEmployeeCode'],
-                                            //     text: getInitialText(""),
-                                            //   //  text: getInitialText(formBloc!.travellerDetails.value?[0].employeeName ?? ""),
-                                            //     onChange:(value){
-                                            //       print(jsonEncode(value));
-                                            //       formBloc!.travellerDetails.updateValue([value]);
-                                            //     },),
-                                            //   alignment: Alignment.centerLeft,
-                                            // ),
-
-                                            buildExpandableView(jsonData,"travellerDetails",context),
-
-                                            // Container(
-                                            //   child: Row(
-                                            //     children: [
-                                            //       buildTravellerWidget(jsonData['travellerDetails']),
-                                            //       Expanded(
-                                            //         child: Container(
-                                            //             margin: EdgeInsets.symmetric(horizontal: 20.w),
-                                            //             child: InkWell(
-                                            //                 onTap: ()async{
-                                            //
-                                            //                   // if(formBloc!.cityList.value!.isEmpty){
-                                            //                   //   MetaAlert.showSuccessAlert(message: "Please add Itinerary Details First");
-                                            //                   //   return;
-                                            //                   // }
-                                            //                   //
-                                            //
-                                            //                     Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
-                                            //                         AddTravellerDetails(
-                                            //                           "D",
-                                            //                           isEdit:false,
-                                            //                           onAdd: (data){
-                                            //                           //  listInsurance.add(data);
-                                            //                           //  formBloc!.insuranceList.clear();
-                                            //                           //  formBloc!.insuranceList.changeValue(listInsurance);
-                                            //                           },)));
-                                            //
-                                            //
-                                            //
-                                            //
-                                            //                 },
-                                            //                 child: MetaTextView(mapData: {
-                                            //                   "text" : "Add",
-                                            //                   "color" : "0xFF2854A1",
-                                            //                   "size": "15",
-                                            //                   "family": "bold",
-                                            //                   "align": "center-right",
-                                            //                   "type": "cash"
-                                            //                 },text: "ADD")
-                                            //             )),
-                                            //       )
-                                            //     ],
-                                            //   ),
-                                            // )
-                                            //
-                                            // SwitchComponent(
-                                            //     color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
-                                            //     jsonData: jsonData['travellerDetails'],
-                                            //     childWidget: buildTravellerWidget(jsonData['travellerDetails']),
-                                            //     initialValue: showTravellerItems),
-                                          ],
-                                        ),
+                                        visible: (
+                                            state.value.toString().toLowerCase() == "employee".toLowerCase()
+                                                || state.value.toString().toLowerCase() == "non-employee".toLowerCase())  ? true : false,
+                                        child:buildExpandableView(jsonData,"travellerDetails",context)
                                       );
                                     }
                                 ),
@@ -873,14 +806,17 @@ class TrProcessed extends StatelessWidget {
                                     ],
                                   )),
                               SizedBox(width: 10.w,),
-                              InkWell(
+                              details.employeeType!="Employee" ? InkWell(
                                   onTap: (){
 
                                   },
                                   child: Container(
                                       width:25.w,
                                       height:25.w,
-                                      child: MetaSVGView(mapData:  map['listView']['items'][0]))),
+                                      child: MetaSVGView(mapData:  map['listView']['items'][0]))):
+                              Container(
+                                  width:25.w,
+                                  height:25.w),
                               SizedBox(width: 5.w,),
                               InkWell(
                                   onTap: (){
@@ -1070,52 +1006,75 @@ class TrProcessed extends StatelessWidget {
     if(formBloc!.requestTypeID.value.toString().toLowerCase() == "onBehalf".toLowerCase()){
 
     if(formBloc!.employeeType.value == "Employee"){
-        Navigator.of(ctx).push(
-            MaterialPageRoute(builder: (context) =>
-                EmployeeScreen(
-                  onTap: (data) {
-                    Navigator.pop(context);
-                      TRTravellerDetails model = TRTravellerDetails(
-                          employeeCode: data.employeecode,
-                          employeeName: data.fullName,
-                          name: data.fullName,
-                          gender: data.gender,
-                          email: data.currentContact!.email ?? "",
-                          employeeType: "Employee",
-                          mobileNumber: data.currentContact!.mobile ?? "",
-                         // location: data.loc ?? ""
-                      );
-                    formBloc!.travellerDetails.changeValue([model]);
-                  },
-                ))
-        );
+      if(formBloc!.travellerDetails.value!.length == 0){
+        navigateEmployee(ctx,false);
+      }else{
+        MetaAlert.showSuccessAlert(message: "Employee Details Already Added");
+      }
+
       }else{
         if(formBloc!.travellerDetails.value!.length == 0){
-          navigateTraveller(ctx,false);
+          navigateTraveller(ctx,false,TRTravellerDetails());
         }else{
           MetaAlert.showSuccessAlert(message: "Traveller Details Already Added");
         }
       }
-
+    }else if(formBloc!.requestTypeID.value.toString().toLowerCase() == "group".toLowerCase()){
+      if(formBloc!.employeeType.value == "Employee"){
+        navigateEmployee(ctx,false);
+      }else{
+        navigateTraveller(ctx,false,TRTravellerDetails());
+      }
     }
-
-
-
-
-
   }
 
-  void navigateTraveller(ctx,isEdit) {
+  void navigateTraveller(ctx,isEdit,details) {
     Navigator.of(ctx).push(MaterialPageRoute(builder: (context) =>
         AddTravellerDetails(
           tripType,
           isEdit:isEdit,
+          travellerDetails: details,
           onAdd: (data){
-            formBloc!.travellerDetails.changeValue([data]);
-            //  listInsurance.add(data);
-            //  formBloc!.insuranceList.clear();
-            //  formBloc!.insuranceList.changeValue(listInsurance);
+
+            if(formBloc!.requestTypeID.value.toString().toLowerCase() == "onBehalf".toLowerCase()){
+              formBloc!.travellerDetails.changeValue([data]);
+            }else{
+              list =  formBloc!.travellerDetails.value ?? [];
+              list.add(data);
+              formBloc!.travellerDetails.clear();
+              formBloc!.travellerDetails.changeValue(list);
+              print(formBloc!.travellerDetails.value);
+            }
           },)));
   }
+
+  void navigateEmployee(ctx,isEdit) {
+    Navigator.of(ctx).push(
+        MaterialPageRoute(builder: (context) =>
+            EmployeeScreen(
+              onTap: (data) {
+                Navigator.pop(context);
+                TRTravellerDetails model = TRTravellerDetails(
+                  employeeCode: data.employeecode,
+                  employeeName: data.fullName,
+                  name: data.fullName,
+                  gender: data.gender,
+                  email: data.currentContact!.email ?? "",
+                  employeeType: "Employee",
+                  mobileNumber: data.currentContact!.mobile ?? "",
+                );
+                if(formBloc!.requestTypeID.value.toString().toLowerCase() == "onBehalf".toLowerCase()){
+                  formBloc!.travellerDetails.changeValue([model]);
+                }else{
+                  formBloc!.travellerDetails.value ?? [];
+                  list.add(model);
+                  formBloc!.travellerDetails.clear();
+                  formBloc!.travellerDetails.changeValue(list);
+                }
+              },
+            ))
+    );
+  }
+
 
 }
