@@ -16,6 +16,7 @@ class TRTravellerDetails {
   String? deptName;
   String? companyCode;
   String? location;
+  bool? primary;
 
   TRTravellerDetails(
       {this.employeeCode,
@@ -34,6 +35,7 @@ class TRTravellerDetails {
         this.divisionName,
         this.deptName,
         this.companyCode,
+        this.primary,
         this.location});
 
   TRTravellerDetails.fromJson(Map<String, dynamic> json) {
@@ -54,6 +56,7 @@ class TRTravellerDetails {
     deptName = json['deptName'];
     companyCode = json['companyCode'];
     location = json['location'];
+    primary = json['primary'];
   }
 
   Map<String, dynamic> toJson() {
@@ -75,6 +78,7 @@ class TRTravellerDetails {
     data['deptName'] = this.deptName;
     data['companyCode'] = this.companyCode;
     data['location'] = this.location;
+    data['primary'] = this.primary;
     return data;
   }
 
@@ -97,6 +101,7 @@ class TRTravellerDetails {
       'deptName': this.deptName,
       'companyCode': this.companyCode,
       'location': this.location,
+      'primary': this.primary,
     };
   }
 
@@ -119,6 +124,7 @@ class TRTravellerDetails {
       deptName: map['deptName'] as String,
       companyCode: map['companyCode'] as String,
       location: map['location'] as String,
+      primary: map['primary'] ?? false,
     );
   }
 }

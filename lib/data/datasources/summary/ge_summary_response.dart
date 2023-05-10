@@ -1,3 +1,5 @@
+import 'package:travelgrid/data/models/ge/ge_group_accom_model.dart';
+
 class GESummaryResponse {
   bool? status;
   String? token;
@@ -182,8 +184,7 @@ class MaGeAccomodationExpense {
   String? voucherPath;
   bool? violated;
   String? voucherNumber;
-  String? groupEmployees;
-  bool? groupExpense;
+  List<GEGroupAccomModel>? maGeAccomodationGroupExpense;
 
   MaGeAccomodationExpense(
       {this.id,
@@ -204,8 +205,7 @@ class MaGeAccomodationExpense {
         this.voilationMessage,
         this.voucherPath,
         this.violated,
-        this.groupEmployees,
-        this.groupExpense,
+        this.maGeAccomodationGroupExpense,
         this.voucherNumber});
 
   MaGeAccomodationExpense.fromJson(Map<String, dynamic> json) {
@@ -228,8 +228,12 @@ class MaGeAccomodationExpense {
     voucherPath = json['voucherPath'];
     violated = json['violated'];
     voucherNumber = json['voucherNumber'];
-    groupEmployees = json['groupEmployees'];
-    groupExpense = json['groupExpense'];
+    if (json['maGeAccomodationGroupExpense'] != null) {
+      maGeAccomodationGroupExpense = [];
+      json['maGeAccomodationGroupExpense'].forEach((v) {
+        maGeAccomodationGroupExpense!.add(new GEGroupAccomModel.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -253,8 +257,10 @@ class MaGeAccomodationExpense {
     data['voucherPath'] = this.voucherPath;
     data['violated'] = this.violated;
     data['voucherNumber'] = this.voucherNumber;
-    data['groupEmployees'] = this.groupEmployees;
-    data['groupExpense'] = this.groupExpense;
+    if (this.maGeAccomodationGroupExpense != null) {
+      data['maGeAccomodationGroupExpense'] =
+          this.maGeAccomodationGroupExpense!.map((v) => v.toJson()).toList();
+    }
     return data;
   }
 }

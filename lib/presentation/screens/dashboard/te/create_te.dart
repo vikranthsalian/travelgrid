@@ -155,10 +155,12 @@ class _CreateTravelExpenseBodyState extends State<CreateTravelExpenseBody> {
   List<Tuple3<Map,String,String>> summaryDetails=[];
   List<String> values=[];
   List<ExpenseVisitDetails> visitItems=[];
+  List<MaTravelerDetails> travellerItems=[];
   List<MaTravelExpenseComment> commentList=[];
 
-  bool showRequesterDetails=false;
+  bool showRequesterDetails=true;
   bool showVisitDetails=true;
+  bool showTravllerDetails=true;
   bool showSummaryItems=true;
   bool showSummaryDetails=false;
   bool showApproverDetails=false;
@@ -293,6 +295,8 @@ class _CreateTravelExpenseBodyState extends State<CreateTravelExpenseBody> {
 
       getTicketModel(response.data!.ticketExpenses!);
 
+       travellerItems = response.data!.maTravelRequest!.maTravelerDetails ?? [];
+
       visitItems = response.data!.expenseVisitDetails ?? [];
 
       commentList= response.data!.matravelExpenseComment ?? [];
@@ -318,9 +322,15 @@ class _CreateTravelExpenseBodyState extends State<CreateTravelExpenseBody> {
          //   buildExpandableView(jsonData,"visitItems"),
             SwitchComponent(
                 color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
+                jsonData: jsonData['travellerDetails'],
+                childWidget: buildTravellerItemWidget(jsonData['travellerDetails']),
+                initialValue: showTravllerDetails),
+            SwitchComponent(
+                color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
                 jsonData: jsonData['visitItems'],
                 childWidget: buildVisitItemWidget(jsonData['visitItems']),
                 initialValue: showVisitDetails),
+
          //   buildExpandableView(jsonData,"summaryItems"),
             SwitchComponent(
                 color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
@@ -559,6 +569,53 @@ class _CreateTravelExpenseBodyState extends State<CreateTravelExpenseBody> {
             );
           },
         )
+    );
+  }
+
+  Container buildTravellerItemWidget(Map map) {
+    List items =[];
+    items =  map['dataHeader'];
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 20.w,vertical: 10.h),
+      color: Colors.white,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Container(
+              child: Row(
+                children: items.map((e) {
+                  return Expanded(
+                      flex: e['flex'],
+                      child: Container(
+                          margin: EdgeInsets.symmetric(horizontal: 0.w),
+                          child: MetaTextView(mapData: e)));
+                }).toList(),
+              )
+          ),
+          Divider(color: Color(0xff3D3D3D),),
+          ListView.builder(
+              physics: NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              scrollDirection: Axis.vertical,
+              padding: EdgeInsets.zero,
+              itemBuilder: (BuildContext context, int i) {
+
+                print("travellerItems[i].toJson()");
+                print(travellerItems[i].toJson());
+                return Container(
+                  margin: EdgeInsets.symmetric(vertical: 2.h),
+                  child: Row(
+                      children: [
+                        Expanded(flex:1, child: MetaTextView(mapData: map['listView']['item'],text: CityUtil.getCityNameFromID(travellerItems[i].employeeCode) )),
+                        Expanded(flex:1,child: MetaTextView(mapData: map['listView']['item'],text:travellerItems[i].employeeName )),
+                        Expanded(flex:1,child: MetaTextView(mapData: map['listView']['item'],text:travellerItems[i].email)),
+                      ]),
+                );
+              },
+              itemCount: travellerItems.length
+          )
+        ],
+      ),
     );
   }
 

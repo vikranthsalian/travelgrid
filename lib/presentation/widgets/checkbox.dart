@@ -4,13 +4,11 @@ import 'package:flutter/material.dart';
 class MetaCheckBox extends StatefulWidget {
 
   Function(bool)? onCheckPressed;
-  Map mapData;
   bool? value;
 
   MetaCheckBox({
     this.onCheckPressed,
     this.value = false,
-    required this.mapData,
   });
 
   @override

@@ -922,6 +922,38 @@
         "align": "center-right"
       }
     },
+    "travellerDetails": {
+      "label": {
+        "text" : "Traveller Details",
+        "color" : "0xFF2854A1",
+        "size": "16",
+        "family": "bold",
+        "align": "center-left"
+      },
+      "showDetails": {
+        "label": {
+          "text" : "Show",
+          "color" : "0XFFFFFFFF",
+          "size": "10",
+          "family": "bold",
+          "align": "center-right"
+        }
+      },
+      "header": {
+        "text" : "",
+        "color" : "0xFF000000",
+        "size": "12",
+        "family": "bold",
+        "align": "center"
+      },
+      "item": {
+        "text" : "",
+        "color" : "0xFFCCCCCC",
+        "size": "11",
+        "family": "bold",
+        "align": "center"
+      }
+    },
     "cashAdvanceDetails": {
       "label": {
         "text" : "Cash Advance Details",
@@ -6003,6 +6035,91 @@
         "family": "regular",
         "align": "center-left"
       }
+    },
+    "travellerDetails": {
+      "label": {
+        "text" : "Traveller Details",
+        "color" : "0xFF2854A1",
+        "size": "16",
+        "family": "bold",
+        "align": "center-left"
+      },
+      "showDetails": {
+        "label": {
+          "text" : "Show",
+          "color" : "0XFFFFFFFF",
+          "size": "10",
+          "family": "bold",
+          "align": "center-right"
+        }
+      },
+      "addButton": {
+        "text" : "Add Visit",
+        "color" : "0xFFFFFFFF",
+        "backgroundColor" : "0xFF2854A1",
+        "size": "10",
+        "family": "regular",
+        "borderRadius": 15.0
+      },
+      "dataHeader":  [
+        {
+          "text" : "Employee Code",
+          "color" : "0xFF000000",
+          "size": "10",
+          "family": "bold",
+          "align": "center-left",
+          "flex": 1
+        },
+        {
+          "text" : "Employee Name",
+          "color" : "0xFF000000",
+          "size": "10",
+          "family": "bold",
+          "align": "center-left",
+          "flex": 1
+        },
+        {
+          "text" : "Email",
+          "color" : "0xFF000000",
+          "size": "10",
+          "family": "bold",
+          "align": "center-left",
+          "flex": 1
+        }
+      ],
+      "listView": {
+        "item": {
+          "text" : "",
+          "color" : "0XFF000000",
+          "size": "10",
+          "family": "regular",
+          "align": "center-left",
+          "items": [
+            {
+              "icon": "edit.svg",
+              "color" : "0xFF2854A1"
+            },
+            {
+              "icon": "delete.svg",
+              "color" : "0xFFff0000"
+            }
+          ]
+        },
+        "emptyData": {
+          "image_view":   {
+            "image" : "logo_banner.png",
+            "align": "center",
+            "wd": 250.0
+          },
+          "title":  {
+            "text" : "No item Added!",
+            "color" : "0XFF3D3D3D",
+            "size": "16",
+            "family": "regular"
+          }
+        }
+      }
+
     },
     "visitItems": {
       "label": {

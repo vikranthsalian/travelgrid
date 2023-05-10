@@ -1,3 +1,4 @@
+import 'package:travelgrid/data/blocs/cities/city_bloc.dart';
 import 'package:travelgrid/data/models/ge/ge_group_accom_model.dart';
 
 class GEAccomModel {
@@ -116,6 +117,17 @@ class GEAccomModel {
   }
 
   factory GEAccomModel.fromMap(Map<String, dynamic> map) {
+
+
+    List<GEGroupAccomModel>  getGroupAccom(list) {
+      List<GEGroupAccomModel> data=[];
+
+      for(var item in list){
+        data.add(GEGroupAccomModel.fromMap(item));
+      }
+    return data;
+    }
+
     return GEAccomModel(
       checkInDate: map['checkInDate'] as String,
       checkInTime: map['checkInTime'] as String,
@@ -134,7 +146,8 @@ class GEAccomModel {
       withBill: map['withBill'] as bool,
       voucherPath: map['voucherPath'] as String,
       voucherNumber: map['voucherNumber'] as String,
-      maGeAccomodationGroupExpense: map['maGeAccomodationGroupExpense'] ?? []
+      maGeAccomodationGroupExpense: getGroupAccom(map['maGeAccomodationGroupExpense'])
     );
   }
+
 }

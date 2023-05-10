@@ -105,11 +105,12 @@ class _InitRootState extends State<InitRoot> {
                                                 onGenerateRoute: AppRoutes().generateRoute,
                                                 themeMode: ThemeMode.system,
                                                 theme: GlobalTheme().globalTheme,
-                                                builder: (_, child) {
-                                                  return PrivacyGate(
-                                                    child: EasyLoading.init()(context,child),
-                                                  );
-                                                },
+                                                builder: EasyLoading.init(),
+                                                // builder: (_, child) {
+                                                //   // return PrivacyGate(
+                                                //   //   child: EasyLoading.init()(context,child),
+                                                //   // );
+                                                // },
                                               );
                                             }
                                           );

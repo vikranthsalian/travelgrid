@@ -146,6 +146,49 @@ class AddGroupAccommodation extends StatelessWidget {
                                         children: [
 
                                           Container(
+                                            margin: EdgeInsets.symmetric(horizontal: 10.w),
+                                            child: Row(
+                                              children: [
+                                                Expanded(
+                                                  child: BlocBuilder<SelectFieldBloc, SelectFieldBlocState>(
+                                                      bloc: formBloc!.empCode,
+                                                      builder: (context, state) {
+                                                        return Container(
+                                                          child: MetaDialogSelectorView(mapData: jsonData['selectEmployeeCode'],
+                                                            text :getInitialText(formBloc!.empCode.value ?? ""),
+                                                            onChange:(value){
+                                                              print(value);
+                                                              formBloc!.empName.updateValue(value['name']);
+                                                              formBloc!.empCode.updateValue(value['code']);
+
+                                                            },),
+                                                        );
+                                                      }
+                                                  ),
+                                                ),
+                                                Expanded(
+                                                  child: BlocBuilder<SelectFieldBloc, SelectFieldBlocState>(
+                                                      bloc: formBloc!.empName,
+                                                      builder: (context, state) {
+                                                        return Container(
+                                                          child: MetaDialogSelectorView(mapData: jsonData['selectEmployeeName'],
+                                                            text :getInitialText(formBloc!.empName.value ?? ""),
+                                                            onChange:(value){
+                                                              print(value);
+                                                              formBloc!.empName.updateValue(value['name']);
+                                                              formBloc!.empCode.updateValue(value['code']);
+
+                                                            },),
+                                                        );
+                                                      }
+                                                  ),
+                                                ),
+
+                                              ],
+                                            ),
+                                          ),
+
+                                          Container(
                                             child: MetaDateTimeView(mapData: jsonData['checkInDateTime'],
                                               disableFutureDates:true,
                                               value: {
@@ -171,47 +214,7 @@ class AddGroupAccommodation extends StatelessWidget {
                                               },),
                                           ),
 
-                                          Container(
-                                            margin: EdgeInsets.symmetric(horizontal: 10.w),
-                                            child: Row(
-                                              children: [
-                                                Expanded(
-                                                  child: BlocBuilder<SelectFieldBloc, SelectFieldBlocState>(
-                                                      bloc: formBloc!.empName,
-                                                      builder: (context, state) {
-                                                        return Container(
-                                                          child: MetaDialogSelectorView(mapData: jsonData['selectEmployeeName'],
-                                                            text :getInitialText(formBloc!.empName.value ?? ""),
-                                                            onChange:(value){
-                                                              print(value);
-                                                              formBloc!.empName.updateValue(value['name']);
-                                                              formBloc!.empCode.updateValue(value['code']);
 
-                                                            },),
-                                                        );
-                                                      }
-                                                  ),
-                                                ),
-                                                Expanded(
-                                                  child: BlocBuilder<SelectFieldBloc, SelectFieldBlocState>(
-                                                      bloc: formBloc!.empCode,
-                                                      builder: (context, state) {
-                                                        return Container(
-                                                          child: MetaDialogSelectorView(mapData: jsonData['selectEmployeeCode'],
-                                                            text :getInitialText(formBloc!.empCode.value ?? ""),
-                                                            onChange:(value){
-                                                              print(value);
-                                                              formBloc!.empName.updateValue(value['name']);
-                                                              formBloc!.empCode.updateValue(value['code']);
-
-                                                            },),
-                                                        );
-                                                      }
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                          ),
 
                                         ],
                                       ),

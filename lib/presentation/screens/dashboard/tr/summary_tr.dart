@@ -49,6 +49,7 @@ class _TravelRequestSummaryState extends State<TravelRequestSummary> {
 
   bool showRequesterDetails=false;
   bool cityPairDetails=true;
+  bool maTravellerDetails=false;
   bool cashAdvanceDetails=false;
   bool forexAdvanceDetails=false;
   bool visaDetails=false;
@@ -56,6 +57,7 @@ class _TravelRequestSummaryState extends State<TravelRequestSummary> {
   bool showApproverDetails=false;
   String tripType="";
   List<MaCityPairs>? cityPairList=[];
+  List<MaTravelerDetails>? travellerList=[];
   List<MaCashAdvance>? cashAdvanceList=[];
   List<MaForexAdvance>? forexAdvanceList=[];
   List<MaTravelVisas>? visaList=[];
@@ -189,6 +191,7 @@ class _TravelRequestSummaryState extends State<TravelRequestSummary> {
        TRSummaryResponse? response = state.responseSum;
        tripType = response!.data?.tripType  ?? "Domestic";
 
+       travellerList = response.data?.maTravelerDetails ?? [];
        cityPairList = response.data?.maCityPairs ?? [];
        cashAdvanceList = response.data?.maCashAdvance ?? [];
        forexAdvanceList = response.data?.maForexAdvance ?? [];
@@ -216,16 +219,21 @@ class _TravelRequestSummaryState extends State<TravelRequestSummary> {
           //  buildExpandableView(jsonData,"requesterDetails"),
             SwitchComponent(
                 color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
+                jsonData: jsonData['travellerDetails'],
+                childWidget: buildTravellerWidget(jsonData['travellerDetails']),
+                initialValue: maTravellerDetails),
+            SwitchComponent(
+                color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
                 jsonData: jsonData['cityPairDetails'],
                 childWidget: buildCityPairWidget(jsonData['cityPairDetails']),
                 initialValue: cityPairDetails),
            // buildExpandableView(jsonData,"cityPairDetails"),
             if(tripType=="Domestic")
-              SwitchComponent(
-                  color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
-                  jsonData: jsonData['cashAdvanceDetails'],
-                  childWidget: buildCashAdvanceWidget(jsonData['cashAdvanceDetails']),
-                  initialValue: cashAdvanceDetails),
+            SwitchComponent(
+                color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
+                jsonData: jsonData['cashAdvanceDetails'],
+                childWidget: buildCashAdvanceWidget(jsonData['cashAdvanceDetails']),
+                initialValue: cashAdvanceDetails),
          //   buildExpandableView(jsonData,"cashAdvanceDetails"),
             if(tripType=="Overseas")
               SwitchComponent(
@@ -584,6 +592,58 @@ class _TravelRequestSummaryState extends State<TravelRequestSummary> {
                 );
               },
               itemCount: cityPairList!.length
+          ),
+        ],
+      ):SizedBox(),
+    );
+
+  }
+
+  Container buildTravellerWidget(Map map) {
+
+    return  Container(
+      padding: EdgeInsets.symmetric(horizontal: 10.w),
+      color: Colors.white,
+      child: travellerList!.isNotEmpty ? Column(
+        children: [
+          Row(
+            children: [
+              Container(
+                  width: 40.w,
+                  child: MetaTextView(mapData:  map['header'],text: "Sl.No.")),
+              Expanded(child: MetaTextView(mapData:  map['header'],text: "Employee Code",)),
+              Expanded(
+                  flex: 2,
+                  child: MetaTextView(mapData:  map['header'],text: "Employee Name")),
+              Expanded(child: MetaTextView(mapData:  map['header'],text: "Email")),
+              //     Expanded(child: MetaTextView(mapData:  map['dAmount'])),
+            ],
+          ),
+          ListView.builder(
+              physics: NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              padding: EdgeInsets.zero,
+              itemBuilder: (BuildContext context, int index) {
+                MaTravelerDetails item = travellerList![index];
+                return Container(
+                  padding: EdgeInsets.symmetric(vertical: 5.h),
+                  color: Colors.white,
+                  child:  Row(
+                    children: [
+                      Container(
+                          width: 40.w,
+                          child: MetaTextView(mapData:  map['item'],text: (index+1).toString())),
+                      Expanded(child: MetaTextView(mapData:  map['item'],text: item.employeeCode,)),
+                      Expanded(
+                          flex: 2,
+                          child: MetaTextView(mapData:  map['item'],text:item.employeeName )),
+                      Expanded(child: MetaTextView(mapData:  map['item'],text: item.email)),
+                      //     Expanded(child: MetaTextView(mapData:  map['dAmount'])),
+                    ],
+                  ),
+                );
+              },
+              itemCount: travellerList!.length
           ),
         ],
       ):SizedBox(),

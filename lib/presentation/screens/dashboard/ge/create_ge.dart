@@ -728,7 +728,6 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpenseBody> {
     }
 
     if(e['onClick'].toString() == RouteConstants.createAccommodationExpensePath  || e['onClick'].toString()  == GETypes.ACCOMMODATION.toString()){
-      print(GETypes.MISCELLANEOUS);
       print(data);
       GEAccomModel? model;
       if(data.isNotEmpty){

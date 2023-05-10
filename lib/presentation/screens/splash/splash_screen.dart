@@ -22,7 +22,7 @@ class SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState() {
-    setPrivacyScreenConfig();
+   // setPrivacyScreenConfig();
     splashData = FlavourConstants.splashData;
     prettyPrint(splashData);
     splashBottomText = FlavourConstants.splashData['splash_bottom_text'];

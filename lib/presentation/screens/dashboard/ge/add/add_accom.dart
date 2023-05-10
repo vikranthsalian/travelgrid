@@ -229,7 +229,6 @@ class CreateAccommodationExpense extends StatelessWidget {
                                                           height:20.w,
                                                           width: 20.w,
                                                           child: MetaCheckBox(
-                                                              mapData:jsonData['checkbox'],
                                                               value:formBloc!.showGroup.value,
                                                               onCheckPressed: (bool? value){
                                                                 formBloc!.showGroup.updateValue(value);

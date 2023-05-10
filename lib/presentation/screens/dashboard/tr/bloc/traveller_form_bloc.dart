@@ -65,6 +65,7 @@ class TravellerFormBloc extends FormBloc<String, String> {
       'gender': this.gender.value,
       'location': this.address.value,
       'mobileNumber': this.contact.value,
+      'primary': false,
     };
      emitSuccess(successResponse: jsonEncode(saveVisitData));
 

@@ -51,7 +51,7 @@ class Data {
   String? comments;
   String? grade;
   MaRequesterDetails? maRequesterDetails;
-  MaTravelerDetails? maTravelerDetails;
+  List<MaTravelerDetails>? maTravelerDetails;
   List<MaCityPairs>? maCityPairs;
   List<MaCashAdvance>? maCashAdvance;
   List<MaForexAdvance>? maForexAdvance;
@@ -89,7 +89,10 @@ class Data {
     comments = json['comments'];
     grade = json['grade'];
     maRequesterDetails = json['maRequesterDetails'] != null ? new MaRequesterDetails.fromJson(json['maRequesterDetails']) : null;
-    maTravelerDetails = json['maTravelerDetails'] != null ? new MaTravelerDetails.fromJson(json['maTravelerDetails']) : null;
+    if (json['maTravelerDetails'] != null) {
+      maTravelerDetails = <MaTravelerDetails>[];
+      json['maTravelerDetails'].forEach((v) { maTravelerDetails!.add(new MaTravelerDetails.fromJson(v)); });
+    }
     if (json['maCityPairs'] != null) {
       maCityPairs = <MaCityPairs>[];
       json['maCityPairs'].forEach((v) { maCityPairs!.add(new MaCityPairs.fromJson(v)); });
@@ -146,6 +149,9 @@ class Data {
       data['maRequesterDetails'] = this.maRequesterDetails!.toJson();
     }
     data['maTravelerDetails'] = this.maTravelerDetails;
+    if (this.maTravelerDetails != null) {
+      data['maTravelerDetails'] = this.maTravelerDetails!.map((v) => v.toJson()).toList();
+    }
     if (this.maCityPairs != null) {
       data['maCityPairs'] = this.maCityPairs!.map((v) => v.toJson()).toList();
     }

@@ -601,7 +601,6 @@ class CreateTravelExpenseOV extends StatelessWidget {
                             height:20.w,
                             width: 20.w,
                             child: MetaCheckBox(
-                                mapData:map['listView']['checkbox'],
                                 value:list[i].isChecked,
                                 onCheckPressed: (bool? value){
                                   list[i].isChecked = value;

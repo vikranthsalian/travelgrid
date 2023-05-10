@@ -23,6 +23,7 @@ import 'package:travelgrid/presentation/screens/dashboard/tr/add/add_traveller.d
 import 'package:travelgrid/presentation/screens/dashboard/tr/add/add_visa.dart';
 import 'package:travelgrid/presentation/screens/dashboard/tr/add/build_itenerary.dart';
 import 'package:travelgrid/presentation/screens/dashboard/tr/bloc/tr_processed_form_bloc.dart';
+import 'package:travelgrid/presentation/widgets/checkbox.dart';
 import 'package:travelgrid/presentation/widgets/dialog_selector_view.dart';
 import 'package:travelgrid/presentation/widgets/search_selector_view.dart';
 import 'package:travelgrid/presentation/widgets/svg_view.dart';
@@ -40,6 +41,7 @@ class TrProcessed extends StatelessWidget {
   File? file;
   Map<String,dynamic> jsonData = {};
   ProcessedTrFormBloc?  formBloc;
+
   var map = {
     "text" : '',
     "color" : "0xFFFFFFFF",
@@ -107,26 +109,23 @@ class TrProcessed extends StatelessWidget {
 
 
                   if(summaryResponse?.data?.maRequesterDetails?.requestType.toString()!="self") {
-                    formBloc!.employeeType.updateValue(
-                        summaryResponse?.data?.maTravelerDetails!.employeeType
-                            .toString() ?? "");
 
-                    TRTravellerDetails details = TRTravellerDetails(
-                        employeeCode: summaryResponse?.data?.maTravelerDetails!
-                            .employeeCode,
-                        employeeName: summaryResponse?.data?.maTravelerDetails!
-                            .employeeName,
-                        email: summaryResponse?.data?.maTravelerDetails!
-                            .email ?? "",
-                        employeeType: summaryResponse?.data?.maTravelerDetails!
-                            .employeeType,
-                        mobileNumber: summaryResponse?.data?.maTravelerDetails!
-                            .mobileNumber ?? "",
-                        emergencyContactNo: summaryResponse?.data
-                            ?.maTravelerDetails!.emergencyContactNo ?? ""
-                    );
+                   List<TRTravellerDetails> details=[];
+                    for(var item in summaryResponse!.data!.maTravelerDetails!){
 
-                    formBloc!.travellerDetails.updateValue([details]);
+                      formBloc!.employeeType.updateValue(item.employeeType);
+
+                     details.add(TRTravellerDetails(
+                      employeeCode: item.employeeCode,
+                      employeeName:item.employeeName ?? "",
+                      name:item.name ?? "",
+                      email: item.email ?? "",
+                      employeeType: item.employeeType,
+                      mobileNumber:item.mobileNumber ?? "",
+                      emergencyContactNo:item.emergencyContactNo ?? ""
+                     ));
+                    }
+                    formBloc!.travellerDetails.updateValue(details);
                   }
 
                   formBloc!.purposeOfTravel.updateValue(summaryResponse?.data?.purposeOfVisit.toString()??"");
@@ -763,6 +762,19 @@ class TrProcessed extends StatelessWidget {
         bloc: formBloc!.travellerDetails,
         builder: (context, state) {
           List<TRTravellerDetails>? list  = formBloc!.travellerDetails.value ?? [] ;
+            bool  checkIndex=false;
+
+
+          for(var item in list){
+            if(item.primary==true){
+              checkIndex=true;
+              break;
+            }
+          }
+
+          if((checkIndex==false && list.isNotEmpty)){
+            list[0].primary=true;
+          }
 
           return  Container(
             padding: EdgeInsets.symmetric(horizontal: 10.w,vertical: 10.h),
@@ -771,7 +783,7 @@ class TrProcessed extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Expanded(child: MetaTextView(mapData:  map['header'],text: "Name")),
+                    Expanded(child: MetaTextView(mapData:  map['header'],text: "TR Traveller")),
                   //  Expanded(child: MetaTextView(mapData:  map['header'],text: "Gender")),
                     Expanded(
                       flex: 2,
@@ -787,13 +799,25 @@ class TrProcessed extends StatelessWidget {
                     shrinkWrap: true,
                     padding: EdgeInsets.zero,
                     itemBuilder: (BuildContext context, int index) {
-                      TRTravellerDetails? details  = formBloc!.travellerDetails.value![index] ;
+                      TRTravellerDetails? details  = list[index] ;
                       return Container(
                         padding: EdgeInsets.symmetric(horizontal: 10.w,vertical: 10.h),
                         color: Colors.white,
                         child: Container(
                           child: Row(
                             children: [
+                                    MetaCheckBox(
+                                      value: details.primary ?? false,
+                                      onCheckPressed: (value){
+                                        for(var item in list){
+                                          item.primary=false;
+                                        }
+                                        details.primary=true;
+                                        formBloc!.travellerDetails.clear();
+                                        formBloc!.travellerDetails.changeValue(list);
+                                      }),
+                               // }
+                              //),
                               Expanded(child: MetaTextView(mapData:  map['item'],text:details.name)),
                              // Expanded(child: MetaTextView(mapData:  map['item'],text: details.gender!)),
                               Expanded(
@@ -820,6 +844,11 @@ class TrProcessed extends StatelessWidget {
                               SizedBox(width: 5.w,),
                               InkWell(
                                   onTap: (){
+
+                                    list.removeAt(index);
+
+                                    formBloc!.travellerDetails.clear();
+                                    formBloc!.travellerDetails.changeValue(list);
 
                                   },
                                   child: Container(
@@ -1057,6 +1086,7 @@ class TrProcessed extends StatelessWidget {
                 TRTravellerDetails model = TRTravellerDetails(
                   employeeCode: data.employeecode,
                   employeeName: data.fullName,
+                  primary: false,
                   name: data.fullName,
                   gender: data.gender,
                   email: data.currentContact!.email ?? "",
