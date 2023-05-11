@@ -83,6 +83,12 @@ class MiscFormBloc extends FormBloc<String, String> {
           showError.updateValue(true);
           return;
         }
+
+        if(miscID.value == "213" && tfAmount.valueToDouble! > showErrorValue.valueToDouble!){
+          showError.updateValue(true);
+          return;
+        }
+
         showError.updateValue(false);
       });
 
