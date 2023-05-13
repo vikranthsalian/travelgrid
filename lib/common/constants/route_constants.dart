@@ -15,6 +15,7 @@ class RouteConstants {
   static const approvalExpensePath = "/approvalExpense";
   static const addItineraryPath = "/addItinerary";
 
+  static const profilePath = "/viewProfile";
   static const policyPath = "/viewPolicies";
   static const walletPath = "/viewWallet";
   static const imagePath = "/viewImage";

@@ -331,6 +331,113 @@
       }
     }
   },
+  "profile_screen_data" : {
+    "backgroundColor" : "0xFF2854A1",
+    "backBar": {
+      "icon": "back",
+      "size": 20.0,
+      "color": "0XFFFFFFFF",
+      "backgroundColor": "transparent",
+      "onPress": true,
+      "align": "center-left"
+    },
+
+    "svgIcon":{
+      "icon": "profile.svg"
+    },
+    "name":  {
+      "text" : "",
+      "color" : "0XFFFFFFFF",
+      "size": "22",
+      "family": "bold",
+      "align": "center"
+    },
+    "title":  {
+      "text" : "",
+      "color" : "0XFFFFFFFF",
+      "size": "18",
+      "family": "bold",
+      "align": "center"
+    },
+    "subtitle":  {
+      "text" : "",
+      "color" : "0XFFFFFFFF",
+      "size": "14",
+      "family": "regular",
+      "align": "center"
+    },
+    "contactDetails":  {
+      "label": {
+        "text" : "Contact Details",
+        "color" : "0XFFFFFFFF",
+        "size": "14",
+        "family": "bold",
+        "align": "center-left"
+      },
+      "showDetails": {
+        "label": {
+          "text" : "Show",
+          "color" : "0XFFFFFFFF",
+          "size": "10",
+          "family": "bold",
+          "align": "center-left"
+        }
+      },
+      "gridLabel": {
+        "text" : "",
+        "color" : "0XFF000000",
+        "size": "10",
+        "family": "bold",
+        "align": "center-left"
+      },
+      "gridValue": {
+        "text" : "",
+        "color" : "0XFFAEAEAE",
+        "size": "7",
+        "family": "regular",
+        "align": "center-left"
+      }
+    },
+    "orgDetails":  {
+      "label": {
+        "text" : "Contact Details",
+        "color" : "0XFFFFFFFF",
+        "size": "14",
+        "family": "bold",
+        "align": "center-left"
+      },
+      "showDetails": {
+        "label": {
+          "text" : "Show",
+          "color" : "0XFFFFFFFF",
+          "size": "10",
+          "family": "bold",
+          "align": "center-left"
+        }
+      },
+      "gridLabel": {
+        "text" : "",
+        "color" : "0XFF000000",
+        "size": "10",
+        "family": "bold",
+        "align": "center-left"
+      },
+      "gridValue": {
+        "text" : "",
+        "color" : "0XFFAEAEAE",
+        "size": "7",
+        "family": "regular",
+        "align": "center-left"
+      }
+    },
+    "logout": {
+      "icon": "logout",
+      "size": 20.0,
+      "color": "0XFFFFFFFF",
+      "backgroundColor": "0XFFFFFFFF",
+      "onPress": true
+    }
+  },
 
   "tr_screen_data" : {
     "backgroundColor" : "0xFF2854A1",

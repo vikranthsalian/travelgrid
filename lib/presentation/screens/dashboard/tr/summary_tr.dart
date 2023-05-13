@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,11 +13,9 @@ import 'package:travelgrid/data/datasources/login_response.dart';
 import 'package:travelgrid/data/datasources/summary/tr_summary_response.dart';
 import 'package:travelgrid/data/models/expense_model.dart';
 import 'package:travelgrid/data/models/success_model.dart';
-import 'package:travelgrid/domain/usecases/te_usecase.dart';
 import 'package:travelgrid/domain/usecases/tr_usecase.dart';
 import 'package:travelgrid/presentation/components/bloc_map_event.dart';
 import 'package:travelgrid/presentation/components/switch_component.dart';
-import 'package:travelgrid/presentation/components/upload_component.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';
 import 'package:travelgrid/presentation/widgets/dialog_selector_view.dart';
 import 'package:travelgrid/presentation/widgets/icon.dart';
@@ -594,7 +591,7 @@ class _TravelRequestSummaryState extends State<TravelRequestSummary> {
               itemCount: cityPairList!.length
           ),
         ],
-      ):SizedBox(),
+      ):noDataAdded(),
     );
 
   }
@@ -608,14 +605,16 @@ class _TravelRequestSummaryState extends State<TravelRequestSummary> {
         children: [
           Row(
             children: [
-              Container(
-                  width: 40.w,
-                  child: MetaTextView(mapData:  map['header'],text: "Sl.No.")),
-              Expanded(child: MetaTextView(mapData:  map['header'],text: "Employee Code",)),
+              // Container(
+              //     width: 40.w,
+              //     child: MetaTextView(mapData:  map['header'],text: "Sl.No.")),
+              Expanded(child: MetaTextView(mapData:  map['header'],text: "Emp. Code",)),
               Expanded(
                   flex: 2,
-                  child: MetaTextView(mapData:  map['header'],text: "Employee Name")),
-              Expanded(child: MetaTextView(mapData:  map['header'],text: "Email")),
+                  child: MetaTextView(mapData:  map['header'],text: "Emp. Name")),
+              Expanded(
+                  flex: 2,
+                  child: MetaTextView(mapData:  map['header'],text: "Email")),
               //     Expanded(child: MetaTextView(mapData:  map['dAmount'])),
             ],
           ),
@@ -630,14 +629,18 @@ class _TravelRequestSummaryState extends State<TravelRequestSummary> {
                   color: Colors.white,
                   child:  Row(
                     children: [
-                      Container(
-                          width: 40.w,
-                          child: MetaTextView(mapData:  map['item'],text: (index+1).toString())),
-                      Expanded(child: MetaTextView(mapData:  map['item'],text: item.employeeCode,)),
+                      // Container(
+                      //     width: 40.w,
+                      //     child: MetaTextView(mapData:  map['item'],text: (index+1).toString())),
+                      Expanded(
+                          child: MetaTextView(mapData:  map['item'],text: item.employeeCode,)),
                       Expanded(
                           flex: 2,
                           child: MetaTextView(mapData:  map['item'],text:item.employeeName )),
-                      Expanded(child: MetaTextView(mapData:  map['item'],text: item.email)),
+                      Expanded(
+                          flex: 2,
+                          child: MetaTextView(mapData:  map['item'],text: item.email)
+                      ),
                       //     Expanded(child: MetaTextView(mapData:  map['dAmount'])),
                     ],
                   ),
@@ -646,7 +649,7 @@ class _TravelRequestSummaryState extends State<TravelRequestSummary> {
               itemCount: travellerList!.length
           ),
         ],
-      ):SizedBox(),
+      ):noDataAdded(),
     );
 
   }
@@ -698,7 +701,8 @@ class _TravelRequestSummaryState extends State<TravelRequestSummary> {
               itemCount: cashAdvanceList!.length
           ),
         ],
-      ):SizedBox(),
+      ):
+      noDataAdded(),
     );
 
   }
@@ -749,7 +753,7 @@ class _TravelRequestSummaryState extends State<TravelRequestSummary> {
               itemCount: forexAdvanceList!.length
           ),
         ],
-      ):SizedBox(),
+      ):noDataAdded(),
     );
 
   }
@@ -794,7 +798,7 @@ class _TravelRequestSummaryState extends State<TravelRequestSummary> {
               itemCount: visaList!.length
           ),
         ],
-      ):SizedBox(),
+      ):noDataAdded(),
     );
 
   }
@@ -840,7 +844,7 @@ class _TravelRequestSummaryState extends State<TravelRequestSummary> {
               itemCount: insuranceList!.length
           ),
         ],
-      ):SizedBox(),
+      ):noDataAdded(),
     );
 
   }
@@ -968,6 +972,18 @@ class _TravelRequestSummaryState extends State<TravelRequestSummary> {
       Navigator.pop(context);
     }
 
+  }
+
+  noDataAdded(){
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 10.h),
+      child: MetaTextView(mapData: {
+        "text" : "No Data Added!",
+        "color" : "0XFF3D3D3D",
+        "size": "16",
+        "family": "regular"
+      }),
+    );
   }
 
 

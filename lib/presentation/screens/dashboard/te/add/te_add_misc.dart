@@ -159,22 +159,17 @@ class AddTeMiscExpense extends StatelessWidget {
                      }else{
 
                      String  dateText = DateFormat('dd-MM-yyyy').format(DateTime.now());
+                     formBloc!.checkInDate.updateValue(dateText);
+                     formBloc!.checkOutDate.updateValue(dateText);
 
-                       formBloc!.checkInDate.updateValue(dateText);
-                       formBloc!.checkOutDate.updateValue(dateText);
                      }
-
-
-
                      return Container(
                       margin: EdgeInsets.symmetric(horizontal: 10.w),
                       child: FormBlocListener<MiscTeFormBloc, String, String>(
                           onSubmissionFailed: (context, state) {
-                            print(state);
                             MetaAlert.showErrorAlert(
                               message: "Please Select All Fields",
                             );
-
                           },
                           onSubmitting: (context, state) {
                             FocusScope.of(context).unfocus();
@@ -345,21 +340,34 @@ class AddTeMiscExpense extends StatelessWidget {
                                                       formBloc!.tfVoucher.updateValue(value);
                                                     }),
                                               ),
-
                                             ],
+                                          ),
+                                          BlocBuilder<SelectFieldBloc, SelectFieldBlocState>(
+                                              bloc: formBloc!.showError,
+                                              builder: (context, state) {
+                                                return Visibility(
+                                                  visible:state.value,
+                                                  child:Container(
+                                                      padding: EdgeInsets.symmetric(horizontal: 10.w),
+                                                      height: 20.h,
+                                                      color: Color(0xFFB71C1C),
+                                                      child: MetaTextView(mapData: errorMap,text: "Eligible amount is "+formBloc!.showErrorValue.value)
+                                                  ),
+                                                );
+                                              }
                                           ),
                                           MetaTextFieldBlocView(mapData: jsonData['text_field_desc'],
                                               textFieldBloc: formBloc!.tfDescription,
                                               onChanged:(value){
                                                 formBloc!.tfDescription.updateValue(value);
-                                              }),
+                                          }),
                                           (violationMessage!=null && violationMessage.isNotEmpty) ?
                                           Container(
                                             padding: EdgeInsets.symmetric(horizontal: 10.w),
                                             height: 20.h,
                                             color: Color(0xFFB71C1C),
                                             child: MetaTextView(mapData: errorMap,text:violationMessage)):SizedBox(),
-                                          SizedBox(height: 20.h,),
+                                          SizedBox(height: 20.h),
                                         ],
                                       ),
                                       absorbing: isView,
@@ -417,9 +425,12 @@ class AddTeMiscExpense extends StatelessWidget {
         bloc: formBloc!.groupIds,
         builder: (context, state) {
 
-
           List<String>? list  = formBloc!.groupIds.value ?? [] ;
-          print("Rebiuild formBloc!.groupIds");
+          if(list.length > 0){
+            formBloc!.count.updateValue(1 + list.length);
+          }else{
+            formBloc!.count.updateValue(1);
+          }
 
           return Container(
             padding: EdgeInsets.symmetric(horizontal: 20.w,vertical: 10.h),

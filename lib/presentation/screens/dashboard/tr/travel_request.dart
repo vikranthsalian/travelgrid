@@ -249,7 +249,7 @@ class TravelRequest extends StatelessWidget {
         Map subtitle = {
           "text" :"#"+ item.tripNumber.toString().toUpperCase(),
           "color" : "0xFF000000",
-          "size": "12",
+          "size": "10",
           "family": "bold",
           "align" : "center-left"
         };
@@ -372,10 +372,10 @@ class TravelRequest extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     Container(
-                                        child: MetaTextView(mapData: subtitle,text:  item.maCityPairs?.first.leavingFrom!.name)
+                                        child: MetaTextView(mapData: subtitle,text:  item.maCityPairs?.first.leavingFrom!.name!.toUpperCase())
                                     ),
                                     Container(
-                                        child: MetaTextView(mapData: subtitle,text:item.maCityPairs?.first.goingTo!.name)
+                                        child: MetaTextView(mapData: subtitle,text:item.maCityPairs?.first.goingTo!.name!.toUpperCase())
                                     ),
                                   ],
                                 ),
@@ -390,7 +390,7 @@ class TravelRequest extends StatelessWidget {
                                         child: MetaTextView(mapData: thirdTitle,text: item.startDate,)
                                     ),
                                     Container(
-                                        child: MetaTextView(mapData: thirdTitle,text:item.startDate)
+                                        child: MetaTextView(mapData: thirdTitle,text:item.endDate)
                                     ),
                                   ],
                                 ),

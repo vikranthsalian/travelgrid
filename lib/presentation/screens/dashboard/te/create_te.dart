@@ -368,10 +368,12 @@ class _CreateTravelExpenseBodyState extends State<CreateTravelExpenseBody> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Visibility(
-            visible: false,
+            visible: true,
             child: MetaButton(mapData: jsonData['bottomButtonLeft'],
+                text: "Cancel",
                 onButtonPressed: (){
-                  submitGe("modify");
+                  Navigator.pop(context);
+              //submitGe("modify");
                 }
             ),
           ),

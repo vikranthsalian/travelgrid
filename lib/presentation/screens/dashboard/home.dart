@@ -78,10 +78,15 @@ class _HomePageState extends State<HomePage> {
                         children: [
                           Expanded(
                             child: ListTile(
-                              leading: Container(
-                                  height: 50.w,
-                                  width: 50.w,
-                                  child: MetaSVGView(mapData:  jsonData['svgIcon']),
+                              leading: InkWell(
+                                onTap:(){
+                                  Navigator.pushNamed(context, RouteConstants.profilePath);
+                                 },
+                                child: Container(
+                                    height: 50.w,
+                                    width: 50.w,
+                                    child: MetaSVGView(mapData:  jsonData['svgIcon']),
+                                ),
                               ) ,
                               title: Container(
                                 child:MetaTextView(mapData: jsonData['label']),

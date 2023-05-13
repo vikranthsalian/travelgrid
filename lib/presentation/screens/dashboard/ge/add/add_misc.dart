@@ -43,8 +43,6 @@ class CreateMiscExpense extends StatelessWidget {
   double cardHt = 90.h;
   MiscFormBloc? formBloc;
   File? file;
-  int days =1;
-  int count =1;
   String violationMessage ="";
 
   Map errorMap={
@@ -80,14 +78,7 @@ class CreateMiscExpense extends StatelessWidget {
                 onButtonPressed: ()async{
 
               if(formBloc!.showError.value!){
-                if(formBloc!.unitTypeID.value=="288"  && (formBloc!.tfAmount.valueToDouble! > (200*days*count))){
-                  MetaAlert.showErrorAlert(message: "Please submit valid amount");
-                  return;
-                }else if(formBloc!.unitTypeID.value=="289"  && (formBloc!.tfAmount.valueToDouble! > (400*days*count))){
-                  MetaAlert.showErrorAlert(message: "Please submit valid amount");
-                  return;
-                }
-
+                MetaAlert.showErrorAlert(message: "Please submit valid amount");
               }
 
 
@@ -336,31 +327,6 @@ class CreateMiscExpense extends StatelessWidget {
                                                         formBloc!.miscName.updateValue(value['label']);
                                                         formBloc!.miscID.updateValue(value['id'].toString());
 
-                                                        if(formBloc!.miscID=="212"){
-
-                                                                if( formBloc!.unitTypeID.value == "288" &&  formBloc!.tfAmount.valueToDouble! >= 200){
-                                                                  formBloc!.showError.updateValue(false);
-                                                                  formBloc!.showError.updateValue(true);
-                                                                }
-
-                                                                if( formBloc!.unitTypeID.value == "289" &&  formBloc!.tfAmount.valueToDouble! >= 400){
-
-                                                                  formBloc!.showError.updateValue(false);
-                                                                  formBloc!.showError.updateValue(true);
-                                                                }
-                                                                getDays();
-
-                                                        }else if(formBloc!.miscID=="213"){
-                                                              if(formBloc!.tfAmount.valueToDouble! >= 200){
-                                                                formBloc!.showError.updateValue(false);
-                                                                formBloc!.showError.updateValue(true);
-                                                              }
-                                                              getDays();
-                                                        }else{
-                                                          formBloc!.showError.updateValue(false);
-                                                        }
-
-
                                                         if(
                                                         formBloc!.miscID.value=="212" ||
                                                             formBloc!.miscID.value=="213" ||
@@ -390,31 +356,7 @@ class CreateMiscExpense extends StatelessWidget {
                                                               print(value);
                                                               formBloc!.unitTypeName.updateValue(value['text']);
                                                               formBloc!.unitTypeID.updateValue(value['id'].toString());
-
-                                                              if( formBloc!.unitTypeID.value == "288"
-                                                                  && formBloc!.tfAmount.value.isNotEmpty
-                                                                  && formBloc!.tfAmount.valueToDouble! >= 200
-                                                              ){
-                                                                formBloc!.showError.updateValue(false);
-                                                                formBloc!.showError.updateValue(true);
-                                                              }else{
-                                                                formBloc!.showError.updateValue(true);
-                                                                formBloc!.showError.updateValue(false);
-                                                              }
-
-                                                              if( formBloc!.unitTypeID.value == "289"
-                                                                  && formBloc!.tfAmount.value.isNotEmpty
-                                                                  &&  formBloc!.tfAmount.valueToDouble! >= 400){
-                                                                formBloc!.showError.updateValue(false);
-                                                                formBloc!.showError.updateValue(true);
-                                                              }else{
-                                                                formBloc!.showError.updateValue(true);
-                                                                formBloc!.showError.updateValue(false);
-                                                              }
-
                                                               getDays();
-
-
                                                             },),
                                                         );
                                                       }
@@ -431,14 +373,6 @@ class CreateMiscExpense extends StatelessWidget {
                                                       onChanged:(value){
                                                         formBloc!.tfAmount.updateValue(value);
                                                         getDays();
-
-                                                        if(formBloc!.miscID.value=="213"){
-                                                          formBloc!.showErrorValue.updateValue((200*days*count).toString());
-                                                        }else if(formBloc!.unitTypeID.value=="288"){
-                                                          formBloc!.showErrorValue.updateValue((200*days*count).toString());
-                                                        }else if(formBloc!.unitTypeID.value=="289"){
-                                                          formBloc!.showErrorValue.updateValue((400*days*count).toString());
-                                                        }
                                                       }),
                                                 ),
                                               ),
@@ -458,17 +392,6 @@ class CreateMiscExpense extends StatelessWidget {
                                           BlocBuilder<SelectFieldBloc, SelectFieldBlocState>(
                                               bloc: formBloc!.showError,
                                               builder: (context, state) {
-                                                print("formBloc!.unitTypeID.value");
-                                                print(formBloc!.unitTypeID.value);
-
-                                                if(formBloc!.miscID.value=="213"){
-                                                  formBloc!.showErrorValue.updateValue((200*days*count).toString());
-                                                }else if(formBloc!.unitTypeID.value=="288"){
-                                                  formBloc!.showErrorValue.updateValue((200*days*count).toString());
-                                                }else if(formBloc!.unitTypeID.value=="289"){
-                                                  formBloc!.showErrorValue.updateValue((400*days*count).toString());
-                                                }
-
                                                 return Visibility(
                                                   visible:state.value,
                                                   child:Container(
@@ -538,14 +461,12 @@ class CreateMiscExpense extends StatelessWidget {
         bloc: formBloc!.groupIds,
         builder: (context, state) {
 
-
           List<String>? list  = formBloc!.groupIds.value ?? [] ;
-          if(list.length<0){
-            count=list.length;
+          if(list.length > 0){
+            formBloc!.count.updateValue(1 + list.length);
           }else{
-            count=1;
+            formBloc!.count.updateValue(1);
           }
-          print("Rebiuild formBloc!.groupIds");
 
           return Container(
             padding: EdgeInsets.symmetric(horizontal: 20.w,vertical: 10.h),
@@ -556,19 +477,19 @@ class CreateMiscExpense extends StatelessWidget {
                 Container(
                     child: Row(
                       children: items.map((e) {
-
                         if(e['flex']==0){
                           return Container(
                               width: 50.w,
                               margin: EdgeInsets.symmetric(horizontal: 0.w),
                               child: MetaTextView(mapData: e));
                         }
-
                         return Expanded(
                             flex: e['flex'],
                             child: Container(
                                 margin: EdgeInsets.symmetric(horizontal: 0.w),
-                                child: MetaTextView(mapData: e)));
+                                child: MetaTextView(mapData: e)
+                            )
+                        );
                       }).toList(),
                     )
                 ),
@@ -579,7 +500,6 @@ class CreateMiscExpense extends StatelessWidget {
                     scrollDirection: Axis.vertical,
                     padding: EdgeInsets.zero,
                     itemBuilder: (BuildContext context, int i) {
-
                       return Container(
                         margin: EdgeInsets.symmetric(vertical: 2.h),
                         child: Row(
@@ -645,7 +565,8 @@ class CreateMiscExpense extends StatelessWidget {
 
 
     int count = (dur.inDays);
-    days = count == 0 ? 1: count;
+    formBloc!.days.updateValue(count == 0 ? 1: count);
+
 
   }
 

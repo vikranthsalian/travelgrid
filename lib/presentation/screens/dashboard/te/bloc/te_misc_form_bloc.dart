@@ -27,6 +27,11 @@ class MiscTeFormBloc extends FormBloc<String, String> {
   final showAdd =  SelectFieldBloc<bool,dynamic>(initialValue: false);
   final groupIds =  SelectFieldBloc<List<String>,dynamic>(initialValue: []);
 
+  final showError = SelectFieldBloc<bool, dynamic>(initialValue: false);
+  final count = SelectFieldBloc<int, int>(initialValue: 1);
+  final days = SelectFieldBloc<int, int>(initialValue: 1);
+  final showErrorValue = TextFieldBloc(initialValue: "0");
+
   static String? emptyValidator(dynamic value) {
     if (value.isEmpty) {
       return "Cannot be empty";
@@ -67,6 +72,26 @@ class MiscTeFormBloc extends FormBloc<String, String> {
         } else {
           unitTypeID.updateValue("nill");
         }
+
+        onChanges();
+      });
+
+
+
+      unitTypeID.onValueChanges(onData: (previous, current) async* {
+        onChanges();
+      });
+
+      tfAmount.onValueChanges(onData: (previous, current) async* {
+        onChanges();
+      });
+
+      count.onValueChanges(onData: (previous, current) async* {
+        onChanges();
+      });
+
+      days.onValueChanges(onData: (previous, current) async* {
+        onChanges();
       });
   }
 
@@ -111,6 +136,51 @@ class MiscTeFormBloc extends FormBloc<String, String> {
 
   }
 
+  void onChanges() {
 
+    if(miscID.value == "212"){
+      showErrorValue.updateValue("");
+      showError.updateValue(false);
+      if(unitTypeID.value == "288") {
+        if (tfAmount.valueToDouble! > (200 * days.value! * count.value!)) {
+          showErrorValue.updateValue((200 * days.value! * count.value!).toString() );
+          print("showErrorValue.value");
+          print(showErrorValue.value);
+          showError.updateValue(true);
+          return;
+        }
+        showErrorValue.updateValue("0");
+        showError.updateValue(false);
+        return;
+      }
+
+      if(unitTypeID.value == "289") {
+        if (tfAmount.valueToDouble! > (400 * days.value! * count.value!)) {
+          showErrorValue.updateValue((400 * days.value! * count.value!).toString());
+          showError.updateValue(true);
+          return;
+        }
+        showErrorValue.updateValue("0");
+        showError.updateValue(false);
+        return;
+      }
+    }
+
+    // if(miscID.value == "213"){
+    //   showErrorValue.updateValue("");
+    //   showError.updateValue(false);
+    //   if(tfAmount.valueToDouble! >= (200 * days.value! * count.value!)){
+    //     showErrorValue.updateValue("200");
+    //     showError.updateValue(true);
+    //     return;
+    //   }else{
+    //     showErrorValue.updateValue("0");
+    //     showError.updateValue(false);
+    //     return;
+    //   }
+    // }
+    showErrorValue.updateValue("");
+    showError.updateValue(false);
+  }
 
 }

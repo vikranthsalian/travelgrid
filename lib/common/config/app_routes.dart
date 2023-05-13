@@ -7,6 +7,7 @@ import 'package:travelgrid/presentation/screens/dashboard/approvals/approval_exp
 import 'package:travelgrid/presentation/screens/dashboard/home.dart';
 import 'package:travelgrid/presentation/screens/dashboard/ge/add/add_travel.dart';
 import 'package:travelgrid/presentation/screens/dashboard/ge/create_ge.dart';
+import 'package:travelgrid/presentation/screens/dashboard/profile/profile_screen.dart';
 import 'package:travelgrid/presentation/screens/dashboard/te/create_te.dart';
 import 'package:travelgrid/presentation/screens/dashboard/tr/create_tr.dart';
 import 'package:travelgrid/presentation/screens/dashboard/tr/summary_tr.dart';
@@ -100,6 +101,9 @@ class AppRoutes {
 
       case RouteConstants.approvalExpensePath:
         return ApprovalExpense();
+
+      case RouteConstants.profilePath:
+        return ProfileScreen();
 
       case RouteConstants.policyPath:
         return PolicyHome();

@@ -21,6 +21,7 @@ class FlavourConstants {
   static  Map<String,dynamic> aeData = FlavorConfig.instance.variables["ae_screen_data"];
 
 
+  static  Map<String,dynamic> profileData = FlavorConfig.instance.variables["profile_screen_data"];
   static  Map<String,dynamic> policyData = FlavorConfig.instance.variables["policy_screen_data"];
   static  Map<String,dynamic> walletData = FlavorConfig.instance.variables["wallet_screen_data"];
   static  Map<String,dynamic> imageData = FlavorConfig.instance.variables["image_screen_data"];
