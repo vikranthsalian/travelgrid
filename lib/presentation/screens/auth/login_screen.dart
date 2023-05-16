@@ -44,9 +44,6 @@ class LoginScreen extends StatelessWidget {
 
     loginJsonData = FlavourConstants.loginData;
    // APIRemoteDatasource().ssoSignIn();
-  //  print('"1000000".toString().formatize()');
-  //  print("1000000".inRupeesFormat());
-
 
       return SafeArea(
         child: Scaffold(
@@ -58,8 +55,9 @@ class LoginScreen extends StatelessWidget {
                 builder: (context) {
 
                   LoginFormBloc  formBloc =  BlocProvider.of<LoginFormBloc>(context);
-             //   formBloc.tfUsername.updateValue("nh09");
-             //   formBloc.tfPassword.updateValue("Test123#");
+
+                  formBloc.tfUsername.updateValue("nh09");
+                   formBloc.tfPassword.updateValue("Test123#");
 
                   return Container(
                     height: double.infinity,

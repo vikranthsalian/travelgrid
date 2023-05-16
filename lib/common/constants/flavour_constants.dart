@@ -4,6 +4,9 @@ class FlavourConstants {
   static  String apiHost =  FlavorConfig.instance.variables["base_url"] ;
 
   static  String appName =  FlavorConfig.instance.variables["app_title"];
+  static  String appAndroidUrl =  FlavorConfig.instance.variables["app_android_url"];
+  static  String appIosUrl =  FlavorConfig.instance.variables["app_ios_url"];
+  static  String shareMsg =  FlavorConfig.instance.variables["app_share_msg"];
  // static  String appLogo =  FlavorConfig.instance.variables["appLogo"];
   static  String path =  FlavorConfig.instance.variables["asset_path"];
   static  bool showNetworkLogs =  FlavorConfig.instance.variables["showNetworkLogs"];

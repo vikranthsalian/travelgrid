@@ -2,6 +2,8 @@
   "app_title": "NH",
   "sub_title": "NH",
   "app_short_title": "NH",
+  "app_android_url": "https://play.google.com/",
+  "app_ios_url": "https://www.apple.com/app-store/",
   "app_logo": "assets/apps/nh/images/app-logo.png",
   "android_app_id": "cm.travelgrid.nh",
   "ios_app_id": "cm.travelgrid.nh",
@@ -16,6 +18,7 @@
   "support_email" : "info@travelgrid.com",
   "privacy_policy_url": "",
   "terms_of_use_url": "",
+  "app_share_msg": "NH Travelgrid.To Download visit",
   "app_theme" : {
     "primary_color" : "0xFF2854A1",
     "secondary_color" : "0XFFFFFFFF",
