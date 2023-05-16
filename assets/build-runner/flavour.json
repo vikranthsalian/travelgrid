@@ -369,7 +369,7 @@
     "contactDetails":  {
       "label": {
         "text" : "Contact Details",
-        "color" : "0XFFFFFFFF",
+        "color" : "0xFF2854A1",
         "size": "14",
         "family": "bold",
         "align": "center-left"
@@ -400,8 +400,8 @@
     },
     "orgDetails":  {
       "label": {
-        "text" : "Contact Details",
-        "color" : "0XFFFFFFFF",
+        "text" : "Organisation Details",
+        "color" : "0xFF2854A1",
         "size": "14",
         "family": "bold",
         "align": "center-left"

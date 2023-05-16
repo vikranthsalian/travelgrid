@@ -468,7 +468,7 @@ class TrProcessed extends StatelessWidget {
               builder: (context, state) {
 
                 List<TRCityPairModel> list  = formBloc!.cityList.value!.toList();
-                return    BuildItinerary(
+                return BuildItinerary(
                   tripType: tripType,
                     map: jsonData['cityPairDetails'],
                     list: list,

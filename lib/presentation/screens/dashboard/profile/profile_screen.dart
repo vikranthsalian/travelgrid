@@ -9,16 +9,20 @@ import 'package:travelgrid/common/extensions/parse_data_type.dart';
 import 'package:travelgrid/common/extensions/pretty.dart';
 import 'package:travelgrid/data/cubits/login_cubit/login_cubit.dart';
 import 'package:travelgrid/data/datasources/login_response.dart';
+import 'package:travelgrid/presentation/components/switch_component.dart';
 import 'package:travelgrid/presentation/widgets/icon.dart';
 import 'package:travelgrid/presentation/widgets/svg_view.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
+import 'package:tuple/tuple.dart';
 
 
 class ProfileScreen extends StatelessWidget {
   Map<String,dynamic> jsonData = {};
   List items=[];
   String fullname="";
-
+  List<Tuple2<String,String>> details=[];
+  bool showContactDetails=true;
+  bool showOrgDetails=true;
   @override
   Widget build(BuildContext context) {
     jsonData = FlavourConstants.profileData;
@@ -26,13 +30,27 @@ class ProfileScreen extends StatelessWidget {
     MetaLoginResponse  loginResponse = context.read<LoginCubit>().getLoginResponse();
     fullname=loginResponse.data!.fullName??"";
 
+
+    details.add(Tuple2("User ID", loginResponse.data!.id.toString()));
+    details.add(Tuple2("Email", loginResponse.data!.currentContact!.email.toString()));
+    details.add(Tuple2("Gender", loginResponse.data!.gender.toString()));
+
+    details.add(Tuple2("Address", loginResponse.data!.currentContact!.addressLine1.toString()));
+    details.add(Tuple2("City", loginResponse.data!.currentContact!.location!.city.toString()));
+    details.add(Tuple2("State", loginResponse.data!.currentContact!.location!.stateprov.toString()));
+    details.add(Tuple2("Country", loginResponse.data!.currentContact!.location!.countryName.toString()));
+    details.add(Tuple2("Mobile", loginResponse.data!.currentContact!.mobile.toString()));
+    details.add(Tuple2("Telephone", loginResponse.data!.currentContact!.telephoneNo.toString()));
+
+
+
     return Scaffold(
         backgroundColor: Colors.white,
         body: Column(
           children: [
             Container(
               color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
-              height: 250.h,
+              height: 220.h,
               child:  Column(
                 children: [
                   SizedBox(height:30.h),
@@ -60,55 +78,56 @@ class ProfileScreen extends StatelessWidget {
                   Container(
                     child:MetaTextView(mapData: jsonData['name'],text: fullname),
                   ),
-                  Container(
-                    child: Row(
-
-                      children: [
-                        Expanded(
-                          child: Column(
-                            children: [
-                              Container(
-                                child:MetaTextView(mapData: jsonData['title'],text: "User ID"),
-                              ),
-                              Container(
-                                child:MetaTextView(mapData: jsonData['subtitle'],text: fullname),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Expanded(
-                          child: Column(
-                            children: [
-                              Container(
-                                child:MetaTextView(mapData: jsonData['title'],text: "Email"),
-                              ),
-                              Container(
-                                child:MetaTextView(mapData: jsonData['subtitle'],text: fullname),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Expanded(
-                          child: Column(
-                            children: [
-                              Container(
-                                child:MetaTextView(mapData: jsonData['title'],text: "Gender"),
-                              ),
-                              Container(
-                                child:MetaTextView(mapData: jsonData['subtitle'],text: fullname),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
                 ],
               ),
             ),
             SizedBox(height:10.h),
-
+            SwitchComponent(
+                color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
+                jsonData: jsonData['contactDetails'],
+                childWidget: buildRequesterWidget(jsonData['contactDetails']),
+                initialValue: showContactDetails),
+            SwitchComponent(
+                color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
+                jsonData: jsonData['orgDetails'],
+                childWidget: buildRequesterWidget(jsonData['orgDetails']),
+                initialValue: showOrgDetails),
           ],
+        )
+    );
+  }
+
+
+
+
+  Container buildRequesterWidget(Map map){
+    return Container(
+        color: Colors.white,
+        child: GridView.builder(
+          physics: NeverScrollableScrollPhysics(),
+          padding: EdgeInsets.zero,
+          itemCount: details.length,
+          shrinkWrap: true,
+          gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount:2,
+              childAspectRatio: 7,
+              mainAxisSpacing: 3.h
+          ),
+          itemBuilder: (BuildContext context, int index) {
+            return Container(
+                margin: EdgeInsets.symmetric(horizontal: 20.w),
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      MetaTextView(
+                        mapData: map['gridLabel'],text:details[index].item1,
+                        key: UniqueKey()
+                      ),
+                      MetaTextView(mapData: map['gridValue'],text:details[index].item2,
+                        key: UniqueKey())
+                    ])
+            );
+          },
         )
     );
   }
