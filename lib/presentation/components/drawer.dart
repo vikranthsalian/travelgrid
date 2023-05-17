@@ -110,7 +110,7 @@ class WidgetDrawerState extends State<WidgetDrawer> {
                       decoration: BoxDecoration(
                           color: Colors.black.withOpacity(0.8),
                           shape: BoxShape.circle),
-                      child: Icon(Icons.insert_emoticon,color: Colors.white,size: 15.sp,),
+                      child: Icon(Icons.card_travel,color: Colors.white,size: 15.sp,),
                     ),
                     title: Transform.translate(
                       offset: Offset(-10.w, 0),
@@ -124,7 +124,7 @@ class WidgetDrawerState extends State<WidgetDrawer> {
                     ),
                     trailing:  Icon(Icons.chevron_right,color: Colors.black.withOpacity(0.8),),
                     onTap: () {
-                      Navigator.pushNamed(context, "/about");
+                      Navigator.of(context).pushNamed(RouteConstants.travelRequestPath);
                     },
                   ),
                   ListTile(
@@ -134,7 +134,7 @@ class WidgetDrawerState extends State<WidgetDrawer> {
                       decoration: BoxDecoration(
                           color: Colors.black.withOpacity(0.8),
                           shape: BoxShape.circle),
-                      child: Icon(Icons.insert_emoticon,color: Colors.white,size: 15.sp,),
+                      child: Icon(Icons.monetization_on_outlined,color: Colors.white,size: 15.sp,),
                     ),
                     title: Transform.translate(
                       offset: Offset(-10.w, 0),
@@ -148,7 +148,7 @@ class WidgetDrawerState extends State<WidgetDrawer> {
                     ),
                     trailing:  Icon(Icons.chevron_right,color: Colors.black.withOpacity(0.8),),
                     onTap: () {
-                      Navigator.pushNamed(context, "/about");
+                      Navigator.pushNamed(context, RouteConstants.travelExpensePath);
                     },
                   ),
                   ListTile(
@@ -158,7 +158,7 @@ class WidgetDrawerState extends State<WidgetDrawer> {
                       decoration: BoxDecoration(
                           color: Colors.black.withOpacity(0.8),
                           shape: BoxShape.circle),
-                      child: Icon(Icons.insert_emoticon,color: Colors.white,size: 15.sp,),
+                      child: Icon(Icons.currency_rupee,color: Colors.white,size: 15.sp,),
                     ),
                     title: Transform.translate(
                       offset: Offset(-10.w, 0),
@@ -172,7 +172,7 @@ class WidgetDrawerState extends State<WidgetDrawer> {
                     ),
                     trailing:  Icon(Icons.chevron_right,color: Colors.black.withOpacity(0.8),),
                     onTap: () {
-                      Navigator.pushNamed(context, "/about");
+                      Navigator.pushNamed(context, RouteConstants.generalExpensePath);
                     },
                   ),
                   ListTile(
@@ -182,7 +182,7 @@ class WidgetDrawerState extends State<WidgetDrawer> {
                       decoration: BoxDecoration(
                           color: Colors.black.withOpacity(0.8),
                           shape: BoxShape.circle),
-                      child: Icon(Icons.insert_emoticon,color: Colors.white,size: 15.sp,),
+                      child: Icon(Icons.done_all,color: Colors.white,size: 15.sp,),
                     ),
                     title: Transform.translate(
                       offset: Offset(-10.w, 0),
@@ -196,7 +196,7 @@ class WidgetDrawerState extends State<WidgetDrawer> {
                     ),
                     trailing:  Icon(Icons.chevron_right,color: Colors.black.withOpacity(0.8),),
                     onTap: () {
-                      Navigator.pushNamed(context, "/about");
+                      Navigator.pushNamed(context, RouteConstants.approvalExpensePath);
                     },
                   ),
                   Divider(),
@@ -207,7 +207,7 @@ class WidgetDrawerState extends State<WidgetDrawer> {
                       decoration: BoxDecoration(
                           color: Colors.black.withOpacity(0.8),
                           shape: BoxShape.circle),
-                      child: Icon(Icons.insert_emoticon,color: Colors.white,size: 15.sp,),
+                      child: Icon(Icons.policy,color: Colors.white,size: 15.sp,),
                     ),
                     title: Transform.translate(
                       offset: Offset(-10.w, 0),
@@ -221,7 +221,7 @@ class WidgetDrawerState extends State<WidgetDrawer> {
                     ),
                     trailing:  Icon(Icons.chevron_right,color: Colors.black.withOpacity(0.8),),
                     onTap: () {
-                      Navigator.pushNamed(context, "/about");
+                      Navigator.pushNamed(context, RouteConstants.policyPath);
                     },
                   ),
                   ListTile(
@@ -231,7 +231,7 @@ class WidgetDrawerState extends State<WidgetDrawer> {
                       decoration: BoxDecoration(
                           color: Colors.black.withOpacity(0.8),
                           shape: BoxShape.circle),
-                      child: Icon(Icons.insert_emoticon,color: Colors.white,size: 15.sp,),
+                      child: Icon(Icons.picture_as_pdf,color: Colors.white,size: 15.sp,),
                     ),
                     title: Transform.translate(
                       offset: Offset(-10.w, 0),
@@ -245,7 +245,9 @@ class WidgetDrawerState extends State<WidgetDrawer> {
                     ),
                     trailing:  Icon(Icons.chevron_right,color: Colors.black.withOpacity(0.8),),
                     onTap: () {
-                      Navigator.pushNamed(context, "/about");
+                      Navigator.of(context).pushNamed(RouteConstants.walletPath,arguments: {
+                        "selectable":false
+                      });
                     },
                   ),
                   Divider(),
@@ -271,7 +273,7 @@ class WidgetDrawerState extends State<WidgetDrawer> {
                     ),
                     trailing:  Icon(Icons.chevron_right,color: Colors.black.withOpacity(0.8),),
                     onTap: () async{
-                      await canLaunchUrl(Uri.parse(FlavourConstants.appAndroidUrl));
+                       launchUrl(Uri.parse(FlavourConstants.appAndroidUrl),mode: LaunchMode.externalApplication);
                     },
                   ),
                   ListTile(

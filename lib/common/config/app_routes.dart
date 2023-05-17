@@ -13,6 +13,7 @@ import 'package:travelgrid/presentation/screens/dashboard/te/create_te.dart';
 import 'package:travelgrid/presentation/screens/dashboard/tr/create_tr.dart';
 import 'package:travelgrid/presentation/screens/dashboard/tr/summary_tr.dart';
 import 'package:travelgrid/presentation/screens/dashboard/tr/travel_request.dart';
+import 'package:travelgrid/presentation/screens/dashboard/tr/upcoming_tr.dart';
 import 'package:travelgrid/presentation/screens/policy/policy_screen.dart';
 import 'package:travelgrid/presentation/screens/splash/splash_screen.dart';
 import 'package:travelgrid/presentation/screens/dashboard/ge/general_expense.dart';
@@ -38,6 +39,9 @@ class AppRoutes {
 
       case RouteConstants.dashboardPath:
         return  HomeNewPage();
+
+      case RouteConstants.upcomingTRPath:
+        return  UpcomingTR();
 
       case RouteConstants.profilePath:
         return  ProfileScreen();
@@ -79,10 +83,8 @@ class AppRoutes {
 
       case RouteConstants.generalCreateExpensePath:
 
-
         if(args!=null){
           args as Map<String, dynamic>;
-
           final bool isEdit = args["isEdit"] ?? false;
           final String title = args["title"]  ?? null;
           final bool isApproval = args["isApproval"]  ?? false;

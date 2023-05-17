@@ -3,9 +3,12 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:travelgrid/common/config/navigator_key.dart';
+import 'package:travelgrid/common/constants/route_constants.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
 import 'package:travelgrid/data/blocs/travel_request/tr_bloc.dart';
+import 'package:travelgrid/presentation/components/dialog_trip_type.dart';
 import 'package:travelgrid/presentation/components/drawer.dart';
+import 'package:travelgrid/presentation/widgets/button.dart';
 import 'package:travelgrid/presentation/widgets/icon.dart';
 import 'package:travelgrid/presentation/widgets/svg_view.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
@@ -26,15 +29,6 @@ class _HomeNewPageState extends State<HomeNewPage> {
   int nextPage=0;
   PageController _controller=PageController();
 
-  List<Tuple3<String,String,List>> data =[
-    Tuple3("Travel \n Request", "briefcase.svg",["0XFF7b4397","0XFFdc2430"]),
-    Tuple3("Travel \n Expense", "misc.svg",["0XFF2193b0","0XFF6dd5ed"]),
-    Tuple3("Approvals", "approve.svg", ["0XFF5C258D", "0XFF4389A2"]),
-    Tuple3("General \n Expense", "conv.svg", ["0XFFFF8008", "0XFFFFC837"]),
-
-
-  ];
-
 
   @override
   Widget build(BuildContext context) {
@@ -50,68 +44,57 @@ class _HomeNewPageState extends State<HomeNewPage> {
       body: Container(
         child: Column(
           children: [
-            Row(
-              children: [
-                Container(
-                  margin:  EdgeInsets.symmetric(vertical: 10.h),
-                  padding:  EdgeInsets.symmetric(vertical: 20.h),
-                  child:
-                  MetaIcon(
-                      mapData:{
-                        "icon": "sort",
-                        "size": 30.0,
-                        "color": "0xFF2854A1",
-                        "backgroundColor": "transparent",
-                        "onPress": true,
-                        "align": "center"
-                      },
-                      onButtonPressed: (){
-                        Timer(
-                            const Duration(milliseconds: 10),() =>{
-                          _scaffoldKey.currentState?.openDrawer()
-                        }
-                        );
-                      }),
+            Container(
+              padding:  EdgeInsets.only(top: 40.h,right: 20.w),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    child:
+                    MetaIcon(
+                        mapData:{
+                          "icon": "sort",
+                          "size": 30.0,
+                          "color": "0xFF2854A1",
+                          "backgroundColor": "transparent",
+                          "onPress": true,
+                          "align": "center"
+                        },
+                        onButtonPressed: (){
+                          Timer(
+                              const Duration(milliseconds: 10),() =>{
+                            _scaffoldKey.currentState?.openDrawer()
+                          }
+                          );
+                        })
+                  ),
+                  Container(
+                    height: 35.h,
+                    child: MetaButton(mapData:{
+                      "text" : "NH - TG",
+                      "color" : "0xFFFFFFFF",
+                      "backgroundColor" : "0xFF2854A1",
+                      "size": "18",
+                      "family": "regular",
+                      "borderRadius": 15.0
+                    },
+                        onButtonPressed: (){
 
-                ),
-              ],
-            ),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 20.w),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Card(
-                    elevation: 10,
-                    child: Container(
-                      height: 100.h,
-                      child: MetaTextView(mapData: {
-                        "text" : "New TR",
-                        "color" : "0xFF2854A1",
-                        "size": "18",
-                        "family": "bold",
-                        "align": "center"
-                      }),
-                    ),
-                    ),
-                  ),
-                  Expanded(
-                    child: Card(
-                    elevation: 10,
-                    child: Container(
-                      height: 100.h,
-                      child: MetaTextView(mapData: {
-                        "text" : "New GE",
-                        "color" : "0xFF2854A1",
-                        "size": "18",
-                        "family": "bold",
-                        "align": "center"
-                      }),
-                    ),
+                        }
                     ),
                   ),
                 ],
               ),
+            ),
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 20.w),
+              child: MetaTextView(mapData: {
+                "text" : "Hi, What would like to do?",
+                "color" : "0xFF000000",
+                "size": "18",
+                "family": "bold",
+                "align": "center-left"
+              }),
             ),
             SizedBox(height: 20.h,),
             Container(
@@ -119,39 +102,59 @@ class _HomeNewPageState extends State<HomeNewPage> {
               child: Row(
                 children: [
                   Expanded(
-                    child: Card(
-                    elevation: 10,
-                    child: Container(
-                      height: 50.h,
-                      child: MetaTextView(mapData: {
-                        "text" : "Upcoming TR",
-                        "color" : "0xFF2854A1",
-                        "size": "18",
-                        "family": "bold",
-                        "align": "center"
-                      }),
-                    ),
-                    ),
+                    child: InkWell(
+                      onTap: ()async{
+                        await showDialog(
+                        context: context,
+                        builder: (_) => DialogTripType(
+                            title: "Select Trip Type",
+                            onPressed: (value){
+
+                              Navigator.of(context).pushNamed(RouteConstants.travelCreateRequestPath,
+                                  arguments: {
+                                    'tripType':value,
+                                    'isEdit':false,
+                                  });
+
+                            }));
+                       },
+                        child: buildCard("New TR","briefcase.svg"))
                   ),
                   Expanded(
-                    child: Card(
-                    elevation: 10,
-                    child: Container(
-                      height: 50.h,
-                      child: MetaTextView(mapData: {
-                        "text" : "Documents",
-                        "color" : "0xFF2854A1",
-                        "size": "18",
-                        "family": "bold",
-                        "align": "center"
-                      }),
-                    ),
-                    ),
-                  ),
+                      child: InkWell(
+                        onTap: (){
+                          Navigator.of(context).pushNamed("/generalCreateExpense");
+                        },
+                          child: buildCard("New GE","conv.svg"))
+                  )
                 ],
               ),
             ),
-            SizedBox(height: 20.h,),
+            SizedBox(height: 30.h,),
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 20.w),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: InkWell(
+                        onTap: (){
+                          Navigator.of(context).pushNamed(RouteConstants.upcomingTRPath);
+                        },
+                        child: buildCard2("Upcoming TR","calendar.svg")),
+                  ),
+                  Expanded(
+                    child: InkWell(
+                      onTap: (){
+                        Navigator.of(context).pushNamed(RouteConstants.walletPath,arguments: {
+                          "selectable":false
+                        });
+                      },
+                        child: buildCard2("Documents","pdf.svg")),
+                  )
+                ],
+              ),
+            ),
+            SizedBox(height: 30.h,),
             Container(
               margin: EdgeInsets.symmetric(horizontal: 20.w),
               height: 100.h,
@@ -206,6 +209,67 @@ class _HomeNewPageState extends State<HomeNewPage> {
         ),
       ),
     );
+  }
+
+  Card buildCard2(text,icon) {
+    return Card(
+                  elevation: 10,
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 5.w),
+                    height: 50.h,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          height: 20.w,
+                          width: 20.w,
+                          child: MetaSVGView(mapData: {
+                            "icon": icon
+                          }),
+                        ),
+                        SizedBox(width: 5.w),
+                        MetaTextView(
+                            mapData: {
+                          "text" : text,
+                          "color" : "0xFF000000",
+                          "size": "13",
+                          "family": "bold",
+                          "align": "center"
+                        }),
+
+                      ],
+                    ),
+                  ),
+                  );
+  }
+
+  Card buildCard(text,icon) {
+    return Card(
+                  elevation: 10,
+                  child: Container(
+                    height: 100.h,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          height: 50.w,
+                          width: 50.w,
+                          child: MetaSVGView(mapData: {
+                            "icon": icon,
+                            "color" : "0xFF000000"
+                          }),
+                        ),
+                        MetaTextView(mapData: {
+                          "text" : text,
+                          "color" : "0xFF000000",
+                          "size": "18",
+                          "family": "bold",
+                          "align": "center"
+                        }),
+                      ],
+                    ),
+                  ),
+                  );
   }
 
 

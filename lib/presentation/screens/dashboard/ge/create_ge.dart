@@ -46,8 +46,6 @@ class CreateGeneralExpense extends StatelessWidget {
   CreateGeneralExpense({this.isEdit=true,this.title,this.isApproval=false});
   GeneralExpenseBloc?  bloc;
   Map? jsonData;
-   Color customSurfaceWhite = Color(0xFF2854A1);
-  Color primaryColor = Color(0XFF2854A1);
 
   @override
   Widget build(BuildContext context) {

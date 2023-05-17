@@ -5,14 +5,15 @@ class RouteConstants {
   static const travelRequestPath = "/travelRequest";
   static const travelExpensePath = "/travelExpense";
   static const generalExpensePath = "/generalExpense";
-
+  static const approvalExpensePath = "/approvalExpense";
+  static const upcomingTRPath = "/upcomingTR";
 
   static const travelRequestViewPath = "/travelRequestView";
 
   static const travelCreateRequestPath = "/travelCreateRequest";
   static const generalCreateExpensePath = "/generalCreateExpense";
   static const travelCreateExpensePath = "/travelCreateExpense";
-  static const approvalExpensePath = "/approvalExpense";
+
   static const addItineraryPath = "/addItinerary";
 
   static const profilePath = "/viewProfile";
