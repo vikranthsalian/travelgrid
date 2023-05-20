@@ -41,27 +41,28 @@ class SplashScreenState extends State<SplashScreen> {
 
     return Scaffold(
       backgroundColor: ParseDataType().getHexToColor(splashData['splash_bg_color']),
-      body:Stack(
-        alignment: Alignment.bottomCenter,
+      body:Container(      height: double.infinity,
+          width: double.infinity,child: Stack(
+
         children: [
-          Container(
-            height: double.infinity,
-            width: double.infinity,
+          Container(alignment: Alignment.center,
+
+
             child: Image.asset(FlavourConstants.path +"images/"+ splashData['splash_logo'],width: 250,height: 250,),
           ),
-          Container(
+          Container(  alignment: Alignment.bottomCenter,
               margin: EdgeInsets.symmetric(vertical: 10.h),
               child: Text(
                   splashBottomText['text'],
                   style:Theme.of(context).textTheme.
-                      caption?.copyWith(
-                                fontSize: ParseDataType().getDouble(splashBottomText['size']).sp,
-                                color: ParseDataType().getHexToColor(splashBottomText['color']) ,
-                                fontFamily: splashBottomText['family'])
+                  caption?.copyWith(
+                      fontSize: ParseDataType().getDouble(splashBottomText['size']).sp,
+                      color: ParseDataType().getHexToColor(splashBottomText['color']) ,
+                      fontFamily: splashBottomText['family'])
               )
           )
         ],
-      ),
+      )),
     );
   }
 

@@ -9,6 +9,7 @@ import 'package:travelgrid/common/extensions/parse_data_type.dart';
 import 'package:travelgrid/common/extensions/pretty.dart';
 import 'package:travelgrid/data/cubits/login_cubit/login_cubit.dart';
 import 'package:travelgrid/data/datasources/login_response.dart';
+import 'package:travelgrid/presentation/components/expandable_component.dart';
 import 'package:travelgrid/presentation/components/switch_component.dart';
 import 'package:travelgrid/presentation/widgets/icon.dart';
 import 'package:travelgrid/presentation/widgets/svg_view.dart';
@@ -82,16 +83,16 @@ class ProfileScreen extends StatelessWidget {
               ),
             ),
             SizedBox(height:10.h),
-            SwitchComponent(
+            ExpandableComponent(
                 color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
                 jsonData: jsonData['contactDetails'],
                 childWidget: buildRequesterWidget(jsonData['contactDetails']),
                 initialValue: showContactDetails),
-            SwitchComponent(
-                color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
-                jsonData: jsonData['orgDetails'],
-                childWidget: buildRequesterWidget(jsonData['orgDetails']),
-                initialValue: showOrgDetails),
+            // ExpandableComponent(
+            //     color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
+            //     jsonData: jsonData['orgDetails'],
+            //     childWidget: buildRequesterWidget(jsonData['orgDetails']),
+            //     initialValue: showOrgDetails),
           ],
         )
     );

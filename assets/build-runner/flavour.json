@@ -25,12 +25,12 @@
     "cursor_color" : "0XFF000000"
   },
   "splash_screen_data":{
-    "splash_bg_color": "0xFF2854A1",
-    "splash_logo": "splash.png",
+    "splash_bg_color": "0xFFFFFFFF",
+    "splash_logo": "logo.png",
     "splash_duration": "2500",
     "splash_bottom_text" : {
       "text" : "Powered by Channel Mentor",
-      "color" : "0XFFFFFFFF",
+      "color" : "0xFF2854A1",
       "size": "14",
       "family": "regular"
     }

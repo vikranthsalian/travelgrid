@@ -115,7 +115,7 @@ class WidgetDrawerState extends State<WidgetDrawer> {
                     title: Transform.translate(
                       offset: Offset(-10.w, 0),
                       child: MetaTextView(mapData: {
-                        "text" : "My Travel Request",
+                        "text" : "Travel Request",
                         "color" : "0xFF000000",
                         "size": "14",
                         "family": "bold",
@@ -139,7 +139,7 @@ class WidgetDrawerState extends State<WidgetDrawer> {
                     title: Transform.translate(
                       offset: Offset(-10.w, 0),
                       child: MetaTextView(mapData: {
-                        "text" : "My Travel Expense",
+                        "text" : "Travel Expense",
                         "color" : "0xFF000000",
                         "size": "14",
                         "family": "bold",
@@ -163,7 +163,7 @@ class WidgetDrawerState extends State<WidgetDrawer> {
                     title: Transform.translate(
                       offset: Offset(-10.w, 0),
                       child: MetaTextView(mapData: {
-                        "text" : "My General Expense",
+                        "text" : "General Expense",
                         "color" : "0xFF000000",
                         "size": "14",
                         "family": "bold",
@@ -187,7 +187,7 @@ class WidgetDrawerState extends State<WidgetDrawer> {
                     title: Transform.translate(
                       offset: Offset(-10.w, 0),
                       child: MetaTextView(mapData: {
-                        "text" : "My Approvals",
+                        "text" : "Approvals",
                         "color" : "0xFF000000",
                         "size": "14",
                         "family": "bold",
@@ -276,31 +276,31 @@ class WidgetDrawerState extends State<WidgetDrawer> {
                        launchUrl(Uri.parse(FlavourConstants.appAndroidUrl),mode: LaunchMode.externalApplication);
                     },
                   ),
-                  ListTile(
-                    leading: Container(
-                      height: 30.w,
-                      width: 30.w,
-                      decoration: BoxDecoration(
-                          color: Colors.black.withOpacity(0.8),
-                          shape: BoxShape.circle),
-                      child: Icon(Icons.share_outlined,color: Colors.white,size: 15.sp,),
-                    ),
-                    title: Transform.translate(
-                      offset: Offset(-10.w, 0),
-                      child:  Text(
-                        'Share App',
-                        style: TextStyle(
-                          fontSize: 16.sp,
-                          color:Colors.black.withOpacity(0.8),
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                    trailing:  Icon(Icons.chevron_right,color: Colors.black.withOpacity(0.8),),
-                    onTap: () {
-                      ShareUtils.onShareMsg(FlavourConstants.shareMsg+FlavourConstants.appAndroidUrl);
-                    },
-                  ),
+                  // ListTile(
+                  //   leading: Container(
+                  //     height: 30.w,
+                  //     width: 30.w,
+                  //     decoration: BoxDecoration(
+                  //         color: Colors.black.withOpacity(0.8),
+                  //         shape: BoxShape.circle),
+                  //     child: Icon(Icons.share_outlined,color: Colors.white,size: 15.sp,),
+                  //   ),
+                  //   title: Transform.translate(
+                  //     offset: Offset(-10.w, 0),
+                  //     child:  Text(
+                  //       'Share App',
+                  //       style: TextStyle(
+                  //         fontSize: 16.sp,
+                  //         color:Colors.black.withOpacity(0.8),
+                  //         fontWeight: FontWeight.w600,
+                  //       ),
+                  //     ),
+                  //   ),
+                  //   trailing:  Icon(Icons.chevron_right,color: Colors.black.withOpacity(0.8),),
+                  //   onTap: () {
+                  //     ShareUtils.onShareMsg(FlavourConstants.shareMsg+FlavourConstants.appAndroidUrl);
+                  //   },
+                  // ),
                 ],
               ),
             )

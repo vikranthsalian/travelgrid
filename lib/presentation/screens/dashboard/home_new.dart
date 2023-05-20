@@ -68,10 +68,10 @@ class _HomeNewPageState extends State<HomeNewPage> {
                           );
                         })
                   ),
-                  Container(
+                  Container(width: 150.w,
                     height: 35.h,
                     child: MetaButton(mapData:{
-                      "text" : "NH - TG",
+                      "text" : "NH Travelgrid",
                       "color" : "0xFFFFFFFF",
                       "backgroundColor" : "0xFF2854A1",
                       "size": "18",
@@ -154,7 +154,7 @@ class _HomeNewPageState extends State<HomeNewPage> {
                 ],
               ),
             ),
-            SizedBox(height: 30.h,),
+            SizedBox(height: 50.h,),
             Container(
               margin: EdgeInsets.symmetric(horizontal: 20.w),
               height: 100.h,
