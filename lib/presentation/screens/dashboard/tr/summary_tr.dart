@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -51,7 +53,7 @@ class _TravelRequestSummaryState extends State<TravelRequestSummary> {
   bool forexAdvanceDetails=false;
   bool visaDetails=false;
   bool insuranceDetails=false;
-  bool showApproverDetails=false;
+  bool showCommentDetails=false;
   String tripType="";
   List<MaCityPairs>? cityPairList=[];
   List<MaTravelerDetails>? travellerList=[];
@@ -59,6 +61,7 @@ class _TravelRequestSummaryState extends State<TravelRequestSummary> {
   List<MaForexAdvance>? forexAdvanceList=[];
   List<MaTravelVisas>? visaList=[];
   List<MaTravelInsurance>? insuranceList=[];
+  List<TravelComments>? commentList=[];
   String voucherPath="";
   String approverData="";
   String agentData="";
@@ -194,6 +197,7 @@ class _TravelRequestSummaryState extends State<TravelRequestSummary> {
        forexAdvanceList = response.data?.maForexAdvance ?? [];
        visaList = response.data?.maTravelVisas ?? [];
        insuranceList = response.data?.maTravelInsurance ?? [];
+       commentList = response.data?.travelComments ?? [];
       // voucherPath=response.data?.
        approverData = response.data?.comments ?? "";
        agentData = response.data?.comments ?? "";
@@ -255,14 +259,14 @@ class _TravelRequestSummaryState extends State<TravelRequestSummary> {
           //  buildExpandableView(jsonData,"insuranceDetails"),
             SwitchComponent(
                 color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
-                jsonData: jsonData['supportingDetails'],
-                childWidget: buildSupportingWidget(jsonData['supportingDetails']),
-                initialValue: showApproverDetails),
+                jsonData: jsonData['commentDetails'],
+                childWidget: buildCommentWidget(jsonData['commentDetails']),
+                initialValue: showCommentDetails),
             SwitchComponent(
                 color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
                 jsonData: jsonData['approverDetails'],
                 childWidget: buildApproverWidget(jsonData['approverDetails']),
-                initialValue: showApproverDetails),
+                initialValue: showCommentDetails),
            // buildExpandableView(jsonData,"approverDetails"),
           ],
         ),
@@ -281,7 +285,7 @@ class _TravelRequestSummaryState extends State<TravelRequestSummary> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
         Expanded(
-          child: MetaButton(mapData: jsonData['bottomButtonLeft'],text: "Cancel",
+          child: MetaButton(mapData: jsonData['bottomButtonLeft'],text: "Close",
               onButtonPressed: ()async{
                 Navigator.pop(context);
               }
@@ -434,11 +438,11 @@ class _TravelRequestSummaryState extends State<TravelRequestSummary> {
           return Container(
             alignment: Alignment.centerRight,
             child: MetaSwitch(mapData: map['showDetails'],
-              value: showApproverDetails,
+              value: showCommentDetails,
               onSwitchPressed: (value){
 
                 setState(() {
-                  showApproverDetails=value;
+                  showCommentDetails=value;
                 });
 
               },),
@@ -465,7 +469,7 @@ class _TravelRequestSummaryState extends State<TravelRequestSummary> {
         case "insuranceDetails":
           return insuranceDetails ? buildInsuranceWidget(map):Container();
         case "approverDetails":
-          return showApproverDetails ? buildApproverWidget(map):Container();
+          return showCommentDetails ? buildApproverWidget(map):Container();
         default:
           return Container();
       }
@@ -605,9 +609,6 @@ class _TravelRequestSummaryState extends State<TravelRequestSummary> {
         children: [
           Row(
             children: [
-              // Container(
-              //     width: 40.w,
-              //     child: MetaTextView(mapData:  map['header'],text: "Sl.No.")),
               Expanded(child: MetaTextView(mapData:  map['header'],text: "Emp. Code",)),
               Expanded(
                   flex: 2,
@@ -626,12 +627,9 @@ class _TravelRequestSummaryState extends State<TravelRequestSummary> {
                 MaTravelerDetails item = travellerList![index];
                 return Container(
                   padding: EdgeInsets.symmetric(vertical: 5.h),
-                  color: Colors.white,
+                  color:  item.primary ==  true ? Colors.orange.withOpacity(0.3) : Colors.white,
                   child:  Row(
                     children: [
-                      // Container(
-                      //     width: 40.w,
-                      //     child: MetaTextView(mapData:  map['item'],text: (index+1).toString())),
                       Expanded(
                           child: MetaTextView(mapData:  map['item'],text: item.employeeCode,)),
                       Expanded(
@@ -849,41 +847,67 @@ class _TravelRequestSummaryState extends State<TravelRequestSummary> {
 
   }
 
-  Container buildSupportingWidget(Map map){
+  Container buildCommentWidget(Map map){
+    // return Container(
+    //   padding: EdgeInsets.symmetric(horizontal: 20.w,vertical: 10.h),
+    //   color: Colors.white,
+    //   child:ListView(
+    //     padding: EdgeInsets.zero,
+    //     shrinkWrap: true,
+    //     children:[
+    //       Row(
+    //           children: [
+    //             Expanded(
+    //               child: Container(
+    //                 child: MetaDialogSelectorView(
+    //                     text: agentData,
+    //                     mapData: map['noteAgent']
+    //                 ),
+    //                 alignment: Alignment.centerLeft,
+    //               ),
+    //             ),
+    //             Expanded(
+    //               child: Container(
+    //                 child: MetaDialogSelectorView(
+    //                     text: approverData,
+    //                     mapData: map['noteApprover']
+    //                 ),
+    //               ),
+    //             ),
+    //           ]),
+    //       // UploadComponent(jsonData: map['uploadButton'],
+    //       //     url:voucherPath,
+    //       //     isViewOnly: true,
+    //       //     onSelected: (dataFile){
+    //       //
+    //       //     })
+    //     ],
+    //   ),
+    // );
+
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20.w,vertical: 10.h),
       color: Colors.white,
-      child:ListView(
-        padding: EdgeInsets.zero,
-        shrinkWrap: true,
-        children:[
-          Row(
-              children: [
-                Expanded(
-                  child: Container(
-                    child: MetaDialogSelectorView(
-                        text: agentData,
-                        mapData: map['noteAgent']
-                    ),
-                    alignment: Alignment.centerLeft,
-                  ),
-                ),
-                Expanded(
-                  child: Container(
-                    child: MetaDialogSelectorView(
-                        text: approverData,
-                        mapData: map['noteApprover']
-                    ),
-                  ),
-                ),
-              ]),
-          // UploadComponent(jsonData: map['uploadButton'],
-          //     url:voucherPath,
-          //     isViewOnly: true,
-          //     onSelected: (dataFile){
-          //
-          //     })
-        ],
+      child:ListView.builder(
+          padding: EdgeInsets.zero,
+          itemCount: commentList!.length,
+          shrinkWrap: true,
+          itemBuilder: (BuildContext context, int index) {
+            return Container(
+              child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+           children: [
+              MetaTextView(mapData:map['name'],text: commentList![index].actionBy!+"("+commentList![index].actionForm!+")"),
+
+            MetaTextView(mapData:map['date'],text:  commentList![index].actionOn),
+                        ],),
+                    MetaTextView(mapData:map['message'],text: commentList![index].comments),
+                  ]),
+            );
+
+          }
       ),
     );
   }

@@ -22,6 +22,7 @@ class ProfileScreen extends StatelessWidget {
   List items=[];
   String fullname="";
   List<Tuple2<String,String>> details=[];
+  List<Tuple2<String,String>> orgDetails=[];
   bool showContactDetails=true;
   bool showOrgDetails=true;
   @override
@@ -33,15 +34,22 @@ class ProfileScreen extends StatelessWidget {
 
 
     details.add(Tuple2("User ID", loginResponse.data!.id.toString()));
-    details.add(Tuple2("Email", loginResponse.data!.currentContact!.email.toString()));
+
     details.add(Tuple2("Gender", loginResponse.data!.gender.toString()));
 
     details.add(Tuple2("Address", loginResponse.data!.currentContact!.addressLine1.toString()));
+
     details.add(Tuple2("City", loginResponse.data!.currentContact!.location!.city.toString()));
     details.add(Tuple2("State", loginResponse.data!.currentContact!.location!.stateprov.toString()));
+    details.add(Tuple2("ZipCode", loginResponse.data!.currentContact!.location!.postalCode.toString()));
     details.add(Tuple2("Country", loginResponse.data!.currentContact!.location!.countryName.toString()));
     details.add(Tuple2("Mobile", loginResponse.data!.currentContact!.mobile.toString()));
-    details.add(Tuple2("Telephone", loginResponse.data!.currentContact!.telephoneNo.toString()));
+
+    orgDetails.add(Tuple2("Email", loginResponse.data!.currentContact!.email.toString()));
+    orgDetails.add(Tuple2("Employee", loginResponse.data!.currentContact!.mobile.toString()));
+    orgDetails.add(Tuple2("Grade", loginResponse.data!.grade!.companyId!.enterprise!.name.toString()));
+    orgDetails.add(Tuple2("Division", loginResponse.data!.divName.toString()));
+
 
 
 
@@ -86,13 +94,13 @@ class ProfileScreen extends StatelessWidget {
             ExpandableComponent(
                 color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
                 jsonData: jsonData['contactDetails'],
-                childWidget: buildRequesterWidget(jsonData['contactDetails']),
+                childWidget: buildRequesterWidget(jsonData['contactDetails'],details),
                 initialValue: showContactDetails),
-            // ExpandableComponent(
-            //     color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
-            //     jsonData: jsonData['orgDetails'],
-            //     childWidget: buildRequesterWidget(jsonData['orgDetails']),
-            //     initialValue: showOrgDetails),
+            ExpandableComponent(
+                color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
+                jsonData: jsonData['orgDetails'],
+                childWidget: buildRequesterWidget(jsonData['orgDetails'],orgDetails),
+                initialValue: showOrgDetails),
           ],
         )
     );
@@ -101,13 +109,13 @@ class ProfileScreen extends StatelessWidget {
 
 
 
-  Container buildRequesterWidget(Map map){
+  Container buildRequesterWidget(Map map,List<Tuple2<String,String>> data){
     return Container(
         color: Colors.white,
         child: GridView.builder(
           physics: NeverScrollableScrollPhysics(),
-          padding: EdgeInsets.zero,
-          itemCount: details.length,
+          padding: EdgeInsets.symmetric(vertical: 10.h),
+          itemCount: data.length,
           shrinkWrap: true,
           gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount:2,
@@ -121,10 +129,10 @@ class ProfileScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       MetaTextView(
-                        mapData: map['gridLabel'],text:details[index].item1,
+                        mapData: map['gridLabel'],text:data[index].item1,
                         key: UniqueKey()
                       ),
-                      MetaTextView(mapData: map['gridValue'],text:details[index].item2,
+                      MetaTextView(mapData: map['gridValue'],text:data[index].item2,
                         key: UniqueKey())
                     ])
             );

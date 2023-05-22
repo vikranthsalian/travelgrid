@@ -86,6 +86,7 @@ class _HomeNewPageState extends State<HomeNewPage> {
                 ],
               ),
             ),
+            SizedBox(height: 10.h,),
             Container(
               margin: EdgeInsets.symmetric(horizontal: 20.w),
               child: MetaTextView(mapData: {
@@ -123,7 +124,7 @@ class _HomeNewPageState extends State<HomeNewPage> {
                   Expanded(
                       child: InkWell(
                         onTap: (){
-                          Navigator.of(context).pushNamed("/generalCreateExpense");
+                          Navigator.of(context).pushNamed(RouteConstants.generalCreateExpensePath);
                         },
                           child: buildCard("New GE","conv.svg"))
                   )

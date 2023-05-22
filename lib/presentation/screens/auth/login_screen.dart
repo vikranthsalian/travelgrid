@@ -5,12 +5,10 @@ import 'package:aad_oauth/aad_oauth.dart';
 import 'package:aad_oauth/model/config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
-import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:travelgrid/common/config/azure_sso.dart';
 import 'package:travelgrid/common/constants/flavour_constants.dart';
 import 'package:travelgrid/common/constants/route_constants.dart';
-import 'package:travelgrid/common/extensions/capitalize.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
 import 'package:travelgrid/common/injector/injector.dart';
 import 'package:travelgrid/common/utils/show_alert.dart';
@@ -70,6 +68,11 @@ class LoginScreen extends StatelessWidget {
                           FocusScope.of(context).unfocus();
                         },
                         onSuccess: (context, state) {
+
+                          if(state.successResponse.toString().isEmpty){
+                            return;
+                          }
+
                           MetaLoginResponse modelResponse = MetaLoginResponse.fromJson(jsonDecode(state.successResponse.toString()));
                           print(modelResponse.data?.toJson());
                           context.read<LoginCubit>().setLoginResponse(modelResponse);

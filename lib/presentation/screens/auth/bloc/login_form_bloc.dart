@@ -41,7 +41,7 @@ class LoginFormBloc extends FormBloc<String, String> {
    if(response!=null && response.status==true){
      emitSuccess(successResponse: jsonEncode(response));
    }else{
-     emitSuccess(successResponse: jsonEncode(response),canSubmitAgain: true);
+     emitSuccess(successResponse: "",canSubmitAgain: true);
    }
 
   }

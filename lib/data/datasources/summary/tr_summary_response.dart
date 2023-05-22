@@ -191,6 +191,7 @@ class MaTravelerDetails {
   String? deptName;
   String? companyCode;
   String? location;
+  bool? primary;
 
   MaTravelerDetails(
       {this.employeeCode,
@@ -209,6 +210,7 @@ class MaTravelerDetails {
         this.divisionName,
         this.deptName,
         this.companyCode,
+        this.primary,
         this.location});
 
   MaTravelerDetails.fromJson(Map<String, dynamic> json) {
@@ -229,6 +231,7 @@ class MaTravelerDetails {
     deptName = json['deptName'];
     companyCode = json['companyCode'];
     location = json['location'];
+    primary = json['primary'] ?? false;
   }
 
   Map<String, dynamic> toJson() {
@@ -250,6 +253,7 @@ class MaTravelerDetails {
     data['deptName'] = this.deptName;
     data['companyCode'] = this.companyCode;
     data['location'] = this.location;
+    data['primary'] = this.primary;
     return data;
   }
 }

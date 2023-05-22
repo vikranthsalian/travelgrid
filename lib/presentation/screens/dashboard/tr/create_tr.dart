@@ -37,6 +37,7 @@ class CreateTravelRequest extends StatelessWidget {
         ..add(GetTravelRequestSummaryEvent(recordLocator: title!));
     }else{
       bloc = Injector.resolve<TravelRequestBloc>();
+      bloc!.add(GetTravelRequestListEvent(0,["All"]));
     }
     print("tripType-------");
     print(tripType);

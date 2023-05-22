@@ -56,7 +56,9 @@ class CreateGeneralExpense extends StatelessWidget {
       bloc = Injector.resolve<GeneralExpenseBloc>()
         ..add(GetGeneralExpenseSummaryEvent(recordLocator: title!));
     }else{
+      print("i am here");
       bloc = Injector.resolve<GeneralExpenseBloc>();
+    bloc!.add(GetGeneralExpenseListEvent(0,["ALL"]));
     }
 
 
@@ -343,7 +345,7 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpenseBody> {
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          MetaButton(mapData: jsonData['bottomButtonLeft'],text: "Cancel",
+          MetaButton(mapData: jsonData['bottomButtonLeft'],text: "Close",
               onButtonPressed: (){
                   Navigator.pop(context);
               }
@@ -381,7 +383,7 @@ class _CreateGeneralExpenseState extends State<CreateGeneralExpenseBody> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           MetaButton(
-                mapData: jsonData['bottomButtonLeft'], text: "Cancel",
+                mapData: jsonData['bottomButtonLeft'], text: "Close",
                 onButtonPressed: () {
                           Navigator.pop(context);
                 }

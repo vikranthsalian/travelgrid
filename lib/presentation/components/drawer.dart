@@ -6,10 +6,14 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:travelgrid/common/constants/color_constants.dart';
 import 'package:travelgrid/common/constants/flavour_constants.dart';
 import 'package:travelgrid/common/constants/route_constants.dart';
+import 'package:travelgrid/common/injector/injector.dart';
 import 'package:travelgrid/common/utils/PackageInfo.dart';
 import 'package:travelgrid/common/utils/ShareUtility.dart';
 import 'package:travelgrid/data/cubits/login_cubit/login_cubit.dart';
 import 'package:travelgrid/data/datasources/login_response.dart';
+import 'package:travelgrid/data/models/success_model.dart';
+import 'package:travelgrid/domain/usecases/common_usecase.dart';
+import 'package:travelgrid/presentation/components/dialog_yes_no.dart';
 import 'package:travelgrid/presentation/widgets/svg_view.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -301,6 +305,46 @@ class WidgetDrawerState extends State<WidgetDrawer> {
                   //     ShareUtils.onShareMsg(FlavourConstants.shareMsg+FlavourConstants.appAndroidUrl);
                   //   },
                   // ),
+                  Divider(),
+                  ListTile(
+                    leading: Container(
+                      height: 30.w,
+                      width: 30.w,
+                      decoration: BoxDecoration(
+                          color: Colors.black.withOpacity(0.8),
+                          shape: BoxShape.circle),
+                      child: Icon(Icons.power_settings_new_sharp,color: Colors.white,size: 15.sp,),
+                    ),
+                    title: Transform.translate(
+                      offset: Offset(-10.w, 0),
+                      child:  Text(
+                        'Log Out',
+                        style: TextStyle(
+                          fontSize: 16.sp,
+                          color:Colors.black.withOpacity(0.8),
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                    trailing:  Icon(Icons.chevron_right,color: Colors.black.withOpacity(0.8),),
+                    onTap: () async{
+                      await showDialog(
+                          context: context,
+                          builder: (_) => DialogYesNo(
+                              title: "Do you want to logout?",
+                              onPressed: (value)async{
+                                if(value == "YES"){
+                                  SuccessModel model =   await Injector.resolve<CommonUseCase>().logOut();
+                                  if(model.token == null){
+                                    Navigator.of(context)
+                                        .pushNamedAndRemoveUntil(RouteConstants.loginPath,
+                                            (Route<dynamic> route) => false);
+                                  }
+
+                                }
+                              }));
+                    },
+                  ),
                 ],
               ),
             )

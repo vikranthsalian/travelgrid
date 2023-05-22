@@ -370,7 +370,7 @@ class _CreateTravelExpenseBodyState extends State<CreateTravelExpenseBody> {
           Visibility(
             visible: true,
             child: MetaButton(mapData: jsonData['bottomButtonLeft'],
-                text: "Cancel",
+                text: "Close",
                 onButtonPressed: (){
                   Navigator.pop(context);
               //submitGe("modify");
@@ -403,7 +403,7 @@ class _CreateTravelExpenseBodyState extends State<CreateTravelExpenseBody> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           MetaButton(
-                mapData: jsonData['bottomButtonLeft'], text: "Cancel",
+                mapData: jsonData['bottomButtonLeft'], text: "Close",
                 onButtonPressed: () {
                   Navigator.pop(context);
                 }
@@ -522,6 +522,7 @@ class _CreateTravelExpenseBodyState extends State<CreateTravelExpenseBody> {
   }
 
   Container buildCommentWidget(Map map){
+    return Container();
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20.w,vertical: 10.h),
       color: Colors.white,
