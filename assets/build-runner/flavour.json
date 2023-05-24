@@ -1606,38 +1606,6 @@
         "align": "center-left"
       }
     },
-    "travellerDetails": {
-      "label": {
-        "text" : "Traveller Details",
-        "color" : "0xFF2854A1",
-        "size": "16",
-        "family": "bold",
-        "align": "center-left"
-      },
-      "showDetails": {
-        "label": {
-          "text" : "Show",
-          "color" : "0XFFFFFFFF",
-          "size": "10",
-          "family": "bold",
-          "align": "center-right"
-        }
-      },
-      "header": {
-        "text" : "",
-        "color" : "0xFF000000",
-        "size": "12",
-        "family": "bold",
-        "align": "center"
-      },
-      "item": {
-        "text" : "",
-        "color" : "0xFFCCCCCC",
-        "size": "9",
-        "family": "bold",
-        "align": "center"
-      }
-    },
     "selectTravelPurpose": {
       "showView": true,
       "key":"travel_purpose_view",
@@ -3434,45 +3402,6 @@
       },
       "hintText" : {
         "text" : "Enter Contact",
-        "color" : "0xFF2854A1",
-        "size": "14",
-        "family": "regular"
-      },
-      "errorText" : {
-        "text" : "",
-        "color" : "0xFFFF0000",
-        "size": "14",
-        "family": "regular"
-      },
-      "validators" : [
-        {
-          "type": "empty"
-        }
-      ]
-    },
-    "text_field_address":  {
-      "name": "Street Address",
-      "apiKey": "address",
-      "type": "text_field_view",
-      "inputType": "text",
-      "isPassword": false,
-      "backgroundColor": "0XFFFFFFFF",
-      "borderColor": "0XFFAEAEAE",
-      "text" : {
-        "text" : "",
-        "color" : "0xFF2854A1",
-        "size": "14",
-        "family": "regular"
-      },
-      "labelText" : {
-        "text" : "Street Address",
-        "color" : "0xFF2854A1",
-        "size": "14",
-        "family": "regular",
-        "align" : "center-left"
-      },
-      "hintText" : {
-        "text" : "Enter Street Address",
         "color" : "0xFF2854A1",
         "size": "14",
         "family": "regular"

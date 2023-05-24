@@ -32,7 +32,7 @@ class MetaTextFieldBlocViewState extends State<MetaTextFieldBlocView> {
   @override
   Widget build(BuildContext context) {
     return TextFieldBlocBuilder(
-      key: UniqueKey(),
+   //   key: UniqueKey(),
       textFieldBloc: widget.textFieldBloc,
       //controller:controller,
       autofocus: false,

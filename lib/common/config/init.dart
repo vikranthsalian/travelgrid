@@ -21,8 +21,6 @@ import 'package:flutter/services.dart';
 
 import 'navigator_key.dart';
 
-enum BuildEnvironment { dev, prod, staging }
-
 class InitRoot extends StatefulWidget {
 
   @override

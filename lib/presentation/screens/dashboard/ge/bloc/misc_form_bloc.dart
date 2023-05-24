@@ -98,7 +98,7 @@ class MiscFormBloc extends FormBloc<String, String> {
     if(showGroup.value == true && groupIds.value!.isEmpty){
       MetaAlert.showErrorAlert(message: "Please add group employees");
     }
-    isGroupExpense=true;
+    isGroupExpense=showGroup.value ?? false;
     String groupValues=groupIds.value!.join(",");
 
 

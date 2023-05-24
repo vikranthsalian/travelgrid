@@ -31,6 +31,7 @@ import 'package:travelgrid/presentation/widgets/switch.dart';
 import 'package:travelgrid/presentation/widgets/text_field.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
 import 'package:travelgrid/presentation/widgets/toggle_button.dart';
+import 'package:travelgrid/presentation/widgets/toggle_switch.dart';
 
 class TrProcessed extends StatelessWidget {
   Function? onNext;
@@ -89,8 +90,8 @@ class TrProcessed extends StatelessWidget {
           child: Builder(
               builder: (context) {
                 formBloc =  BlocProvider.of<ProcessedTrFormBloc>(context);
-                formBloc!.segmentType.updateValue(segment[0]);
-                formBloc!.segmentTypeID.updateValue(segment[0]);
+                formBloc!.segmentType.updateValue(segment[2]);
+                formBloc!.segmentTypeID.updateValue(segment[2]);
 
                 formBloc!.requestType.updateValue("Self");
                 formBloc!.requestTypeID.updateValue("self");
@@ -176,30 +177,35 @@ class TrProcessed extends StatelessWidget {
                             padding: EdgeInsets.zero,
                             shrinkWrap: true,
                             children:[
-                              Container(
-                                color: Colors.white,
-                                padding: EdgeInsets.only(bottom: 10.h,top: 5.h),
-                                // decoration: BoxDecoration(
-                                //   color: ParseDataType().getHexToColor(jsonData['backgroundColor']),
-                                //   //  borderRadius:  BorderRadius.all(Radius.circular(30)),
-                                // ),
+                              SizedBox(height: 10.h,),
+                              Stack(
                                 alignment: Alignment.center,
-
-                                child: Container(
-                                  height: 35.h,
-                                  child: MetaToggleButton(
-                                    type: 2,
-                                    border: 30,
-                                    onCheckPressed: (index){
-                                      selected = index;
-                                      formBloc!.segmentType.updateValue(segment[index]);
-                                      formBloc!.segmentTypeID.updateValue(segment[index].toString());
-                                      formBloc!.cityList.changeValue([]);
-                                    },
-                                    steps: steps,items: items,enabledColor:ParseDataType().getHexToColor(jsonData['backgroundColor']) ),
-                                ),
+                                children: [
+                                  Container(
+                                    width: 272.w,
+                                   //padding: EdgeInsets.symmetric(horizontal: 30.w),
+                                    child: ToggleSwitch(
+                                      initialLabelIndex: 0,
+                                      totalSwitches: 3,
+                                      activeBgColor: [ParseDataType().getHexToColor(jsonData['backgroundColor'])],
+                                      activeFgColor: Colors.white,
+                                      centerText:true,
+                                      minWidth: 90.w,
+                                      inactiveBgColor: Colors.grey,
+                                      inactiveFgColor: Colors.white,
+                                      labels: ['One-Way', 'Round', 'Multi'],
+                                      onToggle: (index) {
+                                        print('switched to: $index');
+                                        selected = index!;
+                                        formBloc!.segmentType.updateValue(segment[index]);
+                                        formBloc!.segmentTypeID.updateValue(segment[index].toString());
+                                        formBloc!.cityList.changeValue([]);
+                                      },
+                                    ),
+                                  ),
+                                ],
                               ),
-
+                              SizedBox(height: 5.h,),
                               Container(
                                 margin: EdgeInsets.symmetric(horizontal: 10.w),
                                 child: Row(

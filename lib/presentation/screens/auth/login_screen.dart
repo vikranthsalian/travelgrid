@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:convert';
 
 import 'package:aad_oauth/aad_oauth.dart';
@@ -23,7 +22,6 @@ import 'package:travelgrid/data/blocs/travel/travel_mode_bloc.dart';
 import 'package:travelgrid/data/blocs/travel_purpose/travel_purpose_bloc.dart';
 import 'package:travelgrid/data/cubits/login_cubit/login_cubit.dart';
 import 'package:travelgrid/data/datasources/login_response.dart';
-import 'package:travelgrid/data/remote/remote_datasource.dart';
 import 'package:travelgrid/presentation/screens/auth/bloc/login_form_bloc.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';
 import 'package:travelgrid/presentation/widgets/image_view.dart';
@@ -36,7 +34,6 @@ class LoginScreen extends StatelessWidget {
   final double _sizedBoxHeight= 10.0.h;
   AadOAuth? oauth ;
   LoginFormBloc? formBloc ;
-  late StreamSubscription<bool> keyboardSubscription;
   @override
   Widget build(BuildContext context) {
 
@@ -54,13 +51,14 @@ class LoginScreen extends StatelessWidget {
 
                   LoginFormBloc  formBloc =  BlocProvider.of<LoginFormBloc>(context);
 
-                //  formBloc.tfUsername.updateValue("nh09");
-                //   formBloc.tfPassword.updateValue("Test123#");
+                formBloc.tfUsername.updateValue("nh09");
+                formBloc.tfPassword.updateValue("Test123#");
 
                   return Container(
                     height: double.infinity,
 
                     child: FormBlocListener<LoginFormBloc, String, String>(
+
                         onSubmissionFailed: (context, state) {
 
                         },

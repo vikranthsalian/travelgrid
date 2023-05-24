@@ -31,20 +31,23 @@ class _MetaToggleButtonState extends State<MetaToggleButton> {
 
 
     return Container(
-
       decoration: BoxDecoration(
         color: Colors.grey.withOpacity(0.3),
         borderRadius:  BorderRadius.all(Radius.circular(widget.border)),
       ),
       child:ToggleButtons(
         direction:Axis.horizontal,
-        onPressed: (int index) {
+
+        onPressed: (index) {
+          print("asd");
+          print(index);
           widget.onCheckPressed!(index);
+          for (int i = 0; i < widget.steps.length; i++) {
+            widget.steps[i] = i == index;
+          }
           setState(() {
             // The button that is tapped is set to true, and the others to false.
-            for (int i = 0; i < widget.steps.length; i++) {
-              widget.steps[i] = i == index;
-            }
+
           });
         },
         borderRadius:  BorderRadius.all(Radius.circular(widget.border)),

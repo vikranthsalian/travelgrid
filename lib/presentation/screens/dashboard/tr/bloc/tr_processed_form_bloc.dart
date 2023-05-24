@@ -112,8 +112,10 @@ class ProcessedTrFormBloc extends FormBloc<String, String> {
         if(requestTypeID.value=="onBehalf")
           "onbehalf": true,
 
-        if(requestTypeID.value=="self")
-          "self": true,
+        if(requestTypeID.value=="self")...{
+          "onbehalf": false,
+        },
+
 
         if(requestTypeID.value=="group")
           "group": true,
