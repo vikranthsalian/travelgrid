@@ -59,9 +59,9 @@ class TrProcessed extends StatelessWidget {
     "align": "center-left"
   };
   final List<bool> steps = <bool>[true, false, false];
-  List<Widget> items = [];
-  List<String> segment = ["O","R","M"];
-  List<String> segLabel = ["one-way","R","M"];
+  // List<Widget> items = [];
+    List<String> segment = ["O","R","M"];
+   List<String> segLabel = ["one-way","return","multi-city"];
   int selected = 0;
   List<TRCityPairModel> listCity=[];
   List<TrForexAdvance> listForex=[];
@@ -69,16 +69,16 @@ class TrProcessed extends StatelessWidget {
   List<TRTravelInsurance> listInsurance=[];
   List<TRTravellerDetails> list =  [];
   bool showTravellerItems=true;
-
+  List<String> segmentTypeList =['One-Way', 'Round', 'Multi'];
   @override
   Widget build(BuildContext context) {
     jsonData = FlavourConstants.trAddProcessed;
 
-    items=[
-      MetaTextView(mapData: map,text: 'One-Way'),
-      MetaTextView(mapData: map,text: 'Round'),
-      MetaTextView(mapData: map,text: 'Multi'),
-    ];
+    // items=[
+    //   MetaTextView(mapData: map,text: 'One-Way'),
+    //   MetaTextView(mapData: map,text: 'Round'),
+    //   MetaTextView(mapData: map,text: 'Multi'),
+    // ];
 
 
     return Scaffold(
@@ -90,19 +90,28 @@ class TrProcessed extends StatelessWidget {
           child: Builder(
               builder: (context) {
                 formBloc =  BlocProvider.of<ProcessedTrFormBloc>(context);
-                formBloc!.segmentType.updateValue(segment[2]);
-                formBloc!.segmentTypeID.updateValue(segment[2]);
+                formBloc!.segmentType.updateValue(segment[0]);
+                formBloc!.segmentTypeID.updateValue(segment[0]);
 
                 formBloc!.requestType.updateValue("Self");
                 formBloc!.requestTypeID.updateValue("self");
 
                 formBloc!.swBillable.updateValue(true);
+
+
                 if(isEdit!){
 
                   final idx = segLabel.indexWhere((element) => element == summaryResponse?.data?.segmentType.toString());
+                  print(idx);
+                  print("summaryResponse?.data?.segmentType");
                   print(summaryResponse?.data?.segmentType);
-                  formBloc!.segmentType.updateValue(segment[idx]);
-                  formBloc!.segmentTypeID.updateValue(segment[idx]);
+                  if(idx>0){
+                    selected=idx;
+                    print(segLabel[idx]);
+                    formBloc!.segmentType.updateValue(segment[idx]);
+                    formBloc!.segmentTypeID.updateValue(segment[idx]);
+                  }
+
 
 
                   formBloc!.requestType.updateValue(summaryResponse?.data?.maRequesterDetails?.requestType.toString().capitalize() ?? "");
@@ -112,6 +121,7 @@ class TrProcessed extends StatelessWidget {
                   if(summaryResponse?.data?.maRequesterDetails?.requestType.toString()!="self") {
 
                    List<TRTravellerDetails> details=[];
+
                     for(var item in summaryResponse!.data!.maTravelerDetails!){
 
                       formBloc!.employeeType.updateValue(item.employeeType);
@@ -185,7 +195,7 @@ class TrProcessed extends StatelessWidget {
                                     width: 272.w,
                                    //padding: EdgeInsets.symmetric(horizontal: 30.w),
                                     child: ToggleSwitch(
-                                      initialLabelIndex: 0,
+                                      initialLabelIndex: selected,
                                       totalSwitches: 3,
                                       activeBgColor: [ParseDataType().getHexToColor(jsonData['backgroundColor'])],
                                       activeFgColor: Colors.white,
@@ -193,7 +203,8 @@ class TrProcessed extends StatelessWidget {
                                       minWidth: 90.w,
                                       inactiveBgColor: Colors.grey,
                                       inactiveFgColor: Colors.white,
-                                      labels: ['One-Way', 'Round', 'Multi'],
+
+                                      labels: segmentTypeList,
                                       onToggle: (index) {
                                         print('switched to: $index');
                                         selected = index!;

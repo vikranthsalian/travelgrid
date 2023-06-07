@@ -11,6 +11,7 @@ class RouteConstants {
   static const travelRequestViewPath = "/travelRequestView";
 
   static const travelCreateRequestPath = "/travelCreateRequest";
+  static const flightPath = "/flightPath";
   static const generalCreateExpensePath = "/generalCreateExpense";
   static const travelCreateExpensePath = "/travelCreateExpense";
 

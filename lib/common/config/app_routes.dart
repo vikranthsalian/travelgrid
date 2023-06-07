@@ -14,6 +14,7 @@ import 'package:travelgrid/presentation/screens/dashboard/tr/create_tr.dart';
 import 'package:travelgrid/presentation/screens/dashboard/tr/summary_tr.dart';
 import 'package:travelgrid/presentation/screens/dashboard/tr/travel_request.dart';
 import 'package:travelgrid/presentation/screens/dashboard/tr/upcoming_tr.dart';
+import 'package:travelgrid/presentation/screens/flight/flight_list.dart';
 import 'package:travelgrid/presentation/screens/policy/policy_screen.dart';
 import 'package:travelgrid/presentation/screens/splash/splash_screen.dart';
 import 'package:travelgrid/presentation/screens/dashboard/ge/general_expense.dart';
@@ -45,6 +46,9 @@ class AppRoutes {
 
       case RouteConstants.profilePath:
         return  ProfileScreen();
+
+      case RouteConstants.flightPath:
+        return  FlightScreen();
 
       case RouteConstants.travelRequestPath:
         return  TravelRequest();

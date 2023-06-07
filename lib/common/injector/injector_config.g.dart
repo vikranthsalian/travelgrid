@@ -23,7 +23,8 @@ class _$InjectorConfig extends InjectorConfig {
       ..registerSingleton((c) => FareClassBloc(c<CommonUseCase>()))
       ..registerSingleton((c) => TravelPurposeBloc(c<CommonUseCase>()))
       ..registerSingleton((c) => CurrencyBloc(c<CommonUseCase>()))
-      ..registerSingleton((c) => EmployeeBloc(c<CommonUseCase>()));
+      ..registerSingleton((c) => EmployeeBloc(c<CommonUseCase>()))
+      ..registerSingleton((c) => FlightBloc(c<CommonUseCase>()));
   }
 
   @override

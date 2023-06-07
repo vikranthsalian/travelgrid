@@ -3,10 +3,17 @@ import 'package:intl/intl.dart';
 
 class MetaDateTime{
 
-  String getDate(String date,{String format = 'MM/dd/yyyy'}) {
+  String getDate(String date,{String format = 'MM/dd/yyyy',bool isFlightDate=false}) {
     DateTime parseDate;
     try {
-       parseDate = new DateFormat("dd-MM-yyyy").parse(date);
+
+      if(isFlightDate){
+        parseDate =  new DateFormat("dd MMM yyyy hh:mm").parse(date);
+      }else{
+        parseDate = new DateFormat("dd-MM-yyyy").parse(date);
+      }
+
+
     }catch(e){
       parseDate = new DateFormat("dd/MM/yyyy").parse(date);
     }

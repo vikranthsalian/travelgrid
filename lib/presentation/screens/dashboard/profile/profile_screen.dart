@@ -46,8 +46,8 @@ class ProfileScreen extends StatelessWidget {
     details.add(Tuple2("Mobile", loginResponse.data!.currentContact!.mobile.toString()));
 
     orgDetails.add(Tuple2("Email", loginResponse.data!.currentContact!.email.toString()));
-    orgDetails.add(Tuple2("Employee", loginResponse.data!.currentContact!.mobile.toString()));
-    orgDetails.add(Tuple2("Grade", loginResponse.data!.grade!.companyId!.enterprise!.name.toString()));
+    orgDetails.add(Tuple2("Employee", loginResponse.data!.employeecode.toString()));
+    orgDetails.add(Tuple2("Grade", loginResponse.data!.grade!.organizationGradeName.toString()));
     orgDetails.add(Tuple2("Division", loginResponse.data!.divName.toString()));
 
 

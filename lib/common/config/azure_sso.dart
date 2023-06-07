@@ -5,14 +5,13 @@ import 'package:travelgrid/common/config/navigator_key.dart';
 
 class AzureSSO{
   static final Config config = new Config(
-    tenant: " 06643ed2-3004-4e12-9001-7193b2f0442a",
+    tenant: "06643ed2-3004-4e12-9001-7193b2f0442a",
     clientId: "6cc2992e-28a2-422b-8cbc-19ef18584b42",
-    scope: "openid profile offline_access User.read",
     clientSecret: "FEu7Q~sU.3aD5jRq1cOeWS.geV4GhXZvkjU9h",
     isB2C: false,
     // redirectUri is Optional as a default is calculated based on app type/web location
    // redirectUri: "https://login.live.com/oauth20_desktop.srf",
-
+    scope: "openid profile offline_access User.read",
     redirectUri: "https://travelex.narayanahealth.org:8090/tgmsal-3.0",
 
     navigatorKey: appNavigatorKey,

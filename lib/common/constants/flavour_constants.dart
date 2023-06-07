@@ -18,6 +18,7 @@ class FlavourConstants {
   static  Map<String,dynamic> homeData = FlavorConfig.instance.variables["home_screen_data"];
 
   //List Data
+  static  Map<String,dynamic> flightData = FlavorConfig.instance.variables["flight_screen_data"];
   static  Map<String,dynamic> trData = FlavorConfig.instance.variables["tr_screen_data"];
   static  Map<String,dynamic> teData = FlavorConfig.instance.variables["te_screen_data"];
   static  Map<String,dynamic> geData = FlavorConfig.instance.variables["ge_screen_data"];

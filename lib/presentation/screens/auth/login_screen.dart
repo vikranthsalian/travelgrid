@@ -22,23 +22,49 @@ import 'package:travelgrid/data/blocs/travel/travel_mode_bloc.dart';
 import 'package:travelgrid/data/blocs/travel_purpose/travel_purpose_bloc.dart';
 import 'package:travelgrid/data/cubits/login_cubit/login_cubit.dart';
 import 'package:travelgrid/data/datasources/login_response.dart';
+import 'package:travelgrid/data/remote/remote_datasource.dart';
 import 'package:travelgrid/presentation/screens/auth/bloc/login_form_bloc.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';
 import 'package:travelgrid/presentation/widgets/image_view.dart';
 import 'package:travelgrid/presentation/widgets/text_field.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class LoginScreen extends StatelessWidget {
   Map<String,dynamic> loginJsonData = {};
-
+  WebViewController? controller ;
   final double _sizedBoxHeight= 10.0.h;
   AadOAuth? oauth ;
   LoginFormBloc? formBloc ;
   @override
   Widget build(BuildContext context) {
-
     loginJsonData = FlavourConstants.loginData;
+
+    controller = WebViewController()
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..setBackgroundColor(const Color(0x00000000))
+      ..setNavigationDelegate(NavigationDelegate(
+          onProgress: (int progress) {
+            // Update loading bar.
+          },
+          onPageStarted: (String url) {},
+          onPageFinished: (String url) {},
+          onWebResourceError: (WebResourceError error) {},
+          onNavigationRequest: (NavigationRequest request) {
+            if (request.url.startsWith('https://www.youtube.com/')) {
+              return NavigationDecision.prevent;
+            }
+            return NavigationDecision.navigate;
+          },
+        ))
+      ..loadRequest(Uri.parse(
+          'https://sso.narayanahealth.org/iamapps/ssologin/custom_saml_app/8acdd27d3477a88558932526d33c5dc0958332d0'
+          //'https://www.youtube.com/'
+      ));
+
+
    // APIRemoteDatasource().ssoSignIn();
+    return WebViewWidget(controller: controller!);
 
       return SafeArea(
         child: Scaffold(
@@ -51,8 +77,8 @@ class LoginScreen extends StatelessWidget {
 
                   LoginFormBloc  formBloc =  BlocProvider.of<LoginFormBloc>(context);
 
-                formBloc.tfUsername.updateValue("nh09");
-                formBloc.tfPassword.updateValue("Test123#");
+               // formBloc.tfUsername.updateValue("nh09");
+              //  formBloc.tfPassword.updateValue("Test123#");
 
                   return Container(
                     height: double.infinity,
