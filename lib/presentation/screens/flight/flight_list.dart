@@ -14,7 +14,6 @@ import 'package:travelgrid/presentation/components/sortby_component.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';
 import 'package:travelgrid/presentation/widgets/icon.dart';
 import 'package:travelgrid/presentation/widgets/image_view.dart';
-import 'package:travelgrid/presentation/widgets/svg_view.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
 
 class FlightScreen extends StatelessWidget {
