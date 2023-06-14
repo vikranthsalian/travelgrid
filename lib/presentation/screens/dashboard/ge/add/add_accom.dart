@@ -1,22 +1,17 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:travelgrid/common/config/navigator_key.dart';
 import 'package:travelgrid/common/constants/flavour_constants.dart';
 import 'package:travelgrid/common/enum/dropdown_types.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
-import 'package:travelgrid/common/injector/injector.dart';
 import 'package:travelgrid/common/utils/upload_util.dart';
 import 'package:travelgrid/data/models/expense_model.dart';
 import 'package:travelgrid/data/models/ge/ge_accom_model.dart';
 import 'package:travelgrid/data/models/ge/ge_group_accom_model.dart';
 import 'package:travelgrid/data/models/success_model.dart';
-import 'package:travelgrid/domain/usecases/common_usecase.dart';
-import 'package:travelgrid/presentation/components/dialog_group.dart';
 import 'package:travelgrid/presentation/components/switch_component.dart';
 import 'package:travelgrid/presentation/components/upload_component.dart';
 import 'package:travelgrid/presentation/screens/dashboard/ge/add/add_group_accom.dart';
@@ -370,7 +365,7 @@ class CreateAccommodationExpense extends StatelessWidget {
                                               onChanged:(value){
                                                 formBloc!.tfDescription.updateValue(value);
                                               }),
-                                          (violationMessage!=null && violationMessage!.isNotEmpty) ?
+                                          (violationMessage!=null && violationMessage.isNotEmpty) ?
                                           Container(
                                               padding: EdgeInsets.symmetric(horizontal: 10.w),
                                               height: 20.h,

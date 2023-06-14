@@ -41,7 +41,7 @@ class MetaTextFieldBlocViewState extends State<MetaTextFieldBlocView> {
       maxLength: widget.mapData['maxLength'] ?? null,
     //  onChanged: onChanged,
       suffixButton:widget.isPassword ? SuffixButton.obscureText: null,
-      obscureText: widget.isPassword  ?? false,
+      obscureText: widget.isPassword,
       textStyle: MetaStyle(mapData: widget.mapData['text']).getStyle() ,
       inputFormatters: widget.mapData['inputFormatters']  ?? [],
       maxLines:  widget.mapData['maxLines'] ?? 1 ,

@@ -67,20 +67,20 @@ class FilterComponent extends StatelessWidget {
           children: <Widget>[
             Container(
                 width: MediaQuery.of(context).size.width,
-                color:ParseDataType().getHexToColor(jsonData!['backgroundColor']),
+                color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
                 padding: EdgeInsets.symmetric(horizontal: 10.h),
                 child:  Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                     MetaTextView(mapData: jsonData!['title']),
-                        MetaIcon(mapData:jsonData!['filterIcon'],
+                     MetaTextView(mapData: jsonData['title']),
+                        MetaIcon(mapData:jsonData['filterIcon'],
                         onButtonPressed: (){
 
                         }),
                     Expanded(
                       child: Container(
                         alignment: Alignment.centerRight,
-                        child: MetaIcon(mapData:jsonData!['closeIcon'],
+                        child: MetaIcon(mapData:jsonData['closeIcon'],
                             onButtonPressed: (){
                               Navigator.pop(context);
                             }),

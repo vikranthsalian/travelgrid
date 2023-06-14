@@ -215,7 +215,7 @@ class AddItinerary  extends StatelessWidget {
 
                                               Row(
                                                   children: [
-                                                    tripType=="D"?
+                                                    tripType == "D"?
                                                     Expanded(
                                                       child: Container(
                                                         child: MetaDialogSelectorView(mapData: jsonData['selectMode'],

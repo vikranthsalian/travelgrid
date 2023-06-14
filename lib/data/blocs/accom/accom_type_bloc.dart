@@ -7,7 +7,6 @@ import 'package:travelgrid/common/injector/injector.dart';
 import 'package:travelgrid/data/cubits/accom_type_cubit/accom_type_cubit.dart';
 import 'package:travelgrid/data/datasources/others/accom_type_list.dart';
 import 'package:travelgrid/domain/usecases/common_usecase.dart';
-import 'package:travelgrid/domain/usecases/ge_usecase.dart';
 
 part 'accom_type_event.dart';
 part 'accom_type_state.dart';

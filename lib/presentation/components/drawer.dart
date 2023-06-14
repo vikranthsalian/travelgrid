@@ -95,7 +95,7 @@ class WidgetDrawerState extends State<WidgetDrawer> {
                         title: Transform.translate(
                           offset: Offset(-10.w, 0),
                           child: MetaTextView(mapData: {
-                            "text" : fullname ?? "",
+                            "text" : fullname,
                             "color" : "0xFFFFFFFF",
                             "size": "18",
                             "family": "bold",
