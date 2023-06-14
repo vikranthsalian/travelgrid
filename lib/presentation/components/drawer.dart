@@ -8,7 +8,6 @@ import 'package:travelgrid/common/constants/flavour_constants.dart';
 import 'package:travelgrid/common/constants/route_constants.dart';
 import 'package:travelgrid/common/injector/injector.dart';
 import 'package:travelgrid/common/utils/PackageInfo.dart';
-import 'package:travelgrid/common/utils/ShareUtility.dart';
 import 'package:travelgrid/data/cubits/login_cubit/login_cubit.dart';
 import 'package:travelgrid/data/datasources/login_response.dart';
 import 'package:travelgrid/data/models/success_model.dart';
