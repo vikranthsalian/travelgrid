@@ -1,20 +1,17 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:travelgrid/common/constants/flavour_constants.dart';
 import 'package:travelgrid/common/enum/dropdown_types.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
-import 'package:travelgrid/common/injector/injector.dart';
 import 'package:travelgrid/common/utils/city_util.dart';
 import 'package:travelgrid/common/utils/upload_util.dart';
 import 'package:travelgrid/data/models/expense_model.dart';
 import 'package:travelgrid/data/models/success_model.dart';
 import 'package:travelgrid/data/models/te/te_ticket_model.dart';
-import 'package:travelgrid/domain/usecases/common_usecase.dart';
 import 'package:travelgrid/presentation/components/upload_component.dart';
 import 'package:travelgrid/presentation/screens/dashboard/te/bloc/te_ticket_form_bloc.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';
