@@ -125,7 +125,7 @@ class CreateAccommodationExpense extends StatelessWidget {
                       if(accomModel!.maGeAccomodationGroupExpense!.isNotEmpty){
                         formBloc!.showGroup.updateValue(true);
                         formBloc!.showAdd.updateValue(true);
-                        List<GEGroupAccomModel> data= accomModel!.maGeAccomodationGroupExpense! ?? [];
+                        List<GEGroupAccomModel> data= accomModel?.maGeAccomodationGroupExpense ?? [];
 
                         formBloc!.groupIds.updateValue(data);
 
