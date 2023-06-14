@@ -5,6 +5,7 @@ import 'package:travelgrid/data/datasources/others/countries_list.dart';
 import 'package:travelgrid/data/datasources/others/currency_list.dart';
 import 'package:travelgrid/data/datasources/others/employee_list.dart';
 import 'package:travelgrid/data/datasources/others/fare_class_list.dart';
+import 'package:travelgrid/data/datasources/others/flight_list.dart';
 import 'package:travelgrid/data/datasources/others/lat_long_distance_model.dart';
 import 'package:travelgrid/data/datasources/others/misc_type_list.dart';
 import 'package:travelgrid/data/datasources/others/non_employee_list.dart';
@@ -27,6 +28,8 @@ class CommonUseCase {
   Future<MetaNonEmployeeListResponse> getNonEmployeesList() async => apiAbstract.getNonEmployeesList();
 
   Future<MetaAccomTypeListResponse> getAccomTypesList() async => apiAbstract.getAccomTypesList();
+
+  Future<MetaFlightListResponse> getFlightList(data) async => apiAbstract.getFlightList(data);
 
   Future<MetaCurrencyListResponse> getCurrencyList() async => apiAbstract.getCurrencyList();
 

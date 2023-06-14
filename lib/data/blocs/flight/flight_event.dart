@@ -4,5 +4,8 @@ part of 'flight_bloc.dart';
 abstract class FlightEvent {}
 
 class GetFlightListEvent extends FlightEvent {
-  GetFlightListEvent();
+  String? from;
+  String? to;
+  String? date;
+  GetFlightListEvent({this.from,this.date,this.to});
 }

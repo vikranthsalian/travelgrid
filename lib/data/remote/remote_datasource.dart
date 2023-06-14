@@ -18,19 +18,28 @@ class APIRemoteDatasource{
     Config config = AzureSSO().getConfig();
     AadOAuth oauth = new AadOAuth(config);
   //  config.loginHint = email;
-    await oauth.login();
+    var data = await oauth.login();
     final accessToken = await oauth.getAccessToken();
 
+
+    print("oauth");
+    print(oauth);
+    print("data");
+    print(data);
+    print("accessToken");
+    print(accessToken);
+
     final graphResponse = await await CustomDio().getWrapper().get(
-        "https://graph.microsoft.com/oidc/userinfo ",
+        "https://graph.microsoft.com/v1.0/me/",
         loadingMessage:"Logging In...",
        // queryParameters:data,
         options:Options(
           headers: {
-            "Authorization": "Bearer" + "$accessToken",
+            "Authorization": "Bearer " + "$accessToken",
             "Content-Type": "application/json"
           })
     );
+    print("graphResponse");
     print(graphResponse);
   }
 

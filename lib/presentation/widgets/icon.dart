@@ -43,6 +43,7 @@ Map<String, IconData> iconMapping = {
   'home' : FontAwesomeIcons.house,
   'filter' : Icons.filter_list_outlined,
   'sort' : Icons.sort,
+  'flight' : Icons.flight,
   'logout' : FontAwesomeIcons.powerOff
 
 };

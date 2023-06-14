@@ -96,29 +96,6 @@ class _MetaSearchSelectorViewState extends State<MetaSearchSelectorView> {
                             },
                           )));
                 }
-                // else{
-                //   Navigator.of(context).push(
-                //       MaterialPageRoute(builder: (context) =>
-                //           NonEmployeeScreen(
-                //             onTap: (data) {
-                //               Navigator.pop(context);
-                //               setState(() {
-                //                 widget.text = data.name;
-                //
-                //                 TRTravellerDetails model = TRTravellerDetails(
-                //                     employeeCode: "",
-                //                     employeeName: data.name,
-                //                     email: data.email ?? "",
-                //                     employeeType: widget.type,
-                //                     mobileNumber: data.mobileNumber ?? "",
-                //                     emergencyContactNo: data.emergencyContactNo ?? ""
-                //                 );
-                //
-                //                 widget.onChange!(model);
-                //               });
-                //             },
-                //           )));
-                // }
 
 
               }

@@ -1972,6 +1972,13 @@
           "align": "center-left"
         }
       },
+      "flight": {
+        "text" : "Search Flight",
+        "color" : "0xFF2854A1",
+        "size": "16",
+        "family": "bold",
+        "align": "center-right"
+      },
       "text_field_pnr":  {
         "name": "PNR",
         "apiKey": "pnr",

@@ -13,12 +13,17 @@ import 'package:travelgrid/presentation/components/filterby_component.dart';
 import 'package:travelgrid/presentation/components/sortby_component.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';
 import 'package:travelgrid/presentation/widgets/icon.dart';
+import 'package:travelgrid/presentation/widgets/image_view.dart';
+import 'package:travelgrid/presentation/widgets/svg_view.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
 
 class FlightScreen extends StatelessWidget {
+
+  String from,date,to;
+  FlightScreen({required this.from,required this.to,required this.date});
   Map<String,dynamic> jsonData = {};
   List items=[];
-  double cardHt = 90.h;
+  double cardHt = 75.h;
 
   FlightBloc? bloc;
 
@@ -97,7 +102,7 @@ class FlightScreen extends StatelessWidget {
             return Container(
                 child: BlocMapToEvent(state: state.eventState, message: state.message,
                     callback: (){
-                       jsonData['listView']['recordsFound']['value'] = state.response?.data?.length;
+                       jsonData['listView']['recordsFound']['value'] = state.response?.data?.airFareResults?.length ?? [];
 
                        if(state.response?.data== null)
                          return;
@@ -128,7 +133,7 @@ class FlightScreen extends StatelessWidget {
                                       Navigator.pop(context);
                                     }),
                                 Container(
-                                  child:MetaTextView(mapData: jsonData['title']),
+                                  child:MetaTextView(mapData: jsonData['title'],text: from +" - "+to + " | "+date,),
                                 ),
                               ],
                             ),
@@ -167,80 +172,50 @@ class FlightScreen extends StatelessWidget {
 
   Widget getListView(FlightState state){
 
-    List<Data>? list = state.response?.data! ?? [];
+    List<AirFareResults>? list = state.response?.data?.airFareResults ?? [];
 
     return  list.isNotEmpty ? ListView.separated(
       shrinkWrap: true,
       padding: EdgeInsets.zero,
       itemCount:list.length,
       itemBuilder: (BuildContext context, int index) {
-        Data item = list[index];
+        AirFareResults item = list[index];
 
-        Map date = {
-          "text" : MetaDateTime().getDate(item.departDate.toString(),format: "dd MMM",isFlightDate: true),
-          "color" : "0xFF2854A1",
-          "size": "13",
-          "family": "bold",
-          "align" : "center"
-        };
-        Map next = {
-          "text" : "⇩",
-          "color" : "0xFF2854A1",
-          "size": "13",
-          "family": "bold",
-          "align" : "center"
-        };
-
-        Map date2 = {
-          "text" : MetaDateTime().getDate(item.arriveDate.toString(),format: "dd MMM",isFlightDate: true),
-          "color" : "0xFF2854A1",
-          "size": "13",
-          "family": "bold",
-          "align" : "center"
-        };
-
-        Map week = {
-          "text" : MetaDateTime().getDate(item.arriveDate.toString(),format: "EEEEEE",isFlightDate: true).toUpperCase(),
-          "color" : "0xFFFFFFFF",
-          "size": "13",
-          "family": "bold",
-          "align" : "center"
-        };
 
         Map flightName = {
-          "text" :"#"+ item.flight.toString().toUpperCase(),
+          "text" : item.carrierName.toString().toUpperCase(),
           "color" : "0xFF2854A1",
-          "size": "15",
+          "size": "16",
           "family": "bold",
           "align" : "center-left"
         };
 
-        Map place = {
-          "text" :MetaDateTime().getDate(item.departDate.toString(),format: "hh:mm",isFlightDate: true),
+        Map flightDetails = {
+          "text" :item.flightNumber.toString().toUpperCase(),
           "color" : "0xFF2854A1",
-          "size": "14",
+          "size": "10",
+          "family": "bold",
+          "align" : "center-left"
+        };
+        Map stops = {
+          "text" :"Total Stops : "+item.totalStops.toString().toUpperCase() ,
+          "color" : "0xFF000000",
+          "size": "10",
           "family": "bold",
           "align" : "center-left"
         };
 
         Map time = {
-          "text" :MetaDateTime().getDate(item.departDate.toString(),format: "hh:mm",isFlightDate: true),
+          "text" :MetaDateTime().getDate(item.departureDate.toString(),format: "hh:mm",isFlightDate: true) +" | "+MetaDateTime().getDate(item.arrivalDate.toString(),format: "hh:mm",isFlightDate: true),
           "color" : "0xFFCCCCCC",
-          "size": "14",
-          "family": "bold",
-          "align" : "center-left"
-        };
-        Map time2 = {
-          "text" :MetaDateTime().getDate(item.arriveDate.toString(),format: "hh:mm",isFlightDate: true),
-          "color" : "0xFFCCCCCC",
-          "size": "14",
+          "size": "8",
           "family": "bold",
           "align" : "center-left"
         };
 
         Map price = {
           "text" :"",
-          "color" : "0xFFFFFFFF",
+          "color" : "0xFF003C00",
           "size": "10",
           "family": "bold",
           "align" : "center-left"
@@ -252,41 +227,35 @@ class FlightScreen extends StatelessWidget {
           child: Row(
             children: [
               Card(
-                color: Color(0xFF2854A1),
                 elevation: 5,
+                color: Color(0xFF2854A1),
                 child: Container(
+
                   width: cardHt,
                   height: cardHt,
-                  child: Column(
+                  child:Column(
                     children: [
                       Container(
-                        height:cardHt * 0.07,
+                        height:cardHt * 0.1,
                       ),
-                      Container(
-                        color: Color(0xFFFFFFFF),
-                        child: Column(
-                          children: [
-                            Container(
-                                height: cardHt * 0.24,
-                                child: MetaTextView(mapData: date)
-                            ),
-                            Container(
-                                height: cardHt * 0.15,
-                                child: MetaTextView(mapData: next)
-                            ),
-                            Container(
-                                height:cardHt * 0.24,
-                                child: MetaTextView( mapData: date2)
-                            )
-                          ],
+                      Expanded(
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.only(bottomLeft: Radius.circular(3),bottomRight:Radius.circular(3)),
+                          child: Container(
+                            padding: EdgeInsets.symmetric(horizontal: 10.w,vertical: 10.w),
+                            color: Color(0xFFFFFFFF),
+
+                            child: MetaBaseImageView(mapData: {
+                              "image" : getImageLogo(item.carrierName!.toLowerCase()),
+
+                //    "align": "center",
+                            }),
+                          ),
                         ),
-                      ),
-                      Container(
-                        height: cardHt * 0.30,
-                        child: MetaTextView( mapData: week),
                       ),
                     ],
                   ),
+
                 ),
               ),
               SizedBox(width: 3.w,),
@@ -300,84 +269,62 @@ class FlightScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         Container(
-                          height:cardHt * 0.07,
+                          height:cardHt * 0.1,
                         ),
-                        Container(
-                          color: Color(0xFFFFFFFF),
-                          child: Column(
-                            children: [
-                              Container(
-                                margin: EdgeInsets.symmetric(horizontal: 10.w),
-                                height: cardHt * 0.16,
-                                child:Container(
-                                    child: MetaTextView(mapData: flightName)
-                                ),
-                              ),
-                              Container(
-                                margin: EdgeInsets.symmetric(horizontal: 10.w),
-                                height: cardHt * 0.23,
-                                child: Row(
+                        Expanded(
+                          child: Container(
+                            padding: EdgeInsets.only(right: 10.w,left: 10.w,top: 2.h,bottom: 3.h),
+                            color: Color(0xFFFFFFFF),
+                            child: Column(
+                              children: [
+                                Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     Container(
-                                        child: MetaTextView(mapData: place,text: item.from,)
-                                    ),
-                                    Container(
-                                        child: MetaTextView(mapData: place,text: item.to,)
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              // Container(
-                              //   margin: EdgeInsets.symmetric(horizontal: 10.w),
-                              //   height: cardHt * 0.15,
-                              //   child: Row(
-                              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              //     children: [
-                              //       Container(
-                              //           child: MetaTextView(mapData: date,text: "")
-                              //       ),
-                              //       Container(
-                              //           child: MetaTextView(mapData: date,text:"")
-                              //       ),
-                              //     ],
-                              //   ),
-                              // ),
-                              Container(
-                                margin: EdgeInsets.symmetric(horizontal: 10.w),
-                                height: cardHt * 0.22,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Container(
-                                        child: MetaTextView(mapData: time)
-                                    ),
-                                    Container(
-                                        child: MetaTextView(mapData: time2)
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Container(
-                          height: cardHt * 0.30,
-                          padding: EdgeInsets.symmetric(horizontal: 10.w,vertical: 2.h),
 
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Container(
-                                  child:  MetaTextView( mapData: price,
-                                      text: "Retail Fare :\n" +item.retailFare.toString().inRupeesFormat())),
-                              SizedBox(width: 10.w,),
-                              Container(
-                                  child: MetaTextView( mapData:  price ,
-                                      text: "Corp Fare :\n" +item.corpFare.toString().inRupeesFormat()))
-                            ],
+
+                                      child:Container(
+                                          child: MetaTextView(mapData: flightName)
+                                      ),
+
+                                    ),
+                                    Container(
+                                        child:  MetaTextView( mapData: price,
+                                            text: "Retail Fare : " +item.corpFare.toString().inRupeesFormat())),
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Container(
+
+
+                                      child:Container(
+                                          child: MetaTextView(mapData: flightDetails)
+                                      ),
+                                    ),
+
+                                    Container(
+                                        child: MetaTextView( mapData:  price ,
+                                            text: "Corp Fare : " +item.corpFare.toString().inRupeesFormat()))
+                                  ],
+                                ),
+                                SizedBox(height: 2.h,),
+
+
+                                Container(
+                                    child: MetaTextView( mapData:  stops )),
+
+                                Container(
+                                    child: MetaTextView(mapData: time)
+                                ),
+
+                              ],
+                            ),
                           ),
                         ),
+
+
                       ],
                     ),
                   ),
@@ -404,11 +351,27 @@ class FlightScreen extends StatelessWidget {
   }
 
   void callBloc() {
-    bloc!.add(GetFlightListEvent());
+
+
+    bloc!.add(GetFlightListEvent(from: from,to: to,date: date.replaceAll("-",date)));
   }
 
   Future<void> _pullRefresh() async {
     callBloc();
+  }
+
+  getImageLogo(String? carrierCode) {
+    switch(carrierCode){
+      case 'air india':
+        return 'ai.png';
+      case 'air asia':
+        return 'aa.png';
+      case 'indigo':
+        return 'in.png';
+      case 'vistara':
+        return 'vi.png';
+    }
+
   }
 
 

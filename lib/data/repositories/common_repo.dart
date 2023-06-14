@@ -8,6 +8,7 @@ import 'package:travelgrid/data/datasources/others/countries_list.dart';
 import 'package:travelgrid/data/datasources/others/currency_list.dart';
 import 'package:travelgrid/data/datasources/others/employee_list.dart';
 import 'package:travelgrid/data/datasources/others/fare_class_list.dart';
+import 'package:travelgrid/data/datasources/others/flight_list.dart';
 import 'package:travelgrid/data/datasources/others/misc_type_list.dart';
 import 'package:travelgrid/data/datasources/others/non_employee_list.dart';
 import 'package:travelgrid/data/datasources/others/travel_mode_list.dart';
@@ -259,6 +260,18 @@ class CommonRepository extends CommonAPIAbstract {
     }
 
     return SuccessModel(status: false);
+  }
+
+  @override
+  Future<MetaFlightListResponse> getFlightList(data) async{
+    var response = await apiRemoteDatasource.getCommonTypes("searchFlightsMobile",data);
+
+    if(response!=null) {
+      MetaFlightListResponse modelResponse = MetaFlightListResponse.fromJson(response);
+      return modelResponse;
+    }
+
+    return MetaFlightListResponse(status: false);
   }
 
 

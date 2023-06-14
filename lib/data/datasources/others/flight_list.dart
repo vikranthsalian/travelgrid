@@ -1,8 +1,8 @@
-  class MetaFlightListResponse {
+class MetaFlightListResponse {
   bool? status;
   String? token;
   String? message;
-  List<Data>? data;
+  Data? data;
 
   MetaFlightListResponse({this.status, this.token, this.message, this.data});
 
@@ -10,12 +10,7 @@
     status = json['status'] == "SUCCESS" ? true:false;
     token = json['token'];
     message = json['message'];
-    if (json['data'] != null) {
-      data = <Data>[];
-      json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
-      });
-    }
+    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -24,72 +19,266 @@
     data['token'] = this.token;
     data['message'] = this.message;
     if (this.data != null) {
-      data['Data'] = this.data!.map((v) => v.toJson()).toList();
+      data['data'] = this.data!.toJson();
     }
     return data;
   }
-
-
 }
 
 class Data {
-  int? id;
-  String? flight;
-  String? from;
-  String? to;
-  String? departDate;
-  String? arriveDate;
-  double? retailFare;
-  double? corpFare;
+  List<AirFareResults>? airFareResults;
+  Null? returnAirFareResults;
+  bool? rountTrip;
+  bool? multi;
+  int? errorCode;
+  Null? errorMessage;
+  bool? intl;
 
-  Data({this.id, this.flight, this.from, this.to, this.departDate, this.arriveDate,this.retailFare,this.corpFare});
+  Data(
+      {this.airFareResults,
+        this.returnAirFareResults,
+        this.rountTrip,
+        this.multi,
+        this.errorCode,
+        this.errorMessage,
+        this.intl});
 
   Data.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    flight = json['flight'];
-    from = json['from'];
-    to = json['to'];
-    departDate = json['departDate'] ;
-    arriveDate = json['arriveDate'];
-    retailFare = json['retailFare'];
+    if (json['airFareResults'] != null) {
+      airFareResults = <AirFareResults>[];
+      json['airFareResults'].forEach((v) {
+        airFareResults!.add(new AirFareResults.fromJson(v));
+      });
+    }
+    returnAirFareResults = json['returnAirFareResults'];
+    rountTrip = json['rountTrip'];
+    multi = json['multi'];
+    errorCode = json['errorCode'];
+    errorMessage = json['errorMessage'];
+    intl = json['intl'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.airFareResults != null) {
+      data['airFareResults'] =
+          this.airFareResults!.map((v) => v.toJson()).toList();
+    }
+    data['returnAirFareResults'] = this.returnAirFareResults;
+    data['rountTrip'] = this.rountTrip;
+    data['multi'] = this.multi;
+    data['errorCode'] = this.errorCode;
+    data['errorMessage'] = this.errorMessage;
+    data['intl'] = this.intl;
+    return data;
+  }
+}
+
+class AirFareResults {
+  String? origin;
+  String? originCode;
+  String? destination;
+  String? destinationCode;
+  String? departureDate;
+  String? arrivalDate;
+  Null? fareClass;
+  String? carrierCode;
+  String? carrierName;
+  String? flightNumber;
+  double? publishedPrice;
+  double? baseFare;
+  double? tax;
+  String? fareKey;
+  double? corpPublishedPrice;
+  double? corpBaseFare;
+  double? corpTax;
+  Null? corpFareKey;
+  double? splrtPublishedPrice;
+  double? splrtBaseFare;
+  double? splrtTax;
+  Null? splrtFareKey;
+  Null? splrtCC;
+  int? totalStops;
+  List<Segments>? segments;
+  Null? returnsegments;
+  Null? returnOrigin;
+  Null? returnDestination;
+  Null? returnDepartureDate;
+  Null? returnArrivalDate;
+  Null? returnCarrierCode;
+  Null? returnCarrierName;
+  Null? returnFlightNumber;
+  int? returnTotalStops;
+  Null? corpFare;
+
+  AirFareResults(
+      {this.origin,
+        this.originCode,
+        this.destination,
+        this.destinationCode,
+        this.departureDate,
+        this.arrivalDate,
+        this.fareClass,
+        this.carrierCode,
+        this.carrierName,
+        this.flightNumber,
+        this.publishedPrice,
+        this.baseFare,
+        this.tax,
+        this.fareKey,
+        this.corpPublishedPrice,
+        this.corpBaseFare,
+        this.corpTax,
+        this.corpFareKey,
+        this.splrtPublishedPrice,
+        this.splrtBaseFare,
+        this.splrtTax,
+        this.splrtFareKey,
+        this.splrtCC,
+        this.totalStops,
+        this.segments,
+        this.returnsegments,
+        this.returnOrigin,
+        this.returnDestination,
+        this.returnDepartureDate,
+        this.returnArrivalDate,
+        this.returnCarrierCode,
+        this.returnCarrierName,
+        this.returnFlightNumber,
+        this.returnTotalStops,
+        this.corpFare});
+
+  AirFareResults.fromJson(Map<String, dynamic> json) {
+    origin = json['origin'];
+    originCode = json['originCode'];
+    destination = json['destination'];
+    destinationCode = json['destinationCode'];
+    departureDate = json['departureDate'];
+    arrivalDate = json['arrivalDate'];
+    fareClass = json['fareClass'];
+    carrierCode = json['carrierCode'];
+    carrierName = json['carrierName'];
+    flightNumber = json['flightNumber'];
+    publishedPrice = json['publishedPrice'];
+    baseFare = json['baseFare'];
+    tax = json['tax'];
+    fareKey = json['fareKey'];
+    corpPublishedPrice = json['corpPublishedPrice'];
+    corpBaseFare = json['corpBaseFare'];
+    corpTax = json['corpTax'];
+    corpFareKey = json['corpFareKey'];
+    splrtPublishedPrice = json['splrtPublishedPrice'];
+    splrtBaseFare = json['splrtBaseFare'];
+    splrtTax = json['splrtTax'];
+    splrtFareKey = json['splrtFareKey'];
+    splrtCC = json['splrtCC'];
+    totalStops = json['totalStops'];
+    if (json['segments'] != null) {
+      segments = <Segments>[];
+      json['segments'].forEach((v) {
+        segments!.add(new Segments.fromJson(v));
+      });
+    }
+    returnsegments = json['returnsegments'];
+    returnOrigin = json['returnOrigin'];
+    returnDestination = json['returnDestination'];
+    returnDepartureDate = json['returnDepartureDate'];
+    returnArrivalDate = json['returnArrivalDate'];
+    returnCarrierCode = json['returnCarrierCode'];
+    returnCarrierName = json['returnCarrierName'];
+    returnFlightNumber = json['returnFlightNumber'];
+    returnTotalStops = json['returnTotalStops'];
     corpFare = json['corpFare'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['flight'] = this.flight;
-    data['from'] = this.from;
-    data['to'] = this.to;
-    data['departDate'] = this.departDate;
-    data['arriveDate'] = this.arriveDate;
-    data['retailFare'] = this.retailFare;
+    data['origin'] = this.origin;
+    data['originCode'] = this.originCode;
+    data['destination'] = this.destination;
+    data['destinationCode'] = this.destinationCode;
+    data['departureDate'] = this.departureDate;
+    data['arrivalDate'] = this.arrivalDate;
+    data['fareClass'] = this.fareClass;
+    data['carrierCode'] = this.carrierCode;
+    data['carrierName'] = this.carrierName;
+    data['flightNumber'] = this.flightNumber;
+    data['publishedPrice'] = this.publishedPrice;
+    data['baseFare'] = this.baseFare;
+    data['tax'] = this.tax;
+    data['fareKey'] = this.fareKey;
+    data['corpPublishedPrice'] = this.corpPublishedPrice;
+    data['corpBaseFare'] = this.corpBaseFare;
+    data['corpTax'] = this.corpTax;
+    data['corpFareKey'] = this.corpFareKey;
+    data['splrtPublishedPrice'] = this.splrtPublishedPrice;
+    data['splrtBaseFare'] = this.splrtBaseFare;
+    data['splrtTax'] = this.splrtTax;
+    data['splrtFareKey'] = this.splrtFareKey;
+    data['splrtCC'] = this.splrtCC;
+    data['totalStops'] = this.totalStops;
+    if (this.segments != null) {
+      data['segments'] = this.segments!.map((v) => v.toJson()).toList();
+    }
+    data['returnsegments'] = this.returnsegments;
+    data['returnOrigin'] = this.returnOrigin;
+    data['returnDestination'] = this.returnDestination;
+    data['returnDepartureDate'] = this.returnDepartureDate;
+    data['returnArrivalDate'] = this.returnArrivalDate;
+    data['returnCarrierCode'] = this.returnCarrierCode;
+    data['returnCarrierName'] = this.returnCarrierName;
+    data['returnFlightNumber'] = this.returnFlightNumber;
+    data['returnTotalStops'] = this.returnTotalStops;
     data['corpFare'] = this.corpFare;
     return data;
   }
+}
 
-  Map<String, dynamic> toMap() {
-    return {
-      'id': this.id,
-      'flight': this.flight,
-      'from': this.from,
-      'to': this.to,
-      'departDate': this.departDate,
-      'arriveDate': this.arriveDate,
-      'retailFare': this.retailFare,
-      'corpFare': this.corpFare,
-    };
+class Segments {
+  String? origin;
+  String? originCode;
+  String? destination;
+  String? destinationCode;
+  String? departureDate;
+  String? arrivalDate;
+  String? carrierCode;
+  String? carrierName;
+  String? flightNumber;
+
+  Segments(
+      {this.origin,
+        this.originCode,
+        this.destination,
+        this.destinationCode,
+        this.departureDate,
+        this.arrivalDate,
+        this.carrierCode,
+        this.carrierName,
+        this.flightNumber});
+
+  Segments.fromJson(Map<String, dynamic> json) {
+    origin = json['origin'];
+    originCode = json['originCode'];
+    destination = json['destination'];
+    destinationCode = json['destinationCode'];
+    departureDate = json['departureDate'];
+    arrivalDate = json['arrivalDate'];
+    carrierCode = json['carrierCode'];
+    carrierName = json['carrierName'];
+    flightNumber = json['flightNumber'];
   }
 
-  factory Data.fromMap(Map<String, dynamic> map) {
-    return Data(
-      id: map['id'] as int,
-      flight: map['flight'] as String,
-      from: map['from'] as String,
-      to: map['to'] as String,
-      departDate: map['departDate'] as String,
-      retailFare: map['retailFare'] as double,
-      corpFare: map['corpFare'] as double,
-    );
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['origin'] = this.origin;
+    data['originCode'] = this.originCode;
+    data['destination'] = this.destination;
+    data['destinationCode'] = this.destinationCode;
+    data['departureDate'] = this.departureDate;
+    data['arrivalDate'] = this.arrivalDate;
+    data['carrierCode'] = this.carrierCode;
+    data['carrierName'] = this.carrierName;
+    data['flightNumber'] = this.flightNumber;
+    return data;
   }
 }

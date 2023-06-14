@@ -48,7 +48,11 @@ class AppRoutes {
         return  ProfileScreen();
 
       case RouteConstants.flightPath:
-        return  FlightScreen();
+        args as Map<String, dynamic>;
+        final String from = args["from"] ?? "";
+        final String to = args["to"]  ?? "";
+        final String date = args["date"]  ?? "";
+        return  FlightScreen(from:from,to:to, date:date);
 
       case RouteConstants.travelRequestPath:
         return  TravelRequest();

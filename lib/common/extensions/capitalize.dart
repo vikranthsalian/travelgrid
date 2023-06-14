@@ -29,7 +29,7 @@ extension RupeesFormatter on String {
     try {
     amount = double.parse(this);
     }catch(e){
-      print("RupeesFormatter ERROR "+e.toString());
+    //  print("RupeesFormatter ERROR "+e.toString());
       return "0";
     }
 

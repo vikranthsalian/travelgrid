@@ -39,32 +39,32 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     loginJsonData = FlavourConstants.loginData;
-
-    controller = WebViewController()
-      ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..setBackgroundColor(const Color(0x00000000))
-      ..setNavigationDelegate(NavigationDelegate(
-          onProgress: (int progress) {
-            // Update loading bar.
-          },
-          onPageStarted: (String url) {},
-          onPageFinished: (String url) {},
-          onWebResourceError: (WebResourceError error) {},
-          onNavigationRequest: (NavigationRequest request) {
-            if (request.url.startsWith('https://www.youtube.com/')) {
-              return NavigationDecision.prevent;
-            }
-            return NavigationDecision.navigate;
-          },
-        ))
-      ..loadRequest(Uri.parse(
-          'https://sso.narayanahealth.org/iamapps/ssologin/custom_saml_app/8acdd27d3477a88558932526d33c5dc0958332d0'
-          //'https://www.youtube.com/'
-      ));
-
-
-   // APIRemoteDatasource().ssoSignIn();
-    return WebViewWidget(controller: controller!);
+     APIRemoteDatasource().ssoSignIn();
+    // controller = WebViewController()
+    //   ..setJavaScriptMode(JavaScriptMode.unrestricted)
+    //   ..setBackgroundColor(const Color(0x00000000))
+    //   ..setNavigationDelegate(NavigationDelegate(
+    //       onProgress: (int progress) {
+    //         // Update loading bar.
+    //       },
+    //       onPageStarted: (String url) {},
+    //       onPageFinished: (String url) {},
+    //       onWebResourceError: (WebResourceError error) {},
+    //       onNavigationRequest: (NavigationRequest request) {
+    //         if (request.url.startsWith('https://www.youtube.com/')) {
+    //           return NavigationDecision.prevent;
+    //         }
+    //         return NavigationDecision.navigate;
+    //       },
+    //     ))
+    //   ..loadRequest(Uri.parse(
+    //       'https://sso.narayanahealth.org/iamapps/ssologin/custom_saml_app/8acdd27d3477a88558932526d33c5dc0958332d0'
+    //       //'https://www.youtube.com/'
+    //   ));
+    //
+    //
+    //
+    // return WebViewWidget(controller: controller!);
 
       return SafeArea(
         child: Scaffold(

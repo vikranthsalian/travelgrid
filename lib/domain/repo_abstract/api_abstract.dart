@@ -6,6 +6,7 @@ import 'package:travelgrid/data/datasources/others/countries_list.dart';
 import 'package:travelgrid/data/datasources/others/currency_list.dart';
 import 'package:travelgrid/data/datasources/others/employee_list.dart';
 import 'package:travelgrid/data/datasources/others/fare_class_list.dart';
+import 'package:travelgrid/data/datasources/others/flight_list.dart';
 import 'package:travelgrid/data/datasources/others/non_employee_list.dart';
 import 'package:travelgrid/data/datasources/summary/ge_summary_response.dart';
 import 'package:travelgrid/data/datasources/list/ge_list_response.dart';
@@ -77,6 +78,8 @@ abstract class CommonAPIAbstract {
   Future<MetaCountryListResponse> getCountriesList();
 
   Future<MetaAccomTypeListResponse> getAccomTypesList();
+
+  Future<MetaFlightListResponse> getFlightList(data);
 
   Future<MetaCurrencyListResponse> getCurrencyList();
 

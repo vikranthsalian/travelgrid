@@ -3,9 +3,11 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:travelgrid/common/constants/route_constants.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
 import 'package:travelgrid/common/injector/injector.dart';
 import 'package:travelgrid/common/utils/city_util.dart';
+import 'package:travelgrid/common/utils/show_alert.dart';
 import 'package:travelgrid/data/cubits/login_cubit/login_cubit.dart';
 import 'package:travelgrid/data/datasources/login_response.dart';
 import 'package:travelgrid/data/models/success_model.dart';
@@ -39,6 +41,8 @@ class AddItinerary  extends StatelessWidget {
   String errorMsg="";
   ItineraryFormBloc?  formBloc;
   MetaLoginResponse loginResponse = MetaLoginResponse();
+  String fromCode="";
+  String toCode="";
   @override
   Widget build(BuildContext context) {
     loginResponse = context.read<LoginCubit>().getLoginResponse();
@@ -187,7 +191,8 @@ class AddItinerary  extends StatelessWidget {
                                                           mapData: jsonData['selectOrigin'],
                                                           text: CityUtil.getCityNameFromID(formBloc!.origin.value),
                                                           onChange:(value){
-                                                            print(value);
+                                                            print(jsonEncode(value));
+                                                            fromCode=value;
                                                             formBloc!.origin.updateValue(value.id.toString());
                                                           },),
                                                         alignment: Alignment.centerLeft,
@@ -200,6 +205,7 @@ class AddItinerary  extends StatelessWidget {
                                                           mapData: jsonData['selectDestination'],
                                                           text: CityUtil.getCityNameFromID(formBloc!.destination.value),
                                                           onChange:(value){
+                                                            fromCode=value;
                                                             formBloc!.destination.updateValue(value.id.toString());
                                                           },),
                                                         alignment: Alignment.centerLeft,
@@ -353,6 +359,28 @@ class AddItinerary  extends StatelessWidget {
                                                       visible: !formBloc!.swByCompanyID.value! ,
                                                       child: Column(
                                                         children: [
+
+                                                          Container(
+                                                            child:InkWell(
+                                                                onTap:(){
+
+                                                                  if(fromCode.isNotEmpty && toCode.isNotEmpty && formBloc!.checkInDate.value.isNotEmpty)
+                                                                  {
+                                                                var data =  Navigator.of(context).pushReplacementNamed(RouteConstants.flightPath,
+                                                                  arguments: {
+                                                                    "from":fromCode,
+                                                                    "to":   toCode,
+                                                                    "date":formBloc!.checkInDate
+                                                                  });
+                                                                print("flightData");
+                                                                print(data);
+                                                                 }else{
+                                                                    MetaAlert.showErrorAlert(message: "Please select fields");
+                                                                 }
+                                                                  },
+                                                                child: MetaTextView(mapData: jsonData['flight'])),
+                                                          ),
+
                                                           Container(
                                                             child: Row(
                                                               children: [
