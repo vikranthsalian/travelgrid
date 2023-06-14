@@ -12,7 +12,6 @@ import 'package:travelgrid/presentation/widgets/button.dart';
 import 'package:travelgrid/presentation/widgets/icon.dart';
 import 'package:travelgrid/presentation/widgets/svg_view.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
-import 'package:tuple/tuple.dart';
 
 class HomeNewPage extends StatefulWidget {
   @override
@@ -24,8 +23,6 @@ class _HomeNewPageState extends State<HomeNewPage> {
   TravelRequestBloc? bloc;
   final GlobalKey<ScaffoldState> _scaffoldKey =  GlobalKey<ScaffoldState>();
 
-
-  int _currentPage = 0;
   int nextPage=0;
   PageController _controller=PageController();
 
@@ -276,7 +273,6 @@ class _HomeNewPageState extends State<HomeNewPage> {
 
   _onchanged(int index) {
     setState(() {
-      _currentPage = index;
     });
   }
   Map<String,dynamic> jsonData ={};
