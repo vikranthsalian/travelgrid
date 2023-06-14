@@ -6,8 +6,6 @@ import 'package:travelgrid/common/constants/flavour_constants.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
 import 'package:travelgrid/data/blocs/employee/employee_bloc.dart';
 import 'package:travelgrid/data/cubits/employee_cubit/employee_cubit.dart';
-import 'package:travelgrid/data/cubits/login_cubit/login_cubit.dart';
-import 'package:travelgrid/data/datasources/login_response.dart' as user;
 import 'package:travelgrid/presentation/components/search_bar_component.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';
 import 'package:travelgrid/presentation/widgets/icon.dart';
