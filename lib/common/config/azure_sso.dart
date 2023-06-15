@@ -7,6 +7,7 @@ class AzureSSO{
   static final Config config = new Config(
     tenant: "18fd1788-4db9-4031-b261-0ecc43186e3b",
     clientId: "41d89ffd-e3ad-48d3-b139-a3402fcaac43",
+    prompt: "login",
    // clientSecret: "Uq48Q~s3rTjTRT1Bm_pKRXY3rrl.MyExmIjW3bCl",
     // redirectUri is Optional as a default is calculated based on app type/web location
    // redirectUri: "https://login.live.com/oauth20_desktop.srf",

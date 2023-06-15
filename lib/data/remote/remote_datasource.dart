@@ -4,32 +4,48 @@ import 'package:dio/dio.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:travelgrid/common/config/azure_sso.dart';
 import 'package:travelgrid/common/config/navigator_key.dart';
+import 'package:travelgrid/common/config/preferences_config.dart';
+import 'package:travelgrid/common/constants/preference_constants.dart';
 import 'package:travelgrid/common/dio/dio_client.dart';
 import 'package:travelgrid/common/utils/loader_hud.dart';
 import 'package:travelgrid/data/cubits/login_cubit/login_cubit.dart';
+import 'package:travelgrid/data/datasources/azure_reponse.dart';
 import 'package:travelgrid/data/datasources/others/accom_type_list.dart';
 import 'package:travelgrid/data/datasources/others/cities_list.dart';
 import 'package:travelgrid/data/datasources/login_response.dart';
 
 class APIRemoteDatasource{
 
-  Future<dynamic> ssoSignIn() async
+  Future<AzureResponse> ssoSignIn() async
   {
-    Config config = AzureSSO().getConfig();
-    AadOAuth oauth = new AadOAuth(config);
-  //  config.loginHint = email;
-    var data = await oauth.login();
-    final accessToken = await oauth.getAccessToken();
 
+    Map data = {
+    "client_id":"41d89ffd-e3ad-48d3-b139-a3402fcaac43",
+    "scope":"https://graph.microsoft.com/.default",
+    "client_secret":"Uq48Q~s3rTjTRT1Bm_pKRXY3rrl.MyExmIjW3bCl",
+    "grant_type":"client_credentials"
+    };
 
-    print("oauth");
-    print(oauth);
-    print("data");
-    print(data);
-    print("accessToken");
-    print(accessToken);
+    // final config = await  CustomDio().getWrapper().post(
+    //     "https://login.microsoftonline.com/18fd1788-4db9-4031-b261-0ecc43186e3b/oauth2/v2.0/token?prompt=login",
+    //     loadingMessage:"Logging In...",
+    //     // queryParameters:data,
+    //     data:data,
+    //
+    //     options:Options(
+    //         headers: {
+    //           "Content-Type": "application/x-www-form-urlencoded"
+    //         })
+    // );
+    // final accessToken = config.data['access_token'];
+   Config config = AzureSSO().getConfig();
+   AadOAuth oauth = new AadOAuth(config);
 
-    final graphResponse = await await CustomDio().getWrapper().get(
+   var value = await oauth.login();
+   final accessToken = await oauth.getAccessToken();
+
+  //   PreferenceConfig.setString(PreferenceConstants.azureToken, accessToken!);
+    final response = await  CustomDio().getWrapper().get(
         "https://graph.microsoft.com/v1.0/me/",
         loadingMessage:"Logging In...",
        // queryParameters:data,
@@ -39,11 +55,33 @@ class APIRemoteDatasource{
             "Content-Type": "application/json"
           })
     );
-    print("graphResponse");
-    print(graphResponse);
+
+
+      AzureResponse modelResponse = AzureResponse.fromJson(response.data);
+      return modelResponse;
+
+
   }
 
-  Future<dynamic> loginRequest(Map<String, String> data,pathUrl) async {
+  Future<dynamic> ssoLogOut() async
+  {
+
+
+    final response = await  CustomDio().getWrapper().get(
+        "https://login.microsoftonline.com/common/oauth2/logout",
+        //"https://graph.microsoft.com/v1.0/me/revokeSignInSessions",
+        loadingMessage:"Logging In...",
+        // queryParameters:data,
+        options:Options(
+            headers: {
+              "Authorization": "Bearer " + PreferenceConfig.getString(PreferenceConstants.azureToken)!,
+              "Content-Type": "application/json"
+            })
+    );
+
+  }
+
+  Future<dynamic> loginRequest(Map<String, dynamic> data,pathUrl) async {
     try {
       final responseJson = await CustomDio().getWrapper().post(
           pathUrl,

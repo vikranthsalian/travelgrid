@@ -9,4 +9,5 @@ class PreferenceConstants {
   static const appName = "AppName";
   static const location = "location";
   static const image = "image";
+  static const azureToken = "azureToken";
 }

@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_flavor/flutter_flavor.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:travelgrid/common/config/init.dart';
+import 'package:travelgrid/common/config/preferences_config.dart';
 import 'package:travelgrid/common/injector/injector_config.dart';
 
 
@@ -17,6 +18,7 @@ void main() async {
 }
 
  configureFlavour() async {
+    await PreferenceConfig.init();
     InjectorConfig.setup();
     String flavourData = await rootBundle.loadString("assets/build-runner/flavour.json");
     Map<String, dynamic> flavourJson = await json.decode(flavourData.toString());

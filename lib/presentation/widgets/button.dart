@@ -43,11 +43,13 @@ class MetaButton extends StatelessWidget {
   Function() onButtonPressed;
   Map mapData;
   String? text;
+  double? width;
 
   MetaButton({super.key,
     required this.onButtonPressed ,
     required this.mapData,
      this.text,
+     this.width =  100,
   });
 
 
@@ -59,7 +61,7 @@ class MetaButton extends StatelessWidget {
       },
       child: Container(
         height:  mapData['height']!=null ? mapData['height'] : 50.h,
-        width:100.w,
+        width:width!.w,
         decoration: BoxDecoration(
             color: ParseDataType().getHexToColor(mapData['backgroundColor']),
             borderRadius: BorderRadius.all(Radius.circular(

@@ -9,20 +9,8 @@ import 'package:travelgrid/common/config/azure_sso.dart';
 import 'package:travelgrid/common/constants/flavour_constants.dart';
 import 'package:travelgrid/common/constants/route_constants.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
-import 'package:travelgrid/common/injector/injector.dart';
-import 'package:travelgrid/common/utils/show_alert.dart';
-import 'package:travelgrid/data/blocs/accom/accom_type_bloc.dart';
-import 'package:travelgrid/data/blocs/approver/approver_type_bloc.dart';
-import 'package:travelgrid/data/blocs/cities/city_bloc.dart';
-import 'package:travelgrid/data/blocs/currency/currency_bloc.dart';
-import 'package:travelgrid/data/blocs/employee/employee_bloc.dart';
-import 'package:travelgrid/data/blocs/fare_class/fare_class_bloc.dart';
-import 'package:travelgrid/data/blocs/misc/misc_type_bloc.dart';
-import 'package:travelgrid/data/blocs/travel/travel_mode_bloc.dart';
-import 'package:travelgrid/data/blocs/travel_purpose/travel_purpose_bloc.dart';
-import 'package:travelgrid/data/cubits/login_cubit/login_cubit.dart';
-import 'package:travelgrid/data/datasources/login_response.dart';
-import 'package:travelgrid/data/remote/remote_datasource.dart';
+import 'package:travelgrid/common/utils/login_util.dart';
+
 import 'package:travelgrid/presentation/screens/auth/bloc/login_form_bloc.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';
 import 'package:travelgrid/presentation/widgets/image_view.dart';
@@ -39,32 +27,7 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     loginJsonData = FlavourConstants.loginData;
-     APIRemoteDatasource().ssoSignIn();
-    // controller = WebViewController()
-    //   ..setJavaScriptMode(JavaScriptMode.unrestricted)
-    //   ..setBackgroundColor(const Color(0x00000000))
-    //   ..setNavigationDelegate(NavigationDelegate(
-    //       onProgress: (int progress) {
-    //         // Update loading bar.
-    //       },
-    //       onPageStarted: (String url) {},
-    //       onPageFinished: (String url) {},
-    //       onWebResourceError: (WebResourceError error) {},
-    //       onNavigationRequest: (NavigationRequest request) {
-    //         if (request.url.startsWith('https://www.youtube.com/')) {
-    //           return NavigationDecision.prevent;
-    //         }
-    //         return NavigationDecision.navigate;
-    //       },
-    //     ))
-    //   ..loadRequest(Uri.parse(
-    //       'https://sso.narayanahealth.org/iamapps/ssologin/custom_saml_app/8acdd27d3477a88558932526d33c5dc0958332d0'
-    //       //'https://www.youtube.com/'
-    //   ));
-    //
-    //
-    //
-    // return WebViewWidget(controller: controller!);
+
 
       return SafeArea(
         child: Scaffold(
@@ -97,30 +60,8 @@ class LoginScreen extends StatelessWidget {
                             return;
                           }
 
-                          MetaLoginResponse modelResponse = MetaLoginResponse.fromJson(jsonDecode(state.successResponse.toString()));
-                          print(modelResponse.data?.toJson());
-                          context.read<LoginCubit>().setLoginResponse(modelResponse);
-                          MetaAlert.showSuccessAlert(
-                              message: "Login Success"
-                          );
+                          MetaLogin.loggedIn(context, state.successResponse);
 
-                          Injector.resolve<AccomTypeBloc>()..add(GetAccomTypeListEvent());
-                          Injector.resolve<TravelModeBloc>()..add(GetTravelModeListEvent());
-                          Injector.resolve<MiscTypeBloc>()..add(GetMiscTypeListEvent());
-                          Injector.resolve<ApproverTypeBloc>()..add(GetApproverTypeListEvent());
-                          Injector.resolve<FareClassBloc>()..add(GetAirFareClassListEvent());
-                          Injector.resolve<FareClassBloc>()..add(GetRailFareClassListEvent());
-                          Injector.resolve<FareClassBloc>()..add(GetRoadFareClassListEvent());
-                          Injector.resolve<TravelPurposeBloc>()..add(GetTravelPurposeListEvent());
-                          Injector.resolve<CurrencyBloc>()..add(GetCurrencyListEvent());
-                          Injector.resolve<CityBloc>()..add(GetCityListEvent());
-                          Injector.resolve<CityBloc>()..add(GetCountryListEvent());
-                          Injector.resolve<CityBloc>()..add(GetCountryListEvent());
-                          Injector.resolve<EmployeeBloc>()..add(GetEmployeeListEvent());
-                          Injector.resolve<EmployeeBloc>()..add(GetNonEmployeeListEvent());
-
-
-                          Navigator.of(context).pushReplacementNamed(RouteConstants.dashboardPath);
                         },
                         onFailure: (context, state) {
 
@@ -172,28 +113,5 @@ class LoginScreen extends StatelessWidget {
   }
 
 
-  void login(bool redirect) async {
-    Config config = AzureSSO().getConfig();
-    oauth = new AadOAuth(config);
-    config.webUseRedirect = redirect;
-
-    final result = await oauth!.login();
-    result.fold(
-          (l) => print(l.toString()),
-          (r) => print('Logged in successfully, your access token: $r'),
-    );
-    var accessToken = await oauth!.getAccessToken();
-    if (accessToken != null) {
-      print(accessToken);
-    }
-  }
-
-  void hasCachedAccountInformation() async {
-    var hasCachedAccountInformation = await oauth!.hasCachedAccountInformation;
-
-        print('HasCachedAccountInformation: $hasCachedAccountInformation');
-
-
-  }
 
 }

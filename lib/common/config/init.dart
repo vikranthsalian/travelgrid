@@ -54,14 +54,8 @@ class _InitRootState extends State<InitRoot> {
 
   @override
   Widget build(BuildContext context) {
-    // final ThemeData globalTheme = Provider.of<GlobalTheme>(context).globalTheme;
-    // var mySystemTheme =  SystemUiOverlayStyle.light
-    //     .copyWith(
-    //     statusBarColor: ColorConstants.priceRed,
-    //     statusBarIconBrightness: Brightness.light);
-
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-    PreferenceConfig.init();
+
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => LoginCubit()),
