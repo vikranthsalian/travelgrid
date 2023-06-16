@@ -60,7 +60,7 @@ class LoginScreen extends StatelessWidget {
                             return;
                           }
 
-                          MetaLogin.loggedIn(context, state.successResponse);
+                          MetaLogin.loggedIn( state.successResponse);
 
                         },
                         onFailure: (context, state) {

@@ -93,7 +93,7 @@ class SplashScreenState extends State<SplashScreen> {
                           return;
                         }
 
-                      MetaLogin.loggedIn(context, response);
+                      MetaLogin.loggedIn(response);
 
                  }
              ),

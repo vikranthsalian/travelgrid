@@ -7,7 +7,7 @@
   "app_logo": "assets/apps/nh/images/app-logo.png",
   "android_app_id": "cm.travelgrid.nh",
   "ios_app_id": "cm.travelgrid.nh",
-  "base_url": "https://travelexuat.narayanahealth.org/tems",
+  "base_url": "https://travelexuat.narayanahealth.org:443/tems/rest/ma/",
   "showNetworkLogs": true,
   "urls": {
     "prod_url" : "",

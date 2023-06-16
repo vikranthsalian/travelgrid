@@ -2,6 +2,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:travelgrid/common/config/navigator_key.dart';
 import 'package:travelgrid/common/constants/route_constants.dart';
 import 'package:travelgrid/common/injector/injector.dart';
 import 'package:travelgrid/common/utils/show_alert.dart';
@@ -19,15 +20,17 @@ import 'package:travelgrid/data/blocs/misc/misc_type_bloc.dart';
 import 'package:travelgrid/data/blocs/travel/travel_mode_bloc.dart';
 import 'package:travelgrid/data/blocs/travel_purpose/travel_purpose_bloc.dart';
 import 'package:travelgrid/data/cubits/login_cubit/login_cubit.dart';
+import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:travelgrid/data/datasources/login_response.dart';
 import 'package:travelgrid/data/remote/remote_datasource.dart';
 class MetaLogin{
   MetaLogin._();
 
-    static void loggedIn(context,response) {
+    static void loggedIn(response) {
+      var ctx=  appNavigatorKey.currentState!.context;
       MetaLoginResponse modelResponse = MetaLoginResponse.fromJson(jsonDecode(response.toString()));
       print(modelResponse.data?.toJson());
-      context.read<LoginCubit>().setLoginResponse(modelResponse);
+      ctx.read<LoginCubit>().setLoginResponse(modelResponse);
       MetaAlert.showSuccessAlert(
           message: "Login Success"
       );
@@ -48,6 +51,6 @@ class MetaLogin{
       Injector.resolve<EmployeeBloc>()..add(GetNonEmployeeListEvent());
 
 
-      Navigator.of(context).pushReplacementNamed(RouteConstants.dashboardPath);
+      Navigator.of(ctx).pushReplacementNamed(RouteConstants.dashboardPath);
     }
 }
