@@ -10,6 +10,7 @@ class TRCityPairModel {
   String? pnr;
   String? ticket;
 
+
   TRCityPairModel(
       {this.leavingFrom,
         this.goingTo,

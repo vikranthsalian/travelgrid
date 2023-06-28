@@ -42,10 +42,10 @@ class Data {
   String? tripBillable;
   String? approver1;
   String? approver2;
-  Null? approver3;
+  String? approver3;
   String? segmentType;
-  Null? voilationMessage;
-  Null? travelerName;
+  String? voilationMessage;
+  String? travelerName;
   String? tripPlan;
   Null? forexAdvance;
   String? comments;

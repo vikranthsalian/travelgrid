@@ -11,7 +11,7 @@
   "showNetworkLogs": true,
   "urls": {
     "prod_url" : "",
-    "uat_url" : "",
+    "uat_url" : "https://travelexuat.narayanahealth.org:443/tems/rest/ma/",
     "dev_url" : "http://172.104.189.54:8080/tems/rest/ma/"
   },
   "asset_path":"assets/apps/nh/",

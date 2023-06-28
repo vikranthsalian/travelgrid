@@ -10,6 +10,7 @@ import 'package:travelgrid/common/constants/flavour_constants.dart';
 import 'package:travelgrid/common/constants/route_constants.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
 import 'package:travelgrid/common/utils/login_util.dart';
+import 'package:travelgrid/data/datasources/login_response.dart';
 
 import 'package:travelgrid/presentation/screens/auth/bloc/login_form_bloc.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';
@@ -28,7 +29,6 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     loginJsonData = FlavourConstants.loginData;
 
-
       return SafeArea(
         child: Scaffold(
           backgroundColor: ParseDataType().getHexToColor(loginJsonData['backgroundColor']),
@@ -41,8 +41,9 @@ class LoginScreen extends StatelessWidget {
                   LoginFormBloc  formBloc =  BlocProvider.of<LoginFormBloc>(context);
 
                // formBloc.tfUsername.updateValue("nh09");
-              //  formBloc.tfPassword.updateValue("Test123#");
-
+                // formBloc.tfPassword.updateValue("Test123#");
+                 // formBloc.tfUsername.updateValue("900898");
+                // formBloc.tfPassword.updateValue("Pass@123");
                   return Container(
                     height: double.infinity,
 
@@ -60,7 +61,9 @@ class LoginScreen extends StatelessWidget {
                             return;
                           }
 
-                          MetaLogin.loggedIn( state.successResponse);
+
+                          MetaLoginResponse modelResponse = MetaLoginResponse.fromJson(jsonDecode(state.successResponse.toString()));
+                          MetaLogin().loggedIn(modelResponse);
 
                         },
                         onFailure: (context, state) {

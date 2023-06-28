@@ -16,6 +16,7 @@ import 'package:travelgrid/data/models/tr/tr_insurance_model.dart';
 import 'package:travelgrid/data/models/tr/tr_traveller_details.dart';
 import 'package:travelgrid/data/models/tr/tr_visa_model.dart';
 import 'package:travelgrid/presentation/components/dialog_cash.dart';
+import 'package:travelgrid/presentation/components/toggle_component.dart';
 import 'package:travelgrid/presentation/screens/common/employees_screen.dart';
 import 'package:travelgrid/presentation/screens/dashboard/tr/add/add_forex.dart';
 import 'package:travelgrid/presentation/screens/dashboard/tr/add/add_insurance.dart';
@@ -51,6 +52,7 @@ class TrProcessed extends StatelessWidget {
     "align" : "center"
   };
 
+
   var supp = {
     "text" : "Supporting Document/Notes",
     "color" : "0xFF2854A1",
@@ -70,15 +72,17 @@ class TrProcessed extends StatelessWidget {
   List<TRTravellerDetails> list =  [];
   bool showTravellerItems=true;
   List<String> segmentTypeList =['One-Way', 'Round', 'Multi'];
+
+  var label = {
+    "text" : "",
+    "color" : "0xFFFFFFFF",
+    "size": "16",
+    "family": "regular",
+    "align": "center"
+  };
   @override
   Widget build(BuildContext context) {
     jsonData = FlavourConstants.trAddProcessed;
-
-    // items=[
-    //   MetaTextView(mapData: map,text: 'One-Way'),
-    //   MetaTextView(mapData: map,text: 'Round'),
-    //   MetaTextView(mapData: map,text: 'Multi'),
-    // ];
 
 
     return Scaffold(
@@ -102,9 +106,7 @@ class TrProcessed extends StatelessWidget {
                 if(isEdit!){
 
                   final idx = segLabel.indexWhere((element) => element == summaryResponse?.data?.segmentType.toString());
-                  print(idx);
-                  print("summaryResponse?.data?.segmentType");
-                  print(summaryResponse?.data?.segmentType);
+
                   if(idx>0){
                     selected=idx;
                     print(segLabel[idx]);
@@ -185,25 +187,30 @@ class TrProcessed extends StatelessWidget {
                         formBloc: formBloc!,
                         child:ListView(
                             padding: EdgeInsets.zero,
-                            shrinkWrap: true,
                             children:[
                               SizedBox(height: 10.h,),
+                              InkWell(onTap:(){
+                              },child: Container(color: Colors.white,height:20.h,width: 40,)),
+
                               Stack(
                                 alignment: Alignment.center,
                                 children: [
+
                                   Container(
                                     width: 272.w,
-                                   //padding: EdgeInsets.symmetric(horizontal: 30.w),
                                     child: ToggleSwitch(
                                       initialLabelIndex: selected,
+                                      //changeOnTap: true,
+                                      animate: true,
                                       totalSwitches: 3,
-                                      activeBgColor: [ParseDataType().getHexToColor(jsonData['backgroundColor'])],
+                                      activeBgColor: [
+                                        ParseDataType().getHexToColor(jsonData['backgroundColor']),
+                                      ],
                                       activeFgColor: Colors.white,
                                       centerText:true,
                                       minWidth: 90.w,
                                       inactiveBgColor: Colors.grey,
                                       inactiveFgColor: Colors.white,
-
                                       labels: segmentTypeList,
                                       onToggle: (index) {
                                         print('switched to: $index');
@@ -214,9 +221,28 @@ class TrProcessed extends StatelessWidget {
                                       },
                                     ),
                                   ),
+                                  // Container(
+                                  //
+                                  //   child: Row(
+                                  //     children: [
+                                  //       Expanded(
+                                  //         child: InkWell(onTap:(){
+                                  //           MetaAlert.showErrorAlert(message: "Oneway");
+                                  //
+                                  //         },child: Container(height: 40)),
+                                  //       ),
+                                  //       Expanded(child: InkWell(onTap:(){
+                                  //         MetaAlert.showErrorAlert(message: "Round");
+                                  //       },child: Container())),
+                                  //       Expanded(child: InkWell(onTap:(){
+                                  //         MetaAlert.showErrorAlert(message: "Multi");
+                                  //       },child: Container()))
+                                  //     ],
+                                  //   ),
+                                  // ),
                                 ],
                               ),
-                              SizedBox(height: 5.h,),
+                              SizedBox(height: 15.h,),
                               Container(
                                 margin: EdgeInsets.symmetric(horizontal: 10.w),
                                 child: Row(

@@ -8,7 +8,9 @@ import 'package:travelgrid/common/injector/injector.dart';
 import 'package:travelgrid/common/utils/date_time_util.dart';
 import 'package:travelgrid/data/blocs/flight/flight_bloc.dart';
 import 'package:travelgrid/data/datasources/others/flight_list.dart';
+import 'package:travelgrid/data/models/success_model.dart';
 import 'package:travelgrid/presentation/components/bloc_map_event.dart';
+import 'package:travelgrid/presentation/components/dialog_yes_no.dart';
 import 'package:travelgrid/presentation/components/filterby_component.dart';
 import 'package:travelgrid/presentation/components/sortby_component.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';
@@ -205,12 +207,23 @@ class FlightScreen extends StatelessWidget {
         };
 
         Map time = {
-          "text" :MetaDateTime().getDate(item.departureDate.toString(),format: "hh:mm",isFlightDate: true) +" | "+MetaDateTime().getDate(item.arrivalDate.toString(),format: "hh:mm",isFlightDate: true),
+          "text" :item.departureTime.toString()+
+              " | "+item.arrivalTime.toString(),
           "color" : "0xFFCCCCCC",
           "size": "8",
           "family": "bold",
           "align" : "center-left"
         };
+
+        Map duration = {
+          "text" :"",
+          "color" : "0xFF0000AA",
+          "size": "8",
+          "family": "bold",
+          "align" : "center-left"
+        };
+
+
 
         Map price = {
           "text" :"",
@@ -221,115 +234,137 @@ class FlightScreen extends StatelessWidget {
         };
 
 
-        return Container(
-          padding: EdgeInsets.symmetric(horizontal: 10.w),
-          child: Row(
-            children: [
-              Card(
-                elevation: 5,
-                color: Color(0xFF2854A1),
-                child: Container(
+        return InkWell(
+          onTap: ()async{
+            await showDialog(
+            context: context,
+            builder: (_) => DialogYesNo(
+                title: "Select Flight "+item.carrierName!+" "+ item.flightNumber.toString()+" \n"+item.departureTime.toString()+
+                    " | "+item.arrivalTime.toString(),
+                onPressed: (value) async{
+                  if(value == "YES"){
 
-                  width: cardHt,
-                  height: cardHt,
-                  child:Column(
-                    children: [
-                      Container(
-                        height:cardHt * 0.1,
-                      ),
-                      Expanded(
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.only(bottomLeft: Radius.circular(3),bottomRight:Radius.circular(3)),
-                          child: Container(
-                            padding: EdgeInsets.symmetric(horizontal: 10.w,vertical: 10.w),
-                            color: Color(0xFFFFFFFF),
+                    Navigator.pop(context,item);
 
-                            child: MetaBaseImageView(mapData: {
-                              "image" : getImageLogo(item.carrierName!.toLowerCase()),
-
-                //    "align": "center",
-                            }),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-
-                ),
-              ),
-              SizedBox(width: 3.w,),
-              Expanded(
-                child: Card(
-                  color: Color(0xFF2854A1),
+                  }
+                }));
+          },
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 10.w),
+            child: Row(
+              children: [
+                Card(
                   elevation: 5,
+                  color: Color(0xFF2854A1),
                   child: Container(
+
                     width: cardHt,
                     height: cardHt,
-                    child: Column(
+                    child:Column(
                       children: [
                         Container(
                           height:cardHt * 0.1,
                         ),
                         Expanded(
-                          child: Container(
-                            padding: EdgeInsets.only(right: 10.w,left: 10.w,top: 2.h,bottom: 3.h),
-                            color: Color(0xFFFFFFFF),
-                            child: Column(
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Container(
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.only(bottomLeft: Radius.circular(3),bottomRight:Radius.circular(3)),
+                            child: Container(
+                              padding: EdgeInsets.symmetric(horizontal: 10.w,vertical: 10.w),
+                              color: Color(0xFFFFFFFF),
 
+                              child: MetaBaseImageView(mapData: {
+                                "image" : getImageLogo(item.carrierName!.toLowerCase()),
 
-                                      child:Container(
-                                          child: MetaTextView(mapData: flightName)
-                                      ),
-
-                                    ),
-                                    Container(
-                                        child:  MetaTextView( mapData: price,
-                                            text: "Retail Fare : " +item.corpFare.toString().inRupeesFormat())),
-                                  ],
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Container(
-
-
-                                      child:Container(
-                                          child: MetaTextView(mapData: flightDetails)
-                                      ),
-                                    ),
-
-                                    Container(
-                                        child: MetaTextView( mapData:  price ,
-                                            text: "Corp Fare : " +item.corpFare.toString().inRupeesFormat()))
-                                  ],
-                                ),
-                                SizedBox(height: 2.h,),
-
-
-                                Container(
-                                    child: MetaTextView( mapData:  stops )),
-
-                                Container(
-                                    child: MetaTextView(mapData: time)
-                                ),
-
-                              ],
+                  //    "align": "center",
+                              }),
                             ),
                           ),
                         ),
-
-
                       ],
                     ),
+
                   ),
                 ),
-              )
-            ],
+                SizedBox(width: 3.w,),
+                Expanded(
+                  child: Card(
+                    color: Color(0xFF2854A1),
+                    elevation: 5,
+                    child: Container(
+                      width: cardHt,
+                      height: cardHt,
+                      child: Column(
+                        children: [
+                          Container(
+                            height:cardHt * 0.1,
+                          ),
+                          Expanded(
+                            child: Container(
+                              padding: EdgeInsets.only(right: 10.w,left: 10.w,top: 2.h,bottom: 3.h),
+                              color: Color(0xFFFFFFFF),
+                              child: Column(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Container(
+
+
+                                        child:Container(
+                                            child: MetaTextView(mapData: flightName)
+                                        ),
+
+                                      ),
+                                      Container(
+                                          child:  MetaTextView( mapData: price,
+                                              text: "Retail Fare : " +item.publishedPrice.toString().inRupeesFormat())),
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Container(
+
+
+                                        child:Container(
+                                            child: MetaTextView(mapData: flightDetails)
+                                        ),
+                                      ),
+
+                                      Container(
+                                          child: MetaTextView( mapData:  price ,
+                                              text: "Corp Fare : " +item.corpPublishedPrice.toString().inRupeesFormat()))
+                                    ],
+                                  ),
+
+                                  Container(
+                                      child: MetaTextView( mapData:  stops )),
+
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Container(
+                                          child: MetaTextView(mapData: time)
+                                      ),
+
+                                    ],
+                                  ),
+                                  Container(
+                                      child: MetaTextView(mapData: duration,text: "Duration : ${item.duration.toString()} Hour",)
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+
+
+                        ],
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
           ),
         );
       },
@@ -351,8 +386,9 @@ class FlightScreen extends StatelessWidget {
 
   void callBloc() {
 
+  String dateString = date.replaceAll("-","");
 
-    bloc!.add(GetFlightListEvent(from: from,to: to,date: date.replaceAll("-",date)));
+    bloc!.add(GetFlightListEvent(from: from,to: to,date:dateString));
   }
 
   Future<void> _pullRefresh() async {

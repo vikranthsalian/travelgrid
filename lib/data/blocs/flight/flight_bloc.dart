@@ -19,10 +19,10 @@ class FlightBloc extends Bloc<FlightEvent, FlightState> {
   void _init(GetFlightListEvent event, Emitter<FlightState> emit) async {
     emit(FlightInitialState());
     Map<String,dynamic> data = {
-      "from":"",
+      "from":event.from,
       "segmentType":"",
-      "to":"",
-      "departDate":"",
+      "to":event.to,
+      "departDate":event.date,
       "fareClass":"",
       "cityPairIndex":"",
       "paxCount":"",

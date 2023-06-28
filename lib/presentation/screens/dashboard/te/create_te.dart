@@ -1151,6 +1151,9 @@ class _CreateTravelExpenseBodyState extends State<CreateTravelExpenseBody> {
       for (var item in dataList) {
         Map<String, dynamic> map = item.toMap();
 
+        TEAccomModel(checkInDate: item.checkInDate);
+
+
           map['currency'] = "48";
           map['accomodationType'] =
               CityUtil.getAccomIDFromName(item.accomodationType);

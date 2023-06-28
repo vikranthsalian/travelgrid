@@ -141,7 +141,7 @@ class _CityScreenState extends State<CityScreen> {
                                           .toString())})"
                                           : "")))
                           ),
-                          trailing: const Icon(Icons.flight_outlined),
+                          trailing: list[index].code !="" ? Icon(Icons.flight_outlined):Container(width: 0,height: 0,),
                           subtitle: Container(
                               margin: EdgeInsets.only(right: 5.w),
                               child: MetaTextView(

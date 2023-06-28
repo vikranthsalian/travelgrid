@@ -336,7 +336,7 @@ class WidgetDrawerState extends State<WidgetDrawer> {
                                   SuccessModel model =   await Injector.resolve<CommonUseCase>().logOut();
                                   if(model.token == null){
                                     Navigator.of(context)
-                                        .pushNamedAndRemoveUntil(RouteConstants.loginPath,
+                                        .pushNamedAndRemoveUntil(RouteConstants.splashPath,
                                             (Route<dynamic> route) => false);
                                   }
 

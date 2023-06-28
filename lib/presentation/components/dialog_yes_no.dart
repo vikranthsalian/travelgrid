@@ -43,8 +43,9 @@ class DialogYesNo extends StatelessWidget{
                       width: double.infinity,
                       child: MetaButton(mapData: jsonData['buttonYes'],
                           onButtonPressed: (){
-                            onPressed!("YES");
                             Navigator.pop(context);
+                            onPressed!("YES");
+
                           }
                       ),
                     ))

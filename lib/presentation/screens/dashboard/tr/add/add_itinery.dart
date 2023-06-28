@@ -10,6 +10,7 @@ import 'package:travelgrid/common/utils/city_util.dart';
 import 'package:travelgrid/common/utils/show_alert.dart';
 import 'package:travelgrid/data/cubits/login_cubit/login_cubit.dart';
 import 'package:travelgrid/data/datasources/login_response.dart';
+import 'package:travelgrid/data/datasources/others/flight_list.dart';
 import 'package:travelgrid/data/models/success_model.dart';
 import 'package:travelgrid/data/models/tr/tr_city_pair_model.dart';
 import 'package:travelgrid/domain/usecases/tr_usecase.dart';
@@ -41,8 +42,8 @@ class AddItinerary  extends StatelessWidget {
   String errorMsg="";
   ItineraryFormBloc?  formBloc;
   MetaLoginResponse loginResponse = MetaLoginResponse();
-  String fromCode="";
-  String toCode="";
+  String? fromCode;
+  String? toCode;
   @override
   Widget build(BuildContext context) {
     loginResponse = context.read<LoginCubit>().getLoginResponse();
@@ -133,7 +134,7 @@ class AddItinerary  extends StatelessWidget {
                           formBloc!.travelModeID.updateValue(cityPairs!.travelMode!);
 
 
-                          if(cityPairs!.byCompany==42){
+                          if(cityPairs!.byCompany == 42){
                             formBloc!.swByCompany.updateValue(true);
                             formBloc!.swByCompanyID.updateValue(true);
                           }
@@ -149,6 +150,11 @@ class AddItinerary  extends StatelessWidget {
 
                           formBloc!.tfTicket.updateValue(cityPairs!.ticket!);
                           formBloc!.tfPNR.updateValue(cityPairs!.pnr!);
+                        }else{
+                          if(cityPairs!=null){
+                            formBloc!.origin.updateValue(cityPairs!.goingTo!);
+                          }
+
                         }
 
 
@@ -192,7 +198,7 @@ class AddItinerary  extends StatelessWidget {
                                                           text: CityUtil.getCityNameFromID(formBloc!.origin.value),
                                                           onChange:(value){
                                                             print(jsonEncode(value));
-                                                            fromCode=value;
+                                                            fromCode=value.code;
                                                             formBloc!.origin.updateValue(value.id.toString());
                                                           },),
                                                         alignment: Alignment.centerLeft,
@@ -205,7 +211,7 @@ class AddItinerary  extends StatelessWidget {
                                                           mapData: jsonData['selectDestination'],
                                                           text: CityUtil.getCityNameFromID(formBloc!.destination.value),
                                                           onChange:(value){
-                                                            fromCode=value;
+                                                            toCode=value.code;
                                                             formBloc!.destination.updateValue(value.id.toString());
                                                           },),
                                                         alignment: Alignment.centerLeft,
@@ -360,22 +366,32 @@ class AddItinerary  extends StatelessWidget {
                                                       child: Column(
                                                         children: [
 
+
                                                           Container(
                                                             child:InkWell(
-                                                                onTap:(){
+                                                                onTap:()async{
 
-                                                                  if(fromCode.isNotEmpty && toCode.isNotEmpty && formBloc!.checkInDate.value.isNotEmpty)
-                                                                  {
-                                                                var data =  Navigator.of(context).pushReplacementNamed(RouteConstants.flightPath,
-                                                                  arguments: {
-                                                                    "from":fromCode,
-                                                                    "to":   toCode,
-                                                                    "date":formBloc!.checkInDate
-                                                                  });
-                                                                print("flightData");
-                                                                print(data);
-                                                                 }else{
+                                                                  if(fromCode == null ||toCode == null){
                                                                     MetaAlert.showErrorAlert(message: "Please select fields");
+                                                                    return;
+                                                                  }
+
+
+                                                                  if(fromCode!.isNotEmpty && toCode!.isNotEmpty && formBloc!.checkInDate.value.isNotEmpty)
+                                                                  {
+                                                                            var data = await Navigator.of(context).pushNamed(RouteConstants.flightPath,
+                                                                              arguments: {
+                                                                                "from":fromCode,
+                                                                                "to": toCode,
+                                                                                "date":formBloc!.checkInDate.value
+                                                                              });
+
+                                                                            AirFareResults airFareResults    = data as AirFareResults;
+
+                                                                        print("flightData");
+                                                                        print(airFareResults.carrierName);
+                                                                 }else{
+                                                                    MetaAlert.showErrorAlert(message: "Flight Search Not Available for selected cities");
                                                                  }
                                                                   },
                                                                 child: MetaTextView(mapData: jsonData['flight'])),

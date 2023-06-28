@@ -81,6 +81,7 @@ class AirFareResults {
   String? destinationCode;
   String? departureDate;
   String? arrivalDate;
+  String? duration;
   Null? fareClass;
   String? carrierCode;
   String? carrierName;
@@ -89,6 +90,8 @@ class AirFareResults {
   double? baseFare;
   double? tax;
   String? fareKey;
+  String? departureTime;
+  String? arrivalTime;
   double? corpPublishedPrice;
   double? corpBaseFare;
   double? corpTax;
@@ -117,6 +120,9 @@ class AirFareResults {
         this.destination,
         this.destinationCode,
         this.departureDate,
+        this.departureTime,
+        this.arrivalTime,
+        this.duration,
         this.arrivalDate,
         this.fareClass,
         this.carrierCode,
@@ -155,7 +161,10 @@ class AirFareResults {
     destinationCode = json['destinationCode'];
     departureDate = json['departureDate'];
     arrivalDate = json['arrivalDate'];
+    arrivalTime = json['arrivalTime'];
+    departureTime = json['departureTime'];
     fareClass = json['fareClass'];
+    duration = json['duration'];
     carrierCode = json['carrierCode'];
     carrierName = json['carrierName'];
     flightNumber = json['flightNumber'];
@@ -198,7 +207,10 @@ class AirFareResults {
     data['destination'] = this.destination;
     data['destinationCode'] = this.destinationCode;
     data['departureDate'] = this.departureDate;
+    data['departureTime'] = this.departureTime;
+    data['duration'] = this.duration;
     data['arrivalDate'] = this.arrivalDate;
+    data['arrivalTime'] = this.arrivalTime;
     data['fareClass'] = this.fareClass;
     data['carrierCode'] = this.carrierCode;
     data['carrierName'] = this.carrierName;

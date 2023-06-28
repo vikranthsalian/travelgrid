@@ -21,16 +21,14 @@ import 'package:travelgrid/data/blocs/travel/travel_mode_bloc.dart';
 import 'package:travelgrid/data/blocs/travel_purpose/travel_purpose_bloc.dart';
 import 'package:travelgrid/data/cubits/login_cubit/login_cubit.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
-import 'package:travelgrid/data/datasources/login_response.dart';
-import 'package:travelgrid/data/remote/remote_datasource.dart';
 class MetaLogin{
-  MetaLogin._();
 
-    static void loggedIn(response) {
+
+     loggedIn(response) {
       var ctx=  appNavigatorKey.currentState!.context;
-      MetaLoginResponse modelResponse = MetaLoginResponse.fromJson(jsonDecode(response.toString()));
-      print(modelResponse.data?.toJson());
-      ctx.read<LoginCubit>().setLoginResponse(modelResponse);
+
+
+      ctx.read<LoginCubit>().setLoginResponse(response);
       MetaAlert.showSuccessAlert(
           message: "Login Success"
       );
@@ -38,11 +36,16 @@ class MetaLogin{
       Injector.resolve<AccomTypeBloc>()..add(GetAccomTypeListEvent());
       Injector.resolve<TravelModeBloc>()..add(GetTravelModeListEvent());
       Injector.resolve<MiscTypeBloc>()..add(GetMiscTypeListEvent());
+
+
       Injector.resolve<ApproverTypeBloc>()..add(GetApproverTypeListEvent());
+
       Injector.resolve<FareClassBloc>()..add(GetAirFareClassListEvent());
+
       Injector.resolve<FareClassBloc>()..add(GetRailFareClassListEvent());
       Injector.resolve<FareClassBloc>()..add(GetRoadFareClassListEvent());
       Injector.resolve<TravelPurposeBloc>()..add(GetTravelPurposeListEvent());
+
       Injector.resolve<CurrencyBloc>()..add(GetCurrencyListEvent());
       Injector.resolve<CityBloc>()..add(GetCityListEvent());
       Injector.resolve<CityBloc>()..add(GetCountryListEvent());

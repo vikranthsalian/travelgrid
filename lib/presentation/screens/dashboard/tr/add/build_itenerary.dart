@@ -103,6 +103,7 @@ class _CreateBuildItineraryState extends State<BuildItinerary> {
                   }else{
                     Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
                         AddItinerary(
+                          cityPairs:widget.list.isNotEmpty ? widget.list.last : null,
                           tripType: widget.tripType,
                           jsonData: map,
                           isEdit:false,
@@ -115,12 +116,8 @@ class _CreateBuildItineraryState extends State<BuildItinerary> {
                               widget.list.add(data);
                               widget.onAdded!(widget.list);
                             }
-
-
                           },)));
                   }
-
-
 
                 },
                   child: MetaTextView(mapData: map['add'],text: "ADD",))),
