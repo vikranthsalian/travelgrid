@@ -16,6 +16,7 @@ import 'package:travelgrid/presentation/components/sortby_component.dart';
 import 'package:travelgrid/presentation/widgets/button.dart';
 import 'package:travelgrid/presentation/widgets/icon.dart';
 import 'package:travelgrid/presentation/widgets/image_view.dart';
+import 'package:travelgrid/presentation/widgets/radio.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
 
 class FlightScreen extends StatelessWidget {
@@ -118,7 +119,6 @@ class FlightScreen extends StatelessWidget {
                     },
                     topComponent:Container(
                       color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
-                      height: 120.h,
                       child:  Column(
                         children: [
                           SizedBox(height:40.h),
@@ -157,6 +157,7 @@ class FlightScreen extends StatelessWidget {
                               ),
                             ],
                           ),
+                          SizedBox(height:5.h),
                         ],
                       ),
                     ),
@@ -236,15 +237,24 @@ class FlightScreen extends StatelessWidget {
 
         return InkWell(
           onTap: ()async{
+            var data= item.publishedPrice.toString();
             await showDialog(
             context: context,
             builder: (_) => DialogYesNo(
                 title: "Select Flight "+item.carrierName!+" "+ item.flightNumber.toString()+" \n"+item.departureTime.toString()+
                     " | "+item.arrivalTime.toString(),
+                widgetView:MetaRadio(
+                  onRadioSwitched: (value){
+                    print("onRadioSwitched");
+                    print(value);
+                    data = value;
+                  },
+                  one: item.publishedPrice.toString(),
+                  two: item.corpPublishedPrice.toString(),),
                 onPressed: (value) async{
                   if(value == "YES"){
 
-                    Navigator.pop(context,item);
+                    Navigator.pop(context,data);
 
                   }
                 }));
@@ -257,7 +267,6 @@ class FlightScreen extends StatelessWidget {
                   elevation: 5,
                   color: Color(0xFF2854A1),
                   child: Container(
-
                     width: cardHt,
                     height: cardHt,
                     child:Column(
@@ -274,8 +283,6 @@ class FlightScreen extends StatelessWidget {
 
                               child: MetaBaseImageView(mapData: {
                                 "image" : getImageLogo(item.carrierName!.toLowerCase()),
-
-                  //    "align": "center",
                               }),
                             ),
                           ),
@@ -300,7 +307,8 @@ class FlightScreen extends StatelessWidget {
                           ),
                           Expanded(
                             child: Container(
-                              padding: EdgeInsets.only(right: 10.w,left: 10.w,top: 2.h,bottom: 3.h),
+                              height:cardHt * 0.9,
+                              padding: EdgeInsets.only(right: 10.w,left: 10.w,bottom: 1.h),
                               color: Color(0xFFFFFFFF),
                               child: Column(
                                 children: [
@@ -308,12 +316,7 @@ class FlightScreen extends StatelessWidget {
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       Container(
-
-
-                                        child:Container(
-                                            child: MetaTextView(mapData: flightName)
-                                        ),
-
+                                          child: MetaTextView(mapData: flightName)
                                       ),
                                       Container(
                                           child:  MetaTextView( mapData: price,
@@ -324,11 +327,7 @@ class FlightScreen extends StatelessWidget {
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       Container(
-
-
-                                        child:Container(
-                                            child: MetaTextView(mapData: flightDetails)
-                                        ),
+                                          child: MetaTextView(mapData: flightDetails)
                                       ),
 
                                       Container(
@@ -346,12 +345,13 @@ class FlightScreen extends StatelessWidget {
                                       Container(
                                           child: MetaTextView(mapData: time)
                                       ),
-
+                                      Container(
+                                          child: MetaTextView(mapData: duration,
+                                            text: "Duration : ${item.duration.toString()} Hour",)
+                                      ),
                                     ],
                                   ),
-                                  Container(
-                                      child: MetaTextView(mapData: duration,text: "Duration : ${item.duration.toString()} Hour",)
-                                  ),
+
                                 ],
                               ),
                             ),

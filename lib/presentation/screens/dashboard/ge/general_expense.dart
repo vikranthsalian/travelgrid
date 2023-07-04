@@ -122,7 +122,6 @@ class GeneralExpense extends StatelessWidget {
                     },
                     topComponent:Container(
                       color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
-                      height: 115.h,
                       child:  Column(
                         children: [
                           SizedBox(height:40.h),
@@ -143,28 +142,6 @@ class GeneralExpense extends StatelessWidget {
                               ],
                             ),
                           ),
-                          // Container(
-                          //   margin: EdgeInsets.symmetric(horizontal: 20.w,vertical: 5.h),
-                          //   padding: EdgeInsets.symmetric(vertical: 5.h),
-                          //   decoration: BoxDecoration(
-                          //       borderRadius: BorderRadius.circular(8.r),
-                          //       color: Color(0xFFFFFFFF),
-                          //       border: Border.all(color: Colors.black12)),
-                          //   child: SearchBarComponent(
-                          //     barHeight: 40.h,
-                          //     hintText: "Search.....",
-                          //     searchController: _searchController,
-                          //     onClear: (){
-                          //
-                          //     },
-                          //     onSubmitted: (text) {
-                          //
-                          //     },
-                          //     onChange: (text) {
-                          //
-                          //     },
-                          //   ),
-                          // ),
                           Container(
                             margin: EdgeInsets.symmetric(horizontal: 20.w),
                             child:MetaTextView(mapData: jsonData['listView']['recordsFound']),
@@ -182,6 +159,7 @@ class GeneralExpense extends StatelessWidget {
                               ),
                             ],
                           ),
+                          SizedBox(height:5.h),
                         ],
                       ),
                     ),

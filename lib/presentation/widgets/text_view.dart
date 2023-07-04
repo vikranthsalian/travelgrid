@@ -13,7 +13,7 @@ class MetaTextView extends StatelessWidget {
     return  Container(
         alignment: ParseDataType().getAlign(mapData['align'] ?? ""),
         child: Text(
-            text==null ?
+            text == null ?
             mapData['value']!=null ? (mapData['value'].toString() +" "+ mapData['text'].toString()) :mapData['text'] :text,
             textAlign: textAlign,
             style:Theme.of(context).textTheme.

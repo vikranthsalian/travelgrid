@@ -136,7 +136,6 @@ class TravelRequest extends StatelessWidget {
                     },
                     topComponent:Container(
                       color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
-                      height: 120.h,
                       child:  Column(
                         children: [
                           SizedBox(height:40.h),
@@ -175,6 +174,7 @@ class TravelRequest extends StatelessWidget {
                               ),
                             ],
                           ),
+                          SizedBox(height:5.h),
                         ],
                       ),
                     ),

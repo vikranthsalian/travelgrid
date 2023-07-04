@@ -3,9 +3,11 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:travelgrid/common/constants/route_constants.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
 import 'package:travelgrid/common/injector/injector.dart';
 import 'package:travelgrid/common/utils/city_util.dart';
+import 'package:travelgrid/common/utils/show_alert.dart';
 import 'package:travelgrid/data/cubits/login_cubit/login_cubit.dart';
 import 'package:travelgrid/data/datasources/login_response.dart';
 import 'package:travelgrid/data/datasources/summary/tr_summary_response.dart';
@@ -43,6 +45,9 @@ class AddRoundItinerary  extends StatelessWidget {
   String errorMsg="";
   String errorMsg2="";
   MetaLoginResponse loginResponse = MetaLoginResponse();
+  String? fromCode;
+  String? toCode;
+
   @override
   Widget build(BuildContext context) {
     loginResponse = context.read<LoginCubit>().getLoginResponse();
@@ -215,6 +220,7 @@ class AddRoundItinerary  extends StatelessWidget {
                                                     text: CityUtil.getCityNameFromID(formBloc!.origin.value),
                                                     onChange:(value){
                                                       print(value);
+                                                      fromCode=value.code;
                                                       formBloc!.origin.updateValue(value.id.toString());
 
                                                       formBloc!.destination2.updateValue(value.id.toString());
@@ -230,7 +236,7 @@ class AddRoundItinerary  extends StatelessWidget {
                                                     text: CityUtil.getCityNameFromID(formBloc!.destination.value),
                                                     onChange:(value){
                                                       formBloc!.destination.updateValue(value.id.toString());
-
+                                                      toCode=value.code;
                                                       formBloc!.origin2.updateValue(value.id.toString());
                                                     },),
                                                   alignment: Alignment.centerLeft,
@@ -400,6 +406,39 @@ class AddRoundItinerary  extends StatelessWidget {
                                                         visible: !formBloc!.swByCompanyID.value! ,
                                                         child: Column(
                                                           children: [
+
+                                                            Container(
+                                                              child:InkWell(
+                                                                  onTap:()async{
+
+                                                                    if(fromCode == null ||toCode == null){
+                                                                      MetaAlert.showErrorAlert(message: "Please select fields");
+                                                                      return;
+                                                                    }
+
+
+                                                                    if(fromCode!.isNotEmpty && toCode!.isNotEmpty && formBloc!.checkInDate.value.isNotEmpty)
+                                                                    {
+                                                                      var data = await Navigator.of(context).pushNamed(RouteConstants.flightPath,
+                                                                          arguments: {
+                                                                            "from":fromCode,
+                                                                            "to": toCode,
+                                                                            "date":formBloc!.checkInDate.value
+                                                                          });
+
+                                                                      String airFareResults  = data as String;
+
+                                                                      print("flightData");
+                                                                      formBloc!.tfAmount.updateValue(data);
+                                                                      //print(airFareResults.carrierName);
+                                                                    }else{
+                                                                      MetaAlert.showErrorAlert(message: "Flight Search Not Available for selected cities");
+                                                                    }
+                                                                  },
+                                                                  child: MetaTextView(mapData: jsonData['flight'])),
+                                                            ),
+
+
                                                             Container(
                                                               child: Row(
                                                                 children: [
@@ -457,31 +496,6 @@ class AddRoundItinerary  extends StatelessWidget {
                                               physics: NeverScrollableScrollPhysics(),
                                               shrinkWrap: true,
                                               children:[
-                                                // Row(
-                                                //     children: [
-                                                //       Expanded(
-                                                //         child: Container(
-                                                //           child: MetaSearchSelectorView(mapData: jsonData['selectOrigin'],
-                                                //             text: CityUtil.getCityNameFromID(formBloc!.origin2.value),
-                                                //             onChange:(value){
-                                                //               print(value);
-                                                //               formBloc!.origin2.updateValue(value.id.toString());
-                                                //             },),
-                                                //           alignment: Alignment.centerLeft,
-                                                //         ),
-                                                //       ),
-                                                //       Expanded(
-                                                //         child: Container(
-                                                //           child: MetaSearchSelectorView(mapData: jsonData['selectDestination'],
-                                                //             text: CityUtil.getCityNameFromID(formBloc!.destination2.value),
-                                                //             onChange:(value){
-                                                //               formBloc!.destination2.updateValue(value.id.toString());
-                                                //             },),
-                                                //           alignment: Alignment.centerLeft,
-                                                //         ),
-                                                //       ),
-                                                //     ]),
-
                                                 Row(
                                                     children: [
                                                       tripType=="D"?
@@ -630,6 +644,38 @@ class AddRoundItinerary  extends StatelessWidget {
                                                         visible: !formBloc!.swByCompanyID2.value! ,
                                                         child: Column(
                                                           children: [
+
+                                                            Container(
+                                                              child:InkWell(
+                                                                  onTap:()async{
+
+                                                                    if(fromCode == null ||toCode == null){
+                                                                      MetaAlert.showErrorAlert(message: "Please select fields");
+                                                                      return;
+                                                                    }
+
+
+                                                                    if(fromCode!.isNotEmpty && toCode!.isNotEmpty && formBloc!.checkInDate2.value.isNotEmpty)
+                                                                    {
+                                                                      var data = await Navigator.of(context).pushNamed(RouteConstants.flightPath,
+                                                                          arguments: {
+                                                                            "from":toCode,
+                                                                            "to": fromCode,
+                                                                            "date":formBloc!.checkInDate2.value
+                                                                          });
+
+                                                                      String airFareResults  = data as String;
+
+                                                                      print("flightData");
+                                                                      formBloc!.tfAmount2.updateValue(data);
+                                                                      //print(airFareResults.carrierName);
+                                                                    }else{
+                                                                      MetaAlert.showErrorAlert(message: "Flight Search Not Available for selected cities");
+                                                                    }
+                                                                  },
+                                                                  child: MetaTextView(mapData: jsonData['flight'])),
+                                                            ),
+
                                                             Container(
                                                               child: Row(
                                                                 children: [

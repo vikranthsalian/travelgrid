@@ -48,10 +48,11 @@ class WidgetDrawerState extends State<WidgetDrawer> {
             bottomNavigationBar: Container(
               color: ColorConstants.primaryColor,
               alignment: Alignment.bottomCenter,
-              height: 45.h,
+              height: 50.h,
               child: Container(
                 padding: EdgeInsets.symmetric(vertical: 5.h),
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Text(
                       appVersion,
@@ -106,128 +107,17 @@ class WidgetDrawerState extends State<WidgetDrawer> {
                         },
                       )),
                   Divider(),
-                  ListTile(
-                    leading: Container(
-                      height: 30.w,
-                      width: 30.w,
-                      decoration: BoxDecoration(
-                          color: Colors.black.withOpacity(0.8),
-                          shape: BoxShape.circle),
-                      child: Icon(Icons.card_travel,color: Colors.white,size: 15.sp,),
-                    ),
-                    title: Transform.translate(
-                      offset: Offset(-10.w, 0),
-                      child: MetaTextView(mapData: {
-                        "text" : "Travel Request",
-                        "color" : "0xFF000000",
-                        "size": "14",
-                        "family": "bold",
-                        "align": "center-left"
-                      }),
-                    ),
-                    trailing:  Icon(Icons.chevron_right,color: Colors.black.withOpacity(0.8),),
-                    onTap: () {
-                      Navigator.of(context).pushNamed(RouteConstants.travelRequestPath);
-                    },
-                  ),
-                  ListTile(
-                    leading: Container(
-                      height: 30.w,
-                      width: 30.w,
-                      decoration: BoxDecoration(
-                          color: Colors.black.withOpacity(0.8),
-                          shape: BoxShape.circle),
-                      child: Icon(Icons.monetization_on_outlined,color: Colors.white,size: 15.sp,),
-                    ),
-                    title: Transform.translate(
-                      offset: Offset(-10.w, 0),
-                      child: MetaTextView(mapData: {
-                        "text" : "Travel Expense",
-                        "color" : "0xFF000000",
-                        "size": "14",
-                        "family": "bold",
-                        "align": "center-left"
-                      }),
-                    ),
-                    trailing:  Icon(Icons.chevron_right,color: Colors.black.withOpacity(0.8),),
-                    onTap: () {
-                      Navigator.pushNamed(context, RouteConstants.travelExpensePath);
-                    },
-                  ),
-                  ListTile(
-                    leading: Container(
-                      height: 30.w,
-                      width: 30.w,
-                      decoration: BoxDecoration(
-                          color: Colors.black.withOpacity(0.8),
-                          shape: BoxShape.circle),
-                      child: Icon(Icons.currency_rupee,color: Colors.white,size: 15.sp,),
-                    ),
-                    title: Transform.translate(
-                      offset: Offset(-10.w, 0),
-                      child: MetaTextView(mapData: {
-                        "text" : "General Expense",
-                        "color" : "0xFF000000",
-                        "size": "14",
-                        "family": "bold",
-                        "align": "center-left"
-                      }),
-                    ),
-                    trailing:  Icon(Icons.chevron_right,color: Colors.black.withOpacity(0.8),),
-                    onTap: () {
-                      Navigator.pushNamed(context, RouteConstants.generalExpensePath);
-                    },
-                  ),
-                  ListTile(
-                    leading: Container(
-                      height: 30.w,
-                      width: 30.w,
-                      decoration: BoxDecoration(
-                          color: Colors.black.withOpacity(0.8),
-                          shape: BoxShape.circle),
-                      child: Icon(Icons.done_all,color: Colors.white,size: 15.sp,),
-                    ),
-                    title: Transform.translate(
-                      offset: Offset(-10.w, 0),
-                      child: MetaTextView(mapData: {
-                        "text" : "Approvals",
-                        "color" : "0xFF000000",
-                        "size": "14",
-                        "family": "bold",
-                        "align": "center-left"
-                      }),
-                    ),
-                    trailing:  Icon(Icons.chevron_right,color: Colors.black.withOpacity(0.8),),
-                    onTap: () {
-                      Navigator.pushNamed(context, RouteConstants.approvalExpensePath);
-                    },
-                  ),
+                  buildListTile(context,"Travel Request",Icons.card_travel,RouteConstants.travelRequestPath),
+                  buildListTile(context,"Travel Expense",Icons.monetization_on_outlined,RouteConstants.travelExpensePath),
+                  buildListTile(context,"General Expense",Icons.done_all,RouteConstants.generalExpensePath),
+                  buildListTile(context,"Approvals",Icons.done_all,RouteConstants.approvalExpensePath),
+
                   Divider(),
+                  buildListTile(context,"Policies",Icons.policy,RouteConstants.policyPath),
+
+
                   ListTile(
-                    leading: Container(
-                      height: 30.w,
-                      width: 30.w,
-                      decoration: BoxDecoration(
-                          color: Colors.black.withOpacity(0.8),
-                          shape: BoxShape.circle),
-                      child: Icon(Icons.policy,color: Colors.white,size: 15.sp,),
-                    ),
-                    title: Transform.translate(
-                      offset: Offset(-10.w, 0),
-                      child: MetaTextView(mapData: {
-                        "text" : "Policies",
-                        "color" : "0xFF000000",
-                        "size": "14",
-                        "family": "bold",
-                        "align": "center-left"
-                      }),
-                    ),
-                    trailing:  Icon(Icons.chevron_right,color: Colors.black.withOpacity(0.8),),
-                    onTap: () {
-                      Navigator.pushNamed(context, RouteConstants.policyPath);
-                    },
-                  ),
-                  ListTile(
+                    dense: false,
                     leading: Container(
                       height: 30.w,
                       width: 30.w,
@@ -254,7 +144,9 @@ class WidgetDrawerState extends State<WidgetDrawer> {
                     },
                   ),
                   Divider(),
+
                   ListTile(
+                    dense: false,
                     leading: Container(
                       height: 30.w,
                       width: 30.w,
@@ -265,14 +157,13 @@ class WidgetDrawerState extends State<WidgetDrawer> {
                     ),
                     title: Transform.translate(
                       offset: Offset(-10.w, 0),
-                      child:  Text(
-                        'Rate Us',
-                        style: TextStyle(
-                          fontSize: 16.sp,
-                          color:Colors.black.withOpacity(0.8),
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
+                      child: MetaTextView(mapData: {
+                        "text" : "Rate Us",
+                        "color" : "0xFF000000",
+                        "size": "14",
+                        "family": "bold",
+                        "align": "center-left"
+                      }),
                     ),
                     trailing:  Icon(Icons.chevron_right,color: Colors.black.withOpacity(0.8),),
                     onTap: () async{
@@ -306,6 +197,7 @@ class WidgetDrawerState extends State<WidgetDrawer> {
                   // ),
                   Divider(),
                   ListTile(
+                    dense: false,
                     leading: Container(
                       height: 30.w,
                       width: 30.w,
@@ -316,14 +208,13 @@ class WidgetDrawerState extends State<WidgetDrawer> {
                     ),
                     title: Transform.translate(
                       offset: Offset(-10.w, 0),
-                      child:  Text(
-                        'Log Out',
-                        style: TextStyle(
-                          fontSize: 16.sp,
-                          color:Colors.black.withOpacity(0.8),
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
+                      child: MetaTextView(mapData: {
+                        "text" : "Log Out",
+                        "color" : "0xFF000000",
+                        "size": "14",
+                        "family": "bold",
+                        "align": "center-left"
+                      }),
                     ),
                     trailing:  Icon(Icons.chevron_right,color: Colors.black.withOpacity(0.8),),
                     onTap: () async{
@@ -350,6 +241,34 @@ class WidgetDrawerState extends State<WidgetDrawer> {
         ),
       ),
     );
+  }
+
+  ListTile buildListTile(BuildContext context,text,icon,path) {
+    return ListTile(
+                  dense: false,
+                  leading: Container(
+                    height: 30.w,
+                    width: 30.w,
+                    decoration: BoxDecoration(
+                        color: Colors.black.withOpacity(0.8),
+                        shape: BoxShape.circle),
+                    child: Icon(icon,color: Colors.white,size: 15.sp,),
+                  ),
+                  title: Transform.translate(
+                    offset: Offset(-10.w, 0),
+                    child: MetaTextView(mapData: {
+                      "text" : text,
+                      "color" : "0xFF000000",
+                      "size": "14",
+                      "family": "bold",
+                      "align": "center-left"
+                    }),
+                  ),
+                  trailing:  Icon(Icons.chevron_right,color: Colors.black.withOpacity(0.8),),
+                  onTap: () {
+                    Navigator.of(context).pushNamed(path);
+                  },
+                );
   }
 
   getAppVersion() async{

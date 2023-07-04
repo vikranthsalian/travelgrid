@@ -65,6 +65,7 @@ class _ApprovalExpenseState extends State<ApprovalExpense> {
                       return Tab(text: e['text']);
                     }).toList())
                   ),
+                  SizedBox(height:5.h),
 
                 ],
               ),

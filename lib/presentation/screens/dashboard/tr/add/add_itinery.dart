@@ -386,13 +386,14 @@ class AddItinerary  extends StatelessWidget {
                                                                                 "date":formBloc!.checkInDate.value
                                                                               });
 
-                                                                            AirFareResults airFareResults    = data as AirFareResults;
+                                                                            String airFareResults  = data as String;
 
                                                                         print("flightData");
-                                                                        print(airFareResults.carrierName);
+                                                                        formBloc!.tfAmount.updateValue(data);
+                                                                        //print(airFareResults.carrierName);
                                                                  }else{
                                                                     MetaAlert.showErrorAlert(message: "Flight Search Not Available for selected cities");
-                                                                 }
+                                                                  }
                                                                   },
                                                                 child: MetaTextView(mapData: jsonData['flight'])),
                                                           ),

@@ -8,15 +8,23 @@ import 'package:travelgrid/presentation/widgets/text_view.dart';
 class DialogYesNo extends StatelessWidget{
   Function? onPressed;
   String? title;
-  DialogYesNo({this.onPressed,this.title});
+  Widget? widgetView;
+  DialogYesNo({this.onPressed,this.title,this.widgetView});
   Map<String,dynamic> jsonData = {};
   @override
   Widget build(BuildContext context) {
+    double adder =0;
     jsonData = FlavourConstants.yesNoData;
+
+    if(widgetView!=null){
+      adder=10.h;
+    }
+
+
     return Dialog(
       backgroundColor: Colors.transparent,
       child: Container(
-        height: MediaQuery.of(context).size.height * 0.18,
+        height:( MediaQuery.of(context).size.height + adder )* 0.18,
         child:ClipRRect(
             borderRadius: BorderRadius.circular(12.r),
             child: Scaffold(
@@ -27,6 +35,8 @@ class DialogYesNo extends StatelessWidget{
                   margin: EdgeInsets.symmetric(horizontal: 20.w),
                     child: MetaTextView(mapData: jsonData['title'],text: title,))
                 ),
+               if(widgetView!=null)
+                widgetView!,
                 Row(
                   children: [
                     Expanded(child: Container(
