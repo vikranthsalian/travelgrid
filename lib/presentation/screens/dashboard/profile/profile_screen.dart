@@ -27,7 +27,8 @@ class ProfileScreen extends StatelessWidget {
     MetaLoginResponse  loginResponse = context.read<LoginCubit>().getLoginResponse();
     fullname=loginResponse.data!.fullName??"";
 
-
+    details.clear();
+    orgDetails.clear();
     details.add(Tuple2("User ID", loginResponse.data!.id.toString()));
 
     details.add(Tuple2("Gender", loginResponse.data!.gender.toString()));
@@ -50,53 +51,55 @@ class ProfileScreen extends StatelessWidget {
 
     return Scaffold(
         backgroundColor: Colors.white,
-        body: Column(
-          children: [
-            Container(
-              color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
-              height: 220.h,
-              child:  Column(
-                children: [
-                  SizedBox(height:30.h),
-                  Container(
-                    height: 40.h,
-                    alignment: Alignment.center,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        MetaIcon(mapData:jsonData['backBar'],
-                            onButtonPressed: (){
-                              Navigator.pop(context);
-                            }),
-                      ],
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
+                height: 220.h,
+                child:  Column(
+                  children: [
+                    SizedBox(height:30.h),
+                    Container(
+                      height: 40.h,
+                      alignment: Alignment.center,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          MetaIcon(mapData:jsonData['backBar'],
+                              onButtonPressed: (){
+                                Navigator.pop(context);
+                              }),
+                        ],
+                      ),
                     ),
-                  ),
 
-                  Container(
-                    height: 100.w,
-                    width: 100.w,
-                    child: MetaSVGView(mapData:  jsonData['svgIcon']),
-                  ),
-                  SizedBox(height: 10.h,),
-                  Container(
-                    child:MetaTextView(mapData: jsonData['name'],text: fullname),
-                  ),
-                ],
+                    Container(
+                      height: 100.w,
+                      width: 100.w,
+                      child: MetaSVGView(mapData:  jsonData['svgIcon']),
+                    ),
+                    SizedBox(height: 10.h,),
+                    Container(
+                      child:MetaTextView(mapData: jsonData['name'],text: fullname),
+                    ),
+                  ],
+                ),
               ),
-            ),
-            SizedBox(height:10.h),
-            ExpandableComponent(
-                color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
-                jsonData: jsonData['contactDetails'],
-                childWidget: buildRequesterWidget(jsonData['contactDetails'],details),
-                initialValue: showContactDetails),
-            ExpandableComponent(
-                color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
-                jsonData: jsonData['orgDetails'],
-                childWidget: buildRequesterWidget(jsonData['orgDetails'],orgDetails),
-                initialValue: showOrgDetails),
-          ],
+              SizedBox(height:10.h),
+              ExpandableComponent(
+                  color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
+                  jsonData: jsonData['contactDetails'],
+                  childWidget: buildRequesterWidget(jsonData['contactDetails'],details),
+                  initialValue: showContactDetails),
+              ExpandableComponent(
+                  color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
+                  jsonData: jsonData['orgDetails'],
+                  childWidget: buildRequesterWidget(jsonData['orgDetails'],orgDetails),
+                  initialValue: showOrgDetails),
+            ],
+          ),
         )
     );
   }
@@ -114,7 +117,7 @@ class ProfileScreen extends StatelessWidget {
           shrinkWrap: true,
           gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount:2,
-              childAspectRatio: 7,
+              childAspectRatio: 5,
               mainAxisSpacing: 3.h
           ),
           itemBuilder: (BuildContext context, int index) {

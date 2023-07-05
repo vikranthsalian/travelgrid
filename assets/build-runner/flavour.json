@@ -396,7 +396,7 @@
       "gridValue": {
         "text" : "",
         "color" : "0XFFAEAEAE",
-        "size": "7",
+        "size": "9",
         "family": "regular",
         "align": "center-left"
       }
@@ -428,7 +428,7 @@
       "gridValue": {
         "text" : "",
         "color" : "0XFFAEAEAE",
-        "size": "7",
+        "size": "9",
         "family": "regular",
         "align": "center-left"
       }

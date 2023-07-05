@@ -114,6 +114,8 @@ class WidgetDrawerState extends State<WidgetDrawer> {
 
                   Divider(),
                   buildListTile(context,"Policies",Icons.policy,RouteConstants.policyPath),
+                  buildListTile(context,"Privacy Policy",Icons.privacy_tip_outlined,"https://www.narayanahealth.org/privacy-policy",isWeb: true),
+                  buildListTile(context,"Terms and Conditions",Icons.sticky_note_2_sharp,"https://www.narayanahealth.org/terms-of-use",isWeb: true),
 
 
                   ListTile(
@@ -243,7 +245,7 @@ class WidgetDrawerState extends State<WidgetDrawer> {
     );
   }
 
-  ListTile buildListTile(BuildContext context,text,icon,path) {
+  ListTile buildListTile(BuildContext context,text,icon,path,{bool isWeb=false}) {
     return ListTile(
                   dense: false,
                   leading: Container(
@@ -265,8 +267,18 @@ class WidgetDrawerState extends State<WidgetDrawer> {
                     }),
                   ),
                   trailing:  Icon(Icons.chevron_right,color: Colors.black.withOpacity(0.8),),
-                  onTap: () {
-                    Navigator.of(context).pushNamed(path);
+                  onTap: () async{
+
+                    if(isWeb){
+                      final Uri url = Uri.parse(path);
+                      if (!await launchUrl(url)) {
+                    throw Exception('Could not launch $path');
+                    }
+                    }else{
+                      Navigator.of(context).pushNamed(path);
+                    }
+
+
                   },
                 );
   }
