@@ -62,6 +62,7 @@ class RoundItineraryFormBloc extends FormBloc<String, String> {
       tfPNR2.addValidators(Validators().getValidators(data['text_field_pnr']));
       tfTicket2.addValidators(Validators().getValidators(data['text_field_ticket']));
       tfAmount2.addValidators(Validators().getValidators(data['text_field_amount']));
+      tfAmount2.addValidators([]);
     }
 
     addFieldBlocs(fieldBlocs: [
