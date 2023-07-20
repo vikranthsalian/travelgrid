@@ -12,8 +12,6 @@ import 'package:travelgrid/common/injector/injector_config.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await configureFlavour();
-
-
   runApp(MyApp());
 }
 
