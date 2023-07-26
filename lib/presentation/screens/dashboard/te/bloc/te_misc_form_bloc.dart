@@ -98,11 +98,8 @@ class MiscTeFormBloc extends FormBloc<String, String> {
   @override
   FutureOr<void> onSubmitting() async {
 
-    bool isGroupExpense=false;
-    if(showGroup.value == true && groupIds.value!.isEmpty){
-      MetaAlert.showErrorAlert(message: "Please add group employees");
-    }
-    isGroupExpense=true;
+    bool isGroupExpense = false;
+    isGroupExpense = showGroup.value ?? false;
     String groupValues=groupIds.value!.join(",");
 
     try {
@@ -138,6 +135,7 @@ class MiscTeFormBloc extends FormBloc<String, String> {
 
   void onChanges() {
 
+    //food
     if(miscID.value == "212"){
       showErrorValue.updateValue("");
       showError.updateValue(false);
@@ -166,19 +164,7 @@ class MiscTeFormBloc extends FormBloc<String, String> {
       }
     }
 
-    // if(miscID.value == "213"){
-    //   showErrorValue.updateValue("");
-    //   showError.updateValue(false);
-    //   if(tfAmount.valueToDouble! >= (200 * days.value! * count.value!)){
-    //     showErrorValue.updateValue("200");
-    //     showError.updateValue(true);
-    //     return;
-    //   }else{
-    //     showErrorValue.updateValue("0");
-    //     showError.updateValue(false);
-    //     return;
-    //   }
-    // }
+
     showErrorValue.updateValue("");
     showError.updateValue(false);
   }

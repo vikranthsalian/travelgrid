@@ -8,8 +8,8 @@ import 'package:travelgrid/common/utils/validators.dart';
 class MiscFormBloc extends FormBloc<String, String> {
 
   final miscID =  SelectFieldBloc<String, dynamic>();
-  final checkInDate = TextFieldBloc(validators: [emptyValidator]);
-  final checkOutDate =  TextFieldBloc(validators: [emptyValidator]);
+  final checkInDate = TextFieldBloc(validators: [emptyValidator],initialValue: DateFormat('dd-MM-yyyy').format(DateTime.now()));
+  final checkOutDate =  TextFieldBloc(validators: [emptyValidator],initialValue: DateFormat('dd-MM-yyyy').format(DateTime.now()));
   final cityName =  TextFieldBloc(validators: [emptyValidator]);
   final cityID =  TextFieldBloc(validators: [emptyValidator]);
   final miscName =  TextFieldBloc(validators: [emptyValidator]);
@@ -92,16 +92,20 @@ class MiscFormBloc extends FormBloc<String, String> {
 
   @override
   FutureOr<void> onSubmitting() async {
+    Map<String,dynamic> saveMiscData = getModel();
+
+
+     emitSuccess(successResponse: jsonEncode(saveMiscData));
+
+  }
+
+  getModel(){
 
 
     bool isGroupExpense=false;
-    if(showGroup.value == true && groupIds.value!.isEmpty){
-      MetaAlert.showErrorAlert(message: "Please add group employees");
-    }
-    isGroupExpense=showGroup.value ?? false;
+
+    isGroupExpense = showGroup.value ?? false;
     String groupValues=groupIds.value!.join(",");
-
-
     Map<String,dynamic> saveMiscData = {
       "miscellaneousTypeName": miscName.value,
       "miscellaneousType":int.parse(miscID.value ?? "0"),
@@ -111,8 +115,8 @@ class MiscFormBloc extends FormBloc<String, String> {
       "city":int.parse(cityID.value),
       "cityName":cityName.value,
       if(miscID.value == "212")
-      "unitType":int.parse(unitTypeID.value),
-    //  "unitName":unitTypeName.value,
+        "unitType":int.parse(unitTypeID.value),
+      //  "unitName":unitTypeName.value,
       "amount": tfAmount.valueToDouble,
       "voucherNumber": tfVoucher.value,
       "description": tfDescription.value,
@@ -124,8 +128,8 @@ class MiscFormBloc extends FormBloc<String, String> {
       "groupEmployees":groupValues,
       "groupExpense":isGroupExpense,
     };
-     emitSuccess(successResponse: jsonEncode(saveMiscData));
 
+    return saveMiscData;
   }
 
   void onChanges() {
@@ -158,19 +162,45 @@ class MiscFormBloc extends FormBloc<String, String> {
       }
     }
 
+
+    // //incidental
     // if(miscID.value == "213"){
     //   showErrorValue.updateValue("");
     //   showError.updateValue(false);
-    //   if(tfAmount.valueToDouble! >= (200 * days.value! * count.value!)){
-    //     showErrorValue.updateValue("200");
+    //
+    //   if (tfAmount.valueToDouble! > (200 * days.value! * count.value!)) {
+    //     showErrorValue.updateValue((200 * days.value! * count.value!).toString() );
+    //     print("showErrorValue.value");
+    //     print(showErrorValue.value);
     //     showError.updateValue(true);
     //     return;
-    //   }else{
-    //     showErrorValue.updateValue("0");
-    //     showError.updateValue(false);
+    //   }
+    //   showErrorValue.updateValue("0");
+    //   showError.updateValue(false);
+    //   return;
+    //
+    //
+    // }
+    //
+    // //Boarding
+    // if(miscID.value == "290"){
+    //   showErrorValue.updateValue("");
+    //   showError.updateValue(false);
+    //
+    //   if (tfAmount.valueToDouble! > (200 * days.value! * count.value!)) {
+    //     showErrorValue.updateValue((200 * days.value! * count.value!).toString() );
+    //     print("showErrorValue.value");
+    //     print(showErrorValue.value);
+    //     showError.updateValue(true);
     //     return;
     //   }
+    //   showErrorValue.updateValue("0");
+    //   showError.updateValue(false);
+    //   return;
+    //
+    //
     // }
+
     showErrorValue.updateValue("");
     showError.updateValue(false);
   }

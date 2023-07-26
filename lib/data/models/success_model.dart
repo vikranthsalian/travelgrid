@@ -10,7 +10,7 @@ class SuccessModel {
     status = json['status'] == "SUCCESS" ? true:false;
     token = json['token'];
     message = json['message'];
-    data = json['data'].toString();
+    data = json['data'];
   }
 
   Map<String, dynamic> toJson() {

@@ -272,6 +272,28 @@ class APIRemoteDatasource{
     }
 
   }
+  Future<dynamic> getCommonTypesPost(pathUrl,body) async {
+
+    try {
+      final responseJson = await CustomDio().getWrapper().post(
+        pathUrl,
+        data:body,
+        loadingMessage:"Loading Data...",
+        queryParameters:{
+          "token" :appNavigatorKey.currentState!.context.read<LoginCubit>().getLoginToken()
+        },
+      );
+      return responseJson.data;
+    } on DioError catch (e) {
+      print("DioError"+e.toString());
+      return MetaAccomTypeListResponse(status: false);
+
+    }catch(e){
+      print("CatchError"+e.toString());
+      return MetaAccomTypeListResponse(status: false);
+    }
+
+  }
 
   Future<dynamic> upload(pathUrl,formData) async {
 

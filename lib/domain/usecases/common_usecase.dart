@@ -11,6 +11,7 @@ import 'package:travelgrid/data/datasources/others/misc_type_list.dart';
 import 'package:travelgrid/data/datasources/others/non_employee_list.dart';
 import 'package:travelgrid/data/datasources/others/travel_mode_list.dart';
 import 'package:travelgrid/data/datasources/others/travel_purpose_list.dart';
+import 'package:travelgrid/data/models/ge/ge_misc_model.dart';
 import 'package:travelgrid/data/models/success_model.dart';
 import 'package:travelgrid/domain/repo_abstract/api_abstract.dart';
 
@@ -48,4 +49,6 @@ class CommonUseCase {
   Future<SuccessModel> uploadFile(formData,type) async => apiAbstract.uploadFile(formData,type);
 
   Future<MetaLatLongDistanceModel> getDistance(origin,dest) async => apiAbstract.getDistance(origin,dest);
+
+  Future<SuccessModel> getValidations(model) async => apiAbstract.getValidations(model);
 }

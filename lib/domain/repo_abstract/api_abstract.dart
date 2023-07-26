@@ -99,4 +99,6 @@ abstract class CommonAPIAbstract {
 
   Future<MetaLatLongDistanceModel> getDistance(origin,dest);
 
+  Future<SuccessModel> getValidations(model);
+
 }

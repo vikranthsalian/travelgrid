@@ -14,6 +14,7 @@ import 'package:travelgrid/data/datasources/others/non_employee_list.dart';
 import 'package:travelgrid/data/datasources/others/travel_mode_list.dart';
 import 'package:travelgrid/data/datasources/others/lat_long_distance_model.dart';
 import 'package:travelgrid/data/datasources/others/travel_purpose_list.dart';
+import 'package:travelgrid/data/models/ge/ge_misc_model.dart';
 import 'package:travelgrid/data/models/success_model.dart';
 import 'package:travelgrid/data/remote/remote_datasource.dart';
 import 'package:travelgrid/domain/repo_abstract/api_abstract.dart';
@@ -272,6 +273,22 @@ class CommonRepository extends CommonAPIAbstract {
     }
 
     return MetaFlightListResponse(status: false);
+  }
+
+
+
+  @override
+  Future<SuccessModel> getValidations(data) async{
+
+
+    var response = await apiRemoteDatasource.getCommonTypesPost("ge/geMiscellaneousRule",data);
+
+    if(response!=null) {
+      SuccessModel modelResponse = SuccessModel.fromJson(response);
+      return modelResponse;
+    }
+
+    return SuccessModel(status: false);
   }
 
 

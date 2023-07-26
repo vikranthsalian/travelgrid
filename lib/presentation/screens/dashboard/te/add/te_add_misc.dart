@@ -71,6 +71,12 @@ class AddTeMiscExpense extends StatelessWidget {
             ),
             MetaButton(mapData: jsonData['bottomButtonRight'],
                 onButtonPressed: ()async{
+
+                  if(formBloc!.showGroup.value == true && formBloc!.groupIds.value!.isEmpty){
+                    MetaAlert.showErrorAlert(message: "Please add group employees");
+                    return;
+                  }
+
                   if(file!=null){
                     SuccessModel model = await  MetaUpload().uploadImage(file!,"EX");
                     if(model.status!){
@@ -123,6 +129,7 @@ class AddTeMiscExpense extends StatelessWidget {
 
 
                      if(isEdit){
+                       formBloc!.showAdd.updateValue(true);
 
                        if(miscModel!.groupExpense == true){
                          formBloc!.showGroup.updateValue(true);
@@ -206,6 +213,8 @@ class AddTeMiscExpense extends StatelessWidget {
                                           BlocBuilder<SelectFieldBloc, SelectFieldBlocState>(
                                               bloc: formBloc!.showAdd,
                                               builder: (context, state) {
+                                                print("formBloc!.showAdd.value");
+                                                print( formBloc!.showAdd.value);
                                                 return Visibility(
                                                   visible: state.value,
                                                   child:  Container(

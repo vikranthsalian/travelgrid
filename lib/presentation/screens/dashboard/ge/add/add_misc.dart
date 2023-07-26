@@ -7,12 +7,14 @@ import 'package:travelgrid/common/config/navigator_key.dart';
 import 'package:travelgrid/common/constants/flavour_constants.dart';
 import 'package:travelgrid/common/enum/dropdown_types.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
+import 'package:travelgrid/common/injector/injector.dart';
 import 'package:travelgrid/common/utils/date_time_util.dart';
 import 'package:travelgrid/common/utils/show_alert.dart';
 import 'package:travelgrid/common/utils/upload_util.dart';
 import 'package:travelgrid/data/models/expense_model.dart';
 import 'package:travelgrid/data/models/ge/ge_misc_model.dart';
 import 'package:travelgrid/data/models/success_model.dart';
+import 'package:travelgrid/domain/usecases/common_usecase.dart';
 import 'package:travelgrid/presentation/components/dialog_group.dart';
 import 'package:travelgrid/presentation/components/switch_component.dart';
 import 'package:travelgrid/presentation/components/upload_component.dart';
@@ -54,7 +56,7 @@ class CreateMiscExpense extends StatelessWidget {
   };
 
   List<String> groupValues=[];
-
+  String  dateText="";
   @override
   Widget build(BuildContext context) {
     jsonData = FlavourConstants.miscCreateData;
@@ -77,20 +79,44 @@ class CreateMiscExpense extends StatelessWidget {
             MetaButton(mapData: jsonData['bottomButtonRight'],
                 onButtonPressed: ()async{
 
-              if(formBloc!.showError.value!){
-                MetaAlert.showErrorAlert(message: "Please submit valid amount");
-              }
+                  if(formBloc!.showGroup.value == true && formBloc!.groupIds.value!.isEmpty){
+                    MetaAlert.showErrorAlert(message: "Please add group employees");
+                    return;
+                  }
+                  if(formBloc!.showError.value == true){
+                    MetaAlert.showErrorAlert(message: "Eligible amount is "+formBloc!.showErrorValue.value);
+                    return;
+                  }
+
+                        if(formBloc!.miscID.value=="213" || formBloc!.miscID.value =="290") {
+                          final String requestBody = json.encoder.convert(
+                              formBloc!.getModel());
+
+                          Map<String, dynamic> valueMap = json.decode(requestBody);
 
 
-            if(file!=null){
-              SuccessModel model = await  MetaUpload().uploadImage(file!,"GE");
-                if(model.status!){
-                  formBloc!.voucherPath.updateValue(model.data!);
-                  formBloc!.submit();
-                }
-              }else{
-               formBloc!.submit();
-              }
+                          SuccessModel model = await Injector.resolve<CommonUseCase>()
+                              .getValidations(valueMap);
+
+                          String msg = model.data['voilationMessage'];
+                          if (msg.isNotEmpty) {
+                            var arry = msg.split("Rs.");
+                            formBloc!.showError.updateValue(true);
+                            formBloc!.showErrorValue.updateValue(arry[1]);
+                            return;
+                          }
+                        }
+
+
+                  if(file!=null){
+                    SuccessModel model = await  MetaUpload().uploadImage(file!,"GE");
+                      if(model.status!){
+                        formBloc!.voucherPath.updateValue(model.data!);
+                        formBloc!.submit();
+                      }
+                    }else{
+                      formBloc!.submit();
+                    }
            }
             )
           ],
@@ -134,7 +160,7 @@ class CreateMiscExpense extends StatelessWidget {
 
 
                      if(isEdit){
-
+                       formBloc!.showAdd.updateValue(true);
                        if(miscModel!.groupExpense == true){
                          formBloc!.showGroup.updateValue(true);
                          formBloc!.showAdd.updateValue(true);
@@ -168,12 +194,6 @@ class CreateMiscExpense extends StatelessWidget {
 
                       formBloc!.tfAmount.updateValue(miscModel!.amount.toString());
                       formBloc!.tfDescription.updateValue(miscModel!.description.toString());
-                     }else{
-
-                     String  dateText = DateFormat('dd-MM-yyyy').format(DateTime.now());
-
-                       formBloc!.checkInDate.updateValue(dateText);
-                       formBloc!.checkOutDate.updateValue(dateText);
                      }
 
 
@@ -191,12 +211,14 @@ class CreateMiscExpense extends StatelessWidget {
                           onSubmitting: (context, state) {
                             FocusScope.of(context).unfocus();
                           },
-                          onSuccess: (context, state) {
+                          onSuccess: (context, state) async{
                             print(state.successResponse);
 
                             if(state.successResponse!=null) {
                               GEMiscModel modelResponse = GEMiscModel.fromJson(
                                   jsonDecode(state.successResponse.toString()));
+
+
 
                               onAdd!(
                                   {
@@ -559,13 +581,18 @@ class CreateMiscExpense extends StatelessWidget {
   }
 
   getDays(){
+    print("getDays");
+    print(formBloc!.checkInDate.value);
+    print(formBloc!.checkOutDate.value);
     DateTime dob1 = MetaDateTime().getDateTime(formBloc!.checkInDate.value);
     DateTime dob2 = MetaDateTime().getDateTime(formBloc!.checkOutDate.value);
     Duration dur =  dob2.difference(dob1);
 
 
     int count = (dur.inDays);
-    formBloc!.days.updateValue(count == 0 ? 1: count);
+    print("count");
+    print(count);
+    formBloc!.days.updateValue(count+1);
 
 
   }
