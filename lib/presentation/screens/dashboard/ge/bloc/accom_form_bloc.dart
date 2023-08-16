@@ -16,9 +16,9 @@ class AccomFormBloc extends FormBloc<String, String> {
   final selectAccomID = SelectFieldBloc<String, dynamic>();
   final selectWithBill = SelectFieldBloc<String, dynamic>();
   final checkInDate =  TextFieldBloc(validators: [emptyValidator]);
-  final checkInTime =  TextFieldBloc(validators: [emptyValidator]);
+  final checkInTime =  TextFieldBloc(validators: [emptyValidator],initialValue: "00:00");
   final checkOutDate =  TextFieldBloc(validators: [emptyValidator]);
-  final checkOutTime =  TextFieldBloc(validators: [emptyValidator]);
+  final checkOutTime =  TextFieldBloc(validators: [emptyValidator],initialValue: "00:00");
   final cityName =  TextFieldBloc(validators: [emptyValidator]);
   final cityID =  TextFieldBloc(validators: [emptyValidator]);
   final accomName =  TextFieldBloc(validators: [emptyValidator]);
@@ -39,6 +39,7 @@ class AccomFormBloc extends FormBloc<String, String> {
     }
     return null;
   }
+
 
   AccomFormBloc(Map<String, dynamic> data):super(autoValidate: true) {
 
@@ -95,10 +96,10 @@ class AccomFormBloc extends FormBloc<String, String> {
   @override
   FutureOr<void> onSubmitting() async {
     print("differenceInYears");
-    DateTime dob1 = MetaDateTime().getDateTime(checkInDate.value);
+    DateTime dob1 = MetaDateTime().getDateOnly(checkInDate.value);
     print(dob1);
 
-    DateTime dob2 = MetaDateTime().getDateTime(checkOutDate.value);
+    DateTime dob2 = MetaDateTime().getDateOnly(checkOutDate.value);
     print(dob2);
     print("differenceInYears 2");
     Duration dur =  dob2.difference(dob1);

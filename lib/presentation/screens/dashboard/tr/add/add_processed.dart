@@ -807,7 +807,6 @@ class TrProcessed extends StatelessWidget {
           List<TRTravellerDetails>? list  = formBloc!.travellerDetails.value ?? [] ;
             bool  checkIndex=false;
 
-
           for(var item in list){
             if(item.primary==true){
               checkIndex=true;
@@ -1111,10 +1110,13 @@ class TrProcessed extends StatelessWidget {
             if(formBloc!.requestTypeID.value.toString().toLowerCase() == "onBehalf".toLowerCase()){
               formBloc!.travellerDetails.changeValue([data]);
             }else{
-              list =  formBloc!.travellerDetails.value ?? [];
+               list = formBloc!.travellerDetails.value ?? [];
               list.add(data);
-              formBloc!.travellerDetails.clear();
-              formBloc!.travellerDetails.changeValue(list);
+              formBloc!.travellerDetails.changeValue([]);
+
+              formBloc!.travellerDetails.updateValue(list);
+
+              print("formBloc!.travellerDetails.value");
               print(formBloc!.travellerDetails.value);
             }
           },)));
@@ -1141,7 +1143,7 @@ class TrProcessed extends StatelessWidget {
                 }else{
                   formBloc!.travellerDetails.value ?? [];
                   list.add(model);
-                  formBloc!.travellerDetails.clear();
+                  formBloc!.travellerDetails.changeValue([]);
                   formBloc!.travellerDetails.changeValue(list);
                 }
               },

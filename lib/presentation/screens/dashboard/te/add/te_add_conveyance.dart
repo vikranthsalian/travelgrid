@@ -7,7 +7,10 @@ import 'package:travelgrid/common/constants/flavour_constants.dart';
 import 'package:travelgrid/common/enum/dropdown_types.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
 import 'package:travelgrid/common/utils/city_util.dart';
+import 'package:travelgrid/common/utils/date_time_util.dart';
+import 'package:travelgrid/common/utils/show_alert.dart';
 import 'package:travelgrid/common/utils/upload_util.dart';
+import 'package:travelgrid/data/datasources/summary/te_summary_response.dart';
 import 'package:travelgrid/data/models/expense_model.dart';
 import 'package:travelgrid/data/models/success_model.dart';
 import 'package:travelgrid/data/models/te/te_conveyance_model.dart';
@@ -26,8 +29,9 @@ class AddTeConveyance extends StatelessWidget {
   bool isEdit;
   bool isView;
   TeConveyanceModel? teConveyanceModel;
-  AddTeConveyance({this.onAdd,this.isEdit=false,this.isView=false,this.teConveyanceModel});
+  AddTeConveyance({this.onAdd,this.expenseVisitDetails = const [],this.isEdit=false,this.isView=false,this.teConveyanceModel});
   Map<String,dynamic> jsonData = {};
+  List<ExpenseVisitDetails?> expenseVisitDetails;
   List items=[];
   double cardHt = 90.h;
   ConveyanceTeFormBloc? formBloc;
@@ -60,6 +64,47 @@ class AddTeConveyance extends StatelessWidget {
             ),
             MetaButton(mapData: jsonData['bottomButtonRight'],
                 onButtonPressed: () async {
+
+                  if(formBloc!.tfAmount.valueToDouble == 0){
+                    MetaAlert.showErrorAlert(message: "Amount value cannot be zero");
+                    return;
+                  }
+
+                  ExpenseVisitDetails details = ExpenseVisitDetails(city: "");
+                  for(var item in expenseVisitDetails){
+                    print("jsonEncode(item)");
+                    print(jsonEncode(item));
+
+                    if(item!.evdStartDate == formBloc!.checkInDate.value || item!.evdEndDate == formBloc!.checkInDate.value){
+                      details =item;
+                    }
+                  }
+                  if(details.city!.isNotEmpty){
+
+                    DateTime visitStartDateTime = MetaDateTime().getDateOnly(details.evdStartDate!);
+                    DateTime visitEndDateTime = MetaDateTime().getDateOnly(details.evdEndDate!);
+
+                    DateTime checkIn = MetaDateTime().getDateOnly(formBloc!.checkInDate.value);
+
+
+                    print("visitEndDateTime");
+                    print(visitEndDateTime);
+                    print("checkIn");
+                    print(checkIn);
+                    if(checkIn.isBefore(visitStartDateTime)){
+                      MetaAlert.showErrorAlert(message: "Check-In Date should be greater than visit start date");
+                      return;
+                    }
+                    if(checkIn.isAfter(visitEndDateTime)){
+                      MetaAlert.showErrorAlert(message: "Check-In Date should be less than visit end date");
+                      return;
+                    }
+
+                  }else{
+                    MetaAlert.showErrorAlert(message: "Please select appropriate Date");
+                    return;
+                  }
+
                   if(file!=null){
                     SuccessModel model = await  MetaUpload().uploadImage(file!,"EX");
                     if(model.status!){

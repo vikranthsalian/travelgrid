@@ -9,8 +9,10 @@ import 'package:travelgrid/common/constants/flavour_constants.dart';
 import 'package:travelgrid/common/enum/dropdown_types.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
 import 'package:travelgrid/common/utils/city_util.dart';
+import 'package:travelgrid/common/utils/date_time_util.dart';
 import 'package:travelgrid/common/utils/show_alert.dart';
 import 'package:travelgrid/common/utils/upload_util.dart';
+import 'package:travelgrid/data/datasources/summary/te_summary_response.dart';
 import 'package:travelgrid/data/models/expense_model.dart';
 import 'package:travelgrid/data/models/success_model.dart';
 import 'package:travelgrid/data/models/te/te_misc_model.dart';
@@ -33,9 +35,10 @@ class AddTeMiscExpense extends StatelessWidget {
   bool isEdit;
   bool isView;
   TEMiscModel? miscModel;
-  AddTeMiscExpense({this.onAdd,this.isEdit=false,this.isView=false,this.miscModel});
+  AddTeMiscExpense({this.onAdd,this.expenseVisitDetails = const [],this.isEdit=false,this.isView=false,this.miscModel});
   Map<String,dynamic> jsonData = {};
   List items=[];
+  List<ExpenseVisitDetails?> expenseVisitDetails;
   double cardHt = 90.h;
   MiscTeFormBloc? formBloc;
   bool loaded=false;
@@ -72,8 +75,64 @@ class AddTeMiscExpense extends StatelessWidget {
             MetaButton(mapData: jsonData['bottomButtonRight'],
                 onButtonPressed: ()async{
 
+                  if(formBloc!.tfAmount.valueToDouble == 0){
+                    MetaAlert.showErrorAlert(message: "Amount value cannot be zero");
+                    return;
+                  }
+
                   if(formBloc!.showGroup.value == true && formBloc!.groupIds.value!.isEmpty){
                     MetaAlert.showErrorAlert(message: "Please add group employees");
+                    return;
+                  }
+
+                  ExpenseVisitDetails details = ExpenseVisitDetails(city: "");
+                  for(var item in expenseVisitDetails){
+                    print(jsonEncode(item));
+                    if(item!.evdStartDate == formBloc!.checkInDate.value || item!.evdStartDate == formBloc!.checkOutDate.value){
+                      details =item;
+                    }
+                  }
+                  if(details.city!.isNotEmpty){
+
+                    DateTime visitStartDateTime = MetaDateTime().getDateOnly(details.evdStartDate!);
+                    DateTime visitEndDateTime = MetaDateTime().getDateOnly(details.evdEndDate!);
+
+                    DateTime checkIn = MetaDateTime().getDateOnly(formBloc!.checkInDate.value);
+                    DateTime checkOut = MetaDateTime().getDateOnly(formBloc!.checkOutDate.value);
+
+                    print("visitStartDateTime");
+                    print(visitStartDateTime);
+                    print("visitEndDateTime");
+                    print(visitEndDateTime);
+                    print("checkIn");
+                    print(checkIn);
+                    if(checkIn.isBefore(visitStartDateTime)){
+                      MetaAlert.showErrorAlert(message: "Check-In Date should be greater than visit start date");
+                      return;
+                    }
+                    if(checkIn.isAfter(visitEndDateTime)){
+                      MetaAlert.showErrorAlert(message: "Check-In Date should be less than visit end date");
+                      return;
+                    }
+
+                    print("-----------------------------------");
+
+                    print("checkOut");
+                    print(checkOut);
+
+                    if(checkOut.isBefore(visitStartDateTime) ){
+                      MetaAlert.showErrorAlert(message: "Check-Out Date should be greater than visit start date");
+                      return;
+                    }
+
+                    if(checkOut.isAfter(visitEndDateTime)){
+                      MetaAlert.showErrorAlert(message: "Check-Out Date should be less than visit end date");
+                      return;
+                    }
+
+
+                  }else{
+                    MetaAlert.showErrorAlert(message: "Please select appropriate date");
                     return;
                   }
 

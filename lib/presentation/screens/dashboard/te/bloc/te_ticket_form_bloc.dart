@@ -8,14 +8,12 @@ class TicketTeFormBloc extends FormBloc<String, String> {
 
   final selectWithBill = SelectFieldBloc<String, dynamic>();
   final checkInDate =  TextFieldBloc(validators: [emptyValidator]);
-  final checkInTime =  TextFieldBloc(validators: [emptyValidator]);
+  final checkInTime =  TextFieldBloc(validators: [emptyValidator],initialValue: "00:00");
   final origin =  TextFieldBloc(validators: [emptyValidator]);
   final destination =  TextFieldBloc(validators: [emptyValidator]);
 
   final fareClass =  TextFieldBloc(validators: [emptyValidator]);
   final travelMode =  TextFieldBloc(validators: [emptyValidator]);
-
-
 
   final swWithBill = BooleanFieldBloc(initialValue: false);
   final swByCompany = BooleanFieldBloc(initialValue: false);

@@ -69,6 +69,18 @@ class AddRoundItinerary  extends StatelessWidget {
             ),
             MetaButton(mapData: jsonData['bottomButtonRight'],
                 onButtonPressed: (){
+
+                  if(formBloc!.tfAmount.valueToDouble == 0 && formBloc!.swByCompany.value == false){
+                    MetaAlert.showErrorAlert(message: "Origin Amount value cannot be zero");
+                    return;
+                  }
+
+                  if(formBloc!.tfAmount2.valueToDouble == 0 && formBloc!.swByCompany2.value == false){
+                    MetaAlert.showErrorAlert(message: "Desitnation Amount value cannot be zero");
+                    return;
+                  }
+
+
                 formBloc!.submit();
                 }
             )

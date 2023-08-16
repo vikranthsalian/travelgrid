@@ -66,6 +66,13 @@ class AddItinerary  extends StatelessWidget {
             ),
             MetaButton(mapData: jsonData['bottomButtonRight'],
                 onButtonPressed: (){
+
+                  if(formBloc!.tfAmount.valueToDouble == 0 && formBloc!.swByCompany.value == false){
+                    MetaAlert.showErrorAlert(message: "Amount value cannot be zero");
+                    return;
+                  }
+
+
                 formBloc!.submit();
                 }
             )

@@ -83,6 +83,13 @@ class CreateMiscExpense extends StatelessWidget {
                     MetaAlert.showErrorAlert(message: "Please add group employees");
                     return;
                   }
+
+
+                  if(formBloc!.tfAmount.valueToDouble == 0){
+                    MetaAlert.showErrorAlert(message: "Amount value cannot be zero");
+                    return;
+                  }
+
                   if(formBloc!.showError.value == true){
                     MetaAlert.showErrorAlert(message: "Eligible amount is "+formBloc!.showErrorValue.value);
                     return;
@@ -194,6 +201,7 @@ class CreateMiscExpense extends StatelessWidget {
 
                       formBloc!.tfAmount.updateValue(miscModel!.amount.toString());
                       formBloc!.tfDescription.updateValue(miscModel!.description.toString());
+                       getDays();
                      }
 
 
@@ -584,8 +592,8 @@ class CreateMiscExpense extends StatelessWidget {
     print("getDays");
     print(formBloc!.checkInDate.value);
     print(formBloc!.checkOutDate.value);
-    DateTime dob1 = MetaDateTime().getDateTime(formBloc!.checkInDate.value);
-    DateTime dob2 = MetaDateTime().getDateTime(formBloc!.checkOutDate.value);
+    DateTime dob1 = MetaDateTime().getDateOnly(formBloc!.checkInDate.value);
+    DateTime dob2 = MetaDateTime().getDateOnly(formBloc!.checkOutDate.value);
     Duration dur =  dob2.difference(dob1);
 
 

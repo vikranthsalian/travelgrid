@@ -6,8 +6,8 @@ import 'package:travelgrid/common/utils/validators.dart';
 
 class RoundItineraryFormBloc extends FormBloc<String, String> {
 
-  final checkInDate =  TextFieldBloc(validators: [emptyValidator]);
-  final checkInTime =  TextFieldBloc(validators: [emptyValidator]);
+  final checkInDate =  TextFieldBloc(validators: [emptyValidator],initialValue: "00:00");
+  final checkInTime =  TextFieldBloc(validators: [emptyValidator],initialValue: "00:00");
    final origin =  TextFieldBloc(validators: [emptyValidator]);
    final destination =  TextFieldBloc(validators: [emptyValidator]);
 
@@ -27,8 +27,8 @@ class RoundItineraryFormBloc extends FormBloc<String, String> {
 
 
 
-  final checkInDate2 =  TextFieldBloc(validators: [emptyValidator]);
-  final checkInTime2 =  TextFieldBloc(validators: [emptyValidator]);
+  final checkInDate2 =  TextFieldBloc(validators: [emptyValidator],initialValue: "00:00");
+  final checkInTime2 =  TextFieldBloc(validators: [emptyValidator],initialValue: "00:00");
   final origin2 =  TextFieldBloc(validators: [emptyValidator]);
   final destination2=  TextFieldBloc(validators: [emptyValidator]);
 

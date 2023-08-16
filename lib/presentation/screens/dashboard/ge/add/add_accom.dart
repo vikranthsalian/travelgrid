@@ -7,6 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:travelgrid/common/constants/flavour_constants.dart';
 import 'package:travelgrid/common/enum/dropdown_types.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
+import 'package:travelgrid/common/utils/show_alert.dart';
 import 'package:travelgrid/common/utils/upload_util.dart';
 import 'package:travelgrid/data/models/expense_model.dart';
 import 'package:travelgrid/data/models/ge/ge_accom_model.dart';
@@ -70,6 +71,13 @@ class CreateAccommodationExpense extends StatelessWidget {
             ),
             MetaButton(mapData: jsonData['bottomButtonRight'],
                 onButtonPressed: () async{
+
+              if(formBloc!.tfAmount.valueToDouble == 0){
+                MetaAlert.showErrorAlert(message: "Amount value cannot be zero");
+                return;
+              }
+
+
                   if(file!=null){
                     SuccessModel model = await  MetaUpload().uploadImage(file!,"GE");
                     if(model.status!){

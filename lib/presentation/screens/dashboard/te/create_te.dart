@@ -972,6 +972,7 @@ class _CreateTravelExpenseBodyState extends State<CreateTravelExpenseBody> {
       Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
           AddTeMiscExpense(
             isEdit:isEdit,
+            expenseVisitDetails: visitItems,
             isView:isView,
             miscModel:model,
             onAdd: (values){
@@ -995,6 +996,7 @@ class _CreateTravelExpenseBodyState extends State<CreateTravelExpenseBody> {
           AddTeAccommodationExpense(
             "D",
             isEdit:isEdit,
+            expenseVisitDetails: visitItems,
             isView:isView,
             accomModel:model,
             onAdd: (values){
@@ -1020,6 +1022,7 @@ class _CreateTravelExpenseBodyState extends State<CreateTravelExpenseBody> {
       Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
           AddTeConveyance(
             isEdit:isEdit,
+            expenseVisitDetails: visitItems,
             isView:isView,
             teConveyanceModel:model,
             onAdd: (values){
@@ -1045,6 +1048,7 @@ class _CreateTravelExpenseBodyState extends State<CreateTravelExpenseBody> {
           AddTeTicketExpense(
             "D",
             isEdit:isEdit,
+            expenseVisitDetails: visitItems,
             isView:isView,
             teTicketModel:model,
             onAdd: (values){

@@ -25,11 +25,18 @@ class MetaDateTime{
     return "";
   }
 
-  DateTime getDateTime(String date,{String format = 'MM/dd/yyyy'}) {
+  DateTime getDateOnly(String date,{String format = 'MM/dd/yyyy'}) {
     DateTime parseDate = new DateFormat("dd-MM-yyyy").parse(date);
 
     return parseDate;
   }
+
+  DateTime getDateTime(String date,{String format = 'MM/dd/yyyy'}) {
+    DateTime parseDate = new DateFormat("dd-MM-yyyy hh:mm").parse(date);
+
+    return parseDate;
+  }
+
 
   String getTime(String date) {
     DateTime dateTime;

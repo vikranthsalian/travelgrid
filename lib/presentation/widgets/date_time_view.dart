@@ -64,7 +64,7 @@ class _MetaDateTimeViewState extends State<MetaDateTimeView> {
       time = "00:00";
     }else{
 
-      DateTime dateTime = MetaDateTime().getDateTime(widget.value['date'].toString(),format: "dd-MM-yyyy");
+      DateTime dateTime = MetaDateTime().getDateOnly(widget.value['date'].toString(),format: "dd-MM-yyyy");
       dateText =  widget.value['date'];
 
       date= dateTime.day.toString();

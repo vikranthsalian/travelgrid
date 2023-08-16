@@ -8,10 +8,10 @@ class AccomTeFormBloc extends FormBloc<String, String> {
 
   final selectAccomID = SelectFieldBloc<String, dynamic>();
   final selectWithBill = SelectFieldBloc<String, dynamic>();
-  final checkInDate =  TextFieldBloc(validators: [emptyValidator]);
-  final checkInTime =  TextFieldBloc(validators: [emptyValidator]);
-  final checkOutDate =  TextFieldBloc(validators: [emptyValidator]);
-  final checkOutTime =  TextFieldBloc(validators: [emptyValidator]);
+  final checkInDate =  TextFieldBloc(validators: [emptyValidator],initialValue: DateFormat('dd-MM-yyyy').format(DateTime.now()));
+  final checkInTime =  TextFieldBloc(validators: [emptyValidator],initialValue: "00:00");
+  final checkOutDate =  TextFieldBloc(validators: [emptyValidator],initialValue: DateFormat('dd-MM-yyyy').format(DateTime.now()));
+  final checkOutTime =  TextFieldBloc(validators: [emptyValidator],initialValue: "00:00");
   final cityName =  TextFieldBloc(validators: [emptyValidator]);
   final cityID =  TextFieldBloc(validators: [emptyValidator]);
   final accomName =  TextFieldBloc(validators: [emptyValidator]);

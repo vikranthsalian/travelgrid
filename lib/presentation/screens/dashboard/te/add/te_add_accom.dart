@@ -7,7 +7,10 @@ import 'package:travelgrid/common/constants/flavour_constants.dart';
 import 'package:travelgrid/common/enum/dropdown_types.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
 import 'package:travelgrid/common/utils/city_util.dart';
+import 'package:travelgrid/common/utils/date_time_util.dart';
+import 'package:travelgrid/common/utils/show_alert.dart';
 import 'package:travelgrid/common/utils/upload_util.dart';
+import 'package:travelgrid/data/datasources/summary/te_summary_response.dart';
 import 'package:travelgrid/data/models/expense_model.dart';
 import 'package:travelgrid/data/models/success_model.dart';
 import 'package:travelgrid/data/models/te/te_accom_model.dart';
@@ -22,17 +25,16 @@ import 'package:travelgrid/presentation/widgets/switch.dart';
 import 'package:travelgrid/presentation/widgets/text_field.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
 
-
-
 class AddTeAccommodationExpense extends StatelessWidget {
   Function(Map)? onAdd;
   bool isEdit;
   bool isView;
   TEAccomModel? accomModel;
   String? tripType;
-  AddTeAccommodationExpense(this.tripType,{this.onAdd,this.isEdit=false,this.isView=false,this.accomModel});
+  AddTeAccommodationExpense(this.tripType,{this.expenseVisitDetails = const [],this.onAdd,this.isEdit=false,this.isView=false,this.accomModel});
   Map<String,dynamic> jsonData = {};
   AccomTeFormBloc?  formBloc;
+  List<ExpenseVisitDetails?> expenseVisitDetails;
   File? file;
   String violationMessage="";
 
@@ -43,6 +45,7 @@ class AddTeAccommodationExpense extends StatelessWidget {
     "family": "regular",
     "align" : "center-left"
   };
+
   @override
   Widget build(BuildContext context) {
     jsonData = FlavourConstants.teAccomAddData;
@@ -65,6 +68,68 @@ class AddTeAccommodationExpense extends StatelessWidget {
             ),
             MetaButton(mapData: jsonData['bottomButtonRight'],
                 onButtonPressed: () async{
+
+
+                  if(formBloc!.tfAmount.valueToDouble == 0){
+                    MetaAlert.showErrorAlert(message: "Amount value cannot be zero");
+                    return;
+                  }
+
+
+              ExpenseVisitDetails details=ExpenseVisitDetails(city: "");
+              for(var item in expenseVisitDetails){
+                print(jsonEncode(item));
+                if(item!.city == formBloc!.cityID.value){
+                  details =item;
+                }
+              }
+              if(details.city!.isNotEmpty){
+
+                DateTime visitStartDateTime = MetaDateTime().getDateTime(details.evdStartDate!+ " "+details.evdStartTime!);
+                DateTime visitEndDateTime = MetaDateTime().getDateTime(details.evdEndDate!+ " "+details.evdEndTime!);
+
+                DateTime checkIn = MetaDateTime().getDateTime(formBloc!.checkInDate.value+ " "+formBloc!.checkInTime.value);
+                DateTime checkOut = MetaDateTime().getDateTime(formBloc!.checkOutDate.value+ " "+formBloc!.checkOutTime.value);
+
+
+                print("visitStartDateTime");
+                print(visitStartDateTime);
+                print("visitEndDateTime");
+                print(visitEndDateTime);
+                print("checkIn");
+                print(checkIn);
+                if(checkIn.isBefore(visitStartDateTime)){
+                  MetaAlert.showErrorAlert(message: "Check-In Date should be greater than visit start date");
+                  return;
+                }
+                if(checkIn.isAfter(visitEndDateTime)){
+                  MetaAlert.showErrorAlert(message: "Check-In Date should be less than visit end date");
+                  return;
+                }
+                print("-----------------------------------");
+
+                print("checkOut");
+                print(checkOut);
+
+                if(checkOut.isBefore(visitStartDateTime) ){
+                  MetaAlert.showErrorAlert(message: "Check-Out Date should be greater than visit start date");
+                  return;
+                }
+
+                if(checkOut.isAfter(visitEndDateTime)){
+                  MetaAlert.showErrorAlert(message: "Check-Out Date should be less than visit end date");
+                  return;
+                }
+
+
+              }else{
+                MetaAlert.showErrorAlert(message: "Please select appropriate city");
+                return;
+              }
+
+
+
+
                   if(file!=null){
                     SuccessModel model = await  MetaUpload().uploadImage(file!,"EX");
                     if(model.status!){
@@ -149,12 +214,6 @@ class AddTeAccommodationExpense extends StatelessWidget {
                       formBloc!.swWithBill.updateValue(accomModel!.withBill!);
                       violationMessage=accomModel!.voilationMessage!;
 
-                    }else{
-
-                      String  dateText = DateFormat('dd-MM-yyyy').format(DateTime.now());
-
-                      formBloc!.checkInDate.updateValue(dateText);
-                      formBloc!.checkOutDate.updateValue(dateText);
                     }
 
                     return Container(
@@ -364,6 +423,11 @@ class AddTeAccommodationExpense extends StatelessWidget {
       return text;
     }
     return null;
+  }
+
+  getTimeInDouble(TimeOfDay time) {
+    return (time.hour * 60) + time.minute;
+
   }
 
 
