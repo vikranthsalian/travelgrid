@@ -1,4 +1,4 @@
-package cm.travelgrid.nh
+package channelmentor.travelgrid.nh
 
 import io.flutter.embedding.android.FlutterActivity
 
