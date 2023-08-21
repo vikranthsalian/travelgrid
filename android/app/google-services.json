@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "986654283396",
-    "project_id": "nh-travelgrid",
-    "storage_bucket": "nh-travelgrid.appspot.com"
+    "project_number": "663094093066",
+    "project_id": "flutter-2023-travelgrid",
+    "storage_bucket": "flutter-2023-travelgrid.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:986654283396:android:2fc1905f1273a3171254d1",
+        "mobilesdk_app_id": "1:663094093066:android:8092de0977a5eec3d106f3",
         "android_client_info": {
           "package_name": "channelmentor.travelgrid.nh"
         }
       },
       "oauth_client": [
         {
-          "client_id": "986654283396-ck9hp152gimbvp09572t8ui5fhf5pnq4.apps.googleusercontent.com",
+          "client_id": "663094093066-2r4pfikl2dhct5n2ruv8cfu1ka7s1m4p.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyC6iAqP3EEIWc8hoMJNz5yTo-xOt0V5TxA"
+          "current_key": "AIzaSyCDzbBOGE_JzH04jfA2i25INMh-BFS2HM0"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "986654283396-ck9hp152gimbvp09572t8ui5fhf5pnq4.apps.googleusercontent.com",
+              "client_id": "663094093066-2r4pfikl2dhct5n2ruv8cfu1ka7s1m4p.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
