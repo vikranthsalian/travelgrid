@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>663094093066-m78ht9ehrugsguoppj7mvfc7p3112o1g.apps.googleusercontent.com</string>
+	<string>663094093066-g4h8k5m48c06qt6873t4ugco5pfmih3u.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.663094093066-m78ht9ehrugsguoppj7mvfc7p3112o1g</string>
+	<string>com.googleusercontent.apps.663094093066-g4h8k5m48c06qt6873t4ugco5pfmih3u</string>
 	<key>API_KEY</key>
 	<string>AIzaSyADAApw57ODibxdotLOtUb3CIHLrbcVzVg</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>channelmentor.travelgrid.nh</string>
+	<string>cm.travelgrid.nh</string>
 	<key>PROJECT_ID</key>
 	<string>flutter-2023-travelgrid</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:663094093066:ios:826e576c09bd7361d106f3</string>
+	<string>1:663094093066:ios:67503c0d812f60fad106f3</string>
 </dict>
 </plist>
