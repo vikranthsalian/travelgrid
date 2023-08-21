@@ -416,7 +416,7 @@
 			<key>entitlements</key>
 			<dict>
 				<key>application-identifier</key>
-				<string>7SGWXBLR65.cm.travelgrid.nh</string>
+				<string>7SGWXBLR65.channelmentor.travelgrid.nh</string>
 				<key>beta-reports-active</key>
 				<true/>
 				<key>com.apple.developer.team-identifier</key>
@@ -433,7 +433,7 @@
 				<key>dateExpires</key>
 				<string>16/03/24</string>
 				<key>name</key>
-				<string>iOS Team Store Provisioning Profile: cm.travelgrid.nh</string>
+				<string>iOS Team Store Provisioning Profile: channelmentor.travelgrid.nh</string>
 			</dict>
 			<key>symbols</key>
 			<true/>
