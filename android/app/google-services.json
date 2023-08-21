@@ -7,35 +7,6 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:986654283396:android:62b40f59a7a80a701254d1",
-        "android_client_info": {
-          "package_name": "channelmentor.travelgrid.nh"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "986654283396-ck9hp152gimbvp09572t8ui5fhf5pnq4.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyC6iAqP3EEIWc8hoMJNz5yTo-xOt0V5TxA"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "986654283396-ck9hp152gimbvp09572t8ui5fhf5pnq4.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
         "mobilesdk_app_id": "1:986654283396:android:fefeef49b26d0d0b1254d1",
         "android_client_info": {
           "package_name": "channelmentor.travelgrid.nh"
