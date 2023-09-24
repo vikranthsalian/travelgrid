@@ -9,6 +9,7 @@ import 'package:travelgrid/common/constants/flavour_constants.dart';
 import 'package:travelgrid/common/constants/preference_constants.dart';
 import 'package:travelgrid/common/extensions/parse_data_type.dart';
 import 'package:travelgrid/common/utils/image_utility.dart';
+import 'package:travelgrid/presentation/widgets/button.dart';
 import 'package:travelgrid/presentation/widgets/icon.dart';
 import 'package:travelgrid/presentation/widgets/text_view.dart';
 
@@ -103,7 +104,7 @@ class _WalletHomeState extends State<WalletHome> {
 
   Widget getListView(){
     double cardHt=90.h;
-    return GridView.builder(
+    return imageList.isNotEmpty ?GridView.builder(
       padding: EdgeInsets.zero,
       itemCount: imageList.length,
       shrinkWrap: true,
@@ -180,6 +181,16 @@ class _WalletHomeState extends State<WalletHome> {
           ),
         );
       },
+    ):  Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        MetaTextView(mapData: jsonData['listView']['emptyData']['title']),
+        SizedBox(height: 10.h,),
+        MetaButton(mapData: jsonData['listView']['emptyData']['bottomButtonRefresh'],
+            onButtonPressed: (){
+
+            })
+      ],
     );
 
   }

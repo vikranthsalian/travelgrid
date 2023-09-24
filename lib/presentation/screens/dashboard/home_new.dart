@@ -29,10 +29,6 @@ class _HomeNewPageState extends State<HomeNewPage> {
 
   @override
   Widget build(BuildContext context) {
-    //
-    // bloc = Injector.resolve<TravelRequestBloc>();
-    // callBloc();
-    //
 
     return Scaffold(
       key: _scaffoldKey,

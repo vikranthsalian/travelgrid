@@ -4,6 +4,8 @@ class FlavourConstants {
   static  String apiHost =  FlavorConfig.instance.variables["urls"]["prod_url"];
   static  String domain =  FlavorConfig.instance.variables["domain"];
   static  String enterpriseName =  FlavorConfig.instance.variables["enterpriseName"];
+  static  String privacyPolicyUrl =  FlavorConfig.instance.variables["privacy_policy_url"];
+  static  String termsUrl =  FlavorConfig.instance.variables["terms_of_use_url"];
 
   static  String appName =  FlavorConfig.instance.variables["app_title"];
   static  String appAndroidUrl =  FlavorConfig.instance.variables["app_android_url"];

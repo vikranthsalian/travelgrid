@@ -114,8 +114,8 @@ class WidgetDrawerState extends State<WidgetDrawer> {
 
                   Divider(),
                   buildListTile(context,"Policies",Icons.policy,RouteConstants.policyPath),
-                  buildListTile(context,"Privacy Policy",Icons.privacy_tip_outlined,"https://www.narayanahealth.org/privacy-policy",isWeb: true),
-                  buildListTile(context,"Terms and Conditions",Icons.sticky_note_2_sharp,"https://www.narayanahealth.org/terms-of-use",isWeb: true),
+                  buildListTile(context,"Privacy Policy",Icons.privacy_tip_outlined,FlavourConstants.privacyPolicyUrl,isWeb: true),
+                 // buildListTile(context,"Terms and Conditions",Icons.sticky_note_2_sharp,FlavourConstants.termsUrl,isWeb: true),
 
 
                   ListTile(

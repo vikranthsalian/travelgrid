@@ -17,8 +17,8 @@
   "enterpriseName": "NH",
   "asset_path":"assets/apps/nh/",
   "support_email" : "info@travelgrid.com",
-  "privacy_policy_url": "",
-  "terms_of_use_url": "",
+  "privacy_policy_url": "https://sites.google.com/view/travelgrid-nh-2023/home",
+  "terms_of_use_url": "https://sites.google.com/view/travelgrid-nh-2023/home",
   "app_share_msg": "Travelex.To Download visit",
   "app_theme" : {
     "primary_color" : "0xFF2854A1",
@@ -769,8 +769,6 @@
       "family": "regular"
     }
   },
-
-
   "ae_screen_data" : {
     "backgroundColor" : "0xFF2854A1",
     "title":  {
@@ -968,7 +966,6 @@
       "family": "regular"
     }
   },
-
   "tr_create_data": {
     "backgroundColor" : "0xFF2854A1",
     "title":  {
@@ -1500,7 +1497,6 @@
       "family": "regular"
     }
   },
-
   "tr_processed_add_data": {
     "prev": "0",
     "next": "1",
@@ -3606,8 +3602,6 @@
       "family": "regular"
     }
   },
-
-
   "ge_create_data": {
     "backgroundColor" : "0xFF2854A1",
     "title":  {
@@ -5993,8 +5987,6 @@
       "family": "regular"
     }
   },
-
-
   "te_create_data": {
     "backgroundColor" : "0xFF2854A1",
     "title":  {
@@ -8625,8 +8617,6 @@
       "family": "regular"
     }
   },
-
-
   "policy_screen_data" : {
     "backgroundColor" : "0xFF2854A1",
     "title":  {
@@ -8786,6 +8776,28 @@
         "size": "12",
         "family": "regular",
         "align": "center-right"
+      }
+    },
+    "emptyData": {
+      "image_view":   {
+        "image" : "logo_banner.png",
+        "align": "center",
+        "wd": 250.0
+      },
+      "title":  {
+        "text" : "No data found!",
+        "color" : "0XFF3D3D3D",
+        "size": "16",
+        "family": "regular"
+      },
+      "bottomButtonRefresh": {
+        "text" : "Refresh",
+        "height": 35.0,
+        "color" : "0xFFFFFFFF",
+        "borderRadius": 30.0,
+        "backgroundColor" : "0xFF2854A1",
+        "size": "15",
+        "family": "regular"
       }
     },
     "bottomButtonFab": {
