@@ -188,7 +188,7 @@ class _WalletHomeState extends State<WalletHome> {
         SizedBox(height: 10.h,),
         MetaButton(mapData: jsonData['listView']['emptyData']['bottomButtonRefresh'],
             onButtonPressed: (){
-
+              loadImageFromPreferences();
             })
       ],
     );
@@ -206,9 +206,10 @@ class _WalletHomeState extends State<WalletHome> {
 
               if(jsonData['bottomButtonFab']['onSave'].isNotEmpty && pickedFile!=null){
 
-                Navigator.of(appNavigatorKey.currentState!.context).pushNamed(jsonData['bottomButtonFab']["onSave"],arguments: {
+              await  Navigator.of(appNavigatorKey.currentState!.context).pushNamed(jsonData['bottomButtonFab']["onSave"],arguments: {
                   "file":pickedFile
                 });
+              loadImageFromPreferences();
               }
 
   }
