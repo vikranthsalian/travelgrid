@@ -1,7 +1,7 @@
-
 import 'package:flutter_flavor/flutter_flavor.dart';
+
 class FlavourConstants {
-  static  String apiHost =  FlavorConfig.instance.variables["base_url"] ;
+  static  String apiHost =  FlavorConfig.instance.variables["prod_url"] ;
 
   static  String appName =  FlavorConfig.instance.variables["app_title"];
   static  String appAndroidUrl =  FlavorConfig.instance.variables["app_android_url"];
