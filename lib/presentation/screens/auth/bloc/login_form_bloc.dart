@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
+import 'package:travelgrid/common/constants/flavour_constants.dart';
 import 'package:travelgrid/common/injector/injector.dart';
 import 'package:travelgrid/common/utils/validators.dart';
 import 'package:travelgrid/data/datasources/login_response.dart';
@@ -34,9 +35,8 @@ class LoginFormBloc extends FormBloc<String, String> {
             {
               "loginId" :tfUsername.value,
               "password" :tfPassword.value,
-              "domain" :'travelexuat.narayanahealth.org',
-             // "domain" :'172.104.189.54',
-              "enterpriseName" :'Travelex',
+              "domain" :FlavourConstants.domain,
+              "enterpriseName" :FlavourConstants.enterpriseName,
             }
         );
    if(response!=null && response.status==true){

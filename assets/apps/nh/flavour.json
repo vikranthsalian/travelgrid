@@ -13,6 +13,8 @@
     "uat_url" : "https://travelexuat.narayanahealth.org:443/tems/rest/ma/",
     "dev_url" : "http://172.104.189.54:8080/tems/rest/ma/"
   },
+  "domain": "travelex.narayanahealth.org",
+  "enterpriseName": "NH",
   "asset_path":"assets/apps/nh/",
   "support_email" : "info@travelgrid.com",
   "privacy_policy_url": "",

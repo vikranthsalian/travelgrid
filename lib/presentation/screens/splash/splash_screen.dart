@@ -83,10 +83,10 @@ class SplashScreenState extends State<SplashScreen> {
                    MetaLoginResponse? response = await Injector.resolve<LoginUseCase>()
                        .callApi(
                        {
-                         "loginId" :"900898",
+                         "loginId" :azureResponse.userPrincipalName,
                          "password" : 'Pass@123',
-                         "domain" :'travelexuat.narayanahealth.org',
-                         "enterpriseName" :'Travelex',
+                         "domain" :FlavourConstants.domain,
+                         "enterpriseName" :FlavourConstants.enterpriseName,
                        });
                    print(response);
                         if(response.toString().isEmpty){
