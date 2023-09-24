@@ -97,21 +97,21 @@ class SplashScreenState extends State<SplashScreen> {
 
                  }
              ),
-                 SizedBox(height:20.h,),
-                 MetaButton(
-                   width: 300,
-                     mapData: {
-                   "text" : "Continue with Travelex Login",
-                   "color" : "0xFFFFFFFF",
-                   "backgroundColor" : "0xFF2854A1",
-                   "size": "18",
-                   "family": "regular",
-                   "borderRadius": 25.0
-                 },
-                 onButtonPressed: (){
-                   Navigator.of(context).pushNamed(RouteConstants.loginPath);
-                 }
-             ),
+             //     SizedBox(height:20.h,),
+             //     MetaButton(
+             //       width: 300,
+             //         mapData: {
+             //       "text" : "Continue with Travelex Login",
+             //       "color" : "0xFFFFFFFF",
+             //       "backgroundColor" : "0xFF2854A1",
+             //       "size": "18",
+             //       "family": "regular",
+             //       "borderRadius": 25.0
+             //     },
+             //     onButtonPressed: (){
+             //       Navigator.of(context).pushNamed(RouteConstants.loginPath);
+             //     }
+             // ),
              SizedBox(height:20.h,),
           Container(
               alignment: Alignment.bottomCenter,
