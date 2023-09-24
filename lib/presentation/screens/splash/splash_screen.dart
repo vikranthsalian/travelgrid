@@ -86,7 +86,7 @@ class SplashScreenState extends State<SplashScreen> {
                          "loginId" :"900898",
                          "password" : 'Pass@123',
                          "domain" :'travelexuat.narayanahealth.org',
-                         "enterpriseName" :'NH',
+                         "enterpriseName" :'Travelex',
                        });
                    print(response);
                         if(response.toString().isEmpty){
@@ -101,7 +101,7 @@ class SplashScreenState extends State<SplashScreen> {
                  MetaButton(
                    width: 300,
                      mapData: {
-                   "text" : "Continue with NH Login",
+                   "text" : "Continue with Travelex Login",
                    "color" : "0xFFFFFFFF",
                    "backgroundColor" : "0xFF2854A1",
                    "size": "18",

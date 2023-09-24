@@ -68,7 +68,7 @@ class _HomeNewPageState extends State<HomeNewPage> {
                   Container(width: 150.w,
                     height: 35.h,
                     child: MetaButton(mapData:{
-                      "text" : "NH Travelgrid",
+                      "text" : "Travelex",
                       "color" : "0xFFFFFFFF",
                       "backgroundColor" : "0xFF2854A1",
                       "size": "18",

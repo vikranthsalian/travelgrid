@@ -1,10 +1,10 @@
 {
-  "app_title": "NH",
-  "sub_title": "NH",
-  "app_short_title": "NH",
+  "app_title": "Travelex",
+  "sub_title": "Travelex",
+  "app_short_title": "Travelex",
   "app_logo": "nh/images/app-logo.png",
-  "android_app_id": "cm.travelgrid.nh",
-  "ios_app_id": "cm.travelgrid.nh",
+  "android_app_id": "com.travelgrid.nh",
+  "ios_app_id": "com.travelgrid.nh",
   "base_url": "",
   "urls": {
     "prod_url" : "",

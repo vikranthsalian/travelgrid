@@ -1,12 +1,12 @@
 {
-  "app_title": "NH",
-  "sub_title": "NH",
-  "app_short_title": "NH",
+  "app_title": "Travelex",
+  "sub_title": "Travelex",
+  "app_short_title": "Travelex",
   "app_android_url": "https://play.google.com/",
   "app_ios_url": "https://www.apple.com/app-store/",
   "app_logo": "assets/apps/nh/images/app-logo.png",
-  "android_app_id": "cm.travelgrid.nh",
-  "ios_app_id": "cm.travelgrid.nh",
+  "android_app_id": "com.travelgrid.nh",
+  "ios_app_id": "com.travelgrid.nh",
   "base_url": "https://travelexuat.narayanahealth.org:443/tems/rest/ma/",
   "showNetworkLogs": true,
   "urls": {
@@ -18,7 +18,7 @@
   "support_email" : "info@travelgrid.com",
   "privacy_policy_url": "",
   "terms_of_use_url": "",
-  "app_share_msg": "NH Travelgrid.To Download visit",
+  "app_share_msg": "Travelex.To Download visit",
   "app_theme" : {
     "primary_color" : "0xFF2854A1",
     "secondary_color" : "0XFFFFFFFF",
@@ -8648,7 +8648,7 @@
       "data": [
         {
           "title": {
-            "text" : "NH - Travel Policies",
+            "text" : "Travelex - Travel Policies",
             "color" : "0xFF2854A1",
             "size": "12",
             "family": "regular",

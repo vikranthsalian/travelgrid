@@ -36,7 +36,7 @@ class LoginFormBloc extends FormBloc<String, String> {
               "password" :tfPassword.value,
               "domain" :'travelexuat.narayanahealth.org',
              // "domain" :'172.104.189.54',
-              "enterpriseName" :'NH',
+              "enterpriseName" :'Travelex',
             }
         );
    if(response!=null && response.status==true){

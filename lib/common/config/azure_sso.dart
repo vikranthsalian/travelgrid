@@ -12,7 +12,7 @@ class AzureSSO{
     // redirectUri is Optional as a default is calculated based on app type/web location
    // redirectUri: "https://login.live.com/oauth20_desktop.srf",
     scope: "openid profile offline_access User.read",
-    redirectUri: "msauth.cm.travelgrid.nh://auth",
+    redirectUri: "msauth.com.travelgrid.nh://auth",
    // https://travelgrid.channelmentor.org:8090/login
     navigatorKey: appNavigatorKey,
     webUseRedirect: false, // default is false - on web only, forces a redirect flow instead of popup auth
