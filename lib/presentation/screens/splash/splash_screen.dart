@@ -80,11 +80,14 @@ class SplashScreenState extends State<SplashScreen> {
                    print("azureResponse");
                    print(jsonEncode(azureResponse));
 
+
+                   var arry = azureResponse.userPrincipalName!.split("@narayanahealth.org");
+
                    MetaLoginResponse? response = await Injector.resolve<LoginUseCase>()
                        .callApi(
                        {
-                         "loginId" :azureResponse.userPrincipalName,
-                         "password" : 'Pass@123',
+                         "loginId" :arry[0],
+                         "password" :'Pass@123',
                          "domain" :FlavourConstants.domain,
                          "enterpriseName" :FlavourConstants.enterpriseName,
                        });
@@ -112,8 +115,8 @@ class SplashScreenState extends State<SplashScreen> {
              //       Navigator.of(context).pushNamed(RouteConstants.loginPath);
              //     }
              // ),
-             SizedBox(height:20.h,),
-          Container(
+             SizedBox(height:20.h),
+             Container(
               alignment: Alignment.bottomCenter,
               margin: EdgeInsets.symmetric(vertical: 10.h),
               child: Text(
@@ -125,7 +128,7 @@ class SplashScreenState extends State<SplashScreen> {
                       fontFamily: splashBottomText['family'])
               )
           ),
-             SizedBox(height:20.h,),
+             SizedBox(height:20.h),
         ],
       )),
     );
