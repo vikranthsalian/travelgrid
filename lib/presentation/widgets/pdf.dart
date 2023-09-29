@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
-import 'package:travelgrid/common/constants/flavour_constants.dart';
+import 'package:travelex/common/constants/flavour_constants.dart';
 
 class MetaPDFView extends StatelessWidget {
   MetaPDFView({super.key,required this.path});

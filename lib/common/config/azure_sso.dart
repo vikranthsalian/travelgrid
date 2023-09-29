@@ -1,7 +1,7 @@
 import 'package:aad_oauth/aad_oauth.dart';
 import 'package:aad_oauth/model/config.dart';
 import 'package:flutter/material.dart';
-import 'package:travelgrid/common/config/navigator_key.dart';
+import 'package:travelex/common/config/navigator_key.dart';
 
 class AzureSSO{
   static final Config config = new Config(

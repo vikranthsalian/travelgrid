@@ -1,8 +1,8 @@
-import 'package:travelgrid/data/datasources/list/tr_list_response.dart';
-import 'package:travelgrid/data/datasources/list/tr_upcoming_response.dart';
-import 'package:travelgrid/data/datasources/summary/tr_summary_response.dart';
-import 'package:travelgrid/data/models/success_model.dart';
-import 'package:travelgrid/domain/repo_abstract/api_abstract.dart';
+import 'package:travelex/data/datasources/list/tr_list_response.dart';
+import 'package:travelex/data/datasources/list/tr_upcoming_response.dart';
+import 'package:travelex/data/datasources/summary/tr_summary_response.dart';
+import 'package:travelex/data/models/success_model.dart';
+import 'package:travelex/domain/repo_abstract/api_abstract.dart';
 
 class TrUseCase {
   final TrAPIAbstract apiAbstract;

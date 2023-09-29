@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:travelgrid/common/constants/flavour_constants.dart';
-import 'package:travelgrid/common/extensions/parse_data_type.dart';
-import 'package:travelgrid/presentation/widgets/button.dart';
-import 'package:travelgrid/presentation/widgets/svg_view.dart';
-import 'package:travelgrid/presentation/widgets/text_view.dart';
+import 'package:travelex/common/constants/flavour_constants.dart';
+import 'package:travelex/common/extensions/parse_data_type.dart';
+import 'package:travelex/presentation/widgets/button.dart';
+import 'package:travelex/presentation/widgets/svg_view.dart';
+import 'package:travelex/presentation/widgets/text_view.dart';
 
 class DialogExpensePicker extends StatelessWidget{
   List mapData;

@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
-import 'package:travelgrid/common/constants/string_constants.dart';
-import 'package:travelgrid/common/utils/loader_hud.dart';
-import 'package:travelgrid/common/utils/show_alert.dart';
+import 'package:travelex/common/constants/string_constants.dart';
+import 'package:travelex/common/utils/loader_hud.dart';
+import 'package:travelex/common/utils/show_alert.dart';
 
 abstract class BaseDioWrapper {
   Future<Response<T>> get<T>(

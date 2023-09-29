@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:travelgrid/common/config/navigator_key.dart';
-import 'package:travelgrid/common/constants/flavour_constants.dart';
-import 'package:travelgrid/common/extensions/parse_data_type.dart';
-import 'package:travelgrid/common/utils/date_time_util.dart';
-import 'package:travelgrid/presentation/widgets/text_view.dart';
+import 'package:travelex/common/config/navigator_key.dart';
+import 'package:travelex/common/constants/flavour_constants.dart';
+import 'package:travelex/common/extensions/parse_data_type.dart';
+import 'package:travelex/common/utils/date_time_util.dart';
+import 'package:travelex/presentation/widgets/text_view.dart';
 
 class MetaDateTimeView extends StatefulWidget {
 

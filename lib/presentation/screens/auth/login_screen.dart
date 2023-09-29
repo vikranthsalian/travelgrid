@@ -5,18 +5,18 @@ import 'package:aad_oauth/model/config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:travelgrid/common/config/azure_sso.dart';
-import 'package:travelgrid/common/constants/flavour_constants.dart';
-import 'package:travelgrid/common/constants/route_constants.dart';
-import 'package:travelgrid/common/extensions/parse_data_type.dart';
-import 'package:travelgrid/common/utils/login_util.dart';
-import 'package:travelgrid/data/datasources/login_response.dart';
+import 'package:travelex/common/config/azure_sso.dart';
+import 'package:travelex/common/constants/flavour_constants.dart';
+import 'package:travelex/common/constants/route_constants.dart';
+import 'package:travelex/common/extensions/parse_data_type.dart';
+import 'package:travelex/common/utils/login_util.dart';
+import 'package:travelex/data/datasources/login_response.dart';
 
-import 'package:travelgrid/presentation/screens/auth/bloc/login_form_bloc.dart';
-import 'package:travelgrid/presentation/widgets/button.dart';
-import 'package:travelgrid/presentation/widgets/image_view.dart';
-import 'package:travelgrid/presentation/widgets/text_field.dart';
-import 'package:travelgrid/presentation/widgets/text_view.dart';
+import 'package:travelex/presentation/screens/auth/bloc/login_form_bloc.dart';
+import 'package:travelex/presentation/widgets/button.dart';
+import 'package:travelex/presentation/widgets/image_view.dart';
+import 'package:travelex/presentation/widgets/text_field.dart';
+import 'package:travelex/presentation/widgets/text_view.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class LoginScreen extends StatelessWidget {

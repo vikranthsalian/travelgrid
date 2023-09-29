@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:travelgrid/common/extensions/parse_data_type.dart';
+import 'package:travelex/common/extensions/parse_data_type.dart';
 
 
 class MetaIcon extends StatelessWidget {

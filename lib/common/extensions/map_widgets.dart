@@ -1,9 +1,9 @@
 //
 // import 'package:flutter/material.dart';
-// import 'package:travelgrid/presentation/widgets/button.dart';
-// import 'package:travelgrid/presentation/widgets/image_view.dart';
-// import 'package:travelgrid/presentation/widgets/text_field.dart';
-// import 'package:travelgrid/presentation/widgets/text_view.dart';
+// import 'package:travelex/presentation/widgets/button.dart';
+// import 'package:travelex/presentation/widgets/image_view.dart';
+// import 'package:travelex/presentation/widgets/text_field.dart';
+// import 'package:travelex/presentation/widgets/text_view.dart';
 //
 // class MapWidget{
 //

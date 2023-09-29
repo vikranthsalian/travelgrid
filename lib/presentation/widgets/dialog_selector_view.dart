@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:travelgrid/common/config/navigator_key.dart';
-import 'package:travelgrid/presentation/components/dialog_group.dart';
-import 'package:travelgrid/presentation/components/dialog_type.dart';
-import 'package:travelgrid/presentation/screens/common/accom_type_screen.dart';
-import 'package:travelgrid/presentation/screens/common/common_type_screen.dart';
-import 'package:travelgrid/presentation/screens/common/currency_screen.dart';
-import 'package:travelgrid/presentation/screens/common/fare_class_screen.dart';
-import 'package:travelgrid/presentation/screens/common/misc_type_screen.dart';
-import 'package:travelgrid/presentation/screens/common/travel_mode_screen.dart';
-import 'package:travelgrid/presentation/screens/common/travel_purpose_screen.dart';
-import 'package:travelgrid/presentation/widgets/text_view.dart';
+import 'package:travelex/common/config/navigator_key.dart';
+import 'package:travelex/presentation/components/dialog_group.dart';
+import 'package:travelex/presentation/components/dialog_type.dart';
+import 'package:travelex/presentation/screens/common/accom_type_screen.dart';
+import 'package:travelex/presentation/screens/common/common_type_screen.dart';
+import 'package:travelex/presentation/screens/common/currency_screen.dart';
+import 'package:travelex/presentation/screens/common/fare_class_screen.dart';
+import 'package:travelex/presentation/screens/common/misc_type_screen.dart';
+import 'package:travelex/presentation/screens/common/travel_mode_screen.dart';
+import 'package:travelex/presentation/screens/common/travel_purpose_screen.dart';
+import 'package:travelex/presentation/widgets/text_view.dart';
 
 class MetaDialogSelectorView extends StatefulWidget {
   Map mapData;

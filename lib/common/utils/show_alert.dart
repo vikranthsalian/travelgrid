@@ -1,5 +1,5 @@
-import 'package:travelgrid/common/constants/string_constants.dart';
-import 'package:travelgrid/common/utils/loader_hud.dart';
+import 'package:travelex/common/constants/string_constants.dart';
+import 'package:travelex/common/utils/loader_hud.dart';
 
 class MetaAlert{
 

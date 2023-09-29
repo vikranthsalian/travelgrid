@@ -1,5 +1,5 @@
 
-import 'package:travelgrid/common/utils/date_time_util.dart';
+import 'package:travelex/common/utils/date_time_util.dart';
 
 class SortUtil{
 

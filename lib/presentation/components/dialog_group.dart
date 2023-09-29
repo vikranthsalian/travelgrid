@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:travelgrid/common/constants/flavour_constants.dart';
-import 'package:travelgrid/common/injector/injector.dart';
-import 'package:travelgrid/data/models/success_model.dart';
-import 'package:travelgrid/domain/usecases/ge_usecase.dart';
-import 'package:travelgrid/presentation/widgets/button.dart';
-import 'package:travelgrid/presentation/widgets/text_field.dart';
-import 'package:travelgrid/presentation/widgets/text_view.dart';
+import 'package:travelex/common/constants/flavour_constants.dart';
+import 'package:travelex/common/injector/injector.dart';
+import 'package:travelex/data/models/success_model.dart';
+import 'package:travelex/domain/usecases/ge_usecase.dart';
+import 'package:travelex/presentation/widgets/button.dart';
+import 'package:travelex/presentation/widgets/text_field.dart';
+import 'package:travelex/presentation/widgets/text_view.dart';
 
 
 class DialogGrooup extends StatelessWidget{

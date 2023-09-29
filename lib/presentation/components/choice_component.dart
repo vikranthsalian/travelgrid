@@ -1,6 +1,6 @@
 import 'package:chips_choice/chips_choice.dart';
 import 'package:flutter/material.dart';
-import 'package:travelgrid/common/constants/color_constants.dart';
+import 'package:travelex/common/constants/color_constants.dart';
 
 class ChoiceComponent extends StatefulWidget {
   List<String> tags;

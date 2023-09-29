@@ -6,13 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:travelgrid/common/constants/flavour_constants.dart';
-import 'package:travelgrid/common/extensions/parse_data_type.dart';
-import 'package:travelgrid/presentation/components/dialog_upload_type.dart';
-import 'package:travelgrid/presentation/components/dialog_yes_no.dart';
-import 'package:travelgrid/presentation/screens/wallet/wallet_screen.dart';
-import 'package:travelgrid/presentation/widgets/svg_view.dart';
-import 'package:travelgrid/presentation/widgets/text_view.dart';
+import 'package:travelex/common/constants/flavour_constants.dart';
+import 'package:travelex/common/extensions/parse_data_type.dart';
+import 'package:travelex/presentation/components/dialog_upload_type.dart';
+import 'package:travelex/presentation/components/dialog_yes_no.dart';
+import 'package:travelex/presentation/screens/wallet/wallet_screen.dart';
+import 'package:travelex/presentation/widgets/svg_view.dart';
+import 'package:travelex/presentation/widgets/text_view.dart';
 
 import 'package:dotted_border/dotted_border.dart';
 

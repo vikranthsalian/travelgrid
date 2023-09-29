@@ -3,16 +3,16 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:travelgrid/common/extensions/parse_data_type.dart';
-import 'package:travelgrid/common/utils/city_util.dart';
-import 'package:travelgrid/data/models/tr/tr_visa_model.dart';
-import 'package:travelgrid/presentation/screens/dashboard/tr/bloc/tr_visa%20_form_bloc.dart';
-import 'package:travelgrid/presentation/widgets/button.dart';
-import 'package:travelgrid/presentation/widgets/dialog_selector_view.dart';
-import 'package:travelgrid/presentation/widgets/icon.dart';
-import 'package:travelgrid/presentation/widgets/search_selector_view.dart';
-import 'package:travelgrid/presentation/widgets/text_field.dart';
-import 'package:travelgrid/presentation/widgets/text_view.dart';
+import 'package:travelex/common/extensions/parse_data_type.dart';
+import 'package:travelex/common/utils/city_util.dart';
+import 'package:travelex/data/models/tr/tr_visa_model.dart';
+import 'package:travelex/presentation/screens/dashboard/tr/bloc/tr_visa%20_form_bloc.dart';
+import 'package:travelex/presentation/widgets/button.dart';
+import 'package:travelex/presentation/widgets/dialog_selector_view.dart';
+import 'package:travelex/presentation/widgets/icon.dart';
+import 'package:travelex/presentation/widgets/search_selector_view.dart';
+import 'package:travelex/presentation/widgets/text_field.dart';
+import 'package:travelex/presentation/widgets/text_view.dart';
 
 class AddVisa  extends StatelessWidget {
 

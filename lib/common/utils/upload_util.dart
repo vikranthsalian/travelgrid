@@ -3,9 +3,9 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
-import 'package:travelgrid/common/injector/injector.dart';
-import 'package:travelgrid/data/models/success_model.dart';
-import 'package:travelgrid/domain/usecases/common_usecase.dart';
+import 'package:travelex/common/injector/injector.dart';
+import 'package:travelex/data/models/success_model.dart';
+import 'package:travelex/domain/usecases/common_usecase.dart';
 
 class MetaUpload{
 

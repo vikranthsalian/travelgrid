@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:travelgrid/data/datasources/others/currency_list.dart';
+import 'package:travelex/data/datasources/others/currency_list.dart';
 
 part 'currency_state.dart';
 

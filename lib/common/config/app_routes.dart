@@ -1,25 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:travelgrid/common/constants/route_constants.dart';
-import 'package:travelgrid/presentation/components/pdf_component.dart';
-import 'package:travelgrid/presentation/screens/auth/login_screen.dart';
-import 'package:travelgrid/presentation/screens/common/image_screen.dart';
-import 'package:travelgrid/presentation/screens/dashboard/approvals/approval_expense.dart';
-import 'package:travelgrid/presentation/screens/dashboard/home.dart';
-import 'package:travelgrid/presentation/screens/dashboard/ge/add/add_travel.dart';
-import 'package:travelgrid/presentation/screens/dashboard/ge/create_ge.dart';
-import 'package:travelgrid/presentation/screens/dashboard/home_new.dart';
-import 'package:travelgrid/presentation/screens/dashboard/profile/profile_screen.dart';
-import 'package:travelgrid/presentation/screens/dashboard/te/create_te.dart';
-import 'package:travelgrid/presentation/screens/dashboard/tr/create_tr.dart';
-import 'package:travelgrid/presentation/screens/dashboard/tr/summary_tr.dart';
-import 'package:travelgrid/presentation/screens/dashboard/tr/travel_request.dart';
-import 'package:travelgrid/presentation/screens/dashboard/tr/upcoming_tr.dart';
-import 'package:travelgrid/presentation/screens/flight/flight_list.dart';
-import 'package:travelgrid/presentation/screens/policy/policy_screen.dart';
-import 'package:travelgrid/presentation/screens/splash/splash_screen.dart';
-import 'package:travelgrid/presentation/screens/dashboard/ge/general_expense.dart';
-import 'package:travelgrid/presentation/screens/dashboard/te/travel_expense.dart';
-import 'package:travelgrid/presentation/screens/wallet/wallet_screen.dart';
+import 'package:travelex/common/constants/route_constants.dart';
+import 'package:travelex/presentation/components/pdf_component.dart';
+import 'package:travelex/presentation/screens/auth/login_screen.dart';
+import 'package:travelex/presentation/screens/common/image_screen.dart';
+import 'package:travelex/presentation/screens/dashboard/approvals/approval_expense.dart';
+import 'package:travelex/presentation/screens/dashboard/home.dart';
+import 'package:travelex/presentation/screens/dashboard/ge/add/add_travel.dart';
+import 'package:travelex/presentation/screens/dashboard/ge/create_ge.dart';
+import 'package:travelex/presentation/screens/dashboard/home_new.dart';
+import 'package:travelex/presentation/screens/dashboard/profile/profile_screen.dart';
+import 'package:travelex/presentation/screens/dashboard/te/create_te.dart';
+import 'package:travelex/presentation/screens/dashboard/tr/create_tr.dart';
+import 'package:travelex/presentation/screens/dashboard/tr/summary_tr.dart';
+import 'package:travelex/presentation/screens/dashboard/tr/travel_request.dart';
+import 'package:travelex/presentation/screens/dashboard/tr/upcoming_tr.dart';
+import 'package:travelex/presentation/screens/flight/flight_list.dart';
+import 'package:travelex/presentation/screens/policy/policy_screen.dart';
+import 'package:travelex/presentation/screens/splash/splash_screen.dart';
+import 'package:travelex/presentation/screens/dashboard/ge/general_expense.dart';
+import 'package:travelex/presentation/screens/dashboard/te/travel_expense.dart';
+import 'package:travelex/presentation/screens/wallet/wallet_screen.dart';
 class AppRoutes {
 
   Route generateRoute(RouteSettings routeSettings) {

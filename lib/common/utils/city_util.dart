@@ -1,19 +1,19 @@
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
-import 'package:travelgrid/data/cubits/accom_type_cubit/accom_type_cubit.dart';
-import 'package:travelgrid/data/cubits/common/city_cubit/city_cubit.dart';
-import 'package:travelgrid/data/cubits/curreny_cubit/currency_cubit.dart';
-import 'package:travelgrid/data/cubits/fare_class_cubit/fare_class_cubit.dart';
-import 'package:travelgrid/data/cubits/misc_type_cubit/misc_type_cubit.dart';
-import 'package:travelgrid/data/cubits/travel_mode_cubit/travel_mode_cubit.dart';
-import 'package:travelgrid/data/cubits/travel_purpose_cubit/travel_purpose_cubit.dart';
-import 'package:travelgrid/data/datasources/others/cities_list.dart' as city;
-import 'package:travelgrid/data/datasources/others/currency_list.dart' as currency;
-import 'package:travelgrid/data/datasources/others/fare_class_list.dart' as fare;
-import 'package:travelgrid/data/datasources/others/misc_type_list.dart' as misc;
-import 'package:travelgrid/data/datasources/others/accom_type_list.dart' as accom;
-import 'package:travelgrid/data/datasources/others/travel_mode_list.dart' as mode;
-import 'package:travelgrid/data/datasources/others/currency_list.dart' as curr;
-import 'package:travelgrid/data/datasources/others/travel_purpose_list.dart' as tp;
+import 'package:travelex/data/cubits/accom_type_cubit/accom_type_cubit.dart';
+import 'package:travelex/data/cubits/common/city_cubit/city_cubit.dart';
+import 'package:travelex/data/cubits/curreny_cubit/currency_cubit.dart';
+import 'package:travelex/data/cubits/fare_class_cubit/fare_class_cubit.dart';
+import 'package:travelex/data/cubits/misc_type_cubit/misc_type_cubit.dart';
+import 'package:travelex/data/cubits/travel_mode_cubit/travel_mode_cubit.dart';
+import 'package:travelex/data/cubits/travel_purpose_cubit/travel_purpose_cubit.dart';
+import 'package:travelex/data/datasources/others/cities_list.dart' as city;
+import 'package:travelex/data/datasources/others/currency_list.dart' as currency;
+import 'package:travelex/data/datasources/others/fare_class_list.dart' as fare;
+import 'package:travelex/data/datasources/others/misc_type_list.dart' as misc;
+import 'package:travelex/data/datasources/others/accom_type_list.dart' as accom;
+import 'package:travelex/data/datasources/others/travel_mode_list.dart' as mode;
+import 'package:travelex/data/datasources/others/currency_list.dart' as curr;
+import 'package:travelex/data/datasources/others/travel_purpose_list.dart' as tp;
 
 import '../config/navigator_key.dart';
 

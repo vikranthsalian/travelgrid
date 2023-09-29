@@ -3,13 +3,13 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:travelgrid/common/config/preferences_config.dart';
-import 'package:travelgrid/common/constants/flavour_constants.dart';
-import 'package:travelgrid/common/constants/preference_constants.dart';
-import 'package:travelgrid/common/extensions/parse_data_type.dart';
-import 'package:travelgrid/common/utils/image_utility.dart';
-import 'package:travelgrid/common/utils/show_alert.dart';
-import 'package:travelgrid/presentation/widgets/button.dart';
+import 'package:travelex/common/config/preferences_config.dart';
+import 'package:travelex/common/constants/flavour_constants.dart';
+import 'package:travelex/common/constants/preference_constants.dart';
+import 'package:travelex/common/extensions/parse_data_type.dart';
+import 'package:travelex/common/utils/image_utility.dart';
+import 'package:travelex/common/utils/show_alert.dart';
+import 'package:travelex/presentation/widgets/button.dart';
 
 
 class ImageScreen extends StatelessWidget {

@@ -1,11 +1,11 @@
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:travelgrid/common/config/navigator_key.dart';
-import 'package:travelgrid/common/constants/event_types.dart';
-import 'package:travelgrid/common/injector/injector.dart';
-import 'package:travelgrid/data/cubits/fare_class_cubit/fare_class_cubit.dart';
-import 'package:travelgrid/data/datasources/others/fare_class_list.dart';
-import 'package:travelgrid/domain/usecases/common_usecase.dart';
+import 'package:travelex/common/config/navigator_key.dart';
+import 'package:travelex/common/constants/event_types.dart';
+import 'package:travelex/common/injector/injector.dart';
+import 'package:travelex/data/cubits/fare_class_cubit/fare_class_cubit.dart';
+import 'package:travelex/data/datasources/others/fare_class_list.dart';
+import 'package:travelex/domain/usecases/common_usecase.dart';
 
 part 'fare_class_event.dart';
 part 'fare_class_state.dart';

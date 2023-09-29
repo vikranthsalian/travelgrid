@@ -1,8 +1,8 @@
-import 'package:travelgrid/data/datasources/summary/te_summary_response.dart';
-import 'package:travelgrid/data/datasources/list/te_list_response.dart';
-import 'package:travelgrid/data/models/success_model.dart';
-import 'package:travelgrid/data/remote/remote_datasource.dart';
-import 'package:travelgrid/domain/repo_abstract/api_abstract.dart';
+import 'package:travelex/data/datasources/summary/te_summary_response.dart';
+import 'package:travelex/data/datasources/list/te_list_response.dart';
+import 'package:travelex/data/models/success_model.dart';
+import 'package:travelex/data/remote/remote_datasource.dart';
+import 'package:travelex/domain/repo_abstract/api_abstract.dart';
 
 class TeRepository extends TeAPIAbstract {
   final APIRemoteDatasource apiRemoteDatasource;

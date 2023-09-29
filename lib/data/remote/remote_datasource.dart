@@ -2,17 +2,17 @@ import 'package:aad_oauth/aad_oauth.dart';
 import 'package:aad_oauth/model/config.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
-import 'package:travelgrid/common/config/azure_sso.dart';
-import 'package:travelgrid/common/config/navigator_key.dart';
-import 'package:travelgrid/common/config/preferences_config.dart';
-import 'package:travelgrid/common/constants/preference_constants.dart';
-import 'package:travelgrid/common/dio/dio_client.dart';
-import 'package:travelgrid/common/utils/loader_hud.dart';
-import 'package:travelgrid/data/cubits/login_cubit/login_cubit.dart';
-import 'package:travelgrid/data/datasources/azure_reponse.dart';
-import 'package:travelgrid/data/datasources/others/accom_type_list.dart';
-import 'package:travelgrid/data/datasources/others/cities_list.dart';
-import 'package:travelgrid/data/datasources/login_response.dart';
+import 'package:travelex/common/config/azure_sso.dart';
+import 'package:travelex/common/config/navigator_key.dart';
+import 'package:travelex/common/config/preferences_config.dart';
+import 'package:travelex/common/constants/preference_constants.dart';
+import 'package:travelex/common/dio/dio_client.dart';
+import 'package:travelex/common/utils/loader_hud.dart';
+import 'package:travelex/data/cubits/login_cubit/login_cubit.dart';
+import 'package:travelex/data/datasources/azure_reponse.dart';
+import 'package:travelex/data/datasources/others/accom_type_list.dart';
+import 'package:travelex/data/datasources/others/cities_list.dart';
+import 'package:travelex/data/datasources/login_response.dart';
 
 class APIRemoteDatasource{
 

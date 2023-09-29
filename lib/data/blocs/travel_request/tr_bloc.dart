@@ -1,15 +1,15 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:travelgrid/common/constants/event_types.dart';
-import 'package:travelgrid/common/extensions/capitalize.dart';
-import 'package:travelgrid/common/injector/injector.dart';
-import 'package:travelgrid/common/utils/sort_util.dart';
-import 'package:travelgrid/data/datasources/summary/ge_summary_response.dart';
-import 'package:travelgrid/data/datasources/list/tr_list_response.dart' as trlist;
-import 'package:travelgrid/data/datasources/list/tr_upcoming_response.dart' as uplist;
-import 'package:travelgrid/data/datasources/summary/tr_summary_response.dart';
-import 'package:travelgrid/data/models/success_model.dart';
-import 'package:travelgrid/domain/usecases/tr_usecase.dart';
+import 'package:travelex/common/constants/event_types.dart';
+import 'package:travelex/common/extensions/capitalize.dart';
+import 'package:travelex/common/injector/injector.dart';
+import 'package:travelex/common/utils/sort_util.dart';
+import 'package:travelex/data/datasources/summary/ge_summary_response.dart';
+import 'package:travelex/data/datasources/list/tr_list_response.dart' as trlist;
+import 'package:travelex/data/datasources/list/tr_upcoming_response.dart' as uplist;
+import 'package:travelex/data/datasources/summary/tr_summary_response.dart';
+import 'package:travelex/data/models/success_model.dart';
+import 'package:travelex/domain/usecases/tr_usecase.dart';
 
 part 'tr_event.dart';
 part 'tr_state.dart';

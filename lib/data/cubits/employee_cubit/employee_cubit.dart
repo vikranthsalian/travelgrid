@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:travelgrid/data/datasources/others/employee_list.dart' as emp;
-import 'package:travelgrid/data/datasources/others/non_employee_list.dart';
+import 'package:travelex/data/datasources/others/employee_list.dart' as emp;
+import 'package:travelex/data/datasources/others/non_employee_list.dart';
 
 part 'employee_state.dart';
 

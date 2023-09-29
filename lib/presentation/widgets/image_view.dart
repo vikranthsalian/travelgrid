@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:travelgrid/common/constants/flavour_constants.dart';
-import 'package:travelgrid/common/extensions/parse_data_type.dart';
+import 'package:travelex/common/constants/flavour_constants.dart';
+import 'package:travelex/common/extensions/parse_data_type.dart';
 
 class MetaImageView extends StatelessWidget {
   Map mapData;

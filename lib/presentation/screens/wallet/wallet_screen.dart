@@ -3,15 +3,15 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:travelgrid/common/config/navigator_key.dart';
-import 'package:travelgrid/common/config/preferences_config.dart';
-import 'package:travelgrid/common/constants/flavour_constants.dart';
-import 'package:travelgrid/common/constants/preference_constants.dart';
-import 'package:travelgrid/common/extensions/parse_data_type.dart';
-import 'package:travelgrid/common/utils/image_utility.dart';
-import 'package:travelgrid/presentation/widgets/button.dart';
-import 'package:travelgrid/presentation/widgets/icon.dart';
-import 'package:travelgrid/presentation/widgets/text_view.dart';
+import 'package:travelex/common/config/navigator_key.dart';
+import 'package:travelex/common/config/preferences_config.dart';
+import 'package:travelex/common/constants/flavour_constants.dart';
+import 'package:travelex/common/constants/preference_constants.dart';
+import 'package:travelex/common/extensions/parse_data_type.dart';
+import 'package:travelex/common/utils/image_utility.dart';
+import 'package:travelex/presentation/widgets/button.dart';
+import 'package:travelex/presentation/widgets/icon.dart';
+import 'package:travelex/presentation/widgets/text_view.dart';
 
 
 class WalletHome extends StatefulWidget {

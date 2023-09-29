@@ -1,13 +1,13 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:travelgrid/common/config/navigator_key.dart';
-import 'package:travelgrid/common/constants/event_types.dart';
-import 'package:travelgrid/common/injector/injector.dart';
-import 'package:travelgrid/data/cubits/misc_type_cubit/misc_type_cubit.dart';
-import 'package:travelgrid/data/datasources/others/misc_type_list.dart';
-import 'package:travelgrid/domain/usecases/common_usecase.dart';
-import 'package:travelgrid/domain/usecases/ge_usecase.dart';
+import 'package:travelex/common/config/navigator_key.dart';
+import 'package:travelex/common/constants/event_types.dart';
+import 'package:travelex/common/injector/injector.dart';
+import 'package:travelex/data/cubits/misc_type_cubit/misc_type_cubit.dart';
+import 'package:travelex/data/datasources/others/misc_type_list.dart';
+import 'package:travelex/domain/usecases/common_usecase.dart';
+import 'package:travelex/domain/usecases/ge_usecase.dart';
 
 part 'misc_type_event.dart';
 part 'misc_type_state.dart';

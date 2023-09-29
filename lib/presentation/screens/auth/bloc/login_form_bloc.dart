@@ -2,11 +2,11 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
-import 'package:travelgrid/common/constants/flavour_constants.dart';
-import 'package:travelgrid/common/injector/injector.dart';
-import 'package:travelgrid/common/utils/validators.dart';
-import 'package:travelgrid/data/datasources/login_response.dart';
-import 'package:travelgrid/domain/usecases/login_usecase.dart';
+import 'package:travelex/common/constants/flavour_constants.dart';
+import 'package:travelex/common/injector/injector.dart';
+import 'package:travelex/common/utils/validators.dart';
+import 'package:travelex/data/datasources/login_response.dart';
+import 'package:travelex/domain/usecases/login_usecase.dart';
 
 class LoginFormBloc extends FormBloc<String, String> {
   final tfUsername = TextFieldBloc();

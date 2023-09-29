@@ -1,5 +1,5 @@
 
-import 'package:travelgrid/common/enum/dropdown_types.dart';
+import 'package:travelex/common/enum/dropdown_types.dart';
 
 class ExpenseModel {
   int? id;

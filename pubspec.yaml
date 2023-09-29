@@ -1,5 +1,5 @@
-name: travelgrid
-description: A new Flutter project.
+name: travelex
+description: Travelex - NH accommodates both self-booking and Travel agent driven bookings to give organization a great thrust in servicing their employees..
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.

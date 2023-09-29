@@ -2,13 +2,13 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
-import 'package:travelgrid/common/utils/show_alert.dart';
-import 'package:travelgrid/data/datasources/summary/tr_summary_response.dart';
-import 'package:travelgrid/data/models/tr/tr_city_pair_model.dart';
-import 'package:travelgrid/data/models/tr/tr_forex_model.dart';
-import 'package:travelgrid/data/models/tr/tr_insurance_model.dart';
-import 'package:travelgrid/data/models/tr/tr_traveller_details.dart';
-import 'package:travelgrid/data/models/tr/tr_visa_model.dart';
+import 'package:travelex/common/utils/show_alert.dart';
+import 'package:travelex/data/datasources/summary/tr_summary_response.dart';
+import 'package:travelex/data/models/tr/tr_city_pair_model.dart';
+import 'package:travelex/data/models/tr/tr_forex_model.dart';
+import 'package:travelex/data/models/tr/tr_insurance_model.dart';
+import 'package:travelex/data/models/tr/tr_traveller_details.dart';
+import 'package:travelex/data/models/tr/tr_visa_model.dart';
 
 class ProcessedTrFormBloc extends FormBloc<String, String> {
 

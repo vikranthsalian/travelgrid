@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:travelgrid/data/datasources/others/cities_list.dart';
-import 'package:travelgrid/data/datasources/others/countries_list.dart' as cn;
+import 'package:travelex/data/datasources/others/cities_list.dart';
+import 'package:travelex/data/datasources/others/countries_list.dart' as cn;
 
 part 'city_state.dart';
 

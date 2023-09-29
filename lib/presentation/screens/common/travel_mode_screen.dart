@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:travelgrid/common/config/navigator_key.dart';
-import 'package:travelgrid/common/constants/flavour_constants.dart';
-import 'package:travelgrid/data/cubits/travel_mode_cubit/travel_mode_cubit.dart';
-import 'package:travelgrid/presentation/widgets/button.dart';
-import 'package:travelgrid/presentation/widgets/text_view.dart';
+import 'package:travelex/common/config/navigator_key.dart';
+import 'package:travelex/common/constants/flavour_constants.dart';
+import 'package:travelex/data/cubits/travel_mode_cubit/travel_mode_cubit.dart';
+import 'package:travelex/presentation/widgets/button.dart';
+import 'package:travelex/presentation/widgets/text_view.dart';
 
 import '../../../data/datasources/others/travel_mode_list.dart';
 

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:travelgrid/data/models/tr/tr_traveller_details.dart';
-import 'package:travelgrid/presentation/screens/common/cities_screen.dart';
-import 'package:travelgrid/presentation/screens/common/countries_screen.dart';
-import 'package:travelgrid/presentation/screens/common/employees_screen.dart';
-import 'package:travelgrid/presentation/screens/common/non_employees_screen.dart';
-import 'package:travelgrid/presentation/widgets/text_view.dart';
+import 'package:travelex/data/models/tr/tr_traveller_details.dart';
+import 'package:travelex/presentation/screens/common/cities_screen.dart';
+import 'package:travelex/presentation/screens/common/countries_screen.dart';
+import 'package:travelex/presentation/screens/common/employees_screen.dart';
+import 'package:travelex/presentation/screens/common/non_employees_screen.dart';
+import 'package:travelex/presentation/widgets/text_view.dart';
 
 
 class MetaSearchSelectorView extends StatefulWidget {

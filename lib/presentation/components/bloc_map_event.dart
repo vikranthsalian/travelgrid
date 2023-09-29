@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:travelgrid/common/constants/event_types.dart';
+import 'package:travelex/common/constants/event_types.dart';
 
 
 class BlocMapToEvent extends StatelessWidget {

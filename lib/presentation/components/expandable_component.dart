@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:travelgrid/presentation/widgets/text_view.dart';
+import 'package:travelex/presentation/widgets/text_view.dart';
 
 class ExpandableComponent extends StatefulWidget {
   Map<String,dynamic> jsonData;

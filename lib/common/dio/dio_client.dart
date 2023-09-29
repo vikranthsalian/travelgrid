@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_pretty_dio_logger/flutter_pretty_dio_logger.dart';
-import 'package:travelgrid/common/constants/flavour_constants.dart';
-import 'package:travelgrid/common/dio/dio_wrapper.dart';
-import 'package:travelgrid/common/utils/show_alert.dart';
+import 'package:travelex/common/constants/flavour_constants.dart';
+import 'package:travelex/common/dio/dio_wrapper.dart';
+import 'package:travelex/common/utils/show_alert.dart';
 List noErrorEndpointTags = ['app_usage_metric'];
 
 class CustomDio {

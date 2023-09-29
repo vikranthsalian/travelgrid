@@ -4,19 +4,19 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:privacy_screen/privacy_screen.dart';
-import 'package:travelgrid/common/constants/color_constants.dart';
-import 'package:travelgrid/common/constants/flavour_constants.dart';
-import 'package:travelgrid/common/constants/route_constants.dart';
-import 'package:travelgrid/common/dio/dio_client.dart';
-import 'package:travelgrid/common/extensions/parse_data_type.dart';
-import 'package:travelgrid/common/extensions/pretty.dart';
-import 'package:travelgrid/common/injector/injector.dart';
-import 'package:travelgrid/common/utils/login_util.dart';
-import 'package:travelgrid/data/datasources/azure_reponse.dart';
-import 'package:travelgrid/data/datasources/login_response.dart';
-import 'package:travelgrid/data/remote/remote_datasource.dart';
-import 'package:travelgrid/domain/usecases/login_usecase.dart';
-import 'package:travelgrid/presentation/widgets/button.dart';
+import 'package:travelex/common/constants/color_constants.dart';
+import 'package:travelex/common/constants/flavour_constants.dart';
+import 'package:travelex/common/constants/route_constants.dart';
+import 'package:travelex/common/dio/dio_client.dart';
+import 'package:travelex/common/extensions/parse_data_type.dart';
+import 'package:travelex/common/extensions/pretty.dart';
+import 'package:travelex/common/injector/injector.dart';
+import 'package:travelex/common/utils/login_util.dart';
+import 'package:travelex/data/datasources/azure_reponse.dart';
+import 'package:travelex/data/datasources/login_response.dart';
+import 'package:travelex/data/remote/remote_datasource.dart';
+import 'package:travelex/domain/usecases/login_usecase.dart';
+import 'package:travelex/presentation/widgets/button.dart';
 
 class SplashScreen extends StatefulWidget {
   @override

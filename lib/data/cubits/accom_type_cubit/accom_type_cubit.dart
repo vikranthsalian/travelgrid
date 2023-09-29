@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:travelgrid/data/datasources/others/accom_type_list.dart';
+import 'package:travelex/data/datasources/others/accom_type_list.dart';
 
 part 'accom_type_state.dart';
 

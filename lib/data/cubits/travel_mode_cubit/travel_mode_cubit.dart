@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:flutter/cupertino.dart';
 
-import 'package:travelgrid/data/datasources/others/travel_mode_list.dart';
+import 'package:travelex/data/datasources/others/travel_mode_list.dart';
 
 part 'travel_mode_state.dart';
 

@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_flavor/flutter_flavor.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:travelgrid/common/config/init.dart';
-import 'package:travelgrid/common/config/preferences_config.dart';
-import 'package:travelgrid/common/injector/injector_config.dart';
+import 'package:travelex/common/config/init.dart';
+import 'package:travelex/common/config/preferences_config.dart';
+import 'package:travelex/common/injector/injector_config.dart';
 
 
 void main() async {

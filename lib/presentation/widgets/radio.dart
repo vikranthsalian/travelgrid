@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:travelgrid/common/extensions/capitalize.dart';
+import 'package:travelex/common/extensions/capitalize.dart';
 
 class MetaRadio extends StatefulWidget {
 

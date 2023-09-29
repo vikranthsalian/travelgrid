@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
-import 'package:travelgrid/common/utils/validators.dart';
-import 'package:travelgrid/data/models/ge/ge_conveyance_model.dart';
+import 'package:travelex/common/utils/validators.dart';
+import 'package:travelex/data/models/ge/ge_conveyance_model.dart';
 class TravelFormBloc extends FormBloc<String, String> {
 
   final selectModeID = SelectFieldBloc<String, dynamic>();

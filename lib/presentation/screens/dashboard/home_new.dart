@@ -2,16 +2,16 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:travelgrid/common/config/navigator_key.dart';
-import 'package:travelgrid/common/constants/route_constants.dart';
-import 'package:travelgrid/common/extensions/parse_data_type.dart';
-import 'package:travelgrid/data/blocs/travel_request/tr_bloc.dart';
-import 'package:travelgrid/presentation/components/dialog_trip_type.dart';
-import 'package:travelgrid/presentation/components/drawer.dart';
-import 'package:travelgrid/presentation/widgets/button.dart';
-import 'package:travelgrid/presentation/widgets/icon.dart';
-import 'package:travelgrid/presentation/widgets/svg_view.dart';
-import 'package:travelgrid/presentation/widgets/text_view.dart';
+import 'package:travelex/common/config/navigator_key.dart';
+import 'package:travelex/common/constants/route_constants.dart';
+import 'package:travelex/common/extensions/parse_data_type.dart';
+import 'package:travelex/data/blocs/travel_request/tr_bloc.dart';
+import 'package:travelex/presentation/components/dialog_trip_type.dart';
+import 'package:travelex/presentation/components/drawer.dart';
+import 'package:travelex/presentation/widgets/button.dart';
+import 'package:travelex/presentation/widgets/icon.dart';
+import 'package:travelex/presentation/widgets/svg_view.dart';
+import 'package:travelex/presentation/widgets/text_view.dart';
 
 class HomeNewPage extends StatefulWidget {
   @override

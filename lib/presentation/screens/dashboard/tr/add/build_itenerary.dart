@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:travelgrid/common/extensions/parse_data_type.dart';
-import 'package:travelgrid/common/utils/city_util.dart';
-import 'package:travelgrid/data/models/tr/tr_city_pair_model.dart';
-import 'package:travelgrid/presentation/screens/dashboard/tr/add/add_itinery.dart';
-import 'package:travelgrid/presentation/screens/dashboard/tr/add/add_round_itinery.dart';
-import 'package:travelgrid/presentation/widgets/svg_view.dart';
-import 'package:travelgrid/presentation/widgets/switch.dart';
-import 'package:travelgrid/presentation/widgets/text_view.dart';
+import 'package:travelex/common/extensions/parse_data_type.dart';
+import 'package:travelex/common/utils/city_util.dart';
+import 'package:travelex/data/models/tr/tr_city_pair_model.dart';
+import 'package:travelex/presentation/screens/dashboard/tr/add/add_itinery.dart';
+import 'package:travelex/presentation/screens/dashboard/tr/add/add_round_itinery.dart';
+import 'package:travelex/presentation/widgets/svg_view.dart';
+import 'package:travelex/presentation/widgets/switch.dart';
+import 'package:travelex/presentation/widgets/text_view.dart';
 
 class BuildItinerary extends StatefulWidget {
   Map<String,dynamic> map;

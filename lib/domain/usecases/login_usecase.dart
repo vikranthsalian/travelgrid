@@ -1,5 +1,5 @@
-import 'package:travelgrid/data/datasources/login_response.dart';
-import 'package:travelgrid/domain/repo_abstract/api_abstract.dart';
+import 'package:travelex/data/datasources/login_response.dart';
+import 'package:travelex/domain/repo_abstract/api_abstract.dart';
 
 class LoginUseCase {
   final LoginAPIAbstract apiAbstract;

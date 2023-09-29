@@ -1,4 +1,4 @@
-import 'package:travelgrid/data/models/ge/ge_group_accom_model.dart';
+import 'package:travelex/data/models/ge/ge_group_accom_model.dart';
 
 class GESummaryResponse {
   bool? status;

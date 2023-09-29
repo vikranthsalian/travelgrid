@@ -1,4 +1,4 @@
-import 'package:travelgrid/data/datasources/summary/te_summary_response.dart';
+import 'package:travelex/data/datasources/summary/te_summary_response.dart';
 
 class TEApprovalList {
   bool? status;
