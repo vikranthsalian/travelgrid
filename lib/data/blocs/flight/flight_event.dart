@@ -7,5 +7,12 @@ class GetFlightListEvent extends FlightEvent {
   String? from;
   String? to;
   String? date;
-  GetFlightListEvent({this.from,this.date,this.to});
+  String? fare;
+  String? paxCount;
+  GetFlightListEvent({this.from,this.date,this.to,this.fare,this.paxCount});
+}
+
+class FlightSearchEvent extends FlightEvent {
+  String? key;
+  FlightSearchEvent({this.key});
 }

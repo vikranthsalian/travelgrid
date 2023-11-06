@@ -1150,6 +1150,38 @@
         "align": "center-right"
       }
     },
+    "flightDetails": {
+      "label": {
+        "text" : "Flight Details",
+        "color" : "0xFF2854A1",
+        "size": "16",
+        "family": "bold",
+        "align": "center-left"
+      },
+      "showDetails": {
+        "label": {
+          "text" : "Show",
+          "color" : "0XFFFFFFFF",
+          "size": "10",
+          "family": "bold",
+          "align": "center-right"
+        }
+      },
+      "flightLabel": {
+        "text" : "",
+        "color" : "0xFF2854A1",
+        "size": "12",
+        "family": "bold",
+        "align": "center"
+      },
+      "flightValue": {
+        "text" : "",
+        "color" : "0xFFCCCCCC",
+        "size": "11",
+        "family": "regular",
+        "align": "center"
+      }
+    },
     "travellerDetails": {
       "label": {
         "text" : "Traveller Details",
@@ -1691,7 +1723,6 @@
         "align": "center-left"
       }
     },
-
     "billableSwitch":  {
       "label":  {
         "text" : "Billable",
@@ -1969,12 +2000,27 @@
           "align": "center-left"
         }
       },
-      "flight": {
-        "text" : "Search Flight",
+
+      "flightSvgIcon":{
+        "icon": "flightSearch.svg"
+      },
+      "flightLabel": {
+        "text" : "",
         "color" : "0xFF2854A1",
-        "size": "16",
+        "size": "12",
         "family": "bold",
-        "align": "center-right"
+        "align": "center"
+      },
+      "flightValue": {
+        "text" : "",
+        "color" : "0xFFCCCCCC",
+        "size": "11",
+        "family": "regular",
+        "align": "center"
+      },
+      "delete": {
+        "icon": "delete.svg",
+        "color" : "0xFFff0000"
       },
       "text_field_pnr":  {
         "name": "PNR",
@@ -7182,12 +7228,8 @@
         }
       ]
     },
-    "flight": {
-      "text" : "Search Flight",
-      "color" : "0xFF2854A1",
-      "size": "16",
-      "family": "bold",
-      "align": "center-right"
+    "flightSvgIcon":{
+      "icon": "flightSearch.svg"
     },
     "text_field_pnr":  {
       "name": "PNR",

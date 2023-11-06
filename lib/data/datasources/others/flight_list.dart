@@ -1,3 +1,5 @@
+import 'package:travelex/common/utils/date_time_util.dart';
+
 class MetaFlightListResponse {
   bool? status;
   String? token;
@@ -87,6 +89,8 @@ class AirFareResults {
   String? carrierName;
   String? flightNumber;
   double? publishedPrice;
+  String? selectedPrice;
+  String? selectedFare;
   double? baseFare;
   double? tax;
   String? fareKey;
@@ -129,6 +133,8 @@ class AirFareResults {
         this.carrierName,
         this.flightNumber,
         this.publishedPrice,
+        this.selectedPrice,
+        this.selectedFare,
         this.baseFare,
         this.tax,
         this.fareKey,
@@ -159,8 +165,8 @@ class AirFareResults {
     originCode = json['originCode'];
     destination = json['destination'];
     destinationCode = json['destinationCode'];
-    departureDate = json['departureDate'];
-    arrivalDate = json['arrivalDate'];
+    departureDate =MetaDateTime().getDate( json['departureDate'], format: "dd-MM-yyyy") ;
+    arrivalDate = MetaDateTime().getDate( json['arrivalDate'], format: "dd-MM-yyyy") ;
     arrivalTime = json['arrivalTime'];
     departureTime = json['departureTime'];
     fareClass = json['fareClass'];
@@ -169,6 +175,8 @@ class AirFareResults {
     carrierName = json['carrierName'];
     flightNumber = json['flightNumber'];
     publishedPrice = json['publishedPrice'];
+    selectedPrice = json['selectedPrice'];
+    selectedFare = json['selectedFare'];
     baseFare = json['baseFare'];
     tax = json['tax'];
     fareKey = json['fareKey'];
@@ -216,6 +224,8 @@ class AirFareResults {
     data['carrierName'] = this.carrierName;
     data['flightNumber'] = this.flightNumber;
     data['publishedPrice'] = this.publishedPrice;
+    data['selectedPrice'] = this.selectedPrice;
+    data['selectedFare'] = this.selectedFare;
     data['baseFare'] = this.baseFare;
     data['tax'] = this.tax;
     data['fareKey'] = this.fareKey;

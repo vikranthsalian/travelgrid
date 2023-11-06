@@ -18,6 +18,7 @@ class MetaIcon extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return IconButton(
+      padding: EdgeInsets.zero,
         icon: FaIcon(
           iconMapping[mapData['icon']],
           color: ParseDataType().getHexToColor(mapData['color']),
