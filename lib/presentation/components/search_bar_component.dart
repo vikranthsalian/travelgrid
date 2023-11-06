@@ -48,9 +48,9 @@ class _SearchBarComponentState extends State<SearchBarComponent> {
                     setState(() {
                       _editing = true;
                     });
-                    if (widget.onChange != null) {
-                      widget.onChange!(widget.searchController.text);
-                    }
+                  }
+                  if (widget.onChange != null) {
+                    widget.onChange!(widget.searchController.text);
                   }
                 },
                 controller: widget.searchController,

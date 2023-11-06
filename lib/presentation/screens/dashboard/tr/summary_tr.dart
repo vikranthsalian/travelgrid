@@ -17,6 +17,7 @@ import 'package:travelex/data/models/expense_model.dart';
 import 'package:travelex/data/models/success_model.dart';
 import 'package:travelex/domain/usecases/tr_usecase.dart';
 import 'package:travelex/presentation/components/bloc_map_event.dart';
+import 'package:travelex/presentation/components/dialog.dart';
 import 'package:travelex/presentation/components/switch_component.dart';
 import 'package:travelex/presentation/widgets/button.dart';
 import 'package:travelex/presentation/widgets/dialog_selector_view.dart';
@@ -228,6 +229,11 @@ class _TravelRequestSummaryState extends State<TravelRequestSummary> {
                 jsonData: jsonData['cityPairDetails'],
                 childWidget: buildCityPairWidget(jsonData['cityPairDetails']),
                 initialValue: cityPairDetails),
+            // SwitchComponent(
+            //     color:ParseDataType().getHexToColor(jsonData['backgroundColor']),
+            //     jsonData: jsonData['flightDetails'],
+            //     childWidget: buildFlightPairWidget(jsonData['flightDetails']),
+            //     initialValue: cityPairDetails),
            // buildExpandableView(jsonData,"cityPairDetails"),
             if(tripType=="Domestic")
             SwitchComponent(
@@ -501,6 +507,108 @@ class _TravelRequestSummaryState extends State<TravelRequestSummary> {
           );
   }
 
+  Container buildFlightPairWidget(Map map) {
+    print("mabuildFlightPairWidgetp");
+    print(map);
+ //   return Container();
+
+    return  Container(
+      padding: EdgeInsets.symmetric(horizontal: 5.w),
+      color: Colors.white,
+      child: cityPairList!.isNotEmpty ? Column(
+        children: [
+          ListView.builder(
+              physics: NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              padding: EdgeInsets.zero,
+              itemBuilder: (BuildContext context, int index) {
+                MaCityPairs item = cityPairList![index];
+                return Container(
+                  child: Column(
+                    children: [
+                      MetaTextView(mapData: map['flightLabel'],text: "Flight Details",),
+
+                      Divider(color: Colors.black,),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Column(
+                              children: [
+                                MetaTextView(mapData: map['flightLabel'],text: "Flight Price",),
+                                MetaTextView(mapData: map['flightValue'],text:item.price.toString()),
+                              ],
+                            ),
+                          ),
+                          Expanded(
+                            child: Column(
+                              children: [
+                                MetaTextView(mapData: map['flightLabel'],text: "Arrival Date",),
+                                MetaTextView(mapData: map['flightValue'],text: item.arrivalDate.toString()),
+                              ],
+                            ),
+                          ),
+                          Expanded(
+                            child: Column(
+                              children: [
+                                MetaTextView(mapData: map['flightLabel'],text: "Arrival Time",),
+                                MetaTextView(mapData: map['flightValue'],text: item.arrivalTime.toString()),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Column(
+                              children: [
+                                MetaTextView(mapData: map['flightLabel'],text: "Flight No",),
+                                MetaTextView(mapData: map['flightValue'],text: item.flightNo.toString()),
+                              ],
+                            ),
+                          ),
+                          Expanded(
+                            child: Column(
+                              children: [
+                                MetaTextView(mapData: map['flightLabel'],text: "Airlines",),
+                                MetaTextView(mapData: map['flightValue'],text: item.airlines.toString()),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Column(
+                              children: [
+                                MetaTextView(mapData: map['flightLabel'],text: "Selected Fare",),
+                                MetaTextView(mapData: map['flightValue'],text:item.selectedFare.toString()),
+                              ],
+                            ),
+                          ),
+                          Expanded(
+                            child: Column(
+                              children: [
+                                MetaTextView(mapData: map['flightLabel'],text: "No of Stops",),
+                                MetaTextView(mapData: map['flightValue'],text: item.numberOfStops.toString()),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                );
+              },
+              itemCount: cityPairList!.length
+          ),
+        ],
+      ):noDataAdded(),
+    );
+
+  }
+
   Container buildCityPairWidget(Map map) {
 
     return  Container(
@@ -577,12 +685,177 @@ class _TravelRequestSummaryState extends State<TravelRequestSummary> {
                         SizedBox(height: 3.h,),
                         Container(
                           padding: EdgeInsets.symmetric(horizontal: 10.w),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Expanded(child: MetaTextView(mapData:  map['byComp'],text: item.byCompany!.label!.toLowerCase().toString()=="yes"?"BY COMPANY":"")),
-                                Expanded(child: MetaTextView(mapData:  map['fare'],text: item.fareClass!.label!.toUpperCase().toString()))
-                              ]
+                          child: InkWell(
+                            onTap: (){
+
+                              if(item.sbt!) {
+                                Map label = {
+                                  "text": "",
+                                  "color": "0xFF2854A1",
+                                  "size": "12",
+                                  "family": "bold",
+                                  "align": "center"
+                                };
+
+                                Map value = {
+                                  "text": "",
+                                  "color": "0xFF000000",
+                                  "size": "11",
+                                  "family": "regular",
+                                  "align": "center"
+                                };
+                                showDialog(
+                                    context: context,
+                                    builder: (_) =>
+                                        MetaDialog(
+                                          child: Container(
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                MetaTextView(mapData: label,
+                                                  text: "Flight Details",),
+
+                                                Divider(color: Colors.black,),
+                                                Row(
+                                                  children: [
+                                                    Expanded(
+                                                      child: Column(
+                                                        children: [
+                                                          MetaTextView(
+                                                            mapData: label,
+                                                            text: "Flight Price",),
+                                                          MetaTextView(
+                                                              mapData: value,
+                                                              text: item.price
+                                                                  .toString()),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    Expanded(
+                                                      child: Column(
+                                                        children: [
+                                                          MetaTextView(
+                                                            mapData: label,
+                                                            text: "Arrival Date",),
+                                                          MetaTextView(
+                                                              mapData: value,
+                                                              text: item
+                                                                  .arrivalDate
+                                                                  .toString()),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    Expanded(
+                                                      child: Column(
+                                                        children: [
+                                                          MetaTextView(
+                                                            mapData: label,
+                                                            text: "Arrival Time",),
+                                                          MetaTextView(
+                                                              mapData: value,
+                                                              text: item
+                                                                  .arrivalTime
+                                                                  .toString()),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                Row(
+                                                  children: [
+                                                    Expanded(
+                                                      child: Column(
+                                                        children: [
+                                                          MetaTextView(
+                                                            mapData: label,
+                                                            text: "Flight No",),
+                                                          MetaTextView(
+                                                              mapData: value,
+                                                              text: item
+                                                                  .flightNo
+                                                                  .toString()),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    Expanded(
+                                                      child: Column(
+                                                        children: [
+                                                          MetaTextView(
+                                                            mapData: label,
+                                                            text: "Airlines",),
+                                                          MetaTextView(
+                                                              mapData: value,
+                                                              text: item
+                                                                  .airlines
+                                                                  .toString()),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                Row(
+                                                  children: [
+                                                    Expanded(
+                                                      child: Column(
+                                                        children: [
+                                                          MetaTextView(
+                                                            mapData: label,
+                                                            text: "Selected Fare",),
+                                                          MetaTextView(
+                                                              mapData: value,
+                                                              text: item
+                                                                  .selectedFare
+                                                                  .toString()),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    Expanded(
+                                                      child: Column(
+                                                        children: [
+                                                          MetaTextView(
+                                                            mapData: label,
+                                                            text: "No of Stops",),
+                                                          MetaTextView(
+                                                              mapData: value,
+                                                              text: item
+                                                                  .numberOfStops
+                                                                  .toString()),
+                                                        ],
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ));
+                              }
+                            },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  item.sbt! ? AbsorbPointer(
+                                    child: Container(
+                                      height:25,
+                                      width:25,
+                                      child: MetaIcon(
+                                          mapData:{
+                                            "icon": "flight",
+                                            "size": 20.0,
+                                            "color": "0xFFFFFFFF",
+                                            "backgroundColor": "transparent",
+                                            "onPress": true,
+                                            "align": "center"
+                                          },
+                                          onButtonPressed: (){
+
+                                          }),
+                                    ),
+                                  ):Container(),
+                                  Expanded(child: MetaTextView(mapData:  map['byComp'],text: item.byCompany!.label!.toLowerCase().toString()=="yes"?"BY COMPANY":"")),
+                                  Expanded(child: MetaTextView(mapData:  map['fare'],text: item.fareClass!.label!.toUpperCase().toString()))
+                                ]
+                            ),
                           ),
                         ),
                         SizedBox(height: 3.h,),

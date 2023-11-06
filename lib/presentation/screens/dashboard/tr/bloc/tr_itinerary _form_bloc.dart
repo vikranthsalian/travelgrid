@@ -12,15 +12,31 @@ class ItineraryFormBloc extends FormBloc<String, String> {
   final destination =  TextFieldBloc(validators: [emptyValidator]);
 
   final fareClass =  TextFieldBloc(validators: [emptyValidator]);
+  final fareClassKey =  TextFieldBloc(validators: [emptyValidator],initialValue: "");
   final travelMode =  TextFieldBloc(validators: [emptyValidator]);
   final travelModeID =  SelectFieldBloc();
 
   final swByCompany = BooleanFieldBloc(initialValue: false);
+  final showFlightSearch = BooleanFieldBloc(initialValue: false);
+  final showFlightDetails = BooleanFieldBloc(initialValue: false);
   final swByCompanyID = SelectFieldBloc(initialValue: false);
 
   final tfAmount = TextFieldBloc();
   final tfPNR= TextFieldBloc();
   final tfTicket= TextFieldBloc();
+
+
+  final timeField = SelectFieldBloc(initialValue: "");
+
+  final flightNo= TextFieldBloc();
+  final airline= TextFieldBloc();
+  final airlineCode= TextFieldBloc();
+  final stops= TextFieldBloc();
+  final sbt= BooleanFieldBloc(initialValue: false);
+  final selectedFare= TextFieldBloc();
+  final flightPrice= TextFieldBloc();
+  final arrivalDate= TextFieldBloc();
+  final arrivalTime= TextFieldBloc();
 
   final showError = SelectFieldBloc<bool, dynamic>(initialValue: false);
 
@@ -78,8 +94,21 @@ class ItineraryFormBloc extends FormBloc<String, String> {
       "fareClass": fareClass.valueToInt,
       "travelMode": travelMode.value,
       "price":tfAmount.value == "nill" ? null: tfAmount.valueToDouble,
-      "pnr": tfAmount.value == "nill" ? "":tfPNR.value,
+      "pnr": tfAmount.value == "nill" ? "": tfPNR.value,
       "ticket":tfAmount.value == "nill" ? "": tfTicket.value,
+
+      if(showFlightDetails.value &&  travelMode.value == "A")
+        "arrivalDate": arrivalDate.value,
+        "arrivalTime": arrivalTime.value,
+        "flightNo": flightNo.value,
+        "airlines": airline.value,
+        "airlinesCode": airlineCode.value,
+        "selectedFare": selectedFare.value,
+        "sbt":sbt.value,
+        "numberOfStops":stops.valueToInt,
+        "price":flightPrice.valueToDouble,
+
+
     };
 
     emitSuccess(successResponse: jsonEncode(save));

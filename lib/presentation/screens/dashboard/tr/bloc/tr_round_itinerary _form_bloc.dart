@@ -12,6 +12,7 @@ class RoundItineraryFormBloc extends FormBloc<String, String> {
    final destination =  TextFieldBloc(validators: [emptyValidator]);
 
   final fareClass =  TextFieldBloc(validators: [emptyValidator]);
+  final fareClassKey =  TextFieldBloc(validators: [emptyValidator]);
   final travelMode =  TextFieldBloc(validators: [emptyValidator]);
   final travelModeID =  SelectFieldBloc();
 
@@ -21,10 +22,27 @@ class RoundItineraryFormBloc extends FormBloc<String, String> {
   final tfAmount = TextFieldBloc();
   final tfPNR= TextFieldBloc();
   final tfTicket= TextFieldBloc();
+
+  final timeField = SelectFieldBloc(initialValue: "");
+  final showFlightSearch = BooleanFieldBloc(initialValue: false);
+  final showFlightDetails = BooleanFieldBloc(initialValue: false);
+
+  final flightNo= TextFieldBloc();
+  final airline= TextFieldBloc();
+  final airlineCode= TextFieldBloc();
+  final stops= TextFieldBloc();
+  final sbt= BooleanFieldBloc(initialValue: false);
+  final selectedFare= TextFieldBloc();
+  final flightPrice= TextFieldBloc();
+  final arrivalDate= TextFieldBloc();
+  final arrivalTime= TextFieldBloc();
+
   final showError = SelectFieldBloc<bool, dynamic>(initialValue: false);
 
 
-
+  final timeField2 = SelectFieldBloc(initialValue: "");
+  final showFlightSearch2 = BooleanFieldBloc(initialValue: false);
+  final showFlightDetails2 = BooleanFieldBloc(initialValue: false);
 
 
   final checkInDate2 =  TextFieldBloc(validators: [emptyValidator],initialValue: "00:00");
@@ -32,12 +50,23 @@ class RoundItineraryFormBloc extends FormBloc<String, String> {
   final origin2 =  TextFieldBloc(validators: [emptyValidator]);
   final destination2=  TextFieldBloc(validators: [emptyValidator]);
 
-  final fareClass2 =  TextFieldBloc(validators: [emptyValidator]);
-  final travelMode2 =  TextFieldBloc(validators: [emptyValidator]);
-  final travelModeID2 =  SelectFieldBloc();
+  final flightNo2= TextFieldBloc();
+  final airline2= TextFieldBloc();
+  final airlineCode2= TextFieldBloc();
+  final stops2= TextFieldBloc();
+  final sbt2= BooleanFieldBloc(initialValue: false);
+  final selectedFare2= TextFieldBloc();
+  final flightPrice2= TextFieldBloc();
+  final arrivalDate2= TextFieldBloc();
+  final arrivalTime2= TextFieldBloc();
 
-  final swByCompany2 = BooleanFieldBloc(initialValue: false);
-  final swByCompanyID2 = SelectFieldBloc(initialValue: false);
+  // final fareClass2 =  TextFieldBloc(validators: [emptyValidator]);
+  // final fareClassKey2 =  TextFieldBloc(validators: [emptyValidator]);
+  // final travelMode2 =  TextFieldBloc(validators: [emptyValidator]);
+  // final travelModeID2 =  SelectFieldBloc();
+  //
+  // final swByCompany2 = BooleanFieldBloc(initialValue: false);
+  // final swByCompanyID2 = SelectFieldBloc(initialValue: false);
 
   final tfAmount2 = TextFieldBloc();
   final tfPNR2= TextFieldBloc();
@@ -81,9 +110,9 @@ class RoundItineraryFormBloc extends FormBloc<String, String> {
       checkInTime2,
       origin2,
       destination2,
-      travelMode2,
-      fareClass2,
-      swByCompany2,
+      // travelMode2,
+      // fareClass2,
+      // swByCompany2,
       tfPNR2,
       tfTicket2,
       tfAmount2,
@@ -94,26 +123,34 @@ class RoundItineraryFormBloc extends FormBloc<String, String> {
         tfPNR.updateValue("nill");
         tfTicket.updateValue("nill");
         tfAmount.updateValue("nill");
+
+        tfPNR2.updateValue("nill");
+        tfTicket2.updateValue("nill");
+        tfAmount2.updateValue("nill");
       } else {
         tfPNR.updateValue("");
         tfTicket.updateValue("");
         tfAmount.updateValue("");
 
-      }
-    });
-
-    swByCompany2.onValueChanges(onData: (previous, current) async* {
-      if(current.value == true) {
-        tfPNR2.updateValue("nill");
-        tfTicket2.updateValue("nill");
-        tfAmount2.updateValue("nill");
-      } else {
-        tfPNR2.updateValue("");
-        tfTicket2.updateValue("");
-        tfAmount2.updateValue("");
+            tfPNR2.updateValue("");
+            tfTicket2.updateValue("");
+            tfAmount2.updateValue("");
 
       }
     });
+    //
+    // swByCompany2.onValueChanges(onData: (previous, current) async* {
+    //   if(current.value == true) {
+    //     tfPNR2.updateValue("nill");
+    //     tfTicket2.updateValue("nill");
+    //     tfAmount2.updateValue("nill");
+    //   } else {
+    //     tfPNR2.updateValue("");
+    //     tfTicket2.updateValue("");
+    //     tfAmount2.updateValue("");
+    //
+    //   }
+    // });
 
   }
 
@@ -131,18 +168,45 @@ class RoundItineraryFormBloc extends FormBloc<String, String> {
         "price": tfAmount.value == "nill" ? 0.0 : tfAmount.valueToDouble,
         "pnr": tfPNR.value == "nill" ? "" : tfPNR.value,
         "ticket": tfTicket.value == "nill" ? "" : tfTicket.value,
+
+        if(showFlightDetails.value &&  travelMode.value == "A")
+           "arrivalDate": arrivalDate.value,
+          "arrivalTime": arrivalTime.value,
+          "flightNo": flightNo.value,
+          "airlines": airline.value,
+          "airlinesCode": airlineCode.value,
+          "selectedFare": selectedFare.value,
+          "sbt":sbt.value,
+          "numberOfStops":stops.valueToInt,
+          "price":flightPrice.valueToDouble,
+
       },
       "pair2": {
         "leavingFrom": origin2.value,
         "goingTo": destination2.value,
         "startDate": checkInDate2.value,
         "startTime": checkInTime2.value,
-        "byCompany": swByCompany2.value ? 42 : 41,
-        "fareClass": fareClass2.valueToInt,
-        "travelMode": travelMode2.value,
+
+
+        "byCompany": swByCompany.value ? 42 : 41,
+        "fareClass": fareClass.valueToInt,
+        "travelMode": travelMode.value,
+
+
         "price": tfAmount2.value == "nill" ? 0.0 : tfAmount2.valueToDouble,
         "pnr": tfPNR2.value == "nill" ? "" : tfPNR2.value,
         "ticket": tfTicket2.value == "nill" ? "" : tfTicket2.value,
+
+        if(showFlightDetails2.value &&  travelMode.value == "A")
+          "arrivalDate": arrivalDate2.value,
+          "arrivalTime": arrivalTime2.value,
+          "flightNo": flightNo2.value,
+          "airlines": airline2.value,
+          "airlinesCode": airlineCode2.value,
+          "selectedFare": selectedFare2.value,
+          "sbt":sbt2.value,
+          "numberOfStops":stops2.valueToInt,
+          "price":flightPrice2.valueToDouble,
       }
     };
 

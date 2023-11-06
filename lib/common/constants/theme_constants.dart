@@ -77,8 +77,6 @@ class GlobalTheme {
 const ColorScheme _customColorScheme = ColorScheme(
   primary: customGold100,
   secondary: customGold200,
-  primaryVariant: Colors.black,
-  secondaryVariant: Colors.black,
   surface: Colors.purpleAccent,
   background: customSurfaceWhite,
   error: Colors.black,

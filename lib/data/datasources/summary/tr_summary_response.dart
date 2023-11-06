@@ -337,9 +337,16 @@ class MaCityPairs {
   String? arrivalTime;
   String? flightNo;
   String? airlines;
+  String? selectedFare;
+  int? numberOfStops;
+  bool? sbt;
   bool? booked;
 
-  MaCityPairs({this.id, this.leavingFrom, this.goingTo, this.startDate, this.startTime, this.byCompany, this.fareClass, this.travelMode, this.pnr, this.price, this.ticketNo, this.arrivalDate, this.arrivalTime, this.flightNo, this.airlines, this.booked});
+  MaCityPairs({this.id,
+    this.sbt,
+    this.selectedFare,
+    this.numberOfStops,
+    this.leavingFrom, this.goingTo, this.startDate, this.startTime, this.byCompany, this.fareClass, this.travelMode, this.pnr, this.price, this.ticketNo, this.arrivalDate, this.arrivalTime, this.flightNo, this.airlines, this.booked});
 
   MaCityPairs.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -357,6 +364,9 @@ class MaCityPairs {
     arrivalTime = json['arrivalTime'];
     flightNo = json['flightNo'];
     airlines = json['airlines'];
+    selectedFare = json['selectedFare'];
+    numberOfStops = json['numberOfStops'] ?? 0;
+    sbt = json['sbt'] ?? false;
     booked = json['booked'];
   }
 
@@ -386,6 +396,9 @@ class MaCityPairs {
     data['flightNo'] = this.flightNo;
     data['airlines'] = this.airlines;
     data['booked'] = this.booked;
+    data['selectedFare'] = this.selectedFare;
+    data['numberOfStops'] = this.numberOfStops;
+    data['sbt'] = this.sbt;
     return data;
   }
 }

@@ -5,8 +5,9 @@ import 'package:travelex/common/extensions/parse_data_type.dart';
 class MetaTextView extends StatelessWidget {
   Map mapData;
   String? text;
+  Color? color;
   TextAlign? textAlign;
-  MetaTextView({super.key, required this.mapData,this.text,this.textAlign=TextAlign.center});
+  MetaTextView({super.key, required this.mapData,this.text,this.textAlign=TextAlign.center,this.color});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +20,7 @@ class MetaTextView extends StatelessWidget {
             style:Theme.of(context).textTheme.
             bodySmall?.copyWith(
                 fontSize: ParseDataType().getDouble(mapData['size']).sp,
-                color: ParseDataType().getHexToColor(mapData['color']) ,
+                color:color ?? ParseDataType().getHexToColor(mapData['color']),
                 fontFamily: mapData['family'])
         )
     );

@@ -46,7 +46,7 @@ class _MetaRadioState extends State<MetaRadio> {
                 child: InkWell(
                   onTap: (){
 
-                    onSelect(widget.one!);
+                    onSelect(widget.one!,"retail");
 
                   },
                   child:Transform.translate(
@@ -56,7 +56,7 @@ class _MetaRadioState extends State<MetaRadio> {
                       value: widget.one!,
                       groupValue: _value,
                       onChanged: (value){
-                        onSelect(value!);
+                        onSelect(value!,"retail");
                       },
                     ),
                   ),
@@ -66,7 +66,7 @@ class _MetaRadioState extends State<MetaRadio> {
             Expanded(
               child: InkWell(
                 onTap: (){
-                  onSelect(widget.two!);
+                  onSelect(widget.two!,"corporate");
                 },
                 child: Container(
                   height: 25.h,
@@ -77,7 +77,7 @@ class _MetaRadioState extends State<MetaRadio> {
                       value: widget.two!,
                       groupValue: _value,
                       onChanged: (value){
-                        onSelect(value!);
+                        onSelect(value!,"corporate");
                       },
                     ),
                   ),
@@ -90,11 +90,11 @@ class _MetaRadioState extends State<MetaRadio> {
     );
   }
 
-  void onSelect(String value) {
+  void onSelect(String value,String type) {
     _value = value;
     print(_value);
 
-    widget.onRadioSwitched!(_value);
+    widget.onRadioSwitched!(_value,type);
     setState(() {
 
     });

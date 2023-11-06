@@ -18,6 +18,7 @@ class ProcessedTrFormBloc extends FormBloc<String, String> {
   final requestTypeID = SelectFieldBloc<String, dynamic>(initialValue: "");
 
   final travellerDetails = SelectFieldBloc<List<TRTravellerDetails>,dynamic>(initialValue: []);
+  final travellerCount = SelectFieldBloc<String,dynamic>(initialValue: "1");
   final purposeOfTravelID = SelectFieldBloc();
   final purposeOfTravel = TextFieldBloc(validators: [emptyValidator]);
 
