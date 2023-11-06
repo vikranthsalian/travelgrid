@@ -20,6 +20,7 @@ import 'package:travelex/presentation/widgets/date_time_view.dart';
 import 'package:travelex/presentation/widgets/dialog_selector_view.dart';
 import 'package:travelex/presentation/widgets/icon.dart';
 import 'package:travelex/presentation/widgets/search_selector_view.dart';
+import 'package:travelex/presentation/widgets/svg_view.dart';
 import 'package:travelex/presentation/widgets/switch.dart';
 import 'package:travelex/presentation/widgets/text_field.dart';
 import 'package:travelex/presentation/widgets/text_view.dart';
@@ -30,7 +31,8 @@ class AddItinerary  extends StatelessWidget {
   TRCityPairModel? cityPairs;
   bool isEdit;
   String? tripType;
-  AddItinerary({required this.jsonData,this.onAdd,this.cityPairs,this.isEdit=false,this.tripType});
+  String? paxCount;
+  AddItinerary({required this.jsonData,this.onAdd,this.cityPairs,this.isEdit=false,this.tripType,this.paxCount});
 
   Map errorMap={
     "text" : '',
@@ -72,8 +74,13 @@ class AddItinerary  extends StatelessWidget {
                     return;
                   }
 
+                  if(formBloc!.swByCompany.value && formBloc!.showFlightDetails.value==false){
+                    MetaAlert.showErrorAlert(message: "Please add Flight Details");
+                    return;
+                  }
 
-                formBloc!.submit();
+
+                  formBloc!.submit();
                 }
             )
           ],
@@ -117,6 +124,9 @@ class AddItinerary  extends StatelessWidget {
 
                         formBloc!.travelMode.updateValue("A");
                         formBloc!.travelModeID.updateValue("A");
+                        if(formBloc!.travelMode.value == "A"){
+                          formBloc!.showFlightSearch.updateValue(true);
+                        }
 
                         formBloc!.swByCompany.updateValue(true);
                         formBloc!.swByCompanyID.updateValue(true);
@@ -134,6 +144,8 @@ class AddItinerary  extends StatelessWidget {
                           formBloc!.origin.updateValue(cityPairs!.leavingFrom!);
                           formBloc!.destination.updateValue(cityPairs!.goingTo!);
 
+
+
                           formBloc!.checkInDate.updateValue(cityPairs!.startDate!);
                           formBloc!.checkInTime.updateValue(cityPairs!.startTime!);
 
@@ -146,20 +158,54 @@ class AddItinerary  extends StatelessWidget {
                             formBloc!.swByCompanyID.updateValue(true);
                           }
 
-                            formBloc!.fareClass.updateValue(cityPairs!.fareClass.toString());
 
+                          fromCode = CityUtil.getCityNameFromID(formBloc!.origin.value,isCode: true);
+                          toCode = CityUtil.getCityNameFromID(formBloc!.destination.value,isCode: true);
+                          formBloc!.fareClass.updateValue(cityPairs!.fareClass.toString());
 
+                          String? fareClassKey = CityUtil.getFareValueFromID(
+                              formBloc!.fareClass.value,
+                              formBloc!.travelMode.value,
+                              isValue:false,
+                              showCode:true,
+                          );
+                          formBloc!.fareClassKey.updateValue(fareClassKey ?? "");
 
                           if(cityPairs!.price!=null){
                             formBloc!.tfAmount.updateValue(cityPairs!.price!.toString());
                           }
 
-
                           formBloc!.tfTicket.updateValue(cityPairs!.ticket!);
                           formBloc!.tfPNR.updateValue(cityPairs!.pnr!);
+
+                          if(cityPairs!.sbt == true){
+
+                            formBloc!.showFlightDetails.updateValue(true);
+                            formBloc!.showFlightSearch.updateValue(true);
+
+
+                            formBloc!.flightPrice.updateValue(cityPairs!.price.toString());
+
+                            formBloc!.arrivalDate.updateValue(cityPairs!.arrivalDate.toString());
+                            formBloc!.arrivalTime.updateValue(cityPairs!.arrivalTime.toString());
+
+                            formBloc!.checkInDate.updateValue(cityPairs!.startDate.toString());
+                            formBloc!.checkInTime.updateValue(cityPairs!.startTime.toString());
+
+                            formBloc!.airlineCode.updateValue(cityPairs!.airlinesCode.toString());
+                            formBloc!.airline.updateValue(cityPairs!.airlines.toString());
+                            formBloc!.flightNo.updateValue(cityPairs!.flightNo.toString());
+                            formBloc!.stops.updateValue(cityPairs!.numberOfStops.toString());
+                            formBloc!.selectedFare.updateValue(cityPairs!.selectedFare.toString());
+                            formBloc!.sbt.updateValue(cityPairs!.sbt!);
+
+                          }
+
+
                         }else{
                           if(cityPairs!=null){
                             formBloc!.origin.updateValue(cityPairs!.goingTo!);
+                            fromCode = CityUtil.getCityNameFromID(formBloc!.origin.value,isCode: true);
                           }
 
                         }
@@ -205,7 +251,7 @@ class AddItinerary  extends StatelessWidget {
                                                           text: CityUtil.getCityNameFromID(formBloc!.origin.value),
                                                           onChange:(value){
                                                             print(jsonEncode(value));
-                                                            fromCode=value.code;
+                                                            fromCode= value.code;
                                                             formBloc!.origin.updateValue(value.id.toString());
                                                           },),
                                                         alignment: Alignment.centerLeft,
@@ -238,6 +284,12 @@ class AddItinerary  extends StatelessWidget {
                                                             formBloc!.travelMode.updateValue(value['id'].toString());
                                                             formBloc!.travelModeID.updateValue(value['id'].toString());
                                                             formBloc!.fareClass.updateValue("");
+                                                            if(value['id']=="A"){
+                                                              formBloc!.showFlightSearch.updateValue(true);
+                                                            }else{
+                                                              formBloc!.showFlightSearch.updateValue(false);
+                                                              formBloc!.showFlightDetails.updateValue(false);
+                                                            }
                                                           },),
                                                       ),
                                                     ):Expanded(
@@ -270,6 +322,7 @@ class AddItinerary  extends StatelessWidget {
                                                                 onChange:(value)async{
                                                                   print(value);
                                                                   formBloc!.fareClass.updateValue(value['id'].toString());
+                                                                  formBloc!.fareClassKey.updateValue(value['value'].toString());
 
                                                                   Map<String,dynamic> params = {
                                                                     "tripTypeFC": tripType,
@@ -326,6 +379,12 @@ class AddItinerary  extends StatelessWidget {
                                                               //  formBloc!.selectWithBill.updateValue(value.toString());
                                                               formBloc!.swByCompany.updateValue(value);
                                                               formBloc!.swByCompanyID.updateValue(value);
+                                                              if(value){
+                                                                formBloc!.showFlightSearch.updateValue(true);
+                                                              }else{
+                                                                formBloc!.showFlightSearch.updateValue(false);
+                                                                formBloc!.showFlightDetails.updateValue(false);
+                                                              }
                                                             }),
                                                       );
                                                     }
@@ -349,61 +408,218 @@ class AddItinerary  extends StatelessWidget {
                                                   }
                                               ),
 
-                                              Container(
-                                                child: MetaDateTimeView(mapData: jsonData['checkInDateTime'],
-                                                  value: {
-                                                    "date": formBloc!.checkInDate.value,
-                                                    "time": formBloc!.checkInTime.value,
-                                                  },
-                                                  onChange: (value){
-                                                    print(value);
-                                                    formBloc!.checkInDate.updateValue(value['date'].toString());
-                                                    formBloc!.checkInTime.updateValue(value['time'].toString());
-                                                  },),
+                                              BlocBuilder<SelectFieldBloc, SelectFieldBlocState>(
+                                                  bloc: formBloc!.timeField,
+                                                  builder: (context, state) {
+
+                                                    print("MetaDateTimeView rebuild");
+                                                    print(formBloc!.checkInDate.value);
+                                                    print(formBloc!.checkInTime.value);
+
+                                                    return Container(
+                                                      child: MetaDateTimeView(mapData: jsonData['checkInDateTime'],
+                                                        value: {
+                                                          "date": formBloc!.checkInDate.value,
+                                                          "time": formBloc!.checkInTime.value,
+                                                        },
+                                                        onChange: (value){
+                                                          print(value);
+                                                          formBloc!.checkInDate.updateValue(value['date'].toString());
+                                                          formBloc!.checkInTime.updateValue(value['time'].toString());
+                                                        },),
+                                                    );
+
+                                                  }
                                               ),
 
 
 
-                                             BlocBuilder<SelectFieldBloc, SelectFieldBlocState>(
+                                              BlocBuilder<BooleanFieldBloc, BooleanFieldBlocState>(
+                                                  bloc: formBloc!.showFlightSearch,
+                                                  builder: (context, state) {
+
+                                                    return Visibility(
+                                                      visible: state.value,
+                                                      child:   Container(
+                                                        child:InkWell(
+                                                            onTap:() async{
+
+                                                              if(fromCode == null ||toCode == null){
+                                                                MetaAlert.showErrorAlert(message: "Please select fields");
+                                                                return;
+                                                              }
+
+                                                              if( formBloc!.fareClassKey.value.isEmpty){
+                                                                MetaAlert.showErrorAlert(message: "Please select Fare Class");
+                                                                return;
+                                                              }
+
+
+                                                              if(fromCode!.isNotEmpty && toCode!.isNotEmpty && formBloc!.checkInDate.value.isNotEmpty)
+                                                              {
+                                                                var data = await Navigator.of(context).pushNamed(RouteConstants.flightPath,
+                                                                    arguments: {
+                                                                      "from":fromCode,
+                                                                      "to": toCode,
+                                                                      "paxCount": paxCount,
+                                                                      "fareClass": formBloc!.fareClassKey.value,
+                                                                      "date":formBloc!.checkInDate.value,
+                                                                    });
+
+                                                                AirFareResults airFareResults  = data as AirFareResults;
+
+                                                                print("flightData");
+                                                                print(jsonEncode(airFareResults));
+                                                                if(airFareResults.origin!=null){
+                                                                  formBloc!.showFlightDetails.updateValue(true);
+
+
+                                                                  formBloc!.flightPrice.updateValue(airFareResults.selectedPrice!);
+
+                                                                  formBloc!.arrivalDate.updateValue(airFareResults.arrivalDate ?? "");
+                                                                  formBloc!.arrivalTime.updateValue(airFareResults.arrivalTime ?? "");
+
+                                                                  formBloc!.checkInDate.updateValue(airFareResults.departureDate ?? "");
+                                                                  formBloc!.checkInTime.updateValue(airFareResults.departureTime ?? "");
+
+                                                                  formBloc!.airlineCode.updateValue(airFareResults.carrierCode!);
+                                                                  formBloc!.airline.updateValue(airFareResults.carrierName!);
+                                                                  formBloc!.flightNo.updateValue(airFareResults.flightNumber!);
+                                                                  formBloc!.stops.updateValue(airFareResults.totalStops.toString());
+                                                                  formBloc!.sbt.updateValue(true);
+                                                                  formBloc!.selectedFare.updateValue(airFareResults.selectedFare!);
+                                                                  formBloc!.timeField.updateValue(airFareResults.departureTime ?? "");
+                                                                }
+                                                              }else{
+                                                                MetaAlert.showErrorAlert(message: "Flight Search Not Available for selected cities");
+                                                              }
+                                                            },
+                                                            child:Align(
+                                                              alignment: Alignment.centerRight,
+                                                              child: Container(
+                                                                  height: 35.w,
+                                                                  width: 35.w,
+                                                                  child:MetaSVGView(mapData: jsonData['flightSvgIcon'])
+                                                              ),
+                                                            )
+                                                        )
+                                                      ),
+                                                    );
+
+                                                  }
+                                              ),
+
+                                              SizedBox(height: 10.h,),
+                                              BlocBuilder<BooleanFieldBloc, BooleanFieldBlocState>(
+                                                  bloc: formBloc!.showFlightDetails,
+                                                  builder: (context, state) {
+
+                                                    return   Visibility(
+                                                      visible: state.value,
+                                                      child: Container(
+                                                        child: Column(
+                                                          children: [
+                                                            MetaTextView(mapData: jsonData['flightLabel'],text: "Flight Details",),
+
+                                                            Divider(color: Colors.black,),
+                                                            Row(
+                                                              children: [
+                                                                Expanded(
+                                                                  child: Column(
+                                                                    children: [
+                                                                      MetaTextView(mapData: jsonData['flightLabel'],text: "Flight Price",),
+                                                                      MetaTextView(mapData: jsonData['flightValue'],text:formBloc!.flightPrice.value),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                                Expanded(
+                                                                  child: Column(
+                                                                    children: [
+                                                                      MetaTextView(mapData: jsonData['flightLabel'],text: "Arrival Date",),
+                                                                      MetaTextView(mapData: jsonData['flightValue'],text: formBloc!.arrivalDate.value),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                                Expanded(
+                                                                  child: Column(
+                                                                    children: [
+                                                                      MetaTextView(mapData: jsonData['flightLabel'],text: "Arrival Time",),
+                                                                      MetaTextView(mapData: jsonData['flightValue'],text: formBloc!.arrivalTime.value),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                            Row(
+                                                              children: [
+                                                                Expanded(
+                                                                  child: Column(
+                                                                    children: [
+                                                                      MetaTextView(mapData: jsonData['flightLabel'],text: "Flight No",),
+                                                                      MetaTextView(mapData: jsonData['flightValue'],text: formBloc!.flightNo.value),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                                Expanded(
+                                                                  child: Column(
+                                                                    children: [
+                                                                      MetaTextView(mapData: jsonData['flightLabel'],text: "Airlines",),
+                                                                      MetaTextView(mapData: jsonData['flightValue'],text: formBloc!.airline.value),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                            Row(
+                                                              children: [
+                                                                Expanded(
+                                                                  child: Column(
+                                                                    children: [
+                                                                      MetaTextView(mapData: jsonData['flightLabel'],text: "Selected Fare",),
+                                                                      MetaTextView(mapData: jsonData['flightValue'],text: formBloc!.selectedFare.value),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                                Expanded(
+                                                                  child: Column(
+                                                                    children: [
+                                                                      MetaTextView(mapData: jsonData['flightLabel'],text: "No of Stops",),
+                                                                      MetaTextView(mapData: jsonData['flightValue'],text: formBloc!.stops.value),
+                                                                    ],
+                                                                  ),
+                                                                )
+                                                              ],
+                                                            ),
+                                                            Container(
+                                                              alignment: Alignment.centerRight,
+                                                              child: InkWell(
+                                                                  onTap: (){
+
+                                                                    formBloc!.showFlightDetails.updateValue(false);
+
+                                                                  },
+                                                                  child: Container(
+                                                                      width:25.w,
+                                                                      height:25.w,
+                                                                      child: MetaSVGView(mapData: jsonData['delete']))),
+                                                            ),
+                                                            Divider(color: Colors.black,),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    );
+
+                                                  }
+                                              ),
+
+                                              BlocBuilder<SelectFieldBloc, SelectFieldBlocState>(
                                                   bloc: formBloc!.swByCompanyID,
                                                   builder: (context, state) {
 
                                                     return  Visibility(
-                                                      visible: !formBloc!.swByCompanyID.value! ,
-                                                      child: Column(
+                                                        visible: !formBloc!.swByCompanyID.value! ,
+                                                        child: Column(
                                                         children: [
-
-
-                                                          Container(
-                                                            child:InkWell(
-                                                                onTap:()async{
-
-                                                                  if(fromCode == null ||toCode == null){
-                                                                    MetaAlert.showErrorAlert(message: "Please select fields");
-                                                                    return;
-                                                                  }
-
-
-                                                                  if(fromCode!.isNotEmpty && toCode!.isNotEmpty && formBloc!.checkInDate.value.isNotEmpty)
-                                                                  {
-                                                                            var data = await Navigator.of(context).pushNamed(RouteConstants.flightPath,
-                                                                              arguments: {
-                                                                                "from":fromCode,
-                                                                                "to": toCode,
-                                                                                "date":formBloc!.checkInDate.value
-                                                                              });
-
-                                                                            String airFareResults  = data as String;
-
-                                                                        print("flightData");
-                                                                        formBloc!.tfAmount.updateValue(data);
-                                                                        //print(airFareResults.carrierName);
-                                                                 }else{
-                                                                    MetaAlert.showErrorAlert(message: "Flight Search Not Available for selected cities");
-                                                                  }
-                                                                  },
-                                                                child: MetaTextView(mapData: jsonData['flight'])),
-                                                          ),
 
                                                           Container(
                                                             child: Row(

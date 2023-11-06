@@ -207,6 +207,7 @@ class CreateTravelRequestBody extends StatelessWidget {
   checkOverlapped()async{
 
     List cities= submitMap['maTravelRequestCityPair'];
+    print(submitMap);
     print(cities);
 
 
@@ -218,7 +219,7 @@ class CreateTravelRequestBody extends StatelessWidget {
       "startDate": cities.first['startDate'],
       "endDate":cities.last['startDate'],
     };
-
+    print(overlapParams);
     SuccessModel model =   await Injector.resolve<TrUseCase>().checkOverlapped(overlapParams);
     print(model.toJson());
     if(model.message == null){

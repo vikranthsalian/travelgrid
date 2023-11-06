@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:travelex/common/extensions/parse_data_type.dart';
@@ -15,7 +17,8 @@ class BuildItinerary extends StatefulWidget {
   Function? onAdded;
   String? type;
   String? tripType;
-  BuildItinerary({required this.map,this.list=const [],this.onAdded,this.type,this.tripType});
+  String? paxCount;
+  BuildItinerary({required this.map,this.list=const [],this.onAdded,this.type,this.tripType,this.paxCount = "1"});
 
   @override
   _CreateBuildItineraryState createState() => _CreateBuildItineraryState();
@@ -90,6 +93,7 @@ class _CreateBuildItineraryState extends State<BuildItinerary> {
 
                     Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
                         AddRoundItinerary(
+                          paxCount: widget.paxCount,
                           tripType: widget.tripType,
                           jsonData: map,
                           isEdit:false,
@@ -103,11 +107,14 @@ class _CreateBuildItineraryState extends State<BuildItinerary> {
                   }else{
                     Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
                         AddItinerary(
+                          paxCount: widget.paxCount,
                           cityPairs:widget.list.isNotEmpty ? widget.list.last : null,
                           tripType: widget.tripType,
                           jsonData: map,
                           isEdit:false,
                           onAdd: (TRCityPairModel data){
+                            print("AddItinerary");
+                            print(jsonEncode(data));
                             print("===========> "+widget.type.toString());
                             if(widget.type=="O"){
                               widget.onAdded!([data]);
@@ -232,6 +239,7 @@ class _CreateBuildItineraryState extends State<BuildItinerary> {
 
                             Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
                                 AddRoundItinerary(
+                                  paxCount: widget.paxCount,
                                   cityPairs1: widget.list[0],
                                   cityPairs2: widget.list[1],
                                   tripType: widget.tripType,
@@ -251,6 +259,7 @@ class _CreateBuildItineraryState extends State<BuildItinerary> {
 
                           Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
                               AddItinerary(
+                                paxCount: widget.paxCount,
                                 cityPairs: item,
                                 tripType: widget.tripType,
                                 jsonData: map,

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:travelex/data/cubits/accom_type_cubit/accom_type_cubit.dart';
 import 'package:travelex/data/cubits/common/city_cubit/city_cubit.dart';
@@ -42,6 +44,7 @@ class CityUtil{
       if(data.isEmpty){
         return id;
       }
+
       return data.first.name;
     }
 
@@ -74,7 +77,7 @@ class CityUtil{
     }
 
 
-  static String? getFareValueFromID(id,mode,{bool isValue=true}) {
+  static String? getFareValueFromID(id,mode,{bool isValue=true,bool showCode=false}) {
     print("getFareValueFromID:==>");
     print(id);
     print(mode);
@@ -88,6 +91,8 @@ class CityUtil{
     List<fare.Data> list = appNavigatorKey.currentState!.context.read<FareClassCubit>().getFareClassResponse(mode);
 
     if(isValue){
+      print("list");
+      print(jsonEncode(list));
       Iterable<fare.Data> data = list.where((item) => (item.value.toString() == id.toString()));
       if(data.isNotEmpty){
         return data.first.label;
@@ -97,6 +102,10 @@ class CityUtil{
     }else{
       Iterable<fare.Data> data = list.where((item) => (item.id.toString() == id.toString()));
       if(data.isNotEmpty){
+        if(showCode){
+          return data.first.value;
+        }
+
         return data.first.label;
       }
       return null;

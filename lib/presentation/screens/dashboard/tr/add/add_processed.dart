@@ -124,7 +124,7 @@ class TrProcessed extends StatelessWidget {
 
                    List<TRTravellerDetails> details=[];
 
-                    for(var item in summaryResponse!.data!.maTravelerDetails!){
+                    for(var item in summaryResponse?.data?.maTravelerDetails ?? []){
 
                       formBloc!.employeeType.updateValue(item.employeeType);
 
@@ -138,7 +138,8 @@ class TrProcessed extends StatelessWidget {
                       emergencyContactNo:item.emergencyContactNo ?? ""
                      ));
                     }
-                    formBloc!.travellerDetails.updateValue(details);
+                    //formBloc!.travellerDetails.updateValue(details);
+                   updateTravellerDetails(details);
                   }
 
                   formBloc!.purposeOfTravel.updateValue(summaryResponse?.data?.purposeOfVisit.toString()??"");
@@ -259,7 +260,8 @@ class TrProcessed extends StatelessWidget {
                                             if(formBloc!.requestTypeID.value == "self"){
                                               formBloc!.travellerDetails.clear();
                                               list.clear();
-                                              formBloc!.travellerDetails.updateValue([]);
+                                              updateTravellerDetails([]);
+                                            //  formBloc!.travellerDetails.updateValue([]);
                                               formBloc!.employeeType.updateValue("");
                                             }
 
@@ -511,7 +513,10 @@ class TrProcessed extends StatelessWidget {
               builder: (context, state) {
 
                 List<TRCityPairModel> list  = formBloc!.cityList.value!.toList();
+                print("buildCityPairWidget");
+                print(jsonEncode(list));
                 return BuildItinerary(
+                  paxCount: formBloc!.travellerCount.value ?? "1",
                   tripType: tripType,
                     map: jsonData['cityPairDetails'],
                     list: list,
@@ -856,7 +861,8 @@ class TrProcessed extends StatelessWidget {
                                         }
                                         details.primary=true;
                                         formBloc!.travellerDetails.clear();
-                                        formBloc!.travellerDetails.changeValue(list);
+                                        setTravellerDetails(list);
+                                        //formBloc!.travellerDetails.changeValue(list);
                                       }),
                                // }
                               //),
@@ -890,7 +896,8 @@ class TrProcessed extends StatelessWidget {
                                     list.removeAt(index);
 
                                     formBloc!.travellerDetails.clear();
-                                    formBloc!.travellerDetails.changeValue(list);
+                                    setTravellerDetails(list);
+                                    //formBloc!.travellerDetails.changeValue(list);
 
                                   },
                                   child: Container(
@@ -954,7 +961,18 @@ class TrProcessed extends StatelessWidget {
         "price":item.price,
         "pnr":item.pnr,
         "ticket":item.ticketNo,
+        "arrivalDate":item.arrivalDate,
+        "arrivalTime":item.arrivalTime,
+        "flightNo":item.flightNo,
+        "airlines":item.airlines,
+        //"airlinesCode":item.a,
+        "selectedFare":item.selectedFare,
+        "numberOfStops":item.numberOfStops,
+        "sbt":item.sbt,
+
       };
+      print("TRCityPairModel");
+      print(data);
       cityList.add(TRCityPairModel.fromJson(data));
     }
     formBloc!.cityList.updateValue(cityList);
@@ -1108,13 +1126,17 @@ class TrProcessed extends StatelessWidget {
           onAdd: (data){
 
             if(formBloc!.requestTypeID.value.toString().toLowerCase() == "onBehalf".toLowerCase()){
-              formBloc!.travellerDetails.changeValue([data]);
+              //formBloc!.travellerDetails.changeValue([data]);
+              setTravellerDetails([data]);
             }else{
                list = formBloc!.travellerDetails.value ?? [];
               list.add(data);
-              formBloc!.travellerDetails.changeValue([]);
 
-              formBloc!.travellerDetails.updateValue(list);
+              // formBloc!.travellerDetails.updateValue(list);
+            //  formBloc!.travellerDetails.changeValue([]);
+               updateTravellerDetails([]);
+               setTravellerDetails(list);
+
 
               print("formBloc!.travellerDetails.value");
               print(formBloc!.travellerDetails.value);
@@ -1139,17 +1161,31 @@ class TrProcessed extends StatelessWidget {
                   mobileNumber: data.currentContact!.mobile ?? "",
                 );
                 if(formBloc!.requestTypeID.value.toString().toLowerCase() == "onBehalf".toLowerCase()){
-                  formBloc!.travellerDetails.changeValue([model]);
+                 // formBloc!.travellerDetails.changeValue([model]);
+                  setTravellerDetails([model]);
                 }else{
                   formBloc!.travellerDetails.value ?? [];
                   list.add(model);
-                  formBloc!.travellerDetails.changeValue([]);
-                  formBloc!.travellerDetails.changeValue(list);
+                  //formBloc!.travellerDetails.changeValue([]);
+                  setTravellerDetails([]);
+                 // formBloc!.travellerDetails.changeValue(list);
+                  setTravellerDetails(list);
                 }
               },
             ))
     );
   }
+
+  setTravellerDetails(List<TRTravellerDetails> list){
+    formBloc!.travellerCount.updateValue(list.length.toString());
+    formBloc!.travellerDetails.changeValue(list);
+  }
+
+  updateTravellerDetails(List<TRTravellerDetails> list){
+    formBloc!.travellerCount.updateValue(list.length.toString());
+    formBloc!.travellerDetails.updateValue(list);
+  }
+
 
 
 }

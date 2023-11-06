@@ -29,10 +29,11 @@ class _MetaDateTimeViewState extends State<MetaDateTimeView> {
   @override
   Widget build(BuildContext context) {
 
-    // if(widget.value['time']!=null && widget.value['time'].toString().isNotEmpty){
-    //   time = widget.value['time'];
-    //   print(widget.value['time']);
-    // }
+    if(widget.value['time']!=null && widget.value['time'].toString().isNotEmpty){
+      time = widget.value['time'];
+      print("=============Setting Time=============");
+      print(widget.value['time']);
+    }
 
     if(widget.mapData['showView'] == "date"){
       return Container(
@@ -202,6 +203,7 @@ class _MetaDateTimeViewState extends State<MetaDateTimeView> {
             String hr= picked_s.hour.toString().length == 1 ? "0"+picked_s.hour.toString():picked_s.hour.toString();
             String mn= picked_s.minute.toString().length == 1? "0"+picked_s.minute.toString():picked_s.minute.toString();
             time= hr +":"+mn;
+            widget.value['time']=time;
             if(widget.mapData['showView'] == "date_time"){
               widget.onChange!(
                   {
@@ -221,7 +223,7 @@ class _MetaDateTimeViewState extends State<MetaDateTimeView> {
           child: Column(
             children: [
               MetaTextView(mapData: widget.mapData['timeView']['label']),
-              MetaTextView(mapData: widget.mapData['timeView']['timeText'],text: time,),
+              MetaTextView(mapData: widget.mapData['timeView']['timeText'],text: time),
             ],
           )
       ),

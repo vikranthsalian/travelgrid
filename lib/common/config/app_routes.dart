@@ -52,7 +52,9 @@ class AppRoutes {
         final String from = args["from"] ?? "";
         final String to = args["to"]  ?? "";
         final String date = args["date"]  ?? "";
-        return  FlightScreen(from:from,to:to, date:date);
+        final String paxCount = args["paxCount"]  ?? "1";
+        final String fareClass = args["fareClass"]  ?? "";
+        return  FlightScreen(from:from,to:to, date:date,paxCount:paxCount,fareClass: fareClass);
 
       case RouteConstants.travelRequestPath:
         return  TravelRequest();
