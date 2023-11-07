@@ -29,16 +29,14 @@ class MetaFlightListResponse {
 
 class Data {
   List<AirFareResults>? airFareResults;
-  Null? returnAirFareResults;
   bool? rountTrip;
   bool? multi;
   int? errorCode;
-  Null? errorMessage;
+  String? errorMessage;
   bool? intl;
 
   Data(
       {this.airFareResults,
-        this.returnAirFareResults,
         this.rountTrip,
         this.multi,
         this.errorCode,
@@ -52,7 +50,6 @@ class Data {
         airFareResults!.add(new AirFareResults.fromJson(v));
       });
     }
-    returnAirFareResults = json['returnAirFareResults'];
     rountTrip = json['rountTrip'];
     multi = json['multi'];
     errorCode = json['errorCode'];
@@ -66,7 +63,6 @@ class Data {
       data['airFareResults'] =
           this.airFareResults!.map((v) => v.toJson()).toList();
     }
-    data['returnAirFareResults'] = this.returnAirFareResults;
     data['rountTrip'] = this.rountTrip;
     data['multi'] = this.multi;
     data['errorCode'] = this.errorCode;
@@ -84,7 +80,7 @@ class AirFareResults {
   String? departureDate;
   String? arrivalDate;
   String? duration;
-  Null? fareClass;
+  String? fareClass;
   String? carrierCode;
   String? carrierName;
   String? flightNumber;
@@ -99,24 +95,15 @@ class AirFareResults {
   double? corpPublishedPrice;
   double? corpBaseFare;
   double? corpTax;
-  Null? corpFareKey;
+  String? corpFareKey;
   double? splrtPublishedPrice;
   double? splrtBaseFare;
   double? splrtTax;
-  Null? splrtFareKey;
-  Null? splrtCC;
+  String? splrtFareKey;
   int? totalStops;
   List<Segments>? segments;
-  Null? returnsegments;
-  Null? returnOrigin;
-  Null? returnDestination;
-  Null? returnDepartureDate;
-  Null? returnArrivalDate;
-  Null? returnCarrierCode;
-  Null? returnCarrierName;
-  Null? returnFlightNumber;
   int? returnTotalStops;
-  Null? corpFare;
+  double? corpFare;
 
   AirFareResults(
       {this.origin,
@@ -146,17 +133,8 @@ class AirFareResults {
         this.splrtBaseFare,
         this.splrtTax,
         this.splrtFareKey,
-        this.splrtCC,
         this.totalStops,
         this.segments,
-        this.returnsegments,
-        this.returnOrigin,
-        this.returnDestination,
-        this.returnDepartureDate,
-        this.returnArrivalDate,
-        this.returnCarrierCode,
-        this.returnCarrierName,
-        this.returnFlightNumber,
         this.returnTotalStops,
         this.corpFare});
 
@@ -188,7 +166,6 @@ class AirFareResults {
     splrtBaseFare = json['splrtBaseFare'];
     splrtTax = json['splrtTax'];
     splrtFareKey = json['splrtFareKey'];
-    splrtCC = json['splrtCC'];
     totalStops = json['totalStops'];
     if (json['segments'] != null) {
       segments = <Segments>[];
@@ -196,14 +173,6 @@ class AirFareResults {
         segments!.add(new Segments.fromJson(v));
       });
     }
-    returnsegments = json['returnsegments'];
-    returnOrigin = json['returnOrigin'];
-    returnDestination = json['returnDestination'];
-    returnDepartureDate = json['returnDepartureDate'];
-    returnArrivalDate = json['returnArrivalDate'];
-    returnCarrierCode = json['returnCarrierCode'];
-    returnCarrierName = json['returnCarrierName'];
-    returnFlightNumber = json['returnFlightNumber'];
     returnTotalStops = json['returnTotalStops'];
     corpFare = json['corpFare'];
   }
@@ -237,19 +206,10 @@ class AirFareResults {
     data['splrtBaseFare'] = this.splrtBaseFare;
     data['splrtTax'] = this.splrtTax;
     data['splrtFareKey'] = this.splrtFareKey;
-    data['splrtCC'] = this.splrtCC;
     data['totalStops'] = this.totalStops;
     if (this.segments != null) {
       data['segments'] = this.segments!.map((v) => v.toJson()).toList();
     }
-    data['returnsegments'] = this.returnsegments;
-    data['returnOrigin'] = this.returnOrigin;
-    data['returnDestination'] = this.returnDestination;
-    data['returnDepartureDate'] = this.returnDepartureDate;
-    data['returnArrivalDate'] = this.returnArrivalDate;
-    data['returnCarrierCode'] = this.returnCarrierCode;
-    data['returnCarrierName'] = this.returnCarrierName;
-    data['returnFlightNumber'] = this.returnFlightNumber;
     data['returnTotalStops'] = this.returnTotalStops;
     data['corpFare'] = this.corpFare;
     return data;

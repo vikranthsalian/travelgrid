@@ -8,12 +8,14 @@ class MetaRadio extends StatefulWidget {
   bool? value;
   String? one;
   String? two;
+  String? three;
 
   MetaRadio({
     this.onRadioSwitched,
     this.value,
     this.one,
     this.two,
+    this.three,
   });
 
   @override
@@ -33,59 +35,67 @@ class _MetaRadioState extends State<MetaRadio> {
   @override
   Widget build(BuildContext context) {
     
-    return Transform.translate(
-      offset: Offset(0,-0),
-      child: Container(
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child:Container(
-                alignment: Alignment.center,
-                height: 25.h,
-                child: InkWell(
-                  onTap: (){
-
-                    onSelect(widget.one!,"retail");
-
-                  },
-                  child:Transform.translate(
-                    offset: Offset(0,-15),
-                    child: RadioListTile(
-                      title: Text(widget.one!.inRupeesFormat(),style: TextStyle(fontSize: 10),),
-                      value: widget.one!,
-                      groupValue: _value,
-                      onChanged: (value){
-                        onSelect(value!,"retail");
-                      },
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            Expanded(
+    return Container(
+      margin: EdgeInsets.only(bottom: 5.h),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            child:Container(
+              alignment: Alignment.center,
               child: InkWell(
                 onTap: (){
-                  onSelect(widget.two!,"corporate");
+
+                  onSelect(widget.one!,"retail");
+
                 },
-                child: Container(
-                  height: 25.h,
-                  child: Transform.translate(
-                    offset: Offset(0,-15),
-                    child: RadioListTile(
-                      title: Text(widget.two!.inRupeesFormat(),style: TextStyle(fontSize: 10),),
-                      value: widget.two!,
-                      groupValue: _value,
-                      onChanged: (value){
-                        onSelect(value!,"corporate");
-                      },
-                    ),
-                  ),
+                child:Column(
+                  children: [
+                    Radio(value:  widget.one!, groupValue: _value, onChanged: (value){
+                      onSelect(value!,"retail");
+                    }),
+                    Text("Retail Fare \n"+widget.one!.inRupeesFormat(),style: TextStyle(fontSize: 10))
+                  ],
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+          Expanded(
+            child: InkWell(
+              onTap: (){
+                onSelect(widget.two!,"corporate");
+              },
+              child: Container(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Radio(value:  widget.two!, groupValue: _value, onChanged: (value){
+                      onSelect(value!,"corporate");
+                    }),
+                    Text("Corporate Fare \n"+widget.two!.inRupeesFormat(),style: TextStyle(fontSize: 10))
+                  ],
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            child: InkWell(
+                onTap: (){
+                  onSelect(widget.three!,"splrt");
+                },
+                child: Container(
+                    child: Column(
+                      children: [
+                        Radio(value:  widget.three!, groupValue: _value, onChanged: (value){
+                          onSelect(value!,"splrt");
+                        }),
+                        Text("Special Fare \n"+widget.three!.inRupeesFormat(),style: TextStyle(fontSize: 12))
+                      ],
+                    )
+                )
+            ),
+          ),
+        ],
       ),
     );
   }

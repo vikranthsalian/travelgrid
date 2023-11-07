@@ -24,7 +24,7 @@ class DialogYesNo extends StatelessWidget{
     return Dialog(
       backgroundColor: Colors.transparent,
       child: Container(
-        height:( MediaQuery.of(context).size.height + adder )* 0.18,
+        height:( MediaQuery.of(context).size.height + adder )* 0.22,
         child:ClipRRect(
             borderRadius: BorderRadius.circular(12.r),
             child: Scaffold(

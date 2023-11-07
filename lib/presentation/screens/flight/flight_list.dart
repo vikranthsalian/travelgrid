@@ -235,7 +235,7 @@ class FlightScreen extends StatelessWidget {
             await showDialog(
             context: context,
             builder: (_) => DialogYesNo(
-                title: "Select Flight "+item.carrierName!+" "+ item.flightNumber.toString()+"\n Retail Fare    |   Corporate fare",
+                title: "Select Flight "+item.carrierName!+" "+ item.flightNumber.toString(),
                 widgetView:MetaRadio(
                   onRadioSwitched: (value,type){
                     print("onRadioSwitched");
@@ -244,7 +244,9 @@ class FlightScreen extends StatelessWidget {
                     item.selectedFare = type;
                   },
                   one: item.publishedPrice.toString(),
-                  two: item.corpPublishedPrice.toString(),),
+                  two: item.corpPublishedPrice.toString(),
+                  three: item.splrtPublishedPrice.toString(),
+                ),
                 onPressed: (value) async{
                   if(value == "YES"){
 
