@@ -1,4 +1,4 @@
-package com.travelgrid.nh
+package tg.travelex.nh
 
 import io.flutter.embedding.android.FlutterActivity
 

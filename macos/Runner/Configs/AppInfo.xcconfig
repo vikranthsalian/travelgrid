@@ -8,7 +8,7 @@
 PRODUCT_NAME = travelgrid
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = com.travelgrid.nh
+PRODUCT_BUNDLE_IDENTIFIER = tg.travelex.nh
 
 // The copyright displayed in application information
 PRODUCT_COPYRIGHT = Copyright © 2023 com.app. All rights reserved.

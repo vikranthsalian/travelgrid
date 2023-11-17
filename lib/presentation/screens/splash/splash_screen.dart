@@ -30,7 +30,7 @@ class SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState() {
-   // setPrivacyScreenConfig();
+    setPrivacyScreenConfig();
     splashData = FlavourConstants.splashData;
     prettyPrint(splashData);
     splashBottomText = FlavourConstants.splashData['splash_bottom_text'];
@@ -68,7 +68,7 @@ class SplashScreenState extends State<SplashScreen> {
              MetaButton(
                  width: 300,
                  mapData: {
-               "text" : "Continue with Microsoft Azure",
+               "text" : "Login",
                "color" : "0xFFFFFFFF",
                "backgroundColor" : "0xFF2854A1",
                "size": "18",

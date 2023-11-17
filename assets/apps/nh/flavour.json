@@ -5,8 +5,8 @@
   "app_android_url": "https://play.google.com/",
   "app_ios_url": "https://www.apple.com/app-store/",
   "app_logo": "assets/apps/nh/images/app-logo.png",
-  "android_app_id": "com.travelgrid.nh",
-  "ios_app_id": "com.travelgrid.nh",
+  "android_app_id": "tg.travelex.nh",
+  "ios_app_id": "tg.travelex.nh",
   "showNetworkLogs": true,
   "urls": {
     "prod_url" : "https://travelex.narayanahealth.org:443/tems/rest/ma/",
